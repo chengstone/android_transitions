@@ -91,7 +91,7 @@ public class Reveal extends Visibility {
 	 * <p>
 	 * This mode can be used as well for <b>appearing</b> targets as for <b>disappearing</b> ones.
 	 */
-	public static final int REVEAL = 0x01;
+	public static final int REVEAL = MODE_IN;
 
 	/**
 	 * Mode to indicate that Reveal transition should play <b>conceal</b> animation, that is to
@@ -99,7 +99,7 @@ public class Reveal extends Visibility {
 	 * <p>
 	 * This mode can be used as well for <b>disappearing</b> targets as for <b>appearing</b> ones.
 	 */
-	public static final int CONCEAL = 0x02;
+	public static final int CONCEAL = MODE_OUT;
 
 	/**
 	 * Static members ==============================================================================
@@ -114,12 +114,6 @@ public class Reveal extends Visibility {
 	 * the currently animating view.
 	 */
 	private final RevealInfo REVEAL_INFO = new RevealInfo();
-
-	/**
-	 * Mode determining whether we will run <b>reveal</b> or <b>conceal</b> animation.
-	 * Either {@link #REVEAL} or {@link #CONCEAL}.
-	 */
-	private final int mMode;
 
 	/**
 	 * X coordinate for center of the reveal/conceal animation. If {@code null}, {@link #mCenterXFraction}
@@ -211,7 +205,7 @@ public class Reveal extends Visibility {
 	 * @param mode One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
 	public Reveal(@RevealMode int mode) {
-		this.mMode = mode;
+		setMode(mode);
 	}
 
 	/**
@@ -221,16 +215,16 @@ public class Reveal extends Visibility {
 	 * @param context Context used to obtain values from the specified <var>attrs</var>.
 	 * @param attrs   Set of attributes from which to obtain property values for the reveal animation.
 	 */
+	@SuppressWarnings("ResourceType")
 	public Reveal(@NonNull Context context, @NonNull AttributeSet attrs) {
 		super(context, attrs);
-		int mode = REVEAL;
 		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);
 		if (typedArray != null) {
 			final int n = typedArray.getIndexCount();
 			for (int i = 0; i < n; i++) {
 				final int index = typedArray.getIndex(i);
 				if (index == R.styleable.Ui_Transition_Reveal_uiRevealMode) {
-					mode = typedArray.getInteger(index, mode);
+					setMode(typedArray.getInteger(index, getMode()));
 				} else if (index == R.styleable.Ui_Transition_Reveal_uiStartRadius) {
 					this.mStartRadius = (float) typedArray.getDimensionPixelSize(index, 0);
 				} else if (index == R.styleable.Ui_Transition_Reveal_uiEndRadius) {
@@ -257,7 +251,6 @@ public class Reveal extends Visibility {
 			}
 			typedArray.recycle();
 		}
-		this.mMode = mode;
 	}
 
 	/**
@@ -265,11 +258,10 @@ public class Reveal extends Visibility {
 	 */
 
 	/**
-	 * @throws UnsupportedOperationException
 	 */
 	@Override
-	public final void setMode(int mode) {
-		throw new UnsupportedOperationException("Reveal mode need to be specified during initialization and cannot be changed.");
+	public void setMode(@RevealMode int mode) {
+		super.setMode(mode);
 	}
 
 	/**
@@ -278,8 +270,9 @@ public class Reveal extends Visibility {
 	 * @return One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
 	@RevealMode
-	public final int getMode() {
-		return mMode;
+	@SuppressWarnings("ResourceType")
+	public int getMode() {
+		return super.getMode();
 	}
 
 	/**
@@ -736,6 +729,9 @@ public class Reveal extends Visibility {
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 
+		// todo: resolve center coordinates based on RTL value ???
+		// todo: resolve absolute gravity like FragmentLayout does and the center can be then
+		// todo: properly resolved for RTL layout
 		switch (mCenterGravity) {
 			case Gravity.START:
 			case Gravity.START | Gravity.TOP:
@@ -767,8 +763,6 @@ public class Reveal extends Visibility {
 				center[1] = viewHeight / 2f;
 				break;
 		}
-
-		// todo: resolve center coordinates based on RTL value ???
 		return center;
 	}
 
@@ -786,7 +780,7 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Calculates start and end radius for the reveal animation of the specified <var>view</var>
-	 * based on the current {@link #mMode}.
+	 * based on the current {@link #getMode()}.
 	 *
 	 * @param view The view for which reveal animation to calculate start and end radius.
 	 * @return An array with two radii: startRadius[0], endRadius[0].
@@ -794,7 +788,7 @@ public class Reveal extends Visibility {
 	private float[] calculateTransitionRadii(View view) {
 		float startRadius, endRadius;
 		startRadius = endRadius = 0;
-		switch (mMode) {
+		switch (getMode()) {
 			case REVEAL:
 				startRadius = 0;
 				endRadius = calculateTransitionRadius(view);

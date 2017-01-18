@@ -24,4 +24,4 @@ as usually.
 
 **[Core](https://github.com/universum-studios/android_transitions/tree/master/library/src/main)**
 
-    compile 'universum.studios.android:transition-core:1.0.0@aar'
+    compile 'universum.studios.android:transitions-core:1.0.0@aar'

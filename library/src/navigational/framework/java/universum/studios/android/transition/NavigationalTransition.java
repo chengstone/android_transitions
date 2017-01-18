@@ -26,10 +26,10 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 /**
- * A {@link BaseNavigationalTransition} implementation that can be used also from a context of
- * <b>native</b> {@link Fragment}.
+ * A {@link BaseNavigationalTransition} implementation that may be used also from a context of
+ * <b>framework's</b> {@link Fragment}.
  * <p>
- * See {@link #start(Fragment)} and {@link #finish(Fragment)} for information.
+ * See {@link #start(Fragment)} and {@link #finish(Fragment)} for more information.
  *
  * @author Martin Albedinsky
  * @see NavigationalTransitionCompat
@@ -73,7 +73,7 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * Creates a new instance of NavigationalTransition with the specified <var>classOfTransitionActivity</var>.
 	 *
 	 * @param classOfTransitionActivity The activity class that will be used to create an {@link Intent}
-	 *                                  whenever starting the new transition.
+	 *                                  whenever starting this transition.
 	 * @see #createIntent(Activity)
 	 */
 	public NavigationalTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
