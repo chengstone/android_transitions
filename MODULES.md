@@ -90,7 +90,7 @@ _depends on:_
 
 **[View-Translate](https://github.com/universum-studios/android_transitions/tree/master/library/src/view/translate)**
 
-    See [1.1.0](https://github.com/universum-studios/android_transitions/milestone/1) milestone.
+> See **[1.1.0](https://github.com/universum-studios/android_transitions/milestone/1)** milestone.
 
 **[Util](https://github.com/universum-studios/android_transitions/tree/master/library/src/util)**
 
