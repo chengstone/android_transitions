@@ -11,7 +11,7 @@ Download the latest **[release](https://github.com/universum-studios/android_tra
 
 ## Compatibility ##
 
-Available from the **Android [API Level 21](http://developer.android.com/about/versions/android-5.0.html "See API highlights")**.
+Available from the **Android [API Level 9](http://developer.android.com/about/versions/android-2.3.html "See API highlights")**.
 
 ### Dependencies ###
 

@@ -24,8 +24,25 @@ android {
         main.manifest.srcFile 'src/main/AndroidManifest.xml'
         main.java.srcDirs = [
                 'src/main/java',
-                'src/common/java',
-                'src/collection/java'
+                'src/navigational/base/java',
+                'src/navigational/framework/java',
+                'src/navigational/compat/java',
+                'src/view/reveal/java',
+                'src/view/scale/java',
+                'src/view/translate/java',
+                'src/window/core/java',
+                'src/window/common/java',
+                'src/window/extra/java',
+                'src/util/java'
+        ]
+        main.res.srcDirs = [
+                'src/main/res',
+                'src/view/reveal/res',
+                'src/view/scale/res',
+                'src/view/translate/res',
+                'src/window/core/res',
+                'src/window/common/res',
+                'src/window/extra/res'
         ]
     }
 }
@@ -34,5 +51,6 @@ android {
  * Library Module dependencies =====================================================================
  */
 dependencies {
-    // None.
+    final String supportVersion = project.property('android.support.version')
+    compile 'com.android.support:support-v4:' + supportVersion
 }

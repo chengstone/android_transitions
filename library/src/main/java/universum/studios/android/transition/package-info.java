@@ -17,6 +17,9 @@
  * =================================================================================================
  */
 /**
+ * Provides a group of common transitions that may be used to animate UI components from one scene
+ * to another one or to transition from one screen to another one.
+ *
  * @author Martin Albedinsky
  */
 package universum.studios.android.transition;

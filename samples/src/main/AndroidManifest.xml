@@ -37,7 +37,11 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 
-			<meta-data android:name="universum.studios.android.samples.SamplesMetaData.NAVIGATION_MENU" android:resource="@menu/navigation"/>
+			<meta-data
+				android:name="universum.studios.android.samples.SamplesMetaData.NAVIGATION_MENU"
+				android:resource="@menu/navigation" />
 		</activity>
+
+		<activity android:name=".ui.window.WindowTransitionActivity" />
 	</application>
 </manifest>

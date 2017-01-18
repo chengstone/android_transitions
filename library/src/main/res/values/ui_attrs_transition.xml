@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * =================================================================================================
+ *                             Copyright (C) 2017 Universum Studios
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Transition attributes. -->
+    <declare-styleable name="Ui.Transition">
+        <!-- Visibility to be applied to a view at the start of appearing transition. -->
+        <attr name="uiAppearVisibility">
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+            <enum name="gone" value="0x00000008"/>
+        </attr>
+        <!-- Visibility to be applied to a view at the start of disappearing transition. -->
+        <attr name="uiDisappearVisibility">
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+            <enum name="gone" value="0x00000008"/>
+        </attr>
+        <!-- Visibility to be applied to a view at the start of a transition's animation. -->
+        <attr name="uiStartVisibility">
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+            <enum name="gone" value="0x00000008"/>
+        </attr>
+        <!-- Visibility to be applied to a view at the end of a transition's animation. -->
+        <attr name="uiEndVisibility">
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+            <enum name="gone" value="0x00000008"/>
+        </attr>
+        <!-- Gravity of the center. -->
+        <attr name="uiCenterGravity">
+            <!-- Use top coordinate of a transition object as vertical center origin. -->
+            <flag name="top" value="0x30" />
+            <!-- Use bottom coordinate of a transition object as vertical center origin. -->
+            <flag name="bottom" value="0x50" />
+            <!-- Use left coordinate of a transition object as horizontal center origin. -->
+            <!--<flag name="left" value="0x03" />-->
+            <!-- Use right coordinate of a transition object as horizontal center origin. -->
+            <!--<flag name="right" value="0x05" />-->
+            <!-- Use vertical center coordinate of a transition object as vertical center origin. -->
+            <flag name="center_vertical" value="0x10" />
+            <!-- Use horizontal center coordinate of a transition object as horizontal center origin. -->
+            <flag name="center_horizontal" value="0x01" />
+            <!-- Use vertical and horizontal center coordinate of a transition object as center origin. -->
+            <flag name="center" value="0x11" />
+            <!-- Use beginning coordinate of a transition object as horizontal center origin. -->
+            <flag name="start" value="0x00800003" />
+            <!-- Use end coordinate of a transition object as horizontal center origin. -->
+            <flag name="end" value="0x00800005" />
+        </attr>
+        <!-- Vertical offset for the center point of a transition. -->
+        <attr name="uiCenterVerticalOffset" format="dimension"/>
+        <!-- Horizontal offset for the center point of a transition. -->
+        <attr name="uiCenterHorizontalOffset" format="dimension"/>
+    </declare-styleable>
+
+    <!-- Reveal transition attributes. -->
+    <declare-styleable name="Ui.Transition.Reveal">
+        <!-- Mode determining whether a view should be revealed or concealed. -->
+        <attr name="uiRevealMode">
+            <enum name="reveal" value="0x01"/>
+            <enum name="conceal" value="0x02"/>
+        </attr>
+        <!-- Radius used at the start of a transition. -->
+        <attr name="uiStartRadius" format="dimension"/>
+        <!-- Radius used at the end of a transition. -->
+        <attr name="uiEndRadius" format="dimension"/>
+        <!-- Re-used. -->
+        <attr name="uiCenterGravity"/>
+        <!-- Re-used. -->
+        <attr name="uiCenterVerticalOffset"/>
+        <!-- Re-used. -->
+        <attr name="uiCenterHorizontalOffset"/>
+        <!-- Re-used. -->
+        <attr name="android:centerX"/>
+        <!-- Re-used. -->
+        <attr name="android:centerY"/>
+        <!-- Re-used. -->
+        <attr name="uiAppearVisibility"/>
+        <!-- Re-used. -->
+        <attr name="uiDisappearVisibility"/>
+        <!-- Re-used. -->
+        <attr name="uiStartVisibility"/>
+        <!-- Re-used. -->
+        <attr name="uiEndVisibility"/>
+    </declare-styleable>
+</resources>

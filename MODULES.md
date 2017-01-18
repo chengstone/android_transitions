@@ -22,6 +22,6 @@ as usually.
         }
     }
 
-**[Core](https://github.com/universum-studios/android_graphics/tree/master/library/src/main)**
+**[Core](https://github.com/universum-studios/android_transitions/tree/master/library/src/main)**
 
     compile 'universum.studios.android:transition-core:1.0.0@aar'

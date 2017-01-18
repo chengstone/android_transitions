@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * =================================================================================================
+ *                             Copyright (C) 2017 Universum Studios
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+-->
+<resources>
+
+	<!-- ### GLOBAL ============================================================================ -->
+
+	<!-- Duration of animation for a new incoming window. -->
+	<integer name="ui_config_anim_window_in_duration">400</integer>
+	<!-- Duration of animation for an old incoming back-stacked window. -->
+	<integer name="ui_config_anim_window_in_back_duration">300</integer>
+	<!-- Duration of animation for the currently outgoing window (new is incoming). -->
+	<integer name="ui_config_anim_window_out_duration">400</integer>
+	<!-- Duration of animation for the currently outgoing window (back-stacked is incoming). -->
+	<integer name="ui_config_anim_window_out_back_duration">300</integer>
+
+	<!-- ### SLIDE ============================================================================= -->
+
+	<!-- Duration of slide animation for a new incoming window. -->
+	<integer name="ui_config_anim_window_slide_in_duration">@integer/ui_config_anim_window_in_duration</integer>
+	<!-- Duration of slide animation for an old incoming back-stacked window. -->
+	<integer name="ui_config_anim_window_slide_in_back_duration">@integer/ui_config_anim_window_in_back_duration</integer>
+	<!-- Duration of slide animation for the currently outgoing window (new is incoming). -->
+	<integer name="ui_config_anim_window_slide_out_duration">@integer/ui_config_anim_window_out_duration</integer>
+	<!-- Duration of slide animation for the currently outgoing window (back-stacked is incoming). -->
+	<integer name="ui_config_anim_window_slide_out_back_duration">@integer/ui_config_anim_window_out_back_duration</integer>
+
+	<!-- ### SCALE ============================================================================= -->
+
+	<!-- Duration of scale animation for a new incoming window. -->
+	<integer name="ui_config_anim_window_scale_in_duration">@integer/ui_config_anim_window_in_duration</integer>
+	<!-- Start offset of scale animation for a new incoming window. -->
+	<integer name="ui_config_anim_window_scale_in_delay">150</integer>
+	<!-- Duration of scale animation for an old incoming back-stacked window. -->
+	<integer name="ui_config_anim_window_scale_in_back_duration">@integer/ui_config_anim_window_in_back_duration</integer>
+	<!-- Start offset of scale animation for an old incoming back-stacked window. -->
+	<integer name="ui_config_anim_window_scale_in_back_delay">100</integer>
+	<!-- Duration of scale animation for the currently outgoing window (new is incoming). -->
+	<integer name="ui_config_anim_window_scale_out_duration">@integer/ui_config_anim_window_out_duration</integer>
+	<!-- Duration of scale animation for the currently outgoing window (back-stacked is incoming). -->
+	<integer name="ui_config_anim_window_scale_out_back_duration">@integer/ui_config_anim_window_slide_out_back_duration</integer>
+
+	<!-- ### FADE ============================================================================== -->
+
+	<!-- Duration of alpha animation for a new incoming window. -->
+	<integer name="ui_config_anim_window_fade_in_duration">@integer/ui_config_anim_window_in_duration</integer>
+	<!-- Duration of alpha animation for an old incoming back-stacked window. -->
+	<integer name="ui_config_anim_window_fade_in_back_duration">@integer/ui_config_anim_window_in_back_duration</integer>
+	<!-- Duration of alpha animation for the currently outgoing window (new is incoming). -->
+	<integer name="ui_config_anim_window_fade_out_duration">@integer/ui_config_anim_window_out_duration</integer>
+	<!-- Duration of alpha animation for the currently outgoing window (back-stacked is incoming). -->
+	<integer name="ui_config_anim_window_fade_out_back_duration">@integer/ui_config_anim_window_slide_out_back_duration</integer>
+</resources>
