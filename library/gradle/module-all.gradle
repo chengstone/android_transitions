@@ -27,6 +27,7 @@ android {
                 'src/navigational/base/java',
                 'src/navigational/framework/java',
                 'src/navigational/compat/java',
+                'src/view/core/java',
                 'src/view/reveal/java',
                 'src/view/scale/java',
                 'src/view/translate/java',
@@ -37,6 +38,7 @@ android {
         ]
         main.res.srcDirs = [
                 'src/main/res',
+                'src/view/core/res',
                 'src/view/reveal/res',
                 'src/view/scale/res',
                 'src/view/translate/res',

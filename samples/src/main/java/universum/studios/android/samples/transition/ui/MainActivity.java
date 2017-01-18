@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import universum.studios.android.fragment.manage.FragmentController;
 import universum.studios.android.fragment.transition.FragmentTransitions;
 import universum.studios.android.samples.transition.R;
+import universum.studios.android.samples.transition.ui.view.ViewTransitionsFragment;
 import universum.studios.android.samples.transition.ui.window.WindowTransitionsFragment;
 import universum.studios.android.samples.ui.SamplesNavigationActivity;
 
@@ -60,6 +61,12 @@ public final class MainActivity extends SamplesNavigationActivity {
 				return true;
 			case R.id.navigation_item_window_transitions:
 				fragmentController.newRequest(new WindowTransitionsFragment())
+						.transition(FragmentTransitions.CROSS_FADE)
+						.replaceSame(true)
+						.execute();
+				return true;
+			case R.id.navigation_item_view_transitions:
+				fragmentController.newRequest(new ViewTransitionsFragment())
 						.transition(FragmentTransitions.CROSS_FADE)
 						.replaceSame(true)
 						.execute();

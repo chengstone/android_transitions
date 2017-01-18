@@ -31,5 +31,9 @@
 		<item
 			android:id="@+id/navigation_item_window_transitions"
 			android:title="@string/navigation_item_window_transitions"/>
+
+		<item
+			android:id="@+id/navigation_item_view_transitions"
+			android:title="@string/navigation_item_view_transitions"/>
 	</group>
 </menu>

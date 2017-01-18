@@ -23,9 +23,12 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.transition.TransitionValues;
 import android.transition.Visibility;
 import android.util.AttributeSet;
@@ -36,13 +39,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * This transition tracks changes to the visibility of target views in the start and end scenes and
- * scales up or down views in the scene. Visibility is determined by the {@link View#setVisibility(int)}
- * state of the views.
+ * A {@link Visibility} transition implementation that tracks changes to the visibility of target
+ * views in the start and end scenes and scales up or down views in the scene. Visibility is
+ * determined by the {@link View#setVisibility(int)} state of the views.
  * <p>
- * A Scale transition can be described in a resource file by using the {@code transition} tag
- * with {@code class} attribute set to {@code com.albedinsky.android.ui.transition.Scale},
- * along with standard Xml attributes for {@link Visibility} transition.
+ * Scale transition can be described in a resource file by using the {@code transition} tag with
+ * {@code class} attribute set to {@code universum.studios.android.transition.Scale}, along with
+ * Xml attributes referenced below.
+ *
+ * <h3>XML attributes</h3>
+ * {@link R.styleable#Ui_Transition_Scale Scale Attributes}
  *
  * @author Martin Albedinsky
  */
@@ -89,6 +95,32 @@ public class Scale extends Visibility {
 	 */
 
 	/**
+	 * Object that holds all necessary properties for the scale transition for the currently
+	 * transitioning view.
+	 */
+	private final Info mInfo = new Info();
+
+	/**
+	 * todo:
+	 */
+	private Float mPivotX;
+
+	/**
+	 * todo:
+	 */
+	private Float mPivotY;
+
+	/**
+	 * todo:
+	 */
+	private float mPivotXFraction = 0.5f;
+
+	/**
+	 * todo:
+	 */
+	private float mPivotYFraction = 0.5f;
+
+	/**
 	 * Constructors ================================================================================
 	 */
 
@@ -109,7 +141,7 @@ public class Scale extends Visibility {
 	}
 
 	/**
-	 * Creates a new instance of scale transition with animation property values set from the
+	 * Creates a new instance of Scale transition with animation property values set from the
 	 * specified <var>attrs</var>.
 	 *
 	 * @param context Context used to obtain values from the specified <var>attrs</var>.
@@ -118,6 +150,21 @@ public class Scale extends Visibility {
 	 */
 	public Scale(@NonNull Context context, @NonNull AttributeSet attrs) {
 		super(context, attrs);
+		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);
+		final int n = typedArray.getIndexCount();
+		for (int i = 0; i < n; i++) {
+			final int index = typedArray.getIndex(i);
+			if (index == R.styleable.Ui_Transition_Scale_android_pivotX) {
+				this.mPivotXFraction = typedArray.getFraction(index, 1, 1, mPivotXFraction);
+			} else if (index == R.styleable.Ui_Transition_Scale_android_pivotY) {
+				this.mPivotYFraction = typedArray.getFraction(index, 1, 1, mPivotYFraction);
+			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotX) {
+				this.mPivotX = (float) typedArray.getDimensionPixelSize(index, 0);
+			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotY) {
+				this.mPivotY = (float) typedArray.getDimensionPixelSize(index, 0);
+			}
+		}
+		typedArray.recycle();
 	}
 
 	/**
@@ -125,95 +172,157 @@ public class Scale extends Visibility {
 	 */
 
 	/**
+	 * Creates a new instance of scale Animator for the specified <var>view</var>.
+	 *
+	 * @param view       The view for which to create the requested animator.
+	 * @param startScale Scale from which to start the animation.
+	 * @param endScale   Scale at which should the animation end.
+	 * @return Animator that will play scale animation for the specified view according to the
+	 * specified parameters when started.
+	 */
+	@NonNull
+	public static Animator createAnimator(@NonNull View view, @FloatRange(from = 0, to = 1) float startScale, @FloatRange(from = 0, to = 1) float endScale) {
+		return ObjectAnimator.ofPropertyValuesHolder(
+				view,
+				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale),
+				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScale, endScale)
+		);
+	}
+
+	/**
+	 * todo:
+	 *
+	 * @param pivotX
+	 */
+	public void setPivotX(@Nullable Float pivotX) {
+		this.mPivotX = pivotX;
+	}
+
+	/**
+	 * todo:
+	 *
+	 * @return
+	 */
+	@Nullable
+	public Float getPivotX() {
+		return mPivotX;
+	}
+
+	/**
+	 * todo:
+	 *
+	 * @param pivotY
+	 */
+	public void setPivotY(@Nullable Float pivotY) {
+		this.mPivotY = pivotY;
+	}
+
+	/**
+	 * todo:
+	 *
+	 * @return
+	 */
+	@Nullable
+	public Float getPivotY() {
+		return mPivotY;
+	}
+
+	/**
+	 * todo:
+	 * <p>
+	 * Default value: <b>{@code 0.5f}</b>
+	 *
+	 * @param fractionX
+	 */
+	public void setPivotXFraction(@FloatRange(from = 0, to = 1) float fractionX) {
+		this.mPivotXFraction = fractionX;
+	}
+
+	/**
+	 * todo:
+	 *
+	 * @return
+	 */
+	@FloatRange(from = 0, to = 1)
+	public float getPivotXFraction() {
+		return mPivotXFraction;
+	}
+
+	/**
+	 * todo:
+	 * <p>
+	 * Default value: <b>{@code 0.5f}</b>
+	 *
+	 * @param fractionY
+	 */
+	public void setPivotYFraction(@FloatRange(from = 0, to = 1) float fractionY) {
+		this.mPivotYFraction = fractionY;
+	}
+
+	/**
+	 * todo:
+	 *
+	 * @return
+	 */
+	@FloatRange(from = 0, to = 1)
+	public float getPivotYFraction() {
+		return mPivotYFraction;
+	}
+
+	/**
 	 */
 	@Override
 	public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
-		// todo: take into count also request for custom scaling pivot
-		return createAnimator(view, 0, 1);
+		calculateTransitionProperties(view, 0f, 1f);
+		view.setPivotX(mInfo.pivotX);
+		view.setPivotY(mInfo.pivotY);
+		view.setScaleX(mInfo.startScale);
+		view.setScaleY(mInfo.startScale);
+		return createAnimator(view, mInfo.startScale, mInfo.endScale);
 	}
 
 	/**
 	 */
 	@Override
 	public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
-		// todo: take into count also request for custom scaling pivot
-		return createAnimator(view, 1, 0);
+		calculateTransitionProperties(view, 1f, 0f);
+		view.setPivotX(mInfo.pivotX);
+		view.setPivotY(mInfo.pivotY);
+		view.setScaleX(mInfo.startScale);
+		view.setScaleY(mInfo.startScale);
+		return createAnimator(view, mInfo.startScale, mInfo.endScale);
 	}
 
 	/**
-	 * Same as {@link #createAnimator(View, float, float, int, int)} for scale pivot fractions.
+	 * Ensures that all necessary properties for this transition are calculated.
 	 *
-	 * @param pivotXFraction Fraction for the pivot X from the range {@code [0.0, 1.0]}.
-	 * @param pivotYFraction Fraction for the pivot Y from the range {@code [0.0, 1.0]}.
+	 * @param view The view to which will be the transition applied.
 	 */
-	@NonNull
-	public static Animator createAnimator(@NonNull View view, float startScale, float endScale, float pivotXFraction, float pivotYFraction) {
-		final int pivotX = Math.round(pivotXFraction * view.getWidth());
-		final int pivotY = Math.round(pivotYFraction * view.getHeight());
-		return createAnimator(view, startScale, endScale, pivotX, pivotY);
-	}
-
-	/**
-	 * Creates a new instance of scale Animator for the specified <var>view</var>.
-	 *
-	 * @param view       The view for which to create the requested animator.
-	 * @param startScale Scale from which to start the animation.
-	 * @param endScale   Scale at which should the animation end.
-	 * @param pivotX     X coordinate of the pivot in pixels along which to scale the view.
-	 * @param pivotY     Y coordinate of the pivot in pixels along which to scale the view.
-	 * @return Animator that will play scale animation for the specified view according to the
-	 * specified parameters when started.
-	 * @see #createAnimator(View, float, float)
-	 */
-	@NonNull
-	public static Animator createAnimator(@NonNull View view, float startScale, float endScale, int pivotX, int pivotY) {
-		ensureViewScalePivots(view, pivotX, pivotY);
-		return createAnimator(view, startScale, endScale);
-	}
-
-	/**
-	 * Ensures that the specified <var>view</var> has set the specified <var>pivotX</var> and
-	 * <var>pivotY</var> values.
-	 *
-	 * @param view   The view of which pivots to ensure.
-	 * @param pivotX The pivot X in pixels to be set to the given view.
-	 * @param pivotY The pivot Y in pixels to be set to the given view.
-	 */
-	private static void ensureViewScalePivots(View view, int pivotX, int pivotY) {
-		view.setPivotX(pivotX);
-		view.setPivotY(pivotY);
-	}
-
-	/**
-	 * Creates a new instance of scale Animator for the specified <var>view</var>.
-	 *
-	 * @param view       The view for which to create the requested animator.
-	 * @param startScale Scale from which to start the animation.
-	 * @param endScale   Scale at which should the animation end.
-	 * @return Animator that will play scale animation for the specified view according to the
-	 * specified parameters when started.
-	 * @see #createAnimator(View, float, float, int, int)
-	 */
-	@NonNull
-	public static Animator createAnimator(@NonNull View view, float startScale, float endScale) {
-		ensureViewScale(view, startScale);
-		final PropertyValuesHolder holderX = PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale);
-		final PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScale, endScale);
-		return ObjectAnimator.ofPropertyValuesHolder(view, holderX, holderY);
-	}
-
-	/**
-	 * Ensures that the specified <var>view</var> has set the specified <var>scale</var>.
-	 *
-	 * @param view  The view of which scale to ensure.
-	 * @param scale The scale to be set to the given view.
-	 */
-	private static void ensureViewScale(View view, float scale) {
-		view.setScaleX(scale);
-		view.setScaleY(scale);
+	private void calculateTransitionProperties(View view, float startScale, float endScale) {
+		mInfo.startScale = startScale;
+		mInfo.endScale = endScale;
+		mInfo.pivotX = mPivotX != null ? mPivotX : (view.getWidth() * mPivotXFraction);
+		mInfo.pivotY = mPivotY != null ? mPivotY : (view.getHeight() * mPivotYFraction);
 	}
 
 	/**
 	 * Inner classes ===============================================================================
 	 */
+
+	/**
+	 * Class holding necessary values for the scale transition that are exclusively associated with
+	 * the currently transitioning view.
+	 */
+	private static final class Info {
+
+		/**
+		 * Scale value.
+		 */
+		float startScale, endScale;
+
+		/**
+		 * Scale pivot coordinate.
+		 */
+		float pivotX, pivotY;
+	}
 }

@@ -16,28 +16,55 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package universum.studios.android.samples.transition.ui;
+package universum.studios.android.samples.transition.ui.view;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.samples.ui.SamplesFragment;
+import universum.studios.android.samples.ui.widget.SamplesRecyclerAdapter;
 
 /**
  * @author Martin Albedinsky
  */
-public final class HomeFragment extends SamplesFragment {
+final class ViewTransitionsAdapter extends SamplesRecyclerAdapter<ViewTransition, ViewTransitionsAdapter.ItemHolder> {
 
 	@SuppressWarnings("unused")
-	private static final String TAG = "HomeFragment";
+	private static final String TAG = "WindowTransitionsAdapter";
 
-	@Nullable
+	static final int ACTION_CLICK = 0x01;
+
+	ViewTransitionsAdapter(@NonNull Context context) {
+		super(context, new ViewTransition[]{
+				ViewTransitions.reveal(),
+				ViewTransitions.scale()
+		});
+	}
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_home, container, false);
+	public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		return new ItemHolder(inflate(R.layout.item_list_window_transition, parent));
+	}
+
+	@Override
+	public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
+		((TextView) holder.itemView).setText(getItem(position).getName());
+	}
+
+	final class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+		ItemHolder(View itemView) {
+			super(itemView);
+			itemView.setOnClickListener(this);
+		}
+
+		@Override
+		public void onClick(View v) {
+			notifyDataSetActionSelected(ACTION_CLICK, getAdapterPosition(), null);
+		}
 	}
 }

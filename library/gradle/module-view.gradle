@@ -23,11 +23,13 @@ android {
     sourceSets {
         main.manifest.srcFile 'src/view/AndroidManifest.xml'
         main.java.srcDirs = [
+                'src/view/core/java',
                 'src/view/reveal/java',
                 'src/view/scale/java',
                 'src/view/translate/java'
         ]
         main.res.srcDirs = [
+                'src/view/core/res',
                 'src/view/reveal/res',
                 'src/view/scale/res',
                 'src/view/translate/res'

@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
  * =================================================================================================
  *                             Copyright (C) 2017 Universum Studios
  * =================================================================================================
  *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
- * *************************************************************************************************
+ * -------------------------------------------------------------------------------------------------
  * You may use this file only in compliance with the License. More details and copy of this License 
  * you may obtain at
  * 
@@ -18,6 +16,29 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
--->
-<!--suppress AndroidUnknownAttribute -->
-<transition class="com.albedinsky.android.ui.transition.Reveal"/>
+package universum.studios.android.samples.transition.ui.view;
+
+import android.app.Activity;
+import android.support.annotation.NonNull;
+
+/**
+ * @author Martin Albedinsky
+ */
+abstract class ViewTransition {
+
+	@SuppressWarnings("unused")
+	private static final String TAG = "ViewTransition";
+
+	private final String mName;
+
+	ViewTransition(@NonNull String name) {
+		this.mName = name;
+	}
+
+	@NonNull
+	String getName() {
+		return mName;
+	}
+
+	abstract void start(@NonNull Activity activity);
+}

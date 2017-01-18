@@ -19,15 +19,36 @@
  * =================================================================================================
  */
 -->
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<!-- ### APPLICATION ======================================================================= -->
-
-	<string name="app_name">Transitions</string>
-
-	<!-- ### NAVIGATION ======================================================================== -->
-
-	<string name="navigation_item_home">Home</string>
-	<string name="navigation_item_window_transitions">Window Transitions</string>
-	<string name="navigation_item_view_transitions">View Transitions</string>
+	<!-- Reveal transition attributes. -->
+	<declare-styleable name="Ui.Transition.Reveal">
+		<!-- Mode determining whether a view should be revealed or concealed. -->
+		<attr name="uiRevealMode">
+			<enum name="reveal" value="0x01" />
+			<enum name="conceal" value="0x02" />
+		</attr>
+		<!-- Radius used at the start of a transition. -->
+		<attr name="uiStartRadius" format="dimension" />
+		<!-- Radius used at the end of a transition. -->
+		<attr name="uiEndRadius" format="dimension" />
+		<!-- Re-used. -->
+		<attr name="uiCenterGravity" />
+		<!-- Re-used. -->
+		<attr name="uiCenterVerticalOffset" />
+		<!-- Re-used. -->
+		<attr name="uiCenterHorizontalOffset" />
+		<!-- Re-used. -->
+		<attr name="android:centerX" />
+		<!-- Re-used. -->
+		<attr name="android:centerY" />
+		<!-- Re-used. -->
+		<attr name="uiAppearVisibility" />
+		<!-- Re-used. -->
+		<attr name="uiDisappearVisibility" />
+		<!-- Re-used. -->
+		<attr name="uiStartVisibility" />
+		<!-- Re-used. -->
+		<attr name="uiEndVisibility" />
+	</declare-styleable>
 </resources>

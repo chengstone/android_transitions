@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+			   xmlns:trans="http://schemas.android.com/apk/res-auto">
+
+	<transition
+		class="universum.studios.android.transition.Reveal"
+		android:duration="600"
+		android:startDelay="400"
+		android:interpolator="@android:interpolator/fast_out_slow_in"
+		trans:uiRevealMode="conceal"
+		trans:uiCenterGravity="end|bottom"
+		trans:uiCenterHorizontalOffset="-44dip"
+		trans:uiCenterVerticalOffset="-44dip"
+		trans:uiEndRadius="28dip"
+		trans:uiEndVisibility="invisible">
+
+		<targets>
+			<target android:targetId="@id/reveal_overlay" />
+		</targets>
+	</transition>
+</transitionSet>

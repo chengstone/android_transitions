@@ -19,5 +19,4 @@
  * =================================================================================================
  */
 -->
-<!--suppress AndroidUnknownAttribute -->
-<transition class="com.albedinsky.android.ui.transition.Scale"/>
+<accelerateDecelerateInterpolator/>

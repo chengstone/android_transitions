@@ -73,35 +73,4 @@
         <!-- Horizontal offset for the center point of a transition. -->
         <attr name="uiCenterHorizontalOffset" format="dimension"/>
     </declare-styleable>
-
-    <!-- Reveal transition attributes. -->
-    <declare-styleable name="Ui.Transition.Reveal">
-        <!-- Mode determining whether a view should be revealed or concealed. -->
-        <attr name="uiRevealMode">
-            <enum name="reveal" value="0x01"/>
-            <enum name="conceal" value="0x02"/>
-        </attr>
-        <!-- Radius used at the start of a transition. -->
-        <attr name="uiStartRadius" format="dimension"/>
-        <!-- Radius used at the end of a transition. -->
-        <attr name="uiEndRadius" format="dimension"/>
-        <!-- Re-used. -->
-        <attr name="uiCenterGravity"/>
-        <!-- Re-used. -->
-        <attr name="uiCenterVerticalOffset"/>
-        <!-- Re-used. -->
-        <attr name="uiCenterHorizontalOffset"/>
-        <!-- Re-used. -->
-        <attr name="android:centerX"/>
-        <!-- Re-used. -->
-        <attr name="android:centerY"/>
-        <!-- Re-used. -->
-        <attr name="uiAppearVisibility"/>
-        <!-- Re-used. -->
-        <attr name="uiDisappearVisibility"/>
-        <!-- Re-used. -->
-        <attr name="uiStartVisibility"/>
-        <!-- Re-used. -->
-        <attr name="uiEndVisibility"/>
-    </declare-styleable>
 </resources>

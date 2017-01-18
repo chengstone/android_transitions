@@ -43,5 +43,21 @@
 		</activity>
 
 		<activity android:name=".ui.window.WindowTransitionActivity" />
+
+		<activity
+			android:name=".ui.view.RevealTransitionActivityA"
+			android:theme="@style/Theme.Transition.Reveal.A" />
+
+		<activity
+			android:name=".ui.view.RevealTransitionActivityB"
+			android:theme="@style/Theme.Transition.Reveal.B" />
+
+		<activity
+			android:name=".ui.view.ScaleTransitionActivityA"
+			android:theme="@style/Theme.Transition.Scale.A" />
+
+		<activity
+			android:name=".ui.view.ScaleTransitionActivityB"
+			android:theme="@style/Theme.Transition.Scale.B" />
 	</application>
 </manifest>

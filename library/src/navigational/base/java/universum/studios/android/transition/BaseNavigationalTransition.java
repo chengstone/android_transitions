@@ -762,7 +762,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param caller The caller activity to finish.
 	 * @param delay  The desired delay after which to finish the caller activity.
 	 */
-	protected void finishCallerDelayed(@NonNull final Activity caller, long delay) {
+	protected void finishCallerDelayed(@NonNull final Activity caller, @IntRange(from = 0) long delay) {
 		final View decorView = caller.getWindow().getDecorView();
 		if (decorView != null) decorView.postDelayed(new Runnable() {
 
