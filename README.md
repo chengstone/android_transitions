@@ -7,7 +7,7 @@ Download the latest **[release](https://github.com/universum-studios/android_tra
 
 ### Gradle ###
 
-    COMING SOON
+    compile 'universum.studios.android:transitions:1.0.0@aar'
 
 ## Compatibility ##
 

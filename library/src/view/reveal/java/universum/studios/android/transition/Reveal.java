@@ -26,6 +26,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
@@ -121,29 +122,29 @@ public class Reveal extends Visibility {
 	 * Mode determining whether we will run <b>reveal</b> or <b>conceal</b> animation.
 	 * Either {@link #REVEAL} or {@link #CONCEAL}.
 	 */
-	private final int mMode;
+	private int mMode = REVEAL;
 
 	/**
 	 * X coordinate for center of the reveal/conceal animation. If {@code null}, {@link #mCenterXFraction}
-	 * should be used to calculate such coordinate.
+	 * should be used to calculate this coordinate.
 	 */
 	private Float mCenterX;
 
 	/**
 	 * Y coordinate for center of the reveal/conceal animation. If {@code null}, {@link #mCenterYFraction}
-	 * should be used to calculate such coordinate.
+	 * should be used to calculate this coordinate.
 	 */
 	private Float mCenterY;
 
 	/**
-	 * Fraction from the range {@code [0.0, 1.0]} that can be used to calculate X coordinate for center
-	 * of the reveal/conceal animation if center Y coordinate has not been specified.
+	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for center
+	 * of the reveal/conceal animation if {@link #mCenterX} coordinate has not been specified.
 	 */
 	private float mCenterXFraction = 0.5f;
 
 	/**
-	 * Fraction from the range {@code [0.0, 1.0]} that can be used to calculate Y coordinate for center
-	 * of the reveal/conceal animation if center Y coordinate has not been specified.
+	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for center
+	 * of the reveal/conceal animation if {@link #mCenterY} coordinate has not been specified.
 	 */
 	private float mCenterYFraction = 0.5f;
 
@@ -213,7 +214,7 @@ public class Reveal extends Visibility {
 	 * @param mode One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
 	public Reveal(@RevealMode int mode) {
-		this.mMode = mode;
+		setMode(mode);
 	}
 
 	/**
@@ -226,13 +227,12 @@ public class Reveal extends Visibility {
 	@SuppressWarnings("ResourceType")
 	public Reveal(@NonNull Context context, @NonNull AttributeSet attrs) {
 		super(context, attrs);
-		int mode = REVEAL;
 		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);
 		final int n = typedArray.getIndexCount();
 		for (int i = 0; i < n; i++) {
 			final int index = typedArray.getIndex(i);
 			if (index == R.styleable.Ui_Transition_Reveal_uiRevealMode) {
-				mode = typedArray.getInteger(index, mode);
+				setMode(typedArray.getInteger(index, REVEAL));
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartRadius) {
 				this.mStartRadius = (float) typedArray.getDimensionPixelSize(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndRadius) {
@@ -258,7 +258,6 @@ public class Reveal extends Visibility {
 			}
 		}
 		typedArray.recycle();
-		this.mMode = mode;
 	}
 
 	/**
@@ -272,6 +271,7 @@ public class Reveal extends Visibility {
 	 * @param view The view of which radius to calculate.
 	 * @return Calculated radius that may be used as end/start radius for the desired reveal animation.
 	 */
+	@FloatRange(from = 0)
 	public static float calculateRadius(@NonNull View view) {
 		return calculateRadius(view.getWidth(), view.getHeight());
 	}
@@ -284,13 +284,14 @@ public class Reveal extends Visibility {
 	 * @param height The height or vertical distance from which to calculate radius.
 	 * @return Calculated radius that may be used as end/start radius for the desired reveal animation.
 	 */
-	public static float calculateRadius(float width, float height) {
+	@FloatRange(from = 0)
+	public static float calculateRadius(@FloatRange(from = 0) float width, @FloatRange(from = 0) float height) {
 		return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
 	}
 
 	/**
-	 * Same as {@link #resolveCenterPosition(View, float, float)} with fraction {@code 0.5f}
-	 * for booth center coordinates.
+	 * Same as {@link #resolveCenterPosition(View, float, float)} with fraction {@code 0.5} for booth
+	 * center coordinates.
 	 */
 	@Size(2)
 	@NonNull
@@ -304,10 +305,10 @@ public class Reveal extends Visibility {
 	 * its current <b>x</b> and <b>y</b> coordinate.
 	 *
 	 * @param view            The view of which center position to resolve.
-	 * @param centerXFraction Fraction to resolve x coordinate of the center. Should be from the range
-	 *                        {@code [0f, 1f]}.
-	 * @param centerYFraction Fraction to resolve y coordinate of the center. Should be from the range
-	 *                        {@code [0f, 1f]}.
+	 * @param centerXFraction Fraction to resolve x coordinate of the center. Should be from the
+	 *                        {@code [0.0, 1.0]} range.
+	 * @param centerYFraction Fraction to resolve y coordinate of the center. Should be from the
+	 *                        {@code [0.0, 1.0]} range.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
 	 */
 	@Size(2)
@@ -321,7 +322,7 @@ public class Reveal extends Visibility {
 	}
 
 	/**
-	 * Same as {@link #resolveCenter(View, float, float)} with fraction {@code 0.5f} for booth center
+	 * Same as {@link #resolveCenter(View, float, float)} with fraction {@code 0.5} for booth center
 	 * coordinates.
 	 */
 	@Size(2)
@@ -335,10 +336,10 @@ public class Reveal extends Visibility {
 	 * <b>height</b> according to the requested fractions.
 	 *
 	 * @param view            The view of which center to resolve.
-	 * @param centerXFraction Fraction to resolve x coordinate of the center. Should be from the range
-	 *                        {@code [0f, 1f]}.
-	 * @param centerYFraction Fraction to resolve y coordinate of the center. Should be from the range
-	 *                        {@code [0f, 1f]}.
+	 * @param centerXFraction Fraction to resolve x coordinate of the center. Should be from the
+	 *                        {@code [0.0, 1.0]} range.
+	 * @param centerYFraction Fraction to resolve y coordinate of the center. Should be from the
+	 *                        {@code [0.0, 1.0]} range.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
 	 */
 	@Size(2)
@@ -351,15 +352,15 @@ public class Reveal extends Visibility {
 	}
 
 	/**
-	 * Same as {@link #createAnimator(View, float, float, float, float)} where the center coordinates
+	 * Same as {@link #createAnimator(View, int, int, float, float)} where the center coordinates
 	 * will be automatically resolved using the given <var>view</var>.
 	 *
 	 * @see #resolveCenterPosition(View)
 	 */
 	@NonNull
-	public static Animator createAnimator(@NonNull View view, float startRadius, float endRadius) {
+	public static Animator createAnimator(@NonNull View view, @FloatRange(from = 0) float startRadius, @FloatRange(from = 0) float endRadius) {
 		final float[] center = resolveCenterPosition(view);
-		return createAnimator(view, center[0], center[1], startRadius, endRadius);
+		return createAnimator(view, Math.round(center[0]), Math.round(center[1]), startRadius, endRadius);
 	}
 
 	/**
@@ -375,16 +376,21 @@ public class Reveal extends Visibility {
 	 * @see ViewAnimationUtils#createCircularReveal(View, int, int, float, float)
 	 */
 	@NonNull
-	public static Animator createAnimator(@NonNull View view, float centerX, float centerY, float startRadius, float endRadius) {
-		return ViewAnimationUtils.createCircularReveal(view, Math.round(centerX), Math.round(centerY), startRadius, endRadius);
+	public static Animator createAnimator(@NonNull View view, @IntRange(from = 0) int centerX, @IntRange(from = 0) int centerY, @FloatRange(from = 0) float startRadius, @FloatRange(from = 0) float endRadius) {
+		return ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
 	}
 
 	/**
-	 * @throws UnsupportedOperationException
+	 * Sets a mode in which should this transition run.
+	 * <p>
+	 * Default value: <b>{@link #REVEAL}</b>
+	 *
+	 * @param mode The desired mode. One of {@link #REVEAL} or {@link #CONCEAL}.
+	 * @see #getMode()
 	 */
 	@Override
-	public final void setMode(int mode) {
-		throw new UnsupportedOperationException("Reveal mode need to be specified during initialization and cannot be changed.");
+	public final void setMode(@RevealMode int mode) {
+		this.mMode = mode;
 	}
 
 	/**
@@ -415,7 +421,7 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the start radius for animating circle of the reveal animation.
 	 *
-	 * @return Start radius in pixels or {@code null} if this radius will be computed based on the
+	 * @return Start radius in pixels or {@code null} if this radius will be calculated based on the
 	 * reveal mode.
 	 * @see #setStartRadius(Float)
 	 */
@@ -442,7 +448,7 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the end radius for animating circle of the reveal animation.
 	 *
-	 * @return End radius in pixels or {@code null} if this radius will be computed based on the
+	 * @return End radius in pixels or {@code null} if this radius will be calculated based on the
 	 * reveal mode.
 	 * @see #setEndRadius(Float)
 	 */
@@ -453,6 +459,8 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets a visibility flag that should be set to a revealing view whenever this transition starts.
+	 * <p>
+	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see R.attr#uiStartVisibility ui:uiStartVisibility
@@ -465,8 +473,6 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition
 	 * (its animation) starts.
-	 * <p>
-	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see #setStartVisibility(int)
@@ -478,6 +484,8 @@ public class Reveal extends Visibility {
 	/**
 	 * Sets a visibility flag that should be set to a revealing view whenever this transition
 	 * (its animation) ends.
+	 * <p>
+	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see R.attr#uiEndVisibility ui:uiEndVisibility
@@ -489,8 +497,6 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition ends.
-	 * <p>
-	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see #setEndVisibility(int)
@@ -502,6 +508,8 @@ public class Reveal extends Visibility {
 	/**
 	 * Sets a visibility flag that should be set to a revealing view whenever this transition has
 	 * been requested to create an appear animator via {@link #onAppear(ViewGroup, View, TransitionValues, TransitionValues)}.
+	 * <p>
+	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see R.attr#uiAppearVisibility ui:uiAppearVisibility
@@ -514,8 +522,6 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition is
 	 * requested to create an appear animator.
-	 * <p>
-	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see #setAppearVisibility(int)
@@ -527,6 +533,8 @@ public class Reveal extends Visibility {
 	/**
 	 * Sets a visibility flag that should be set to a revealing view whenever this transition has
 	 * been requested to create a disappear animator via {@link #onDisappear(ViewGroup, View, TransitionValues, TransitionValues)}.
+	 * <p>
+	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see R.attr#uiDisappearVisibility ui:uiDisappearVisibility
@@ -539,8 +547,6 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition is
 	 * requested to created a disappear animator.
-	 * <p>
-	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
 	 * @see #setDisappearVisibility(int)
@@ -554,14 +560,16 @@ public class Reveal extends Visibility {
 	 * animation.
 	 * <p>
 	 * Sometimes the gravity is not enough to specify exact center coordinates for the reveal animation.
-	 * In such case you can move the center coordinates computed by the requested gravity by specifying
-	 * horizontal and vertical offset via {@link #setCenterHorizontalOffset(int)} and
+	 * In such case you can move the center coordinates calculated by the requested gravity by
+	 * specifying horizontal and vertical offset via {@link #setCenterHorizontalOffset(int)} and
 	 * {@link #setCenterVerticalOffset(int)}.
+	 * <p>
+	 * Default value: <b>{@code null}</b>
 	 *
 	 * @param gravity One of {@link Gravity#CENTER}, {@link Gravity#CENTER_VERTICAL}, {@link Gravity#CENTER_HORIZONTAL},
 	 *                {@link Gravity#TOP}, {@link Gravity#BOTTOM}, {@link Gravity#START}, {@link Gravity#END}
 	 *                or theirs combination. May be {@code null} to use either specified exact center
-	 *                coordinates or the specified fractions to compute such coordinates.
+	 *                coordinates or the specified fractions to calculate such coordinates.
 	 * @see R.attr#uiCenterGravity ui:uiCenterGravity
 	 * @see #getCenterGravity()
 	 * @see #setCenterX(Float)
@@ -576,13 +584,11 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the gravity flags that will be used to resolve center for animating circle of the
 	 * reveal animation.
-	 * <p>
-	 * Default value: <b>{@code null}</b>
 	 *
 	 * @return One of {@link Gravity#CENTER}, {@link Gravity#CENTER_VERTICAL}, {@link Gravity#CENTER_HORIZONTAL},
-	 * {@link Gravity#TOP}, {@link Gravity#BOTTOM}, {@link Gravity#START}, {@link Gravity#END} or theirs
-	 * combination or {@code null} if no gravity has been specified so either center coordinates
-	 * specified via {@link #setCenterX(Float)} and {@link #setCenterY(Float)} will be used or computed
+	 * {@link Gravity#TOP}, {@link Gravity#BOTTOM}, {@link Gravity#START}, {@link Gravity#END} or
+	 * theirs combination or {@code null} if no gravity has been specified so either center coordinates
+	 * specified via {@link #setCenterX(Float)} and {@link #setCenterY(Float)} will be used or calculated
 	 * using the current center fraction values.
 	 * @see #setCenterGravity(Integer)
 	 */
@@ -593,6 +599,8 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets an offset for the <b>center x</b> coordinate for animating circle of the reveal animation.
+	 * <p>
+	 * Default value: <b>{@code 0}</b>
 	 *
 	 * @param offset The desired offset in pixels. If negative the center x coordinate will be moved
 	 *               the the left, if positive it will be moved to the right, otherwise remains
@@ -607,8 +615,6 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Returns the offset for the <b>center x</b> coordinate for animating circle of the reveal animation.
-	 * <p>
-	 * Default value: <b>{@code 0}</b>
 	 *
 	 * @return Horizontal offset in pixels.
 	 * @see #setCenterHorizontalOffset(int)
@@ -619,6 +625,8 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets an offset for the <b>center y</b> coordinate for animating circle of the reveal animation.
+	 * <p>
+	 * Default value: <b>{@code 0}</b>
 	 *
 	 * @param offset The desired offset in pixels. If negative the center y coordinate will be moved
 	 *               the the top, if positive it will be moved to the bottom, otherwise remains
@@ -633,8 +641,6 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Returns the offset for the <b>center y</b> coordinate for animating circle of the reveal animation.
-	 * <p>
-	 * Default value: <b>{@code 0}</b>
 	 *
 	 * @return Vertical offset in pixels.
 	 * @see #setCenterVerticalOffset(int)
@@ -645,9 +651,11 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets a center x coordinate for animating circle of the reveal animation.
+	 * <p>
+	 * Default value: <b>{@code null}</b>
 	 *
 	 * @param centerX The desired center x coordinate in pixels. May be {@code null} to use center
-	 *                x fraction instead.
+	 *                x fraction specified via {@link #setCenterXFraction(float)} instead.
 	 * @see #getCenterX()
 	 * @see #setCenterXFraction(float)
 	 * @see #setCenterY(Float)
@@ -658,11 +666,9 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Returns the x coordinate of the center for animating circle of the reveal animation.
-	 * <p>
-	 * Default value: <b>{@code null}</b>
 	 *
 	 * @return X coordinate of the center for animating circle in pixels or {@code null} if no coordinate
-	 * has been specified so the fraction will be used to compute this center coordinate.
+	 * has been specified so the fraction will be used to calculate this center coordinate.
 	 * @see #setCenterX(Float)
 	 */
 	@Nullable
@@ -672,9 +678,11 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets a center y coordinate for animating circle of the reveal animation.
+	 * <p>
+	 * Default value: <b>{@code null}</b>
 	 *
 	 * @param centerY The desired center y coordinate in pixels. May be {@code null} to use center
-	 *                y fraction instead.
+	 *                y fraction specified via {@link #setCenterYFraction(float)} instead.
 	 * @see #getCenterY()
 	 * @see #setCenterYFraction(float)
 	 * @see #setCenterX(Float)
@@ -685,11 +693,9 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Returns the y coordinate of the center for animating circle of the reveal animation.
-	 * <p>
-	 * Default value: <b>{@code null}</b>
 	 *
 	 * @return Y coordinate of the center for animating circle in pixels or {@code null} if no coordinate
-	 * has been specified so the fraction will be used to compute this center coordinate.
+	 * has been specified so the fraction will be used to calculate this center coordinate.
 	 * @see #setCenterY(Float)
 	 */
 	@Nullable
@@ -699,17 +705,17 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets a fraction for the <b>center x</b> coordinate. This fraction will be used to resolve
-	 * center x coordinate of an animating view based on its current <b>width</b> if such value has
-	 * not been specified.
+	 * center x coordinate of an animating view depending on its current <b>width</b> if such value
+	 * has not been specified via {@link #setCenterX(Float)}.
 	 * <p>
 	 * Sometimes the fraction is not enough to specify exact center coordinate for the reveal animation.
-	 * In such case you can move the center coordinates computed by the requested fractions by specifying
-	 * horizontal and vertical offset via {@link #setCenterHorizontalOffset(int)} and
+	 * In such case you can move the center coordinates calculated by the requested fractions by
+	 * specifying horizontal and vertical offset via {@link #setCenterHorizontalOffset(int)} and
 	 * {@link #setCenterVerticalOffset(int)}.
 	 * <p>
-	 * Default value: <b>{@code 0.5f}</b>
+	 * Default value: <b>{@code 0.5}</b>
 	 *
-	 * @param fractionX The desired fraction from the range {@code [0f, 1f]}.
+	 * @param fractionX The desired fraction from the {@code [0.0, 1.0]} range.
 	 * @see android.R.attr#centerX android:centerX
 	 * @see #getCenterXFraction()
 	 * @see #setCenterYFraction(float)
@@ -722,7 +728,7 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the fraction of the <b>center x</b> coordinate.
 	 *
-	 * @return Fraction from the range {@code [0f, 1f]}.
+	 * @return Fraction from the {@code [0.0, 1.0]} range.
 	 * @see #setCenterXFraction(float)
 	 */
 	@FloatRange(from = 0, to = 1)
@@ -732,17 +738,17 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Sets a fraction for the <b>center y</b> coordinate. This fraction will be used to resolve
-	 * center y coordinate of an animating view based on its current <b>height</b> if such value has
-	 * not been specified.
+	 * center y coordinate of an animating view depending on its current <b>height</b> if such value
+	 * has not been specified via {@link #setCenterY(Float)}.
 	 * <p>
 	 * Sometimes the fraction is not enough to specify exact center coordinate for the reveal animation.
-	 * In such case you can move the center coordinates computed by the requested fractions by specifying
-	 * horizontal and vertical offset via {@link #setCenterHorizontalOffset(int)} and
+	 * In such case you can move the center coordinates calculated by the requested fractions by
+	 * specifying horizontal and vertical offset via {@link #setCenterHorizontalOffset(int)} and
 	 * {@link #setCenterVerticalOffset(int)}.
 	 * <p>
-	 * Default value: <b>{@code 0.5f}</b>
+	 * Default value: <b>{@code 0.5}</b>
 	 *
-	 * @param fractionY The desired fraction from the range {@code [0f, 1f]}.
+	 * @param fractionY The desired fraction from the {@code [0.0, 1.0]} range.
 	 * @see android.R.attr#centerY android:centerY
 	 * @see #getCenterYFraction()
 	 * @see #setCenterXFraction(float)
@@ -755,7 +761,7 @@ public class Reveal extends Visibility {
 	/**
 	 * Returns the fraction of the <b>center y</b> coordinate.
 	 *
-	 * @return Fraction from the range {@code [0f, 1f]}.
+	 * @return Fraction from the {@code [0.0, 1.0]} range.
 	 * @see #setCenterYFraction(float)
 	 */
 	@FloatRange(from = 0, to = 1)
@@ -839,8 +845,8 @@ public class Reveal extends Visibility {
 	}
 
 	/**
-	 * Resolves center coordinates for the reveal animation of the specified <var>view</var> based on
-	 * the current value of {@link #mCenterGravity}.
+	 * Resolves center coordinates for the reveal animation of the specified <var>view</var> depending
+	 * on the current value of {@link #mCenterGravity}.
 	 *
 	 * @param view The view for which will be the reveal animation run.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
@@ -884,15 +890,15 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Calculates start and end radius for the reveal animation of the specified <var>view</var>
-	 * based on the current {@link #getMode()}.
+	 * depending on the current {@link #mMode}.
 	 *
 	 * @param view The view for which reveal animation to calculate start and end radius.
-	 * @return An array with two radii: startRadius[0], endRadius[0].
+	 * @return An array with two radii: startRadius[0], endRadius[1].
 	 */
 	private float[] calculateTransitionRadii(View view) {
 		float startRadius, endRadius;
 		startRadius = endRadius = 0;
-		switch (getMode()) {
+		switch (mMode) {
 			case REVEAL:
 				startRadius = 0;
 				endRadius = calculateTransitionRadius(view);
@@ -907,7 +913,7 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Calculates radius for the reveal transition for the specified <var>view</var>.
-	 * The radius is computed based on how big distance should be traveled from the current
+	 * The radius is calculated depending on how big distance should be traveled from the current
 	 * center coordinates to the outermost edge of the given view.
 	 * <p>
 	 * <b>Note, that this method assumes that center coordinates for the reveal transitions has
@@ -952,8 +958,8 @@ public class Reveal extends Visibility {
 	private Animator createAnimatorFromInfo(View view) {
 		final Animator animator = createAnimator(
 				view,
-				mInfo.centerX,
-				mInfo.centerY,
+				Math.round(mInfo.centerX),
+				Math.round(mInfo.centerY),
 				mInfo.startRadius,
 				mInfo.endRadius
 		);

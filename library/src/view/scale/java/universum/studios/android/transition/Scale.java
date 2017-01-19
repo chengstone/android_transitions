@@ -101,22 +101,26 @@ public class Scale extends Visibility {
 	private final Info mInfo = new Info();
 
 	/**
-	 * todo:
+	 * X coordinate for scaling pivot of the animating view. If {@code null}, {@link #mPivotXFraction}
+	 * should be used to calculate this coordinate.
 	 */
 	private Float mPivotX;
 
 	/**
-	 * todo:
+	 * Y coordinate for scaling pivot of the animating view. If {@code null}, {@link #mPivotYFraction}
+	 * should be used to calculate this coordinate.
 	 */
 	private Float mPivotY;
 
 	/**
-	 * todo:
+	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for scaling
+	 * pivot of the animating view if {@link #mPivotX} coordinate has not been specified.
 	 */
 	private float mPivotXFraction = 0.5f;
 
 	/**
-	 * todo:
+	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for scaling
+	 * pivot of the animating view if {@link #mPivotY} coordinate has not been specified.
 	 */
 	private float mPivotYFraction = 0.5f;
 
@@ -190,18 +194,25 @@ public class Scale extends Visibility {
 	}
 
 	/**
-	 * todo:
+	 * Sets a pivot x coordinate for scale animation.
+	 * <p>
+	 * Default value: <b>{@code null}</b>
 	 *
-	 * @param pivotX
+	 * @param pivotX The desired pivot x coordinate in pixels. May be {@code null} to use pivot
+	 *               fraction specified via {@link #setPivotXFraction(float)} instead.
+	 * @see #getPivotX()
+	 * @see #setPivotXFraction(float)
+	 * @see #setPivotY(Float)
 	 */
 	public void setPivotX(@Nullable Float pivotX) {
 		this.mPivotX = pivotX;
 	}
 
 	/**
-	 * todo:
+	 * Returns the x coordinate for pivot of the scale animation.
 	 *
-	 * @return
+	 * @return Pivot in pixels or {@code null} if no pivot has been specified.
+	 * @see #setPivotX(Float)
 	 */
 	@Nullable
 	public Float getPivotX() {
@@ -209,18 +220,25 @@ public class Scale extends Visibility {
 	}
 
 	/**
-	 * todo:
+	 * Sets a pivot y coordinate for scale animation.
+	 * <p>
+	 * Default value: <b>{@code null}</b>
 	 *
-	 * @param pivotY
+	 * @param pivotY The desired pivot y coordinate in pixels. May be {@code null} to use pivot
+	 *               fraction specified via {@link #setPivotYFraction(float)} instead.
+	 * @see #getPivotY()
+	 * @see #setPivotYFraction(float)
+	 * @see #setPivotX(Float)
 	 */
 	public void setPivotY(@Nullable Float pivotY) {
 		this.mPivotY = pivotY;
 	}
 
 	/**
-	 * todo:
+	 * Returns the y coordinate for pivot of the scale animation.
 	 *
-	 * @return
+	 * @return Pivot in pixels or {@code null} if no pivot has been specified.
+	 * @see #setPivotY(Float)
 	 */
 	@Nullable
 	public Float getPivotY() {
@@ -228,20 +246,26 @@ public class Scale extends Visibility {
 	}
 
 	/**
-	 * todo:
+	 * Sets a fraction for the <b>pivot x</b> coordinate. This fraction will be used to resolve
+	 * pivot x coordinate of an animating view depending on its current <b>width</b> if such value
+	 * has not been specified via {@link #setPivotX(Float)}.
 	 * <p>
-	 * Default value: <b>{@code 0.5f}</b>
+	 * Default value: <b>{@code 0.5}</b>
 	 *
-	 * @param fractionX
+	 * @param fractionX The desired fraction from the {@code [0.0, 1.0]} range.
+	 * @see #getPivotYFraction()
+	 * @see #setPivotXFraction(float)
+	 * @see #setPivotX(Float)
 	 */
 	public void setPivotXFraction(@FloatRange(from = 0, to = 1) float fractionX) {
 		this.mPivotXFraction = fractionX;
 	}
 
 	/**
-	 * todo:
+	 * Returns the fraction of the <b>pivot x</b> coordinate.
 	 *
-	 * @return
+	 * @return Fraction from the {@code [0.0, 1.0]} range.
+	 * @see #setPivotXFraction(float)
 	 */
 	@FloatRange(from = 0, to = 1)
 	public float getPivotXFraction() {
@@ -249,20 +273,26 @@ public class Scale extends Visibility {
 	}
 
 	/**
-	 * todo:
+	 * Sets a fraction for the <b>pivot y</b> coordinate. This fraction will be used to resolve
+	 * pivot y coordinate of an animating view depending on its current <b>height</b> if such value
+	 * has not been specified via {@link #setPivotY(Float)}.
 	 * <p>
-	 * Default value: <b>{@code 0.5f}</b>
+	 * Default value: <b>{@code 0.5}</b>
 	 *
-	 * @param fractionY
+	 * @param fractionY The desired fraction from the {@code [0.0, 1.0]} range.
+	 * @see #getPivotXFraction()
+	 * @see #setPivotYFraction(float)
+	 * @see #setPivotY(Float)
 	 */
 	public void setPivotYFraction(@FloatRange(from = 0, to = 1) float fractionY) {
 		this.mPivotYFraction = fractionY;
 	}
 
 	/**
-	 * todo:
+	 * Returns the fraction of the <b>pivot y</b> coordinate.
 	 *
-	 * @return
+	 * @return Fraction from the {@code [0.0, 1.0]} range.
+	 * @see #setPivotYFraction(float)
 	 */
 	@FloatRange(from = 0, to = 1)
 	public float getPivotYFraction() {

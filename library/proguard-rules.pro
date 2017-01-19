@@ -16,4 +16,5 @@
 # See the License for the specific language governing permissions and limitations under the License.
 # ==================================================================================================
 ##
-# No rules are required.
+# Keep names of all transitions and theris methods.
+-keepnames class universum.studios.android.transition.** extends android.transition.Transition { *; }

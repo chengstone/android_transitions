@@ -32,5 +32,6 @@ android {
  * Library Module dependencies =====================================================================
  */
 dependencies {
-    // None.
+    final String supportVersion = project.property('android.support.version')
+    compile 'com.android.support:support-core-utils:' + supportVersion
 }

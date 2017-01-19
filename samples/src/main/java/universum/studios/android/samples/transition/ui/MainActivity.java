@@ -51,7 +51,7 @@ public final class MainActivity extends SamplesNavigationActivity {
 	}
 
 	@Override
-	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+	protected boolean onHandleNavigationItemSelected(@NonNull MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.navigation_item_home:
 				fragmentController.newRequest(new HomeFragment())

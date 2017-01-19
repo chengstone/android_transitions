@@ -24,7 +24,8 @@ android {
         main.manifest.srcFile 'src/window/AndroidManifest.xml'
         main.java.srcDirs = [
                 'src/window/core/java',
-                'src/window/common/java'
+                'src/window/common/java',
+                'src/window/extra/java'
         ]
         main.res.srcDirs = [
                 'src/window/core/res',

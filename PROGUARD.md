@@ -14,7 +14,8 @@ added in the future.**
 
 > Use below rules to keep **"sensitive"** source code of the library.
 
-    # No special rules are required. Library may be fully obfuscated.
+    # Keep names of all transitions and theris methods.
+    -keepnames class universum.studios.android.transition.** extends android.transition.Transition { *; }
 
 > Use below rules to keep **entire** source code of the library.
 

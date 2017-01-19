@@ -22,6 +22,5 @@
 <alpha xmlns:android="http://schemas.android.com/apk/res/android"
 	   android:duration="@integer/ui_config_anim_window_in_duration"
 	   android:fromAlpha="1"
-	   android:interpolator="@anim/ui_window_interpolator"
 	   android:toAlpha="1"
 	   android:zAdjustment="bottom" />

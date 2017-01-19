@@ -30,7 +30,6 @@ import android.support.v4.app.Fragment;
  * See {@link #start(Fragment)} and {@link #finish(Fragment)} for more information.
  *
  * @author Martin Albedinsky
- * @see NavigationalTransition
  */
 public class NavigationalTransitionCompat extends BaseNavigationalTransition<NavigationalTransitionCompat> {
 

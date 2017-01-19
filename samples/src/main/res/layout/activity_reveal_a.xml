@@ -39,7 +39,6 @@
 			android:layout_height="match_parent"
 			android:background="?attr/colorAccent"
 			android:visibility="invisible"
-			android:layoutDirection="rtl"
 			android:elevation="6dp"/>
 	</FrameLayout>
 </LinearLayout>

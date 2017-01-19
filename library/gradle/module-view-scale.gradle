@@ -35,5 +35,5 @@ android {
  * Library Module dependencies =====================================================================
  */
 dependencies {
-    // None.
+    compile 'universum.studios.android:transitions-core:1.0.0@aar'
 }

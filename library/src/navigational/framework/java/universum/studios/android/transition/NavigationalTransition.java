@@ -32,7 +32,6 @@ import android.support.annotation.NonNull;
  * See {@link #start(Fragment)} and {@link #finish(Fragment)} for more information.
  *
  * @author Martin Albedinsky
- * @see NavigationalTransitionCompat
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class NavigationalTransition extends BaseNavigationalTransition<NavigationalTransition> {
