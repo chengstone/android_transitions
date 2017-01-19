@@ -77,6 +77,10 @@ _depends on:_
 _depends on:_
 [transitions-util](https://github.com/universum-studios/android_database/tree/master/library/src/util)
 
+**[View-Core](https://github.com/universum-studios/android_transitions/tree/master/library/src/view/core)**
+
+    compile 'universum.studios.android:transitions-view-core:1.0.0@aar'
+
 **[View-Reveal](https://github.com/universum-studios/android_transitions/tree/master/library/src/view/reveal)**
 
     compile 'universum.studios.android:transitions-view-reveal:1.0.0@aar'
