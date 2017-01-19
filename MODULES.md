@@ -68,7 +68,8 @@ _depends on:_
     compile 'universum.studios.android:transitions-window-extra:1.0.0@aar'
 
 _depends on:_
-[transitions-window-core](https://github.com/universum-studios/android_database/tree/master/library/src/window/core)
+[transitions-window-core](https://github.com/universum-studios/android_database/tree/master/library/src/window/core),
+[transitions-window-common](https://github.com/universum-studios/android_database/tree/master/library/src/window/common)
 
 **[View](https://github.com/universum-studios/android_transitions/tree/master/library/src/view)**
 
@@ -86,15 +87,23 @@ _depends on:_
     compile 'universum.studios.android:transitions-view-reveal:1.0.0@aar'
 
 _depends on:_
-[transitions-util](https://github.com/universum-studios/android_database/tree/master/library/src/util)
+[transitions-core](https://github.com/universum-studios/android_database/tree/master/library/src/main),
+[transitions-util](https://github.com/universum-studios/android_database/tree/master/library/src/util),
+[transitions-view-core](https://github.com/universum-studios/android_database/tree/master/library/src/view/core)
 
 **[View-Scale](https://github.com/universum-studios/android_transitions/tree/master/library/src/view/scale)**
 
     compile 'universum.studios.android:transitions-view-scale:1.0.0@aar'
 
+_depends on:_
+[transitions-core](https://github.com/universum-studios/android_database/tree/master/library/src/main)
+
 **[View-Translate](https://github.com/universum-studios/android_transitions/tree/master/library/src/view/translate)**
 
 > See **[1.1.0](https://github.com/universum-studios/android_transitions/milestone/1)** milestone.
+
+_depends on:_
+[transitions-core](https://github.com/universum-studios/android_database/tree/master/library/src/main)
 
 **[Util](https://github.com/universum-studios/android_transitions/tree/master/library/src/util)**
 
