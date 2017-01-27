@@ -65,7 +65,6 @@ dependencies {
     /*
      * DEBUG DEPENDENCIES --------------------------------------------------------------------------
      */
-    debugCompile project(':library-window-core')
     debugCompile project(':library-window-common')
 }
 

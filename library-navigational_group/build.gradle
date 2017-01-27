@@ -71,6 +71,7 @@ dependencies {
      * RELEASE DEPENDENCIES ------------------------------------------------------------------------
      */
     compile 'com.android.support:support-annotations:' + supportVersion
+    compile 'com.android.support:support-v4:' + supportVersion
 }
 
 // Apply PUBLISH script.
