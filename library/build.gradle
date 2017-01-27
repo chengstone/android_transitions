@@ -27,6 +27,7 @@ android {
 
     defaultConfig {
         minSdkVersion project.property('library.minSdkVersion')
+        consumerProguardFiles 'proguard-rules.pro'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,10 +35,41 @@ android {
         release {
             minifyEnabled false
         }
+        modules {
+            minifyEnabled false
+        }
         debug {
             minifyEnabled false
             testCoverageEnabled true
         }
+    }
+
+    sourceSets {
+        release.java.srcDirs = [
+                '../library-core/src/main/java',
+                '../library-navigational-base/src/main/java',
+                '../library-navigational-compat/src/main/java',
+                '../library-navigational-framework/src/main/java',
+                '../library-view-core/src/main/java',
+                '../library-view-reveal/src/main/java',
+                '../library-view-scale/src/main/java',
+                '../library-view-translation/src/main/java',
+                '../library-window-core/src/main/java',
+                '../library-window-common/src/main/java',
+                '../library-window-extra/src/main/java',
+                '../library-util/src/main/java'
+        ]
+        debug.java.srcDirs = release.java.srcDirs
+        release.res.srcDirs = [
+                '../library-view-core/src/main/res',
+                '../library-view-reveal/src/main/res',
+                '../library-view-scale/src/main/res',
+                '../library-view-translation/src/main/res',
+                '../library-window-core/src/main/res',
+                '../library-window-common/src/main/res',
+                '../library-window-extra/src/main/res'
+        ]
+        debug.res.srcDirs = release.res.srcDirs
     }
 
     compileOptions {
@@ -59,6 +91,7 @@ dependencies {
      * RELEASE DEPENDENCIES ------------------------------------------------------------------------
      */
     compile 'com.android.support:support-annotations:' + supportVersion
+    compile 'com.android.support:support-v4:' + supportVersion
 
     /*
      * TEST DEPENDENCIES ---------------------------------------------------------------------------
@@ -81,14 +114,5 @@ dependencies {
     }
 }
 
-// Apply MODULE specific build script.
-if (Boolean.valueOf((String) project.property('library.module.build'))) {
-    // Apply separate module configuration.
-    apply from: 'gradle/module-' + project.property('library.module.name') + '.gradle'
-} else {
-    // Apply all modules configuration.
-    apply from: 'gradle/module-all.gradle'
-}
-
-// Apply MAVEN script.
-apply from: 'maven.gradle'
+// Apply PUBLISH script.
+apply from: '../publish/publish.gradle'

@@ -22,6 +22,11 @@ as usually.
         }
     }
 
+## Available modules ##
+> Following modules are available in the [latest](https://github.com/universum-studios/android_transitions/releases "Latest Releases page") release.
+
+- **[Core](https://github.com/universum-studios/android_preferences/tree/master/library-core)**
+
 **[Core](https://github.com/universum-studios/android_transitions/tree/master/library/src/main)**
 
     compile 'universum.studios.android:transitions-core:1.0.0@aar'

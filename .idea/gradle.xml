@@ -9,6 +9,21 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library-core" />
+            <option value="$PROJECT_DIR$/library-navigational-base" />
+            <option value="$PROJECT_DIR$/library-navigational-compat" />
+            <option value="$PROJECT_DIR$/library-navigational-framework" />
+            <option value="$PROJECT_DIR$/library-navigational_group" />
+            <option value="$PROJECT_DIR$/library-util" />
+            <option value="$PROJECT_DIR$/library-view-core" />
+            <option value="$PROJECT_DIR$/library-view-reveal" />
+            <option value="$PROJECT_DIR$/library-view-scale" />
+            <option value="$PROJECT_DIR$/library-view-translation" />
+            <option value="$PROJECT_DIR$/library-view_group" />
+            <option value="$PROJECT_DIR$/library-window-common" />
+            <option value="$PROJECT_DIR$/library-window-core" />
+            <option value="$PROJECT_DIR$/library-window-extra" />
+            <option value="$PROJECT_DIR$/library-window_group" />
             <option value="$PROJECT_DIR$/samples" />
           </set>
         </option>

@@ -4,6 +4,21 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Transitions.iml" filepath="$PROJECT_DIR$/Transitions.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-core/library-core.iml" filepath="$PROJECT_DIR$/library-core/library-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-navigational-base/library-navigational-base.iml" filepath="$PROJECT_DIR$/library-navigational-base/library-navigational-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-navigational-compat/library-navigational-compat.iml" filepath="$PROJECT_DIR$/library-navigational-compat/library-navigational-compat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-navigational-framework/library-navigational-framework.iml" filepath="$PROJECT_DIR$/library-navigational-framework/library-navigational-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-navigational_group/library-navigational_group.iml" filepath="$PROJECT_DIR$/library-navigational_group/library-navigational_group.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-util/library-util.iml" filepath="$PROJECT_DIR$/library-util/library-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-view-core/library-view-core.iml" filepath="$PROJECT_DIR$/library-view-core/library-view-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-view-reveal/library-view-reveal.iml" filepath="$PROJECT_DIR$/library-view-reveal/library-view-reveal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-view-scale/library-view-scale.iml" filepath="$PROJECT_DIR$/library-view-scale/library-view-scale.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-view-translation/library-view-translation.iml" filepath="$PROJECT_DIR$/library-view-translation/library-view-translation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-view_group/library-view_group.iml" filepath="$PROJECT_DIR$/library-view_group/library-view_group.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-window-common/library-window-common.iml" filepath="$PROJECT_DIR$/library-window-common/library-window-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-window-core/library-window-core.iml" filepath="$PROJECT_DIR$/library-window-core/library-window-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-window-extra/library-window-extra.iml" filepath="$PROJECT_DIR$/library-window-extra/library-window-extra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-window_group/library-window_group.iml" filepath="$PROJECT_DIR$/library-window_group/library-window_group.iml" />
       <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
     </modules>
   </component>
