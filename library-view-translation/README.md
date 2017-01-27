@@ -4,5 +4,4 @@ Transitions-View-Translation
 ## Download ##
 
 ### Gradle ###
-
-    compile 'universum.studios.android:transitions-view-translation:1.0.0@aar'
+> See **[1.1.0](https://github.com/universum-studios/android_transitions/milestone/1)** milestone.
