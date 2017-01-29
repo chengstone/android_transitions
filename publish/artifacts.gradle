@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-def boolean standaloneModule = project.name.startsWith('library-') && !project.name.endsWith('_group')
+def boolean isModule = project.name.startsWith('library-') && !project.name.endsWith('_group')
 
 /**
  * Bundles project's classes into a .jar! file.
@@ -30,7 +30,7 @@ task classesJar(type: Jar) {
  * Generates javadoc documentation for the current project.
  */
 task generateJavadoc(type: Javadoc) {
-    source standaloneModule ? android.sourceSets.main.java.sourceFiles : android.sourceSets.release.java.sourceFiles
+    source isModule ? android.sourceSets.main.java.sourceFiles : android.sourceSets.release.java.sourceFiles
     def Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def String sdkDir = properties.getProperty('sdk.dir')
@@ -70,9 +70,9 @@ task javadocJar(type: Jar) {
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     description 'Bundles Raw sources into a .jar! file.'
-    from standaloneModule ? android.sourceSets.main.java.sourceFiles : android.sourceSets.release.java.sourceFiles
+    from isModule ? android.sourceSets.main.java.sourceFiles : android.sourceSets.release.java.sourceFiles
     // Uncomment if this project contains res/ folder.
-    from standaloneModule ? android.sourceSets.main.res.sourceFiles : android.sourceSets.release.res.sourceFiles
+    from isModule ? android.sourceSets.main.res.sourceFiles : android.sourceSets.release.res.sourceFiles
 }
 
 /**
