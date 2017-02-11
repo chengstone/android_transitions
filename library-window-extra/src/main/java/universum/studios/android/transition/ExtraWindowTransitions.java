@@ -127,4 +127,10 @@ public final class ExtraWindowTransitions {
 			R.anim.ui_window_slide_out_top_back,
 			"SLIDE_TO_BOTTOM_AND_HOLD"
 	);
+
+	/**
+	 */
+	private ExtraWindowTransitions() {
+		// Creation of instances of this class is not publicly allowed.
+	}
 }

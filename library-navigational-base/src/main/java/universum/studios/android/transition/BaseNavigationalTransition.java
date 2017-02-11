@@ -202,6 +202,11 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	protected final Class<? extends Activity> mClassOfTransitionActivity;
 
 	/**
+	 * Bundle containing extras for the activity transition activity.
+	 */
+	private Bundle mIntentExtras;
+
+	/**
 	 * If set (other than {@link #RC_NONE}) starting of intent specific for this navigational transition
 	 * will be performed via {@link Activity#startActivityForResult(Intent, int)}, {@link Activity#startActivityForResult(Intent, int, Bundle)}
 	 * or {@link Fragment#startActivityForResult(Intent, int)} depends on the type of caller and
@@ -325,6 +330,35 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	/**
 	 * Methods =====================================================================================
 	 */
+
+	/**
+	 * Specifies a bundle with extras for the transition activity. The given bundle will be attached
+	 * to this transition's {@link Intent} via {@link Intent#putExtras(Bundle)} when it is created
+	 * via {@link #createIntent(Activity)}.
+	 *
+	 * @param extras The desired bundle with extras. May be {@code null} to clear the current one.
+	 * @return This transition to allow methods chaining.
+	 * @see #intentExtras()
+	 */
+	@SuppressWarnings("unchecked")
+	public T intentExtras(@Nullable Bundle extras) {
+		this.mIntentExtras = extras;
+		return (T) this;
+	}
+
+	/**
+	 * Returns the bundle with extras for the transition activity.
+	 * <p>
+	 * This will be either bundle specified via {@link #intentExtras(Bundle)} or created by default
+	 * when this method is called for the first time.
+	 *
+	 * @return The extras bundle for the transition activity.
+	 * @see #intentExtras(Bundle)
+	 */
+	@NonNull
+	public Bundle intentExtras() {
+		return mIntentExtras == null ? (mIntentExtras = new Bundle()) : mIntentExtras;
+	}
 
 	/**
 	 * Specifies a request code that should be used to start activity specific for this navigational
@@ -937,7 +971,11 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 					"Navigational transition(" + getClass().getSimpleName() + ") does not have any class of intended activity specified."
 			);
 		}
-		return new Intent(caller, mClassOfTransitionActivity);
+		final Intent intent = new Intent(caller, mClassOfTransitionActivity);
+		if (mIntentExtras != null) {
+			intent.putExtras(mIntentExtras);
+		}
+		return intent;
 	}
 
 	/**
