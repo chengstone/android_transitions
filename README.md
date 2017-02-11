@@ -1,6 +1,8 @@
 Transitions
 ===============
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=universum-studios/android_transitions&amp;utm_campaign=Badge_Grade)
+
 ## Download ##
 
 Download the latest **[release](https://github.com/universum-studios/android_transitions/releases/tag/1.0.0 "Latest Releases page")** or **add as dependency** in your project via:
