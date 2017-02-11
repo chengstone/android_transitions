@@ -116,3 +116,6 @@ dependencies {
 
 // Apply PUBLISH script.
 apply from: '../publish/publish.gradle'
+
+// Apply CODACY script.
+apply from: 'codacy.gradle'
