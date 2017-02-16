@@ -18,11 +18,13 @@
  */
 package universum.studios.android.transition;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 /**
@@ -113,11 +115,19 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * @param caller The caller fragment that requested start of this navigational transition.
 	 * @see #onFinish(Fragment)
 	 */
+	@SuppressLint("NewApi")
+	@SuppressWarnings("ConstantConditions")
 	protected void onStart(@NonNull Fragment caller) {
 		final Activity activity = caller.getActivity();
 		final Intent intent = createIntent(activity);
-		if (mRequestCode == RC_NONE) caller.startActivity(intent);
-		else caller.startActivityForResult(intent, mRequestCode);
+		if (MATERIAL_SUPPORT) {
+			final Bundle options = makeSceneTransitionAnimation(activity).toBundle();
+			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);
+			else caller.startActivityForResult(intent, mRequestCode, options);
+		} else {
+			if (mRequestCode == RC_NONE) caller.startActivity(intent);
+			else caller.startActivityForResult(intent, mRequestCode);
+		}
 	}
 
 	/**

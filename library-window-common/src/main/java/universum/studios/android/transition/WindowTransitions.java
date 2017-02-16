@@ -282,4 +282,10 @@ public final class WindowTransitions {
 			R.anim.ui_window_slide_out_top_back,
 			"SLIDE_TO_BOTTOM_AND_SCALE_OUT"
 	);
+
+	/**
+	 */
+	private WindowTransitions() {
+		// Creation of instances of this class is not publicly allowed.
+	}
 }

@@ -1,17 +1,22 @@
 Transitions
 ===============
 
-## Download ##
+[![Build Status](https://travis-ci.org/universum-studios/android_transitions.svg?branch=master)](https://travis-ci.org/universum-studios/android_transitions)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=universum-studios/android_transitions&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&utm_medium=referral&utm_content=universum-studios/android_transitions&utm_campaign=Badge_Coverage)
 
-Download the latest **[release](https://github.com/universum-studios/android_transitions/releases/tag/1.0.0 "Latest Releases page")** or **add as dependency** in your project via:
+## Download ##
+[![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
+
+Download the latest **[release](https://github.com/universum-studios/android_transitions/releases "Latest Releases page")** or **add as dependency** in your project via:
 
 ### Gradle ###
 
-    compile 'universum.studios.android:transitions:1.0.0@aar'
+    compile "universum.studios.android:transitions:${DESIRED_VERSION}@aar"
 
 ## Compatibility ##
 
-Available from the **Android [API Level 9](http://developer.android.com/about/versions/android-2.3.html "See API highlights")**.
+Supported down to the **Android [API Level 9](http://developer.android.com/about/versions/android-2.3.html "See API highlights")**.
 
 ### Dependencies ###
 
