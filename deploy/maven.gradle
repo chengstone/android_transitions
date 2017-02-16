@@ -29,7 +29,7 @@ afterEvaluate { project ->
      */
     uploadArchives {
         repositories.mavenDeployer {
-            repository(url: 'file:///' + String.valueOf(project.property('maven.url.local')))
+            repository(url: 'file:///' + System.getenv('MAVEN_URL_LOCAL'))
             /**
              * Project artifact --------------------------------------------------------------------
              */
@@ -70,6 +70,28 @@ afterEvaluate { project ->
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+/**
+ * Task that updates local artifacts directory with artifacts from the Maven local directory.
+ */
+task updateLocalArtifacts() {
+    if (!Boolean.parseBoolean(System.getenv('TRAVIS'))) {
+        final String mavenLocalDir = System.getenv('MAVEN_URL_LOCAL')
+        final String artifactId = String.valueOf(project.property('maven.pom.artifactId'))
+        final String artifactsSourceDir = "${mavenLocalDir}\\universum\\studios\\android\\${artifactId}\\${libraryVersion}"
+        final String artifactsDestinationDir = "..\\artifacts\\universum\\studios\\android\\${artifactId}\\${libraryVersion}"
+        delete artifactsDestinationDir
+        copy {
+            from artifactsSourceDir
+            into artifactsDestinationDir
+        }
+        if (file(artifactsDestinationDir).exists()) {
+            exec {
+                commandLine 'git', 'add', artifactsDestinationDir, '-A'
             }
         }
     }

@@ -44,23 +44,26 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 /**
  * Library dependencies ============================================================================
  */
 repositories {
-    mavenLocal()
+    maven { url = '../artifacts/' }
 }
 
 dependencies {
-    def String supportVersion = project.property('android.support.version')
     /*
      * RELEASE DEPENDENCIES ------------------------------------------------------------------------
      */
-    compile 'com.android.support:support-annotations:' + supportVersion
-    compile 'com.android.support:support-v4:' + supportVersion
-    releaseCompile 'universum.studios.android:transitions-navigational-base:' + project.property('library.version') + '@aar'
+    compile releaseDependencies.androidSupportAnnotations
+    compile releaseDependencies.androidSupportV4
+    releaseCompile "universum.studios.android:transitions-navigational-base:${libraryVersion}@aar"
 
     /*
      * DEBUG DEPENDENCIES --------------------------------------------------------------------------
@@ -68,5 +71,5 @@ dependencies {
     debugCompile project(':library-navigational-base')
 }
 
-// Apply PUBLISH script.
-apply from: '../publish/publish.gradle'
+// Apply DEPLOY script.
+apply from: '../deploy/deploy.gradle'

@@ -23,13 +23,25 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+
 /**
  * @author Martin Albedinsky
  */
 @RunWith(AndroidJUnit4.class)
 public final class WindowTransitionsTest {
 
+	/**
+	 * Log TAG.
+	 */
+	@SuppressWarnings("unused")
+	private static final String TAG = "WindowTransitionsTest";
+
 	@Test
-	public void test() {
+	public void testConstantInstances() {
+		assertThat(WindowTransitions.NONE, is(not(nullValue())));
 	}
 }

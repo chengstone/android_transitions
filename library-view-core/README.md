@@ -2,7 +2,8 @@ Transitions-View-Core
 ===============
 
 ## Download ##
+[![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
 
 ### Gradle ###
 
-    compile 'universum.studios.android:transitions-view-core:1.0.0@aar'
+    compile "universum.studios.android:transitions-view-core:${DESIRED_VERSION}@aar"

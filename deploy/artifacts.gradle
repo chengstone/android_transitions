@@ -31,26 +31,22 @@ task classesJar(type: Jar) {
  */
 task generateJavadoc(type: Javadoc) {
     source isModule ? android.sourceSets.main.java.sourceFiles : android.sourceSets.release.java.sourceFiles
-    def Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    def String sdkDir = properties.getProperty('sdk.dir')
     options {
         author = true
         memberLevel = JavadocMemberLevel.PROTECTED
         header = project.property('maven.pom.project.name') + ' ' + project.property('maven.pom.version') + ' Documentation'
-        links 'http://docs.oracle.com/javase/8/docs/api/'
-        linksOffline 'http://developer.android.com/reference', sdkDir + '\\docs\\reference'
+        links "http://docs.oracle.com/javase/8/docs/api/"
+        linksOffline "http://developer.android.com/reference", "${android.sdkDirectory}\\docs\\reference"
     }
     if (JavaVersion.current().isJava8Compatible()) {
         // Uncomment this when Javadoc tool outputs some (not resolvable) errors like 'reference not found for R.attr#...'.
         //options.addStringOption('Xdoclint:none', '-quiet')
     }
     // Append class path with dependencies.
-    def String supportVersion = project.property('android.support.version')
     classpath += files(
             android.getBootClasspath(),
-            sdkDir + '\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\' + supportVersion + '\\support-annotations-' + supportVersion + '.jar',
-            sdkDir + '\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\' + supportVersion + '\\support-v4-' + supportVersion + '-sources.jar'
+            "${android.sdkDirectory}\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\${androidSupportVersion}\\support-annotations-${androidSupportVersion}.jar",
+            "${android.sdkDirectory}\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\${androidSupportVersion}\\support-v4-${androidSupportVersion}-sources.jar"
     )
     failOnError false
 }
