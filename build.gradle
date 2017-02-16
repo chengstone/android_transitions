@@ -57,7 +57,7 @@ task updateLocalArtifacts() {
  */
 task deployModulesToMavenLocal() {
     subprojects.findAll {
-        if (it.name.startsWith("library")) {
+        if (it.name.startsWith("library-") && !it.name.endsWith('_group')) {
             dependsOn ':' + it.name + ':uploadArchives'
         }
     }
@@ -79,7 +79,7 @@ task deployGroupsToMavenLocal() {
  */
 task deployModulesToBintray() {
     subprojects.findAll {
-        if (it.name.startsWith("library")) {
+        if (it.name.startsWith("library-") && !it.name.endsWith('_group')) {
             dependsOn ':' + it.name + ':bintrayUpload'
         }
     }

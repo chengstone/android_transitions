@@ -3,6 +3,7 @@ Transitions
 
 [![Build Status](https://travis-ci.org/universum-studios/android_transitions.svg?branch=master)](https://travis-ci.org/universum-studios/android_transitions)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=universum-studios/android_transitions&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&utm_medium=referral&utm_content=universum-studios/android_transitions&utm_campaign=Badge_Coverage)
 
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
