@@ -56,10 +56,6 @@ import java.lang.annotation.RetentionPolicy;
 public class Scale extends Visibility {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -85,6 +81,10 @@ public class Scale extends Visibility {
 	 * Name of the view's property used to scale size of a specific view along its y axis.
 	 */
 	public static final String PROPERTY_SCALE_Y = "scaleY";
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================
@@ -331,8 +331,8 @@ public class Scale extends Visibility {
 	private void calculateTransitionProperties(View view, float startScale, float endScale) {
 		mInfo.startScale = startScale;
 		mInfo.endScale = endScale;
-		mInfo.pivotX = mPivotX != null ? mPivotX : (view.getWidth() * mPivotXFraction);
-		mInfo.pivotY = mPivotY != null ? mPivotY : (view.getHeight() * mPivotYFraction);
+		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;
+		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;
 	}
 
 	/**

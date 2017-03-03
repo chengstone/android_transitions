@@ -116,10 +116,6 @@ import java.util.List;
 public abstract class BaseNavigationalTransition<T extends BaseNavigationalTransition> {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -186,6 +182,10 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * {@link #sharedElementExitTransition(Transition)} or ot.
 	 */
 	private static final int TRANSITION_SHARED_ELEMENT_EXIT = 0x00000001 << 7;
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================

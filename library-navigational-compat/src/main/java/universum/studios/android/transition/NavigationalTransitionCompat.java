@@ -36,10 +36,6 @@ import android.support.v4.app.Fragment;
 public class NavigationalTransitionCompat extends BaseNavigationalTransition<NavigationalTransitionCompat> {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -47,6 +43,10 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition<Nav
 	 * Log TAG.
 	 */
 	// private static final String TAG = "NavigationalTransition";
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================
