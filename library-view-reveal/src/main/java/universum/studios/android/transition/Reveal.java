@@ -219,6 +219,7 @@ public class Reveal extends Visibility {
 	 * @param mode One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
 	public Reveal(@RevealMode int mode) {
+		super();
 		setMode(mode);
 	}
 
@@ -301,7 +302,7 @@ public class Reveal extends Visibility {
 	@Size(2)
 	@NonNull
 	public static float[] resolveCenterPosition(@NonNull View view) {
-		return resolveCenterPosition(view, 0.5f, 0.5f);
+		return resolveCenterPosition(view, CENTER_FRACTION, CENTER_FRACTION);
 	}
 
 	/**
@@ -333,7 +334,7 @@ public class Reveal extends Visibility {
 	@Size(2)
 	@NonNull
 	public static float[] resolveCenter(@NonNull View view) {
-		return resolveCenter(view, 0.5f, 0.5f);
+		return resolveCenter(view, CENTER_FRACTION, CENTER_FRACTION);
 	}
 
 	/**
@@ -834,10 +835,10 @@ public class Reveal extends Visibility {
 	private void calculateTransitionProperties(View view) {
 		// First calculate center of the reveal transition.
 		final float[] center;
-		if (mCenterGravity != null) {
-			center = resolveGravityCenter(view);
-		} else {
+		if (mCenterGravity == null) {
 			center = resolveCenter(view, mCenterXFraction, mCenterYFraction);
+		} else {
+			center = resolveGravityCenter(view);
 		}
 		final float centerX = mCenterX == null ? center[0] : mCenterX;
 		final float centerY = mCenterY == null ? center[1] : mCenterY;
@@ -901,7 +902,8 @@ public class Reveal extends Visibility {
 	 * @return An array with two radii: startRadius[0], endRadius[1].
 	 */
 	private float[] calculateTransitionRadii(View view) {
-		final float startRadius, endRadius;
+		final float startRadius;
+		final float endRadius;
 		switch (mMode) {
 			case CONCEAL:
 				startRadius = calculateTransitionRadius(view);
@@ -929,7 +931,8 @@ public class Reveal extends Visibility {
 	 * depends on its current mode.
 	 */
 	private float calculateTransitionRadius(View view) {
-		float horizontalDistance, verticalDistance;
+		final float horizontalDistance;
+		final float verticalDistance;
 		final float centerX = mInfo.centerX;
 		final float centerY = mInfo.centerY;
 		final float viewWidth = view.getWidth();

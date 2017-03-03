@@ -83,6 +83,11 @@ public class Scale extends Visibility {
 	public static final String PROPERTY_SCALE_Y = "scaleY";
 
 	/**
+	 * Default value for scale fraction.
+	 */
+	private static final float SCALE_FRACTION = 0.5f;
+
+	/**
 	 * Interface ===================================================================================
 	 */
 
@@ -116,13 +121,13 @@ public class Scale extends Visibility {
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for scaling
 	 * pivot of the animating view if {@link #mPivotX} coordinate has not been specified.
 	 */
-	private float mPivotXFraction = 0.5f;
+	private float mPivotXFraction = SCALE_FRACTION;
 
 	/**
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for scaling
 	 * pivot of the animating view if {@link #mPivotY} coordinate has not been specified.
 	 */
-	private float mPivotYFraction = 0.5f;
+	private float mPivotYFraction = SCALE_FRACTION;
 
 	/**
 	 * Constructors ================================================================================
@@ -141,6 +146,7 @@ public class Scale extends Visibility {
 	 * @param mode One of {@link #MODE_IN} or {@link #MODE_OUT} or theirs combination.
 	 */
 	public Scale(@ScaleMode int mode) {
+		super();
 		setMode(mode);
 	}
 

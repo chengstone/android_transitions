@@ -466,7 +466,7 @@ public class AnimatorWrapper extends Animator {
 	 *
 	 * @param <L> Type of the listener to wrap.
 	 */
-	private static abstract class BaseAnimatorListenerWrapper<L> {
+	private static class BaseAnimatorListenerWrapper<L> {
 
 		/**
 		 * Wrapped instance of animator listener.
