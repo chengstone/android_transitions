@@ -32,10 +32,6 @@ import android.support.annotation.NonNull;
 public class BasicWindowTransition implements WindowTransition {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -43,6 +39,10 @@ public class BasicWindowTransition implements WindowTransition {
 	 * Log TAG.
 	 */
 	// private static final String TAG = "BasicWindowTransition";
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================

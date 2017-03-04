@@ -40,10 +40,6 @@ import java.util.ArrayList;
 public class AnimatorWrapper extends Animator {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -51,23 +47,6 @@ public class AnimatorWrapper extends Animator {
 	 * Log TAG.
 	 */
 	// private static final String TAG = "AnimatorWrapper";
-
-	/**
-	 * Defines an annotation for determining set of allowed features for AnimatorWrapper.
-	 *
-	 * @see #requestFeatures(int)
-	 * @see #requestFeature(int)
-	 */
-	@Retention(RetentionPolicy.SOURCE)
-	@IntDef(flag = true, value = {
-			START,
-			PAUSE,
-			RESUME,
-			END,
-			CANCEL
-	})
-	public @interface WrapperFeatures {
-	}
 
 	/**
 	 * Flag for indicating to the animator wrapper that it should support <b>START</b> feature for
@@ -117,9 +96,30 @@ public class AnimatorWrapper extends Animator {
 	public static final int CANCEL = 0x00000001 << 4;
 
 	/**
+	 * Defines an annotation for determining set of allowed features for AnimatorWrapper.
+	 *
+	 * @see #requestFeatures(int)
+	 * @see #requestFeature(int)
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef(flag = true, value = {
+			START,
+			PAUSE,
+			RESUME,
+			END,
+			CANCEL
+	})
+	public @interface WrapperFeatures {
+	}
+
+	/**
 	 * Flag grouping all wrapper features in one.
 	 */
 	public static final int ALL = START | PAUSE | RESUME | END | CANCEL;
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================
@@ -163,6 +163,7 @@ public class AnimatorWrapper extends Animator {
 	 * @param animator The animator to be wrapped.
 	 */
 	public AnimatorWrapper(@NonNull Animator animator) {
+		super();
 		this.mAnimator = animator;
 	}
 
@@ -258,13 +259,16 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void addPauseListener(AnimatorPauseListener listener) {
-		if (!hasFeature(PAUSE) && !hasFeature(RESUME)) return;
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-		this.ensurePauseListenerWrappers();
-		if (!mPauseListenerWrappers.containsKey(listener)) {
-			final AnimatorPauseListenerWrapper wrapper = new AnimatorPauseListenerWrapper(listener, this);
-			mPauseListenerWrappers.put(listener, wrapper);
-			mAnimator.addPauseListener(wrapper);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+			return;
+		}
+		if (hasFeature(PAUSE) || hasFeature(RESUME)) {
+			this.ensurePauseListenerWrappers();
+			if (!mPauseListenerWrappers.containsKey(listener)) {
+				final AnimatorPauseListenerWrapper wrapper = new AnimatorPauseListenerWrapper(listener, this);
+				mPauseListenerWrappers.put(listener, wrapper);
+				mAnimator.addPauseListener(wrapper);
+			}
 		}
 	}
 
@@ -272,7 +276,9 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void removePauseListener(AnimatorPauseListener listener) {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+			return;
+		}
 		this.ensurePauseListenerWrappers();
 		final AnimatorPauseListenerWrapper wrapper = mPauseListenerWrappers.get(listener);
 		if (wrapper != null) {
@@ -292,9 +298,9 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public ArrayList<AnimatorListener> getListeners() {
-		return mListenerWrappers != null ?
-				new ArrayList<>(mListenerWrappers.keySet()) :
-				new ArrayList<AnimatorListener>(0);
+		return mListenerWrappers == null ?
+				new ArrayList<AnimatorListener>(0) :
+				new ArrayList<>(mListenerWrappers.keySet());
 	}
 
 	/**
@@ -371,8 +377,7 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void start() {
-		if (!hasFeature(START)) return;
-		mAnimator.start();
+		if (hasFeature(START)) mAnimator.start();
 	}
 
 	/**
@@ -390,9 +395,12 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void pause() {
-		if (!hasFeature(PAUSE)) return;
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-		mAnimator.pause();
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+			return;
+		}
+		if (hasFeature(PAUSE)) {
+			mAnimator.pause();
+		}
 	}
 
 	/**
@@ -411,9 +419,12 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void resume() {
-		if (!hasFeature(PAUSE) && !hasFeature(RESUME)) return;
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-		mAnimator.resume();
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+			return;
+		}
+		if (hasFeature(PAUSE) || !hasFeature(RESUME)) {
+			mAnimator.resume();
+		}
 	}
 
 	/**
@@ -424,8 +435,7 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void end() {
-		if (!hasFeature(START) && !hasFeature(END)) return;
-		mAnimator.end();
+		if (hasFeature(START) || hasFeature(END)) mAnimator.end();
 	}
 
 	/**
@@ -436,8 +446,7 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void cancel() {
-		if (!hasFeature(START) && !hasFeature(CANCEL)) return;
-		mAnimator.cancel();
+		if (hasFeature(START) || hasFeature(CANCEL)) mAnimator.cancel();
 	}
 
 	/**
@@ -457,7 +466,7 @@ public class AnimatorWrapper extends Animator {
 	 *
 	 * @param <L> Type of the listener to wrap.
 	 */
-	private static abstract class BaseAnimatorListenerWrapper<L> {
+	private static class BaseAnimatorListenerWrapper<L> {
 
 		/**
 		 * Wrapped instance of animator listener.

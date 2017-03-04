@@ -39,10 +39,6 @@ import android.support.annotation.NonNull;
 public class NavigationalTransition extends BaseNavigationalTransition<NavigationalTransition> {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -50,6 +46,10 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * Log TAG.
 	 */
 	// private static final String TAG = "NavigationalTransition";
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================

@@ -68,10 +68,6 @@ import universum.studios.android.transition.util.AnimatorWrapper;
 public class Reveal extends Visibility {
 
 	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
 	 * Constants ===================================================================================
 	 */
 
@@ -79,14 +75,6 @@ public class Reveal extends Visibility {
 	 * Log TAG.
 	 */
 	// private static final String TAG = "Reveal";
-
-	/**
-	 * Defines an annotation for determining set of allowed modes for Reveal transition.
-	 */
-	@Retention(RetentionPolicy.SOURCE)
-	@IntDef({REVEAL, CONCEAL})
-	public @interface RevealMode {
-	}
 
 	/**
 	 * Mode to indicate that Reveal transition should play <b>reveal</b> animation, that is to
@@ -103,6 +91,23 @@ public class Reveal extends Visibility {
 	 * This mode can be used as well for <b>disappearing</b> targets as for <b>appearing</b> ones.
 	 */
 	public static final int CONCEAL = MODE_OUT;
+
+	/**
+	 * Defines an annotation for determining set of allowed modes for Reveal transition.
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef({REVEAL, CONCEAL})
+	public @interface RevealMode {
+	}
+
+	/**
+	 * Default value for center fraction.
+	 */
+	private static final float CENTER_FRACTION = 0.5f;
+
+	/**
+	 * Interface ===================================================================================
+	 */
 
 	/**
 	 * Static members ==============================================================================
@@ -140,13 +145,13 @@ public class Reveal extends Visibility {
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for center
 	 * of the reveal/conceal animation if {@link #mCenterX} coordinate has not been specified.
 	 */
-	private float mCenterXFraction = 0.5f;
+	private float mCenterXFraction = CENTER_FRACTION;
 
 	/**
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for center
 	 * of the reveal/conceal animation if {@link #mCenterY} coordinate has not been specified.
 	 */
-	private float mCenterYFraction = 0.5f;
+	private float mCenterYFraction = CENTER_FRACTION;
 
 	/**
 	 * Gravity flags used to resolve center coordinates for the reveal/conceal animation.
@@ -214,6 +219,7 @@ public class Reveal extends Visibility {
 	 * @param mode One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
 	public Reveal(@RevealMode int mode) {
+		super();
 		setMode(mode);
 	}
 
@@ -296,7 +302,7 @@ public class Reveal extends Visibility {
 	@Size(2)
 	@NonNull
 	public static float[] resolveCenterPosition(@NonNull View view) {
-		return resolveCenterPosition(view, 0.5f, 0.5f);
+		return resolveCenterPosition(view, CENTER_FRACTION, CENTER_FRACTION);
 	}
 
 	/**
@@ -328,7 +334,7 @@ public class Reveal extends Visibility {
 	@Size(2)
 	@NonNull
 	public static float[] resolveCenter(@NonNull View view) {
-		return resolveCenter(view, 0.5f, 0.5f);
+		return resolveCenter(view, CENTER_FRACTION, CENTER_FRACTION);
 	}
 
 	/**
@@ -829,10 +835,10 @@ public class Reveal extends Visibility {
 	private void calculateTransitionProperties(View view) {
 		// First calculate center of the reveal transition.
 		final float[] center;
-		if (mCenterGravity != null) {
-			center = resolveGravityCenter(view);
-		} else {
+		if (mCenterGravity == null) {
 			center = resolveCenter(view, mCenterXFraction, mCenterYFraction);
+		} else {
+			center = resolveGravityCenter(view);
 		}
 		final float centerX = mCenterX == null ? center[0] : mCenterX;
 		final float centerY = mCenterY == null ? center[1] : mCenterY;
@@ -840,8 +846,8 @@ public class Reveal extends Visibility {
 		mInfo.centerY = centerY + mCenterVerticalOffset;
 		// Now calculate start with end radius of the reveal transition.
 		final float[] radii = calculateTransitionRadii(view);
-		mInfo.startRadius = mStartRadius != null ? mStartRadius : radii[0];
-		mInfo.endRadius = mEndRadius != null ? mEndRadius : radii[1];
+		mInfo.startRadius = mStartRadius == null ? radii[0] : mStartRadius;
+		mInfo.endRadius = mEndRadius == null ? radii[1] : mEndRadius;
 	}
 
 	/**
@@ -896,16 +902,17 @@ public class Reveal extends Visibility {
 	 * @return An array with two radii: startRadius[0], endRadius[1].
 	 */
 	private float[] calculateTransitionRadii(View view) {
-		float startRadius, endRadius;
-		startRadius = endRadius = 0;
+		final float startRadius;
+		final float endRadius;
 		switch (mMode) {
-			case REVEAL:
-				startRadius = 0;
-				endRadius = calculateTransitionRadius(view);
-				break;
 			case CONCEAL:
 				startRadius = calculateTransitionRadius(view);
 				endRadius = 0;
+				break;
+			case REVEAL:
+			default:
+				startRadius = 0;
+				endRadius = calculateTransitionRadius(view);
 				break;
 		}
 		return new float[]{startRadius, endRadius};
@@ -924,7 +931,8 @@ public class Reveal extends Visibility {
 	 * depends on its current mode.
 	 */
 	private float calculateTransitionRadius(View view) {
-		float horizontalDistance, verticalDistance;
+		final float horizontalDistance;
+		final float verticalDistance;
 		final float centerX = mInfo.centerX;
 		final float centerY = mInfo.centerY;
 		final float viewWidth = view.getWidth();
