@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Scale.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">universum.studios.android.transition</a> &gt; <span class="el_source">Scale.java</span></div><h1>Scale.java</h1><pre class="source lang-java linenums">/*
+ * =================================================================================================
+ *                             Copyright (C) 2017 Universum Studios
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further &quot;License&quot; only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License 
+ * you may obtain at
+ * 
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * You can redistribute, modify or publish any part of the code written within this file but as it 
+ * is described in the License, the software distributed under the License is distributed on an 
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * 
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+package universum.studios.android.transition;
+
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.os.Build;
+import android.support.annotation.FloatRange;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.transition.TransitionValues;
+import android.transition.Visibility;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * A {@link Visibility} transition implementation that tracks changes to the visibility of target
+ * views in the start and end scenes and scales up or down views in the scene. Visibility is
+ * determined by the {@link View#setVisibility(int)} state of the views.
+ * &lt;p&gt;
+ * Scale transition can be described in a resource file by using the {@code transition} tag with
+ * {@code class} attribute set to {@code universum.studios.android.transition.Scale}, along with
+ * Xml attributes referenced below.
+ *
+ * &lt;h3&gt;XML attributes&lt;/h3&gt;
+ * {@link R.styleable#Ui_Transition_Scale Scale Attributes}
+ *
+ * @author Martin Albedinsky
+ */
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+public class Scale extends Visibility {
+
+	/**
+	 * Constants ===================================================================================
+	 */
+
+	/**
+	 * Log TAG.
+	 */
+	// private static final String TAG = &quot;Scale&quot;;
+
+	/**
+	 * Defines an annotation for determining set of allowed modes for Scale transition.
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef(flag = true, value = {MODE_IN, MODE_OUT})
+	public @interface ScaleMode {
+	}
+
+	/**
+	 * Name of the view's property used to scale size of a specific view along its x axis.
+	 */
+	public static final String PROPERTY_SCALE_X = &quot;scaleX&quot;;
+
+	/**
+	 * Name of the view's property used to scale size of a specific view along its y axis.
+	 */
+	public static final String PROPERTY_SCALE_Y = &quot;scaleY&quot;;
+
+	/**
+	 * Default value for scale fraction.
+	 */
+	private static final float SCALE_FRACTION = 0.5f;
+
+	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * Static members ==============================================================================
+	 */
+
+	/**
+	 * Members =====================================================================================
+	 */
+
+	/**
+	 * Object that holds all necessary properties for the scale transition for the currently
+	 * transitioning view.
+	 */
+<span class="nc" id="L106">	private final Info mInfo = new Info();</span>
+
+	/**
+	 * X coordinate for scaling pivot of the animating view. If {@code null}, {@link #mPivotXFraction}
+	 * should be used to calculate this coordinate.
+	 */
+	private Float mPivotX;
+
+	/**
+	 * Y coordinate for scaling pivot of the animating view. If {@code null}, {@link #mPivotYFraction}
+	 * should be used to calculate this coordinate.
+	 */
+	private Float mPivotY;
+
+	/**
+	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for scaling
+	 * pivot of the animating view if {@link #mPivotX} coordinate has not been specified.
+	 */
+<span class="nc" id="L124">	private float mPivotXFraction = SCALE_FRACTION;</span>
+
+	/**
+	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for scaling
+	 * pivot of the animating view if {@link #mPivotY} coordinate has not been specified.
+	 */
+<span class="nc" id="L130">	private float mPivotYFraction = SCALE_FRACTION;</span>
+
+	/**
+	 * Constructors ================================================================================
+	 */
+
+	/**
+	 * Same as {@link #Scale(int)} with both {@link #MODE_IN} and {@link #MODE_OUT} modes combined.
+	 */
+	public Scale() {
+<span class="nc" id="L140">		this(MODE_IN | MODE_OUT);</span>
+<span class="nc" id="L141">	}</span>
+
+	/**
+	 * Creates a new instance of Scale transition with the specified &lt;var&gt;mode&lt;/var&gt;.
+	 *
+	 * @param mode One of {@link #MODE_IN} or {@link #MODE_OUT} or theirs combination.
+	 */
+	public Scale(@ScaleMode int mode) {
+<span class="nc" id="L149">		super();</span>
+<span class="nc" id="L150">		setMode(mode);</span>
+<span class="nc" id="L151">	}</span>
+
+	/**
+	 * Creates a new instance of Scale transition with animation property values set from the
+	 * specified &lt;var&gt;attrs&lt;/var&gt;.
+	 *
+	 * @param context Context used to obtain values from the specified &lt;var&gt;attrs&lt;/var&gt;.
+	 * @param attrs   Set of attributes from which to obtain animation property values for the scale
+	 *                animation.
+	 */
+	public Scale(@NonNull Context context, @NonNull AttributeSet attrs) {
+<span class="nc" id="L162">		super(context, attrs);</span>
+<span class="nc" id="L163">		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);</span>
+<span class="nc" id="L164">		final int n = typedArray.getIndexCount();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L166">			final int index = typedArray.getIndex(i);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			if (index == R.styleable.Ui_Transition_Scale_android_pivotX) {</span>
+<span class="nc" id="L168">				this.mPivotXFraction = typedArray.getFraction(index, 1, 1, mPivotXFraction);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Scale_android_pivotY) {</span>
+<span class="nc" id="L170">				this.mPivotYFraction = typedArray.getFraction(index, 1, 1, mPivotYFraction);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotX) {</span>
+<span class="nc" id="L172">				this.mPivotX = (float) typedArray.getDimensionPixelSize(index, 0);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotY) {</span>
+<span class="nc" id="L174">				this.mPivotY = (float) typedArray.getDimensionPixelSize(index, 0);</span>
+			}
+		}
+<span class="nc" id="L177">		typedArray.recycle();</span>
+<span class="nc" id="L178">	}</span>
+
+	/**
+	 * Methods =====================================================================================
+	 */
+
+	/**
+	 * Creates a new instance of scale Animator for the specified &lt;var&gt;view&lt;/var&gt;.
+	 *
+	 * @param view       The view for which to create the requested animator.
+	 * @param startScale Scale from which to start the animation.
+	 * @param endScale   Scale at which should the animation end.
+	 * @return Animator that will play scale animation for the specified view according to the
+	 * specified parameters when started.
+	 */
+	@NonNull
+	public static Animator createAnimator(@NonNull View view, @FloatRange(from = 0, to = 1) float startScale, @FloatRange(from = 0, to = 1) float endScale) {
+<span class="nc" id="L195">		return ObjectAnimator.ofPropertyValuesHolder(</span>
+				view,
+<span class="nc" id="L197">				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale),</span>
+<span class="nc" id="L198">				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScale, endScale)</span>
+		);
+	}
+
+	/**
+	 * Sets a pivot x coordinate for scale animation.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code null}&lt;/b&gt;
+	 *
+	 * @param pivotX The desired pivot x coordinate in pixels. May be {@code null} to use pivot
+	 *               fraction specified via {@link #setPivotXFraction(float)} instead.
+	 * @see #getPivotX()
+	 * @see #setPivotXFraction(float)
+	 * @see #setPivotY(Float)
+	 */
+	public void setPivotX(@Nullable Float pivotX) {
+<span class="nc" id="L214">		this.mPivotX = pivotX;</span>
+<span class="nc" id="L215">	}</span>
+
+	/**
+	 * Returns the x coordinate for pivot of the scale animation.
+	 *
+	 * @return Pivot in pixels or {@code null} if no pivot has been specified.
+	 * @see #setPivotX(Float)
+	 */
+	@Nullable
+	public Float getPivotX() {
+<span class="nc" id="L225">		return mPivotX;</span>
+	}
+
+	/**
+	 * Sets a pivot y coordinate for scale animation.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code null}&lt;/b&gt;
+	 *
+	 * @param pivotY The desired pivot y coordinate in pixels. May be {@code null} to use pivot
+	 *               fraction specified via {@link #setPivotYFraction(float)} instead.
+	 * @see #getPivotY()
+	 * @see #setPivotYFraction(float)
+	 * @see #setPivotX(Float)
+	 */
+	public void setPivotY(@Nullable Float pivotY) {
+<span class="nc" id="L240">		this.mPivotY = pivotY;</span>
+<span class="nc" id="L241">	}</span>
+
+	/**
+	 * Returns the y coordinate for pivot of the scale animation.
+	 *
+	 * @return Pivot in pixels or {@code null} if no pivot has been specified.
+	 * @see #setPivotY(Float)
+	 */
+	@Nullable
+	public Float getPivotY() {
+<span class="nc" id="L251">		return mPivotY;</span>
+	}
+
+	/**
+	 * Sets a fraction for the &lt;b&gt;pivot x&lt;/b&gt; coordinate. This fraction will be used to resolve
+	 * pivot x coordinate of an animating view depending on its current &lt;b&gt;width&lt;/b&gt; if such value
+	 * has not been specified via {@link #setPivotX(Float)}.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code 0.5}&lt;/b&gt;
+	 *
+	 * @param fractionX The desired fraction from the {@code [0.0, 1.0]} range.
+	 * @see #getPivotYFraction()
+	 * @see #setPivotXFraction(float)
+	 * @see #setPivotX(Float)
+	 */
+	public void setPivotXFraction(@FloatRange(from = 0, to = 1) float fractionX) {
+<span class="nc" id="L267">		this.mPivotXFraction = fractionX;</span>
+<span class="nc" id="L268">	}</span>
+
+	/**
+	 * Returns the fraction of the &lt;b&gt;pivot x&lt;/b&gt; coordinate.
+	 *
+	 * @return Fraction from the {@code [0.0, 1.0]} range.
+	 * @see #setPivotXFraction(float)
+	 */
+	@FloatRange(from = 0, to = 1)
+	public float getPivotXFraction() {
+<span class="nc" id="L278">		return mPivotXFraction;</span>
+	}
+
+	/**
+	 * Sets a fraction for the &lt;b&gt;pivot y&lt;/b&gt; coordinate. This fraction will be used to resolve
+	 * pivot y coordinate of an animating view depending on its current &lt;b&gt;height&lt;/b&gt; if such value
+	 * has not been specified via {@link #setPivotY(Float)}.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code 0.5}&lt;/b&gt;
+	 *
+	 * @param fractionY The desired fraction from the {@code [0.0, 1.0]} range.
+	 * @see #getPivotXFraction()
+	 * @see #setPivotYFraction(float)
+	 * @see #setPivotY(Float)
+	 */
+	public void setPivotYFraction(@FloatRange(from = 0, to = 1) float fractionY) {
+<span class="nc" id="L294">		this.mPivotYFraction = fractionY;</span>
+<span class="nc" id="L295">	}</span>
+
+	/**
+	 * Returns the fraction of the &lt;b&gt;pivot y&lt;/b&gt; coordinate.
+	 *
+	 * @return Fraction from the {@code [0.0, 1.0]} range.
+	 * @see #setPivotYFraction(float)
+	 */
+	@FloatRange(from = 0, to = 1)
+	public float getPivotYFraction() {
+<span class="nc" id="L305">		return mPivotYFraction;</span>
+	}
+
+	/**
+	 */
+	@Override
+	public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
+<span class="nc" id="L312">		calculateTransitionProperties(view, 0f, 1f);</span>
+<span class="nc" id="L313">		view.setPivotX(mInfo.pivotX);</span>
+<span class="nc" id="L314">		view.setPivotY(mInfo.pivotY);</span>
+<span class="nc" id="L315">		view.setScaleX(mInfo.startScale);</span>
+<span class="nc" id="L316">		view.setScaleY(mInfo.startScale);</span>
+<span class="nc" id="L317">		return createAnimator(view, mInfo.startScale, mInfo.endScale);</span>
+	}
+
+	/**
+	 */
+	@Override
+	public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
+<span class="nc" id="L324">		calculateTransitionProperties(view, 1f, 0f);</span>
+<span class="nc" id="L325">		view.setPivotX(mInfo.pivotX);</span>
+<span class="nc" id="L326">		view.setPivotY(mInfo.pivotY);</span>
+<span class="nc" id="L327">		view.setScaleX(mInfo.startScale);</span>
+<span class="nc" id="L328">		view.setScaleY(mInfo.startScale);</span>
+<span class="nc" id="L329">		return createAnimator(view, mInfo.startScale, mInfo.endScale);</span>
+	}
+
+	/**
+	 * Ensures that all necessary properties for this transition are calculated.
+	 *
+	 * @param view The view to which will be the transition applied.
+	 */
+	private void calculateTransitionProperties(View view, float startScale, float endScale) {
+<span class="nc" id="L338">		mInfo.startScale = startScale;</span>
+<span class="nc" id="L339">		mInfo.endScale = endScale;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;</span>
+<span class="nc" id="L342">	}</span>
+
+	/**
+	 * Inner classes ===============================================================================
+	 */
+
+	/**
+	 * Class holding necessary values for the scale transition that are exclusively associated with
+	 * the currently transitioning view.
+	 */
+<span class="nc" id="L352">	private static final class Info {</span>
+
+		/**
+		 * Scale value.
+		 */
+		float startScale, endScale;
+
+		/**
+		 * Scale pivot coordinate.
+		 */
+		float pivotX, pivotY;
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>

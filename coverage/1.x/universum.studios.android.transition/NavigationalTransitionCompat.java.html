@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>NavigationalTransitionCompat.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">universum.studios.android.transition</a> &gt; <span class="el_source">NavigationalTransitionCompat.java</span></div><h1>NavigationalTransitionCompat.java</h1><pre class="source lang-java linenums">/*
+ * =================================================================================================
+ *                             Copyright (C) 2017 Universum Studios
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further &quot;License&quot; only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License 
+ * you may obtain at
+ * 
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * You can redistribute, modify or publish any part of the code written within this file but as it 
+ * is described in the License, the software distributed under the License is distributed on an 
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * 
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+package universum.studios.android.transition;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+
+/**
+ * A {@link BaseNavigationalTransition} implementation that may be used also from a context of
+ * &lt;b&gt;support&lt;/b&gt; {@link Fragment}.
+ * &lt;p&gt;
+ * See {@link #start(Fragment)} and {@link #finish(Fragment)} for more information.
+ *
+ * @author Martin Albedinsky
+ */
+public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;NavigationalTransitionCompat&gt; {
+
+	/**
+	 * Constants ===================================================================================
+	 */
+
+	/**
+	 * Log TAG.
+	 */
+	// private static final String TAG = &quot;NavigationalTransition&quot;;
+
+	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * Static members ==============================================================================
+	 */
+
+	/**
+	 * Members =====================================================================================
+	 */
+
+	/**
+	 * Constructors ================================================================================
+	 */
+
+	/**
+	 * Creates a new instance of NavigationalTransitionCompat without transition activity.
+	 */
+	public NavigationalTransitionCompat() {
+<span class="nc" id="L67">		super();</span>
+<span class="nc" id="L68">	}</span>
+
+	/**
+	 * Creates a new instance of NavigationalTransitionCompat with the specified &lt;var&gt;classOfTransitionActivity&lt;/var&gt;.
+	 *
+	 * @param classOfTransitionActivity The activity class that will be used to create an {@link Intent}
+	 *                                  whenever starting this transition.
+	 * @see #createIntent(Activity)
+	 */
+	public NavigationalTransitionCompat(@NonNull Class&lt;? extends Activity&gt; classOfTransitionActivity) {
+<span class="nc" id="L78">		super(classOfTransitionActivity);</span>
+<span class="nc" id="L79">	}</span>
+
+	/**
+	 * Methods =====================================================================================
+	 */
+
+	/**
+	 * Starts this navigational transition using the given &lt;var&gt;caller&lt;/var&gt; fragment with all
+	 * transitions specified for this navigational transition.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note&lt;/b&gt;, that unlike {@link ##start(Activity)} this cannot be used to start new activity
+	 * with shared elements presented. For that purpose use {@link #start(Activity)} instead.
+	 *
+	 * @param caller The fragment that will be used to create and start an Intent created via
+	 *               {@link #createIntent(Activity)}.
+	 * @see #configureTransitionsOverlapping(Activity)
+	 * @see #configureTransitions(Activity)
+	 */
+	public void start(@NonNull Fragment caller) {
+<span class="nc" id="L98">		final Activity activity = caller.getActivity();</span>
+<span class="nc" id="L99">		configureTransitionsOverlapping(activity);</span>
+<span class="nc" id="L100">		configureTransitions(activity);</span>
+<span class="nc" id="L101">		onStart(caller);</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Invoked whenever {@link #start(Fragment)} is called.
+	 * &lt;p&gt;
+	 * Default implementation starts an Intent created via {@link #createIntent(Activity)} using
+	 * the given caller fragment via {@link Fragment#startActivity(Intent)} if there was no
+	 * {@link #requestCode()} specified and via {@link Fragment#startActivityForResult(Intent, int)}
+	 * if there was.
+	 *
+	 * @param caller The caller fragment that requested start of this navigational transition.
+	 * @see #onFinish(Fragment)
+	 */
+	@SuppressLint(&quot;NewApi&quot;)
+	@SuppressWarnings(&quot;ConstantConditions&quot;)
+	protected void onStart(@NonNull Fragment caller) {
+<span class="nc" id="L118">		final Activity activity = caller.getActivity();</span>
+<span class="nc" id="L119">		final Intent intent = createIntent(activity);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc" id="L121">			final Bundle options = makeSceneTransitionAnimation(activity).toBundle();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
+<span class="nc" id="L123">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
+<span class="nc" id="L124">		} else {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent);</span>
+<span class="nc" id="L126">			else caller.startActivityForResult(intent, mRequestCode);</span>
+		}
+<span class="nc" id="L128">	}</span>
+
+	/**
+	 * Finishes host activity of the given &lt;var&gt;caller&lt;/var&gt; fragment in order to run its exit transitions.
+	 *
+	 * @param caller The fragment of which activity should be finished and of which exit transitions
+	 *               should be started.
+	 * @see #start(Fragment)
+	 */
+	public void finish(@NonNull Fragment caller) {
+<span class="nc" id="L138">		onFinish(caller);</span>
+<span class="nc" id="L139">	}</span>
+
+	/**
+	 * Invoked whenever {@link #finish(Fragment)} is called.
+	 * &lt;p&gt;
+	 * Default implementation invokes {@link #onFinish(Activity)} with a host activity of the given
+	 * caller fragment.
+	 *
+	 * @param caller The fragment that requested finish of its host activity via this navigational transition.
+	 * @see #onStart(Fragment)
+	 */
+	protected void onFinish(@NonNull Fragment caller) {
+<span class="nc" id="L151">		onFinish(caller.getActivity());</span>
+<span class="nc" id="L152">	}</span>
+
+	/**
+	 * Inner classes ===============================================================================
+	 */
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>

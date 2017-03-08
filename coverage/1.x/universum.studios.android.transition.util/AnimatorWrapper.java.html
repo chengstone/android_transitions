@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AnimatorWrapper.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">universum.studios.android.transition.util</a> &gt; <span class="el_source">AnimatorWrapper.java</span></div><h1>AnimatorWrapper.java</h1><pre class="source lang-java linenums">/*
+ * =================================================================================================
+ *                             Copyright (C) 2017 Universum Studios
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further &quot;License&quot; only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License 
+ * you may obtain at
+ * 
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * You can redistribute, modify or publish any part of the code written within this file but as it 
+ * is described in the License, the software distributed under the License is distributed on an 
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * 
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+package universum.studios.android.transition.util;
+
+import android.animation.Animator;
+import android.animation.TimeInterpolator;
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+
+/**
+ * A {@link Animator} implementation that may be used to wrap an instance of animator in order to
+ * 'suppress' some of its features like pausing and resuming for instance.
+ *
+ * @author Martin Albedinsky
+ */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class AnimatorWrapper extends Animator {
+
+	/**
+	 * Constants ===================================================================================
+	 */
+
+	/**
+	 * Log TAG.
+	 */
+	// private static final String TAG = &quot;AnimatorWrapper&quot;;
+
+	/**
+	 * Flag for indicating to the animator wrapper that it should support &lt;b&gt;START&lt;/b&gt; feature for
+	 * its wrapped animator.
+	 *
+	 * @see #start()
+	 */
+	public static final int START = 0x00000001;
+
+	/**
+	 * Flag for indicating to the animator wrapper that it should support &lt;b&gt;PAUSE&lt;/b&gt; feature for
+	 * its wrapped animator.
+	 *
+	 * @see #RESUME
+	 * @see #pause()
+	 */
+	public static final int PAUSE = 0x00000001 &lt;&lt; 1;
+
+	/**
+	 * Flag for indicating to the animator wrapper that it should support &lt;b&gt;RESUME&lt;/b&gt; feature for
+	 * its wrapped animator.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note, that if there is no {@link #PAUSE} feature requested, this feature flag is ignored.&lt;/b&gt;
+	 *
+	 * @see #resume()
+	 */
+	public static final int RESUME = 0x00000001 &lt;&lt; 2;
+
+	/**
+	 * Flag for indicating to the animator wrapper that it should support &lt;b&gt;END&lt;/b&gt; feature for
+	 * its wrapped animator.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note, that if there is no {@link #START} feature requested, this feature flag is ignored.&lt;/b&gt;
+	 *
+	 * @see #end()
+	 */
+	public static final int END = 0x00000001 &lt;&lt; 3;
+
+	/**
+	 * Flag for indicating to the animator wrapper that it should support &lt;b&gt;CANCEL&lt;/b&gt; feature for
+	 * its wrapped animator.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note, that if there is no {@link #START} feature requested, this feature flag is ignored.&lt;/b&gt;
+	 *
+	 * @see #cancel()
+	 */
+	public static final int CANCEL = 0x00000001 &lt;&lt; 4;
+
+	/**
+	 * Defines an annotation for determining set of allowed features for AnimatorWrapper.
+	 *
+	 * @see #requestFeatures(int)
+	 * @see #requestFeature(int)
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef(flag = true, value = {
+			START,
+			PAUSE,
+			RESUME,
+			END,
+			CANCEL
+	})
+	public @interface WrapperFeatures {
+	}
+
+	/**
+	 * Flag grouping all wrapper features in one.
+	 */
+	public static final int ALL = START | PAUSE | RESUME | END | CANCEL;
+
+	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * Static members ==============================================================================
+	 */
+
+	/**
+	 * Members =====================================================================================
+	 */
+
+	/**
+	 * Wrapped animator instance.
+	 */
+	protected final Animator mAnimator;
+
+	/**
+	 * Set of feature flags specified for this wrapper.
+	 */
+<span class="nc" id="L140">	private int mFeatures = ALL;</span>
+
+	/**
+	 * Map containing animator listener wrappers mapped to theirs wrapped listeners used for purpose
+	 * of adding/removing of listeners via {@link #addListener(AnimatorListener)} and
+	 * {@link #removeListener(AnimatorListener)}.
+	 */
+	private ArrayMap&lt;AnimatorListener, AnimatorListenerWrapper&gt; mListenerWrappers;
+
+	/**
+	 * Map containing animator pause listener wrappers mapped to theirs wrapped listeners used for
+	 * purpose of adding/removing of pause listeners via {@link #addPauseListener(AnimatorPauseListener)}
+	 * and {@link #removePauseListener(AnimatorPauseListener)}.
+	 */
+	private ArrayMap&lt;AnimatorPauseListener, AnimatorPauseListenerWrapper&gt; mPauseListenerWrappers;
+
+	/**
+	 * Constructors ================================================================================
+	 */
+
+	/**
+	 * Creates a new instance of AnimatorWrapper to wrap the given instance of &lt;var&gt;animator&lt;/var&gt;.
+	 *
+	 * @param animator The animator to be wrapped.
+	 */
+	public AnimatorWrapper(@NonNull Animator animator) {
+<span class="nc" id="L166">		super();</span>
+<span class="nc" id="L167">		this.mAnimator = animator;</span>
+<span class="nc" id="L168">	}</span>
+
+	/**
+	 * Methods =====================================================================================
+	 */
+
+	/**
+	 * Specifies set of features for this wrapper.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note&lt;/b&gt;, that this will override all current features to the specified ones.
+	 *
+	 * @param features The desired features to be set for this wrapper.
+	 * @see #requestFeature(int)
+	 * @see #hasFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	public void requestFeatures(@WrapperFeatures int features) {
+<span class="nc" id="L185">		this.mFeatures = features;</span>
+<span class="nc" id="L186">	}</span>
+
+	/**
+	 * Adds the specified &lt;var&gt;feature&lt;/var&gt; to the registered ones.
+	 *
+	 * @param feature The desired feature to add.
+	 * @see #requestFeatures(int)
+	 * @see #hasFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	public void requestFeature(@WrapperFeatures int feature) {
+<span class="nc" id="L197">		this.mFeatures |= feature;</span>
+<span class="nc" id="L198">	}</span>
+
+	/**
+	 * Removes the specified &lt;var&gt;feature&lt;/var&gt; from the registered ones.
+	 *
+	 * @param feature The desired feature to remove.
+	 * @see #requestFeature(int)
+	 * @see #hasFeature(int)
+	 */
+	public void removeFeature(@WrapperFeatures int feature) {
+<span class="nc" id="L208">		this.mFeatures &amp;= ~feature;</span>
+<span class="nc" id="L209">	}</span>
+
+	/**
+	 * Checks whether the specified &lt;var&gt;feature&lt;/var&gt; has been requested for this wrapper or not.
+	 *
+	 * @param feature The desired feature to check for.
+	 * @return {@code True} if the feature has been requested via {@link #requestFeature(int)} or
+	 * specified by default, {@code false} otherwise.
+	 * @see #requestFeature(int)
+	 */
+	public boolean hasFeature(@WrapperFeatures int feature) {
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		return (mFeatures &amp; feature) != 0;</span>
+	}
+
+	/**
+	 */
+	@Override
+	public void addListener(AnimatorListener listener) {
+<span class="nc" id="L227">		this.ensureListenerWrappers();</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (!mListenerWrappers.containsKey(listener)) {</span>
+<span class="nc" id="L229">			final AnimatorListenerWrapper wrapper = new AnimatorListenerWrapper(listener, this);</span>
+<span class="nc" id="L230">			mListenerWrappers.put(listener, wrapper);</span>
+<span class="nc" id="L231">			mAnimator.addListener(wrapper);</span>
+		}
+<span class="nc" id="L233">	}</span>
+
+	/**
+	 */
+	@Override
+	public void removeListener(AnimatorListener listener) {
+<span class="nc" id="L239">		this.ensureListenerWrappers();</span>
+<span class="nc" id="L240">		final AnimatorListenerWrapper wrapper = mListenerWrappers.get(listener);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (wrapper != null) {</span>
+<span class="nc" id="L242">			mListenerWrappers.remove(listener);</span>
+<span class="nc" id="L243">			mAnimator.removeListener(wrapper);</span>
+		}
+<span class="nc" id="L245">	}</span>
+
+	/**
+	 * Ensures that the map with listener wrappers is initialized.
+	 */
+	private void ensureListenerWrappers() {
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (mListenerWrappers == null) this.mListenerWrappers = new ArrayMap&lt;&gt;(1);</span>
+<span class="nc" id="L252">	}</span>
+
+	/**
+	 * Ignored if there are no {@link #PAUSE} and {@link #RESUME} features requested.
+	 *
+	 * @see #requestFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	@Override
+	public void addPauseListener(AnimatorPauseListener listener) {
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.KITKAT) {</span>
+<span class="nc" id="L263">			return;</span>
+		}
+<span class="nc bnc" id="L265" title="All 4 branches missed.">		if (hasFeature(PAUSE) || hasFeature(RESUME)) {</span>
+<span class="nc" id="L266">			this.ensurePauseListenerWrappers();</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			if (!mPauseListenerWrappers.containsKey(listener)) {</span>
+<span class="nc" id="L268">				final AnimatorPauseListenerWrapper wrapper = new AnimatorPauseListenerWrapper(listener, this);</span>
+<span class="nc" id="L269">				mPauseListenerWrappers.put(listener, wrapper);</span>
+<span class="nc" id="L270">				mAnimator.addPauseListener(wrapper);</span>
+			}
+		}
+<span class="nc" id="L273">	}</span>
+
+	/**
+	 */
+	@Override
+	public void removePauseListener(AnimatorPauseListener listener) {
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.KITKAT){</span>
+<span class="nc" id="L280">			return;</span>
+		}
+<span class="nc" id="L282">		this.ensurePauseListenerWrappers();</span>
+<span class="nc" id="L283">		final AnimatorPauseListenerWrapper wrapper = mPauseListenerWrappers.get(listener);</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		if (wrapper != null) {</span>
+<span class="nc" id="L285">			mPauseListenerWrappers.remove(listener);</span>
+<span class="nc" id="L286">			mAnimator.removePauseListener(wrapper);</span>
+		}
+<span class="nc" id="L288">	}</span>
+
+	/**
+	 * Ensures that the map with pause listener wrappers is initialized.
+	 */
+	private void ensurePauseListenerWrappers() {
+<span class="nc bnc" id="L294" title="All 2 branches missed.">		if (mPauseListenerWrappers == null) this.mPauseListenerWrappers = new ArrayMap&lt;&gt;(1);</span>
+<span class="nc" id="L295">	}</span>
+
+	/**
+	 */
+	@Override
+	public ArrayList&lt;AnimatorListener&gt; getListeners() {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		return mListenerWrappers == null ?</span>
+				new ArrayList&lt;AnimatorListener&gt;(0) :
+<span class="nc" id="L303">				new ArrayList&lt;&gt;(mListenerWrappers.keySet());</span>
+	}
+
+	/**
+	 */
+	@Override
+	public void removeAllListeners() {
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (mListenerWrappers != null) {</span>
+<span class="nc" id="L311">			this.mListenerWrappers.clear();</span>
+<span class="nc" id="L312">			this.mListenerWrappers = null;</span>
+		}
+<span class="nc bnc" id="L314" title="All 2 branches missed.">		if (mPauseListenerWrappers != null) {</span>
+<span class="nc" id="L315">			this.mPauseListenerWrappers.clear();</span>
+<span class="nc" id="L316">			this.mPauseListenerWrappers = null;</span>
+		}
+<span class="nc" id="L318">		mAnimator.removeAllListeners();</span>
+<span class="nc" id="L319">	}</span>
+
+	/**
+	 */
+	@Override
+	public void setStartDelay(long startDelay) {
+<span class="nc" id="L325">		mAnimator.setStartDelay(startDelay);</span>
+<span class="nc" id="L326">	}</span>
+
+	/**
+	 */
+	@Override
+	public long getStartDelay() {
+<span class="nc" id="L332">		return mAnimator.getStartDelay();</span>
+	}
+
+	/**
+	 */
+	@Override
+	public Animator setDuration(long duration) {
+<span class="nc" id="L339">		mAnimator.setDuration(duration);</span>
+<span class="nc" id="L340">		return this;</span>
+	}
+
+	/**
+	 */
+	@Override
+	public long getDuration() {
+<span class="nc" id="L347">		return mAnimator.getDuration();</span>
+	}
+
+	/**
+	 */
+	@Override
+	public void setInterpolator(TimeInterpolator interpolator) {
+<span class="nc" id="L354">		mAnimator.setInterpolator(interpolator);</span>
+<span class="nc" id="L355">	}</span>
+
+	/**
+	 */
+	@Override
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+	public TimeInterpolator getInterpolator() {
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		return Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN_MR2 ? mAnimator.getInterpolator() : null;</span>
+	}
+
+	/**
+	 */
+	@Override
+	public void setTarget(Object target) {
+<span class="nc" id="L369">		mAnimator.setTarget(target);</span>
+<span class="nc" id="L370">	}</span>
+
+	/**
+	 * Ignored if there is no {@link #START} feature requested.
+	 *
+	 * @see #requestFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	@Override
+	public void start() {
+<span class="nc bnc" id="L380" title="All 2 branches missed.">		if (hasFeature(START)) mAnimator.start();</span>
+<span class="nc" id="L381">	}</span>
+
+	/**
+	 */
+	@Override
+	public boolean isStarted() {
+<span class="nc bnc" id="L387" title="All 4 branches missed.">		return Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.ICE_CREAM_SANDWICH &amp;&amp; mAnimator.isStarted();</span>
+	}
+
+	/**
+	 * Ignored if there is no {@link #PAUSE} feature requested.
+	 *
+	 * @see #requestFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	@Override
+	public void pause() {
+<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.KITKAT) {</span>
+<span class="nc" id="L399">			return;</span>
+		}
+<span class="nc bnc" id="L401" title="All 2 branches missed.">		if (hasFeature(PAUSE)) {</span>
+<span class="nc" id="L402">			mAnimator.pause();</span>
+		}
+<span class="nc" id="L404">	}</span>
+
+	/**
+	 */
+	@Override
+	public boolean isPaused() {
+<span class="nc bnc" id="L410" title="All 4 branches missed.">		return Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT &amp;&amp; mAnimator.isPaused();</span>
+	}
+
+
+	/**
+	 * Ignored if there are no {@link #PAUSE} and {@link #RESUME} features requested.
+	 *
+	 * @see #requestFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	@Override
+	public void resume() {
+<span class="nc bnc" id="L422" title="All 2 branches missed.">		if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.KITKAT) {</span>
+<span class="nc" id="L423">			return;</span>
+		}
+<span class="nc bnc" id="L425" title="All 4 branches missed.">		if (hasFeature(PAUSE) || !hasFeature(RESUME)) {</span>
+<span class="nc" id="L426">			mAnimator.resume();</span>
+		}
+<span class="nc" id="L428">	}</span>
+
+	/**
+	 * Ignored if there are no {@link #START} and {@link #END} features requested.
+	 *
+	 * @see #requestFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	@Override
+	public void end() {
+<span class="nc bnc" id="L438" title="All 4 branches missed.">		if (hasFeature(START) || hasFeature(END)) mAnimator.end();</span>
+<span class="nc" id="L439">	}</span>
+
+	/**
+	 * Ignored if there are no {@link #START} and {@link #CANCEL} features requested.
+	 *
+	 * @see #requestFeature(int)
+	 * @see #removeFeature(int)
+	 */
+	@Override
+	public void cancel() {
+<span class="nc bnc" id="L449" title="All 4 branches missed.">		if (hasFeature(START) || hasFeature(CANCEL)) mAnimator.cancel();</span>
+<span class="nc" id="L450">	}</span>
+
+	/**
+	 */
+	@Override
+	public boolean isRunning() {
+<span class="nc" id="L456">		return mAnimator.isRunning();</span>
+	}
+
+	/**
+	 * Inner classes ===============================================================================
+	 */
+
+	/**
+	 * Base class for animator listener wrappers used by {@link AnimatorWrapper} to support proper
+	 * dispatching of animation callbacks to the wrapped listener.
+	 *
+	 * @param &lt;L&gt; Type of the listener to wrap.
+	 */
+	private static class BaseAnimatorListenerWrapper&lt;L&gt; {
+
+		/**
+		 * Wrapped instance of animator listener.
+		 */
+		final L listener;
+
+		/**
+		 * Animator wrapper to be dispatched with occurred animation callbacks.
+		 */
+		final Animator animatorWrapper;
+
+		/**
+		 * Creates a new instance of BaseAnimatorListenerWrapper to wrap the given instance of animator
+		 * &lt;var&gt;listener&lt;/var&gt;.
+		 *
+		 * @param listener        The listener to be wrapped.
+		 * @param animatorWrapper The animator wrapper to be dispatched with occurred animation callbacks
+		 *                        to ensure that the original listener always communicates with the
+		 *                        wrapped animator through its wrapper.
+		 */
+<span class="nc" id="L490">		BaseAnimatorListenerWrapper(L listener, Animator animatorWrapper) {</span>
+<span class="nc" id="L491">			this.listener = listener;</span>
+<span class="nc" id="L492">			this.animatorWrapper = animatorWrapper;</span>
+<span class="nc" id="L493">		}</span>
+	}
+
+	/**
+	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorListener}.
+	 */
+	private static final class AnimatorListenerWrapper extends BaseAnimatorListenerWrapper&lt;AnimatorListener&gt;
+			implements
+			AnimatorListener {
+
+		/**
+		 * Creates a new instance of AnimatorListenerWrapper to wrap the given instance of animator
+		 * &lt;var&gt;listener&lt;/var&gt;.
+		 *
+		 * @see BaseAnimatorListenerWrapper#BaseAnimatorListenerWrapper(Object, Animator)
+		 */
+		AnimatorListenerWrapper(AnimatorListener listener, Animator animatorWrapper) {
+<span class="nc" id="L510">			super(listener, animatorWrapper);</span>
+<span class="nc" id="L511">		}</span>
+
+		/**
+		 */
+		@Override
+		public void onAnimationStart(Animator animation) {
+<span class="nc" id="L517">			listener.onAnimationStart(animatorWrapper);</span>
+<span class="nc" id="L518">		}</span>
+
+		/**
+		 */
+		@Override
+		public void onAnimationEnd(Animator animation) {
+<span class="nc" id="L524">			listener.onAnimationEnd(animatorWrapper);</span>
+<span class="nc" id="L525">		}</span>
+
+		/**
+		 */
+		@Override
+		public void onAnimationCancel(Animator animation) {
+<span class="nc" id="L531">			listener.onAnimationCancel(animatorWrapper);</span>
+<span class="nc" id="L532">		}</span>
+
+		/**
+		 */
+		@Override
+		public void onAnimationRepeat(Animator animation) {
+<span class="nc" id="L538">			listener.onAnimationRepeat(animatorWrapper);</span>
+<span class="nc" id="L539">		}</span>
+	}
+
+	/**
+	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorPauseListener}.
+	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	private static final class AnimatorPauseListenerWrapper extends BaseAnimatorListenerWrapper&lt;AnimatorPauseListener&gt;
+			implements
+			AnimatorPauseListener {
+
+		/**
+		 * Creates a new instance of AnimatorPauseListenerWrapper to wrap the given instance of animator
+		 * &lt;var&gt;listener&lt;/var&gt;.
+		 *
+		 * @see BaseAnimatorListenerWrapper#BaseAnimatorListenerWrapper(Object, Animator)
+		 */
+		AnimatorPauseListenerWrapper(AnimatorPauseListener listener, Animator animatorWrapper) {
+<span class="nc" id="L557">			super(listener, animatorWrapper);</span>
+<span class="nc" id="L558">		}</span>
+
+		/**
+		 */
+		@Override
+		public void onAnimationPause(Animator animation) {
+<span class="nc" id="L564">			listener.onAnimationPause(animatorWrapper);</span>
+<span class="nc" id="L565">		}</span>
+
+		/**
+		 */
+		@Override
+		public void onAnimationResume(Animator animation) {
+<span class="nc" id="L571">			listener.onAnimationResume(animatorWrapper);</span>
+<span class="nc" id="L572">		}</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>
