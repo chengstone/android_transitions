@@ -5,10 +5,10 @@ set -ex
 # Setup script constants.
 TEMP_DIR=website-temp
 LIBRARY_NAME=transitions
-LIBRARY_ARTIFACT_NAME=$LIBRARY_NAME
+LIBRARY_ARTIFACT_NAME="${LIBRARY_NAME//_/-}"
 LIBRARY_VERSION=1.0.1
 LIBRARY_REPO="git@github.com:universum-studios/android_${LIBRARY_NAME}.git"
-LIBRARY_DIR_ARTIFACTS=../artifacts/universum/studios/android/$LIBRARY_NAME/$LIBRARY_VERSION/
+LIBRARY_DIR_ARTIFACTS=../artifacts/universum/studios/android/$LIBRARY_ARTIFACT_NAME/$LIBRARY_VERSION/
 LIBRARY_JAVADOC_FILE_NAME="${LIBRARY_ARTIFACT_NAME}-${LIBRARY_VERSION}-javadoc.jar"
 LIBRARY_DIR_TESTS=../library/build/reports/androidTests/connected/
 LIBRARY_DIR_COVERAGE=../library/build/reports/coverage/debug/
