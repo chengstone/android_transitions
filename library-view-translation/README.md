@@ -1,7 +1,7 @@
 Transitions-View-Translation
 ===============
 
-This module contains ...
+This module will contain `Translation` transition which is implementation of `Visibility` transition.
 
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)

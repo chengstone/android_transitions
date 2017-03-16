@@ -1,7 +1,8 @@
 Transitions-View-Scale
 ===============
 
-This module contains ...
+This module contains `Scale` transition which is implementation of `Visibility` transition. 
+This transition may be used to either **scale up** or **scale down** a desired view.
 
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)

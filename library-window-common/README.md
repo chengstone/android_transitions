@@ -1,7 +1,8 @@
 Transitions-Window-Common
 ===============
 
-This module contains ...
+This module contains **common** implementations of `WindowTransition` along with appropriate
+animation resources.
 
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)

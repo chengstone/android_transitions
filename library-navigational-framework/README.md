@@ -1,7 +1,8 @@
 Transitions-Navigational-Framework
 ===============
 
-This module contains ...
+This module contains implementation of `BaseNavigationalTransition` that may be used in context
+of `Fragment` from the `android.app` package.
 
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)

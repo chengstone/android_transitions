@@ -1,7 +1,7 @@
 Transitions-Navigational-Base
 ===============
 
-This module contains ...
+This module contains base implementation for navigational transitions.
 
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
