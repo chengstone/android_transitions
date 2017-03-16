@@ -27,6 +27,7 @@ android {
 
     defaultConfig {
         minSdkVersion project.property('library.minSdkVersion')
+        targetSdkVersion project.property('library.targetSdkVersion')
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

@@ -28,15 +28,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.samples.ui.SamplesFragment;
-import universum.studios.android.samples.ui.widget.SamplesOnDataSetActionListener;
+import universum.studios.android.support.samples.ui.SamplesFragment;
+import universum.studios.android.widget.adapter.OnDataSetActionListener;
 
 /**
  * @author Martin Albedinsky
  */
 public final class ViewTransitionsFragment extends SamplesFragment
 		implements
-		SamplesOnDataSetActionListener<ViewTransitionsAdapter> {
+		OnDataSetActionListener<ViewTransitionsAdapter> {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "ViewTransitionsFragment";
@@ -53,7 +53,7 @@ public final class ViewTransitionsFragment extends SamplesFragment
 		final RecyclerView recyclerView = (RecyclerView) view.findViewById(android.R.id.list);
 		recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 		final ViewTransitionsAdapter adapter = new ViewTransitionsAdapter(getActivity());
-		adapter.setOnDataSetActionListener(this);
+		adapter.registerOnDataSetActionListener(this);
 		recyclerView.setAdapter(adapter);
 	}
 

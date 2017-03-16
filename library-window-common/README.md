@@ -1,6 +1,8 @@
 Transitions-Window-Common
 ===============
 
+This module contains ...
+
 ## Download ##
 [![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
 
@@ -10,3 +12,9 @@ Transitions-Window-Common
 
 _depends on:_
 [transitions-window-core](https://github.com/universum-studios/android_transitions/tree/master/library-window-core)
+
+## Components ##
+
+Below are listed some of **primary components** that are available in this module:
+
+- [WindowTransitions](https://github.com/universum-studios/android_transitions/blob/master/library-window-common/src/main/java/universum/studios/android/transition/WindowTransitions.java)

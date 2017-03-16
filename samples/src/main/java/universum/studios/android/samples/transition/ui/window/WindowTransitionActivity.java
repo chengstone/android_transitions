@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.samples.ui.SamplesActivity;
+import universum.studios.android.support.samples.ui.SamplesActivity;
 import universum.studios.android.transition.WindowTransition;
 
 /**

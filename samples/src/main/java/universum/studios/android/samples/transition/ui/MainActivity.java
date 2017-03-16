@@ -23,12 +23,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
-import universum.studios.android.fragment.manage.FragmentController;
-import universum.studios.android.fragment.transition.FragmentTransitions;
+import universum.studios.android.support.fragment.manage.FragmentController;
+import universum.studios.android.support.fragment.transition.FragmentTransitions;
 import universum.studios.android.samples.transition.R;
 import universum.studios.android.samples.transition.ui.view.ViewTransitionsFragment;
 import universum.studios.android.samples.transition.ui.window.WindowTransitionsFragment;
-import universum.studios.android.samples.ui.SamplesNavigationActivity;
+import universum.studios.android.support.samples.ui.SamplesMainFragment;
+import universum.studios.android.support.samples.ui.SamplesNavigationActivity;
 
 /**
  * @author Martin Albedinsky
@@ -45,16 +46,13 @@ public final class MainActivity extends SamplesNavigationActivity {
 		super.onCreate(savedInstanceState);
 		this.fragmentController = new FragmentController(this);
 		this.fragmentController.setViewContainerId(R.id.samples_container);
-		if (savedInstanceState == null) {
-			fragmentController.newRequest(new HomeFragment()).execute();
-		}
 	}
 
 	@Override
 	protected boolean onHandleNavigationItemSelected(@NonNull MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.navigation_item_home:
-				fragmentController.newRequest(new HomeFragment())
+				fragmentController.newRequest(new SamplesMainFragment())
 						.transition(FragmentTransitions.CROSS_FADE)
 						.replaceSame(true)
 						.execute();
@@ -72,6 +70,6 @@ public final class MainActivity extends SamplesNavigationActivity {
 						.execute();
 				return true;
 		}
-		return true;
+		return super.onHandleNavigationItemSelected(item);
 	}
 }

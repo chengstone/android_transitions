@@ -76,6 +76,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${androidSupportVersion}"
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    compile 'universum.studios.android:samples:0.1.2@aar'
-    compile 'universum.studios.android:fragments:1.0.1@aar'
+    compile 'universum.studios.android.support:support-samples:0.1.3@aar'
+    compile 'universum.studios.android:widget-adapters:1.0.1@aar'
+    compile 'universum.studios.android.support:support-fragments:1.1.1@aar'
 }

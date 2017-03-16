@@ -25,7 +25,7 @@ import android.view.View;
 
 import butterknife.OnClick;
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.samples.ui.SamplesActivity;
+import universum.studios.android.support.samples.ui.SamplesActivity;
 import universum.studios.android.transition.NavigationalTransition;
 
 /**
