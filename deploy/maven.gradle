@@ -80,7 +80,7 @@ afterEvaluate { project ->
  */
 task updateArtifacts() {
     final String mavenLocalDir = System.getenv('MAVEN_URL_LOCAL')
-    if (!Boolean.parseBoolean(System.getenv('TRAVIS')) && mavenLocalDir != null) {
+    if (mavenLocalDir != null && !Boolean.parseBoolean(System.getenv('TRAVIS'))) {
         final String artifactId = String.valueOf(project.property('maven.pom.artifactId'))
         final String artifactsSourceDir = "${mavenLocalDir}\\universum\\studios\\android\\${artifactId}\\${libraryVersion}"
         final String artifactsDestinationDir = "..\\artifacts\\universum\\studios\\android\\${artifactId}\\${libraryVersion}"

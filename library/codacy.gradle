@@ -40,16 +40,14 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn: 'createDebugCoverageRepor
     } else {
         token = System.getenv('CODACY_PROJECT_TOKEN')
     }
-    if (token != null) {
-        main = "com.codacy.CodacyCoverageReporter"
-        classpath = configurations.codacy
-        args = [
-                "-l",
-                "Java",
-                "-r",
-                "${buildDir}/reports/coverage/debug/report.xml",
-                "--projectToken",
-                token
-        ]
-    }
+    main = "com.codacy.CodacyCoverageReporter"
+    classpath = configurations.codacy
+    args = [
+            "-l",
+            "Java",
+            "-r",
+            "${buildDir}/reports/coverage/debug/report.xml",
+            "--projectToken",
+            token == null ? "NO_TOKEN" : token
+    ]
 }

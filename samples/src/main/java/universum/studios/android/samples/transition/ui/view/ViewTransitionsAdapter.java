@@ -26,12 +26,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.samples.ui.widget.SamplesRecyclerAdapter;
+import universum.studios.android.widget.adapter.SimpleRecyclerAdapter;
 
 /**
  * @author Martin Albedinsky
  */
-final class ViewTransitionsAdapter extends SamplesRecyclerAdapter<ViewTransition, ViewTransitionsAdapter.ItemHolder> {
+final class ViewTransitionsAdapter extends SimpleRecyclerAdapter<ViewTransition, ViewTransitionsAdapter.ItemHolder> {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "WindowTransitionsAdapter";

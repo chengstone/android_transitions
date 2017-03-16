@@ -24,7 +24,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.samples.ui.SamplesActivity;
+import universum.studios.android.support.samples.ui.SamplesActivity;
 
 /**
  * @author Martin Albedinsky

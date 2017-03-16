@@ -24,6 +24,9 @@
 	<!-- ### APPLICATION ======================================================================= -->
 
 	<string name="app_name">Transitions</string>
+	<string name="app_intro">
+		Welcome to the Transitions sample App.
+	</string>
 
 	<!-- ### NAVIGATION ======================================================================== -->
 
