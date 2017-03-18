@@ -22,13 +22,13 @@ apply plugin: 'com.android.library'
  * Library options =================================================================================
  */
 android {
-    compileSdkVersion Integer.valueOf((String) project.property('android.compileSdkVersion'))
-    buildToolsVersion project.property('android.buildToolsVersion')
+    compileSdkVersion config.build.compileSdkVersion
+    buildToolsVersion config.build.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion project.property('library.minSdkVersion')
-        targetSdkVersion project.property('library.targetSdkVersion')
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion config.build.minSdkVersion
+        targetSdkVersion config.build.targetSdkVersion
+        testInstrumentationRunner config.test.instrumentationRunner
     }
 
     buildTypes {
@@ -75,15 +75,15 @@ android {
  * Library dependencies ============================================================================
  */
 repositories {
-    maven { url = '../artifacts/' }
+    maven { url = repos.project.artifacts }
 }
 
 dependencies {
     /*
      * RELEASE DEPENDENCIES ------------------------------------------------------------------------
      */
-    compile releaseDependencies.androidSupportAnnotations
-    releaseCompile "universum.studios.android:transitions-util:${libraryVersion}@aar"
+    compile deps.androidSupport.annotations
+    releaseCompile "universum.studios.android:transitions-util:${config.library.version}@aar"
 
     /*
      * DEBUG DEPENDENCIES --------------------------------------------------------------------------
