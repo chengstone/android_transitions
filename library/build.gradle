@@ -71,6 +71,21 @@ android {
                 '../library-window-extra/src/main/res'
         ]
         debug.res.srcDirs = release.res.srcDirs
+        androidTest.java.srcDirs = [
+                '../library/src/androidTest/java',
+                '../library-core/src/androidTest/java',
+                '../library-navigational-base/src/androidTest/java',
+                '../library-navigational-compat/src/androidTest/java',
+                '../library-navigational-framework/src/androidTest/java',
+                '../library-view-core/src/androidTest/java',
+                '../library-view-reveal/src/androidTest/java',
+                '../library-view-scale/src/androidTest/java',
+                '../library-view-translation/src/androidTest/java',
+                '../library-window-core/src/androidTest/java',
+                '../library-window-common/src/androidTest/java',
+                '../library-window-extra/src/androidTest/java',
+                '../library-util/src/androidTest/java'
+        ]
     }
 
     compileOptions {
