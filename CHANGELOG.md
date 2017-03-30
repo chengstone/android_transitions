@@ -8,7 +8,7 @@ Change-Log
   `configureIncomingTransitions(Activity)` and `configureOutgoingTransitions(Activity)`. The **outgoing**
   configuration method is by default called whenever `BaseNavigationalTransition.start(Activity)` is 
   invoked and the **incoming** configuration method should be called by the activity to which is the
-  calling activity transitioning in its `onCreate(Bundle)` method.
+  calling activity transitioning from its `onCreate(Bundle)` method.
 - `BaseNavigationalTransition.configureTransitionsOverlapping(Activity)` has been deprecated as its
   implementation has been moved into `configureIncomingTransitions(Activity)`.
 - `BaseNavigationalTransition` now also supports setting whether a transitioning shared elements should
