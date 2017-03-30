@@ -115,7 +115,7 @@ import java.util.List;
  */
 public abstract class BaseNavigationalTransition<T extends BaseNavigationalTransition> {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -183,15 +183,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	private static final int TRANSITION_SHARED_ELEMENT_EXIT = 0x00000001 << 7;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -305,7 +305,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	private TransitionInflater mTransitionInflater;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -327,7 +327,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 		this.mClassOfTransitionActivity = classOfTransitionActivity;
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -748,8 +748,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureTransitions(Activity)
 	 */
 	public void start(@NonNull Activity caller) {
-		configureTransitionsOverlapping(caller);
-		configureTransitions(caller);
+		configureOutgoingTransitions(caller);
 		onStart(caller);
 	}
 
@@ -841,6 +840,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	}
 
 	/**
+	 * <b>This method has been deprecated and will be removed in the next release.</b>
+	 * <p>
 	 * Specifies a boolean flags for a window of the specified <var>activity</var> determining whether
 	 * an enter or return transition can overlap or not based on the requested values for this
 	 * navigational transition.
@@ -852,8 +853,9 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *                 can overlap or not.
 	 * @see Window#setAllowEnterTransitionOverlap(boolean)
 	 * @see Window#setAllowReturnTransitionOverlap(boolean)
+	 * @deprecated Use {@link #configureIncomingTransitions(Activity)} instead.
 	 */
-	@SuppressLint("NewApi")
+	@Deprecated
 	public void configureTransitionsOverlapping(@NonNull Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
@@ -865,28 +867,92 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	}
 
 	/**
-	 * Attaches all transitions, including those for shared elements, specified for this navigational
-	 * transition to a window of the specified <var>activity</var> via one of
-	 * {@code Window#set...Transition(...)} methods.
-	 * <p>
-	 * <b>Note</b>, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android
-	 * versions this method does nothing.
+	 * This method groups calls to {@link #configureIncomingTransitions(Activity)} and
+	 * {@link #configureOutgoingTransitions(Activity)} into one call.
 	 *
-	 * @param activity The activity to which window should be transitions attached.
+	 * @param activity The activity of which window transitions to configure.
+	 */
+	public void configureTransitions(@NonNull Activity activity) {
+		configureIncomingTransitions(activity);
+		configureOutgoingTransitions(activity);
+	}
+
+	/**
+	 * Performs configuration of the given <var>activity's</var> window by attaching to it <b>enter</b>
+	 * and <b>return</b> transitions (those for shared elements including) specified for this navigational
+	 * transition. Also the configuration related to transitions overlapping will be performed here.
+	 * <p>
+	 * This method should be called from {@link Activity#onCreate(Bundle)} by the activity to which
+	 * is the calling activity transitioning. See also {@link #configureOutgoingTransitions(Activity)}.
+	 * <p>
+	 * <b>Note</b>, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android  versions this
+	 * method does nothing.
+	 *
+	 * @param activity The activity of which window transitions to configure.
 	 * @see Window#setEnterTransition(Transition)
 	 * @see Window#setReturnTransition(Transition)
-	 * @see Window#setReenterTransition(Transition)
-	 * @see Window#setExitTransition(Transition)
 	 * @see Window#setSharedElementEnterTransition(Transition)
 	 * @see Window#setSharedElementReturnTransition(Transition)
+	 * @see Window#setAllowEnterTransitionOverlap(boolean)
+	 * @see Window#setAllowReturnTransitionOverlap(boolean)
+	 */
+	public void configureIncomingTransitions(@NonNull Activity activity) {
+		if (MATERIAL_SUPPORT) {
+			final Window window = activity.getWindow();
+			if ((mSpecifiedTransitions & TRANSITION_ENTER) != 0) {
+				window.setEnterTransition(mEnterTransition);
+			}
+			if ((mSpecifiedTransitions & TRANSITION_RETURN) != 0) {
+				window.setReturnTransition(mReturnTransition);
+			}
+			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_ENTER) != 0) {
+				window.setSharedElementEnterTransition(mSharedElementEnterTransition);
+			}
+			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_RETURN) != 0) {
+				window.setSharedElementReturnTransition(mSharedElementReturnTransition);
+			}
+			if (mAllowEnterTransitionOverlap != null) {
+				window.setAllowEnterTransitionOverlap(mAllowEnterTransitionOverlap);
+			}
+			if (mAllowReturnTransitionOverlap != null) {
+				window.setAllowReturnTransitionOverlap(mAllowReturnTransitionOverlap);
+			}
+		}
+	}
+
+	/**
+	 * Performs configuration of the given <var>activity's</var> window by attaching to it <b>reenter</b>
+	 * and <b>exit</b> transitions (those for shared elements including) specified for this navigational
+	 * transition.
+	 * <p>
+	 * This method is by default invoked whenever {@link #start(Activity)} is called for this
+	 * navigational transition. Its counterpart, {@link #configureIncomingTransitions(Activity)},
+	 * should be called by the activity to which is the calling activity transitioning.
+	 * <p>
+	 * <b>Note</b>, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android  versions this
+	 * method does nothing.
+	 *
+	 * @param activity The activity of which window transitions to configure.
+	 * @see Window#setReenterTransition(Transition)
+	 * @see Window#setExitTransition(Transition)
 	 * @see Window#setSharedElementReenterTransition(Transition)
 	 * @see Window#setSharedElementExitTransition(Transition)
 	 */
-	public void configureTransitions(@NonNull Activity activity) {
+	public void configureOutgoingTransitions(@NonNull Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
-			this.attachTransitions(window);
-			this.attachSharedElementTransitions(window);
+			if ((mSpecifiedTransitions & TRANSITION_REENTER) != 0) {
+				window.setReenterTransition(mReenterTransition);
+			}
+			if ((mSpecifiedTransitions & TRANSITION_EXIT) != 0) {
+				window.setExitTransition(mExitTransition);
+			}
+			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_REENTER) != 0) {
+				window.setSharedElementReenterTransition(mSharedElementReenterTransition);
+			}
+			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_EXIT) != 0) {
+				window.setSharedElementExitTransition(mSharedElementExitTransition);
+			}
 		}
 	}
 
@@ -900,14 +966,6 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void attachTransitions(Window window) {
-		if ((mSpecifiedTransitions & TRANSITION_ENTER) != 0)
-			window.setEnterTransition(mEnterTransition);
-		if ((mSpecifiedTransitions & TRANSITION_REENTER) != 0)
-			window.setReenterTransition(mReenterTransition);
-		if ((mSpecifiedTransitions & TRANSITION_RETURN) != 0)
-			window.setReturnTransition(mReturnTransition);
-		if ((mSpecifiedTransitions & TRANSITION_EXIT) != 0)
-			window.setExitTransition(mExitTransition);
 	}
 
 	/**
@@ -921,14 +979,6 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void attachSharedElementTransitions(Window window) {
-		if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_ENTER) != 0)
-			window.setSharedElementEnterTransition(mSharedElementEnterTransition);
-		if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_REENTER) != 0)
-			window.setSharedElementReenterTransition(mSharedElementReenterTransition);
-		if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_RETURN) != 0)
-			window.setSharedElementReturnTransition(mSharedElementReturnTransition);
-		if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_EXIT) != 0)
-			window.setSharedElementExitTransition(mSharedElementExitTransition);
 
 	}
 
@@ -1006,7 +1056,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 		else caller.finish();
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

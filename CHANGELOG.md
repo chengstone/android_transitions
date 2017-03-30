@@ -1,6 +1,18 @@
 Change-Log
 ===============
 
+### Release 1.0.2 ###
+> --.--.2017
+
+- Implementation of `BaseNavigationalTransition.configureTransitions(Activity)` has been split into
+  `BaseNavigationalTransition.configureIncomingTransitions(Activity)` and
+  `BaseNavigationalTransition.configureOutgoingTransitions(Activity)`. The **outgoing** configuration
+  method is by default called whenever `BaseNavigationalTransition.start(Activity)` is invoked and
+  the **incoming** configuration method should be called by the activity to which is the calling
+  activity transitioning in its `onCreate(Bundle)` method.
+- `BaseNavigationalTransition.configureTransitionsOverlapping(Activity)` has been deprecated as its
+  implementation has been moved into `BaseNavigationalTransition.configureIncomingTransitions(Activity)`.
+
 ### Release 1.0.1 ###
 > 16.02.2017
 

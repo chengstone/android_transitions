@@ -38,7 +38,7 @@ import android.support.annotation.NonNull;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class NavigationalTransition extends BaseNavigationalTransition<NavigationalTransition> {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -47,19 +47,19 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 */
 	// private static final String TAG = "NavigationalTransition";
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -81,7 +81,7 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 		super(classOfTransitionActivity);
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -154,7 +154,7 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 		onFinish(caller.getActivity());
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

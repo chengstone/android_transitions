@@ -35,7 +35,7 @@ import android.support.v4.app.Fragment;
  */
 public class NavigationalTransitionCompat extends BaseNavigationalTransition<NavigationalTransitionCompat> {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -44,19 +44,19 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition<Nav
 	 */
 	// private static final String TAG = "NavigationalTransition";
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -78,7 +78,7 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition<Nav
 		super(classOfTransitionActivity);
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -151,7 +151,7 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition<Nav
 		onFinish(caller.getActivity());
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

@@ -31,7 +31,7 @@ import android.support.annotation.NonNull;
  */
 public class BasicWindowTransition implements WindowTransition {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -40,11 +40,11 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 	// private static final String TAG = "BasicWindowTransition";
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
@@ -68,7 +68,7 @@ public class BasicWindowTransition implements WindowTransition {
 		}
 	};
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -97,7 +97,7 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 	private final String mName;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -153,7 +153,7 @@ public class BasicWindowTransition implements WindowTransition {
 		this.mName = source.readString();
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -229,7 +229,7 @@ public class BasicWindowTransition implements WindowTransition {
 		activity.overridePendingTransition(mFinishEnterAnimRes, mFinishExitAnimRes);
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

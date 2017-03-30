@@ -39,7 +39,7 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AnimatorWrapper extends Animator {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -117,15 +117,15 @@ public class AnimatorWrapper extends Animator {
 	 */
 	public static final int ALL = START | PAUSE | RESUME | END | CANCEL;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -153,7 +153,7 @@ public class AnimatorWrapper extends Animator {
 	 */
 	private ArrayMap<AnimatorPauseListener, AnimatorPauseListenerWrapper> mPauseListenerWrappers;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -167,7 +167,7 @@ public class AnimatorWrapper extends Animator {
 		this.mAnimator = animator;
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -456,7 +456,7 @@ public class AnimatorWrapper extends Animator {
 		return mAnimator.isRunning();
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 

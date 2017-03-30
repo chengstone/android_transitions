@@ -55,7 +55,7 @@ import java.lang.annotation.RetentionPolicy;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Scale extends Visibility {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -87,15 +87,15 @@ public class Scale extends Visibility {
 	 */
 	private static final float SCALE_FRACTION = 0.5f;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -129,7 +129,7 @@ public class Scale extends Visibility {
 	 */
 	private float mPivotYFraction = SCALE_FRACTION;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -177,7 +177,7 @@ public class Scale extends Visibility {
 		typedArray.recycle();
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -341,7 +341,7 @@ public class Scale extends Visibility {
 		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 

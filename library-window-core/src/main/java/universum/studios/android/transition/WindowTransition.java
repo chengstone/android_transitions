@@ -54,7 +54,7 @@ import android.support.annotation.NonNull;
  */
 public interface WindowTransition extends Parcelable {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -63,7 +63,7 @@ public interface WindowTransition extends Parcelable {
 	 */
 	int NO_ANIMATION = 0;
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
