@@ -18,12 +18,18 @@
 */
 package universum.studios.android.transition;
 
+import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import universum.studios.android.test.BaseInstrumentedTest;
+import universum.studios.android.test.TestActivity;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 /**
  * @author Martin Albedinsky
@@ -34,8 +40,38 @@ public final class BaseNavigationalTransitionTest extends BaseInstrumentedTest {
 	@SuppressWarnings("unused")
 	private static final String TAG = "BaseNavigationalTransitionTest";
 
+	private BaseNavigationalTransition<NavigationalTransitionImpl> mEmptyTransition;
+	private BaseNavigationalTransition<NavigationalTransitionImpl> mTransitionWithActivity;
+
+	@Override
+	public void beforeTest() throws Exception {
+		super.beforeTest();
+		this.mEmptyTransition = new NavigationalTransitionImpl();
+		this.mTransitionWithActivity = new NavigationalTransitionImpl(TestActivity.class);
+	}
+
+	@Override
+	public void afterTest() throws Exception {
+		super.afterTest();
+		this.mEmptyTransition = null;
+		this.mTransitionWithActivity = null;
+	}
+
 	@Test
-	public void test() {
-		// todo:: implement test
+	public void testSharedElementsUseOverlay() {
+		assertThat(mEmptyTransition.sharedElementsUseOverlay(), is(false));
+		mEmptyTransition.sharedElementsUseOverlay(true);
+		assertThat(mEmptyTransition.sharedElementsUseOverlay(), is(true));
+	}
+
+	private static final class NavigationalTransitionImpl extends BaseNavigationalTransition<NavigationalTransitionImpl> {
+
+		NavigationalTransitionImpl() {
+			super();
+		}
+
+		NavigationalTransitionImpl(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+			super(classOfTransitionActivity);
+		}
 	}
 }
