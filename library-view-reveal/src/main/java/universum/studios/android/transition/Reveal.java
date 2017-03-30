@@ -67,7 +67,7 @@ import universum.studios.android.transition.util.AnimatorWrapper;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Reveal extends Visibility {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -105,15 +105,15 @@ public class Reveal extends Visibility {
 	 */
 	private static final float CENTER_FRACTION = 0.5f;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -202,7 +202,7 @@ public class Reveal extends Visibility {
 	 */
 	private int mDisappearVisibility = View.VISIBLE;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -266,7 +266,7 @@ public class Reveal extends Visibility {
 		typedArray.recycle();
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -976,7 +976,7 @@ public class Reveal extends Visibility {
 		return animatorWrapper;
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 
