@@ -21,10 +21,12 @@ package universum.studios.android.test;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
 /**
- * An activity that may be used for purpose of <b>Android Instrumented Tests</b>.
+ * Simple activity that may be used in <b>Android Instrumented Tests</b> in order to set up
+ * {@link ActivityTestRule}.
  *
  * @author Martin Albedinsky
  */

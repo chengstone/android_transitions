@@ -327,7 +327,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *                                  that to be started whenever {@link #start(Activity)} is called
 	 *                                  upon this navigational transition.
 	 */
-	public BaseNavigationalTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+	public BaseNavigationalTransition(@NonNull final Class<? extends Activity> classOfTransitionActivity) {
 		this.mClassOfTransitionActivity = classOfTransitionActivity;
 	}
 
@@ -345,7 +345,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #intentExtras()
 	 */
 	@SuppressWarnings("unchecked")
-	public T intentExtras(@Nullable Bundle extras) {
+	public T intentExtras(@Nullable final Bundle extras) {
 		this.mIntentExtras = extras;
 		return (T) this;
 	}
@@ -379,7 +379,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see Fragment#startActivityForResult(Intent, int)
 	 */
 	@SuppressWarnings("unchecked")
-	public T requestCode(@IntRange(from = RC_NONE) int requestCode) {
+	public T requestCode(@IntRange(from = RC_NONE) final int requestCode) {
 		this.mRequestCode = requestCode;
 		return (T) this;
 	}
@@ -404,7 +404,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T enterTransition(@Nullable Transition transition) {
+	public T enterTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_ENTER;
 		this.mEnterTransition = transition;
 		return (T) this;
@@ -432,7 +432,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T reenterTransition(@Nullable Transition transition) {
+	public T reenterTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_REENTER;
 		this.mReenterTransition = transition;
 		return (T) this;
@@ -459,7 +459,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T returnTransition(@Nullable Transition transition) {
+	public T returnTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_RETURN;
 		this.mReturnTransition = transition;
 		return (T) this;
@@ -487,7 +487,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T exitTransition(@Nullable Transition transition) {
+	public T exitTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_EXIT;
 		this.mExitTransition = transition;
 		return (T) this;
@@ -516,7 +516,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T allowEnterTransitionOverlap(boolean allow) {
+	public T allowEnterTransitionOverlap(final boolean allow) {
 		this.mAllowEnterTransitionOverlap = allow;
 		return (T) this;
 	}
@@ -542,7 +542,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T allowReturnTransitionOverlap(boolean allow) {
+	public T allowReturnTransitionOverlap(final boolean allow) {
 		this.mAllowReturnTransitionOverlap = allow;
 		return (T) this;
 	}
@@ -567,7 +567,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T sharedElementEnterTransition(@Nullable Transition transition) {
+	public T sharedElementEnterTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_ENTER;
 		this.mSharedElementEnterTransition = transition;
 		return (T) this;
@@ -595,7 +595,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T sharedElementReenterTransition(@Nullable Transition transition) {
+	public T sharedElementReenterTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_REENTER;
 		this.mSharedElementReenterTransition = transition;
 		return (T) this;
@@ -623,7 +623,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T sharedElementReturnTransition(@Nullable Transition transition) {
+	public T sharedElementReturnTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_RETURN;
 		this.mSharedElementReturnTransition = transition;
 		return (T) this;
@@ -650,7 +650,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #inflateTransition(Context, int)
 	 */
 	@SuppressWarnings("unchecked")
-	public T sharedElementExitTransition(@Nullable Transition transition) {
+	public T sharedElementExitTransition(@Nullable final Transition transition) {
 		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_EXIT;
 		this.mSharedElementExitTransition = transition;
 		return (T) this;
@@ -680,7 +680,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T sharedElementsUseOverlay(boolean useOverlay) {
+	public T sharedElementsUseOverlay(final boolean useOverlay) {
 		this.mSharedElementUseOverlay = useOverlay;
 		return (T) this;
 	}
@@ -708,7 +708,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@Nullable
 	@SuppressLint("NewApi")
-	public Transition inflateTransition(@NonNull Context context, int resource) {
+	public Transition inflateTransition(@NonNull final Context context, final int resource) {
 		if (MATERIAL_SUPPORT) {
 			if (mTransitionInflater == null) {
 				this.mTransitionInflater = TransitionInflater.from(context);
@@ -732,7 +732,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@Nullable
 	@SuppressLint("NewApi")
-	public TransitionManager inflateTransitionManager(@NonNull Context context, int resource, @NonNull ViewGroup sceneRoot) {
+	public TransitionManager inflateTransitionManager(@NonNull final Context context, final int resource, @NonNull final ViewGroup sceneRoot) {
 		if (MATERIAL_SUPPORT) {
 			if (mTransitionInflater == null) {
 				this.mTransitionInflater = TransitionInflater.from(context);
@@ -776,7 +776,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #makeSceneTransitionAnimation(Activity)
 	 */
 	@SuppressWarnings("unchecked")
-	public T sharedElement(@NonNull View element, @NonNull String elementName) {
+	public T sharedElement(@NonNull final View element, @NonNull final String elementName) {
 		if (mSharedElements == null) {
 			this.mSharedElements = new ArrayList<>(1);
 		}
@@ -846,7 +846,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressLint("NewApi")
 	@SuppressWarnings("ConstantConditions")
-	protected void onStart(@NonNull Activity caller) {
+	protected void onStart(@NonNull final Activity caller) {
 		final Intent intent = createIntent(caller);
 		if (MATERIAL_SUPPORT) {
 			final Bundle options = makeSceneTransitionAnimation(caller).toBundle();
@@ -865,7 +865,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param caller The caller activity to finish.
 	 * @param delay  The desired delay after which to finish the caller activity.
 	 */
-	protected void finishCallerDelayed(@NonNull final Activity caller, @IntRange(from = 0) long delay) {
+	protected void finishCallerDelayed(@NonNull final Activity caller, @IntRange(from = 0) final long delay) {
 		final View decorView = caller.getWindow().getDecorView();
 		if (decorView != null) decorView.postDelayed(new Runnable() {
 
@@ -890,7 +890,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *
 	 * @param caller The caller activity to finish.
 	 */
-	protected void finishCaller(@NonNull Activity caller) {
+	protected void finishCaller(@NonNull final Activity caller) {
 		onFinishCaller(caller);
 	}
 
@@ -904,7 +904,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param caller The caller activity to finish.
 	 */
 	@SuppressLint("NewApi")
-	protected void onFinishCaller(@NonNull Activity caller) {
+	protected void onFinishCaller(@NonNull final Activity caller) {
 		if (MATERIAL_SUPPORT) caller.finishAfterTransition();
 		else caller.finish();
 	}
@@ -926,7 +926,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @deprecated Use {@link #configureIncomingTransitions(Activity)} instead.
 	 */
 	@Deprecated
-	public void configureTransitionsOverlapping(@NonNull Activity activity) {
+	public void configureTransitionsOverlapping(@NonNull final Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
 			if (mAllowEnterTransitionOverlap != null)
@@ -942,7 +942,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *
 	 * @param activity The activity of which window transitions to configure.
 	 */
-	public void configureTransitions(@NonNull Activity activity) {
+	public void configureTransitions(@NonNull final Activity activity) {
 		configureIncomingTransitions(activity);
 		configureOutgoingTransitions(activity);
 	}
@@ -966,7 +966,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see Window#setAllowEnterTransitionOverlap(boolean)
 	 * @see Window#setAllowReturnTransitionOverlap(boolean)
 	 */
-	public void configureIncomingTransitions(@NonNull Activity activity) {
+	public void configureIncomingTransitions(@NonNull final Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
 			if ((mSpecifiedTransitions & TRANSITION_ENTER) != 0) {
@@ -1011,7 +1011,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see Window#setSharedElementReenterTransition(Transition)
 	 * @see Window#setSharedElementExitTransition(Transition)
 	 */
-	public void configureOutgoingTransitions(@NonNull Activity activity) {
+	public void configureOutgoingTransitions(@NonNull final Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
 			if ((mSpecifiedTransitions & TRANSITION_REENTER) != 0) {
@@ -1045,7 +1045,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	@Nullable
 	@SuppressLint("NewApi")
 	@SuppressWarnings("unchecked")
-	public ActivityOptions makeSceneTransitionAnimation(@NonNull Activity caller) {
+	public ActivityOptions makeSceneTransitionAnimation(@NonNull final Activity caller) {
 		if (MATERIAL_SUPPORT) {
 			if (mSharedElements != null && !mSharedElements.isEmpty()) {
 				final Pair<View, String>[] pairs = new Pair[mSharedElements.size()];
@@ -1065,7 +1065,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * activity specified.
 	 */
 	@NonNull
-	public Intent createIntent(@NonNull Activity caller) {
+	public Intent createIntent(@NonNull final Activity caller) {
 		if (mClassOfTransitionActivity == null) {
 			throw new UnsupportedOperationException(
 					"Navigational transition(" + getClass().getSimpleName() + ") does not have any class of intended activity specified."
@@ -1084,7 +1084,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param caller The activity that should be finished and of which exit transitions should be started.
 	 * @see #start(Activity)
 	 */
-	public void finish(@NonNull Activity caller) {
+	public void finish(@NonNull final Activity caller) {
 		onFinish(caller);
 	}
 
@@ -1101,7 +1101,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @see #onStart(Activity)
 	 */
 	@SuppressLint("NewApi")
-	protected void onFinish(@NonNull Activity caller) {
+	protected void onFinish(@NonNull final Activity caller) {
 		if (MATERIAL_SUPPORT) caller.finishAfterTransition();
 		else caller.finish();
 	}

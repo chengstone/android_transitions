@@ -286,6 +286,6 @@ public final class WindowTransitions {
 	/**
 	 */
 	private WindowTransitions() {
-		// Creation of instances of this class is not publicly allowed.
+		// Not allowed to be instantiated publicly.
 	}
 }

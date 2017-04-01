@@ -2,7 +2,7 @@ Change-Log
 ===============
 
 ### Release 1.0.2 ###
-> --.--.2017
+> --.04.2017
 
 - Implementation of `BaseNavigationalTransition.configureTransitions(Activity)` has been split into
   `configureIncomingTransitions(Activity)` and `configureOutgoingTransitions(Activity)`. The **outgoing**
@@ -13,6 +13,8 @@ Change-Log
   implementation has been moved into `configureIncomingTransitions(Activity)`.
 - `BaseNavigationalTransition` now also supports setting whether a transitioning shared elements should
   use **overlay** or not via `sharedElementsUseOverlay(boolean)`.
+- Fixed **animation resource** for **enter back** animation of window transitions declared in 
+  `ExtranWindowTransitions` class
 
 ### Release 1.0.1 ###
 > 16.02.2017

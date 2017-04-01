@@ -25,6 +25,11 @@ import org.junit.runner.RunWith;
 
 import universum.studios.android.test.BaseInstrumentedTest;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.nullValue;
+
 /**
  * @author Martin Albedinsky
  */
@@ -35,7 +40,13 @@ public final class ExtraWindowTransitionsTest extends BaseInstrumentedTest {
 	private static final String TAG = "ExtraWindowTransitionsTest";
 
 	@Test
-	public void test() {
-		// todo:: implement test
+	public void testSLIDE_TO_RIGHT_AND_HOLD() {
+		final WindowTransition transition = ExtraWindowTransitions.SLIDE_TO_RIGHT_AND_HOLD;
+		assertThat(transition, is(not(nullValue())));
+		assertThat(transition.getStartEnterAnimation(), is(R.anim.ui_window_slide_in_right));
+		assertThat(transition.getStartExitAnimation(), is(R.anim.ui_window_hold));
+		assertThat(transition.getFinishEnterAnimation(), is(R.anim.ui_window_hold_back));
+		assertThat(transition.getFinishExitAnimation(), is(R.anim.ui_window_slide_out_left_back));
+		assertThat(transition.getName(), is("SLIDE_TO_RIGHT_AND_HOLD"));
 	}
 }
