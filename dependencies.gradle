@@ -3,10 +3,12 @@ def versions = [
         androidSupportVersion                  : '25.3.0',
         androidSupportTestVersion              : '0.5',
         androidSupportTestEspressoVersion      : '2.2.2',
-        butterknife                            : '8.5.1',
         universumStudiosSupportSamplesVersion  : '0.1.3',
         universumStudiosSupportFragmentsVersion: '1.1.1',
-        universumStudiosWidgetAdaptersVersion  : '1.0.1'
+        universumStudiosWidgetAdaptersVersion  : '1.0.1',
+        butterknifeVersion                     : '8.5.1',
+        junitVersion                           : '4.12',
+        mockitoVersion                         : '2.7.20'
 ]
 
 ext.versions = versions
@@ -22,7 +24,7 @@ def androidSupport = [
 ]
 
 def annotationProcessor = [
-        butterknife: "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+        butterknife: "com.jakewharton:butterknife-compiler:${versions.butterknifeVersion}"
 ]
 
 def test = [
@@ -32,8 +34,9 @@ def test = [
         androidEspressoCore      : "com.android.support.test.espresso:espresso-core:${versions.androidSupportTestEspressoVersion}",
         androidEspressoIntents   : "com.android.support.test.espresso:espresso-intents:${versions.androidSupportTestEspressoVersion}",
         androidEspressoContrib   : "com.android.support.test.espresso:espresso-contrib:${versions.androidSupportTestEspressoVersion}",
-        junit                    : 'junit:junit:4.12',
-        mockitoCore              : 'org.mockito:mockito-core:2.0.57-beta'
+        junit                    : "junit:junit:${versions.junitVersion}",
+        mockitoCore              : "org.mockito:mockito-core:${versions.mockitoVersion}",
+        mockitoAndroid           : "org.mockito:mockito-android:${versions.mockitoVersion}"
 ]
 
 def universumStudios = [
@@ -43,7 +46,7 @@ def universumStudios = [
 ]
 
 def other = [
-        butterknife: "com.jakewharton:butterknife:${versions.butterknife}"
+        butterknife: "com.jakewharton:butterknife:${versions.butterknifeVersion}"
 ]
 
 ext.deps = [

@@ -50,7 +50,7 @@ public final class ExtraWindowTransitions {
 			// Exit animation.
 			R.anim.ui_window_hold,
 			// Enter back animation.
-			R.anim.ui_window_hold,
+			R.anim.ui_window_hold_back,
 			// Exit back animation.
 			R.anim.ui_window_slide_out_left_back,
 			"SLIDE_TO_RIGHT_AND_HOLD"
@@ -74,7 +74,7 @@ public final class ExtraWindowTransitions {
 			// Exit animation.
 			R.anim.ui_window_hold,
 			// Enter back animation.
-			R.anim.ui_window_hold,
+			R.anim.ui_window_hold_back,
 			// Exit back animation.
 			R.anim.ui_window_slide_out_right_back,
 			"SLIDE_TO_LEFT_AND_HOLD"
@@ -98,7 +98,7 @@ public final class ExtraWindowTransitions {
 			// Exit animation.
 			R.anim.ui_window_hold,
 			// Enter back animation.
-			R.anim.ui_window_hold,
+			R.anim.ui_window_hold_back,
 			// Exit back animation.
 			R.anim.ui_window_slide_out_bottom_back,
 			"SLIDE_TO_TOP_AND_HOLD"
@@ -122,7 +122,7 @@ public final class ExtraWindowTransitions {
 			// Exit animation.
 			R.anim.ui_window_hold,
 			// Enter back animation.
-			R.anim.ui_window_hold,
+			R.anim.ui_window_hold_back,
 			// Exit back animation.
 			R.anim.ui_window_slide_out_top_back,
 			"SLIDE_TO_BOTTOM_AND_HOLD"
@@ -131,6 +131,6 @@ public final class ExtraWindowTransitions {
 	/**
 	 */
 	private ExtraWindowTransitions() {
-		// Creation of instances of this class is not publicly allowed.
+		// Not allowed to be instantiated publicly.
 	}
 }

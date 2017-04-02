@@ -55,7 +55,7 @@ import java.lang.annotation.RetentionPolicy;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Scale extends Visibility {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -87,15 +87,15 @@ public class Scale extends Visibility {
 	 */
 	private static final float SCALE_FRACTION = 0.5f;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -129,7 +129,7 @@ public class Scale extends Visibility {
 	 */
 	private float mPivotYFraction = SCALE_FRACTION;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -145,7 +145,7 @@ public class Scale extends Visibility {
 	 *
 	 * @param mode One of {@link #MODE_IN} or {@link #MODE_OUT} or theirs combination.
 	 */
-	public Scale(@ScaleMode int mode) {
+	public Scale(@ScaleMode final int mode) {
 		super();
 		setMode(mode);
 	}
@@ -158,7 +158,7 @@ public class Scale extends Visibility {
 	 * @param attrs   Set of attributes from which to obtain animation property values for the scale
 	 *                animation.
 	 */
-	public Scale(@NonNull Context context, @NonNull AttributeSet attrs) {
+	public Scale(@NonNull final Context context, @NonNull final AttributeSet attrs) {
 		super(context, attrs);
 		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);
 		final int n = typedArray.getIndexCount();
@@ -177,7 +177,7 @@ public class Scale extends Visibility {
 		typedArray.recycle();
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -191,7 +191,11 @@ public class Scale extends Visibility {
 	 * specified parameters when started.
 	 */
 	@NonNull
-	public static Animator createAnimator(@NonNull View view, @FloatRange(from = 0, to = 1) float startScale, @FloatRange(from = 0, to = 1) float endScale) {
+	public static Animator createAnimator(
+			@NonNull final View view,
+			@FloatRange(from = 0, to = 1) final float startScale,
+			@FloatRange(from = 0, to = 1) final float endScale
+	) {
 		return ObjectAnimator.ofPropertyValuesHolder(
 				view,
 				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale),
@@ -210,7 +214,7 @@ public class Scale extends Visibility {
 	 * @see #setPivotXFraction(float)
 	 * @see #setPivotY(Float)
 	 */
-	public void setPivotX(@Nullable Float pivotX) {
+	public void setPivotX(@Nullable final Float pivotX) {
 		this.mPivotX = pivotX;
 	}
 
@@ -236,7 +240,7 @@ public class Scale extends Visibility {
 	 * @see #setPivotYFraction(float)
 	 * @see #setPivotX(Float)
 	 */
-	public void setPivotY(@Nullable Float pivotY) {
+	public void setPivotY(@Nullable final Float pivotY) {
 		this.mPivotY = pivotY;
 	}
 
@@ -263,7 +267,7 @@ public class Scale extends Visibility {
 	 * @see #setPivotXFraction(float)
 	 * @see #setPivotX(Float)
 	 */
-	public void setPivotXFraction(@FloatRange(from = 0, to = 1) float fractionX) {
+	public void setPivotXFraction(@FloatRange(from = 0, to = 1) final float fractionX) {
 		this.mPivotXFraction = fractionX;
 	}
 
@@ -290,7 +294,7 @@ public class Scale extends Visibility {
 	 * @see #setPivotYFraction(float)
 	 * @see #setPivotY(Float)
 	 */
-	public void setPivotYFraction(@FloatRange(from = 0, to = 1) float fractionY) {
+	public void setPivotYFraction(@FloatRange(from = 0, to = 1) final float fractionY) {
 		this.mPivotYFraction = fractionY;
 	}
 
@@ -308,7 +312,7 @@ public class Scale extends Visibility {
 	/**
 	 */
 	@Override
-	public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
+	public Animator onAppear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
 		calculateTransitionProperties(view, 0f, 1f);
 		view.setPivotX(mInfo.pivotX);
 		view.setPivotY(mInfo.pivotY);
@@ -320,7 +324,7 @@ public class Scale extends Visibility {
 	/**
 	 */
 	@Override
-	public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
+	public Animator onDisappear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
 		calculateTransitionProperties(view, 1f, 0f);
 		view.setPivotX(mInfo.pivotX);
 		view.setPivotY(mInfo.pivotY);
@@ -334,14 +338,14 @@ public class Scale extends Visibility {
 	 *
 	 * @param view The view to which will be the transition applied.
 	 */
-	private void calculateTransitionProperties(View view, float startScale, float endScale) {
+	private void calculateTransitionProperties(final View view, final float startScale, final float endScale) {
 		mInfo.startScale = startScale;
 		mInfo.endScale = endScale;
 		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;
 		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 

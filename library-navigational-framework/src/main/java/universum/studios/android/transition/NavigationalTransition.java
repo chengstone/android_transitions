@@ -38,7 +38,7 @@ import android.support.annotation.NonNull;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class NavigationalTransition extends BaseNavigationalTransition<NavigationalTransition> {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -47,19 +47,19 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 */
 	// private static final String TAG = "NavigationalTransition";
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -77,17 +77,18 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 *                                  whenever starting this transition.
 	 * @see #createIntent(Activity)
 	 */
-	public NavigationalTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+	public NavigationalTransition(@NonNull final Class<? extends Activity> classOfTransitionActivity) {
 		super(classOfTransitionActivity);
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * Starts this navigational transition using the given <var>caller</var> fragment with all
-	 * transitions specified for this navigational transition.
+	 * Starts this navigational transition using the given <var>caller</var> fragment  with transitions
+	 * and shared elements that are configured for the caller's parent activity via
+	 * {@link #configureOutgoingTransitions(Activity)}.
 	 * <p>
 	 * <b>Note</b>, that unlike {@link ##start(Activity)} this cannot be used to start new activity
 	 * with shared elements presented. For that purpose use {@link #start(Activity)} instead.
@@ -97,10 +98,9 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * @see #configureTransitionsOverlapping(Activity)
 	 * @see #configureTransitions(Activity)
 	 */
-	public void start(@NonNull Fragment caller) {
+	public void start(@NonNull final Fragment caller) {
 		final Activity activity = caller.getActivity();
-		configureTransitionsOverlapping(activity);
-		configureTransitions(activity);
+		configureOutgoingTransitions(activity);
 		onStart(caller);
 	}
 
@@ -117,7 +117,7 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 */
 	@SuppressLint("NewApi")
 	@SuppressWarnings("ConstantConditions")
-	protected void onStart(@NonNull Fragment caller) {
+	protected void onStart(@NonNull final Fragment caller) {
 		final Activity activity = caller.getActivity();
 		final Intent intent = createIntent(activity);
 		if (MATERIAL_SUPPORT) {
@@ -137,7 +137,7 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 *               should be started.
 	 * @see #start(Fragment)
 	 */
-	public void finish(@NonNull Fragment caller) {
+	public void finish(@NonNull final Fragment caller) {
 		onFinish(caller);
 	}
 
@@ -150,11 +150,11 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * @param caller The fragment that requested finish of its host activity via this navigational transition.
 	 * @see #onStart(Fragment)
 	 */
-	protected void onFinish(@NonNull Fragment caller) {
+	protected void onFinish(@NonNull final Fragment caller) {
 		onFinish(caller.getActivity());
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

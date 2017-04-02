@@ -31,7 +31,7 @@ import android.support.annotation.NonNull;
  */
 public class BasicWindowTransition implements WindowTransition {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -40,11 +40,11 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 	// private static final String TAG = "BasicWindowTransition";
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
@@ -56,19 +56,19 @@ public class BasicWindowTransition implements WindowTransition {
 		/**
 		 */
 		@Override
-		public BasicWindowTransition createFromParcel(Parcel source) {
+		public BasicWindowTransition createFromParcel(@NonNull final Parcel source) {
 			return new BasicWindowTransition(source);
 		}
 
 		/**
 		 */
 		@Override
-		public BasicWindowTransition[] newArray(int size) {
+		public BasicWindowTransition[] newArray(final int size) {
 			return new BasicWindowTransition[size];
 		}
 	};
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -97,7 +97,7 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 	private final String mName;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -105,7 +105,7 @@ public class BasicWindowTransition implements WindowTransition {
 	 * Same as {@link #BasicWindowTransition(int, int, int, int)} finish animations set to
 	 * {@link #NO_ANIMATION}.
 	 */
-	public BasicWindowTransition(@AnimRes int enterAnim, @AnimRes int exitAnim) {
+	public BasicWindowTransition(@AnimRes final int enterAnim, @AnimRes final int exitAnim) {
 		this(enterAnim, exitAnim, NO_ANIMATION, NO_ANIMATION);
 	}
 
@@ -113,7 +113,12 @@ public class BasicWindowTransition implements WindowTransition {
 	 * Same as {@link #BasicWindowTransition(int, int, int, int, String)} with name specified
 	 * as {@code "UNKNOWN"}.
 	 */
-	public BasicWindowTransition(@AnimRes int startEnterAnim, @AnimRes int startExitAnim, @AnimRes int finishEnterAnim, @AnimRes int finishExitAnim) {
+	public BasicWindowTransition(
+			@AnimRes final int startEnterAnim,
+			@AnimRes final int startExitAnim,
+			@AnimRes final int finishEnterAnim,
+			@AnimRes final int finishExitAnim
+	) {
 		this(startEnterAnim, startExitAnim, finishEnterAnim, finishExitAnim, "UNKNOWN");
 	}
 
@@ -131,7 +136,13 @@ public class BasicWindowTransition implements WindowTransition {
 	 * @see #overrideStart(Activity)
 	 * @see #overrideFinish(Activity)
 	 */
-	public BasicWindowTransition(@AnimRes int startEnterAnim, @AnimRes int startExitAnim, @AnimRes int finishEnterAnim, @AnimRes int finishExitAnim, @NonNull String name) {
+	public BasicWindowTransition(
+			@AnimRes final int startEnterAnim,
+			@AnimRes final int startExitAnim,
+			@AnimRes final int finishEnterAnim,
+			@AnimRes final int finishExitAnim,
+			@NonNull final String name
+	) {
 		this.mStartEnterAnimRes = startEnterAnim;
 		this.mStartExitAnimRes = startExitAnim;
 		this.mFinishEnterAnimRes = finishEnterAnim;
@@ -145,7 +156,7 @@ public class BasicWindowTransition implements WindowTransition {
 	 *
 	 * @param source Parcel with data for the new instance.
 	 */
-	protected BasicWindowTransition(@NonNull Parcel source) {
+	protected BasicWindowTransition(@NonNull final Parcel source) {
 		this.mStartEnterAnimRes = source.readInt();
 		this.mStartExitAnimRes = source.readInt();
 		this.mFinishEnterAnimRes = source.readInt();
@@ -153,14 +164,14 @@ public class BasicWindowTransition implements WindowTransition {
 		this.mName = source.readString();
 	}
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
 	/**
 	 */
 	@Override
-	public void writeToParcel(Parcel dest, int flags) {
+	public void writeToParcel(@NonNull final Parcel dest, final int flags) {
 		dest.writeInt(mStartEnterAnimRes);
 		dest.writeInt(mStartExitAnimRes);
 		dest.writeInt(mFinishEnterAnimRes);
@@ -218,18 +229,18 @@ public class BasicWindowTransition implements WindowTransition {
 	/**
 	 */
 	@Override
-	public void overrideStart(@NonNull Activity activity) {
+	public void overrideStart(@NonNull final Activity activity) {
 		activity.overridePendingTransition(mStartEnterAnimRes, mStartExitAnimRes);
 	}
 
 	/**
 	 */
 	@Override
-	public void overrideFinish(@NonNull Activity activity) {
+	public void overrideFinish(@NonNull final Activity activity) {
 		activity.overridePendingTransition(mFinishEnterAnimRes, mFinishExitAnimRes);
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }
