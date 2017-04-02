@@ -27,3 +27,5 @@ Change-Log
 
 ### [Release 1.0.0](https://github.com/universum-studios/android_transitions/releases/tag/1.0.0) ###
 > 19.01.2017
+
+- First production release.
