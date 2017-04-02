@@ -1,8 +1,8 @@
 Change-Log
 ===============
 
-### Release 1.0.2 ###
-> --.04.2017
+### [Release 1.0.2](https://github.com/universum-studios/android_preferences/releases/tag/1.0.2) ###
+> 02.04.2017
 
 - Implementation of `BaseNavigationalTransition.configureTransitions(Activity)` has been split into
   `configureIncomingTransitions(Activity)` and `configureOutgoingTransitions(Activity)`. The **outgoing**
@@ -16,7 +16,7 @@ Change-Log
 - Fixed **animation resource** for **enter back** animation of window transitions declared in 
   `ExtranWindowTransitions` class
 
-### Release 1.0.1 ###
+### [Release 1.0.1](https://github.com/universum-studios/android_transitions/releases/tag/1.0.1) ###
 > 16.02.2017
 
 - `BaseNavigationalTransition` now allows to specify `Bundle` with extras for the transition activity
@@ -25,5 +25,5 @@ Change-Log
   the same way as `BaseNavigationalTransitions.onStart(Activity)` is implemented to allow starting
   of transition with scene transition animations.
 
-### Release 1.0.0 ###
+### [Release 1.0.0](https://github.com/universum-studios/android_transitions/releases/tag/1.0.0) ###
 > 19.01.2017
