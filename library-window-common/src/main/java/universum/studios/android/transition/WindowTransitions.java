@@ -18,8 +18,6 @@
  */
 package universum.studios.android.transition;
 
-import universum.studios.android.transition.window.common.R;
-
 /**
  * Factory providing <b>common</b> {@link WindowTransition WindowTransitions}.
  * <ul>

@@ -18,8 +18,6 @@
  */
 package universum.studios.android.transition;
 
-import universum.studios.android.transition.window.extra.R;
-
 /**
  * Factory providing <b>extra</b> {@link WindowTransition WindowTransitions}.
  * <ul>
