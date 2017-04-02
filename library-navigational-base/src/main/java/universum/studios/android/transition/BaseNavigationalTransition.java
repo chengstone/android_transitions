@@ -751,7 +751,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SafeVarargs
 	@SuppressWarnings("unchecked")
-	public final T sharedElements(@NonNull Pair<View, String>... elements) {
+	public final T sharedElements(@NonNull final Pair<View, String>... elements) {
 		if (mSharedElements == null) {
 			this.mSharedElements = new ArrayList<>(1);
 		}
@@ -819,7 +819,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param caller The activity that will be used to create and start an Intent created via
 	 *               {@link #createIntent(Activity)}.
 	 */
-	public void start(@NonNull Activity caller) {
+	public void start(@NonNull final Activity caller) {
 		configureOutgoingTransitions(caller);
 		onStart(caller);
 	}
