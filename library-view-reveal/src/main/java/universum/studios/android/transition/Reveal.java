@@ -43,6 +43,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import universum.studios.android.transition.util.AnimatorWrapper;
+import universum.studios.android.transition.view.reveal.R;
 
 /**
  * A {@link Visibility} transition implementation that tracks changes to the visibility of target

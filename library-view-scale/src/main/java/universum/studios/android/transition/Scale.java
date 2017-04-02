@@ -38,6 +38,8 @@ import android.view.ViewGroup;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import universum.studios.android.transition.view.scale.R;
+
 /**
  * A {@link Visibility} transition implementation that tracks changes to the visibility of target
  * views in the start and end scenes and scales up or down views in the scene. Visibility is
