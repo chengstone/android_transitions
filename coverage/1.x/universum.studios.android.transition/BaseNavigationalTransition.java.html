@@ -19,7 +19,6 @@
 package universum.studios.android.transition;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
@@ -115,7 +114,7 @@ import java.util.List;
  */
 public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTransition&gt; {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -128,7 +127,7 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * Boolean flag indicating whether the current Android device can run Material Design like navigational
 	 * transition (i. e. with shared elements, ...) or not.
 	 */
-<span class="nc bnc" id="L131" title="All 2 branches missed.">	public static final boolean MATERIAL_SUPPORT = Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">	public static final boolean MATERIAL_SUPPORT = Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP;</span>
 
 	/**
 	 * Flag determining that no request code has been specified for a specific navigational transition.
@@ -183,15 +182,15 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	private static final int TRANSITION_SHARED_ELEMENT_EXIT = 0x00000001 &lt;&lt; 7;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -212,7 +211,7 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * or {@link Fragment#startActivityForResult(Intent, int)} depends on the type of caller and
 	 * current configuration of this transition.
 	 */
-<span class="nc" id="L215">	int mRequestCode = RC_NONE;</span>
+<span class="fc" id="L214">	int mRequestCode = RC_NONE;</span>
 
 	/**
 	 * Transition that should be attached to caller's activity window if {@link #TRANSITION_ENTER}
@@ -301,20 +300,25 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	private List&lt;Pair&lt;View, String&gt;&gt; mSharedElements;
 
 	/**
+	 * Boolean flag indicating whether transitioning shared elements should use overlay or not.
+	 */
+	private Boolean mSharedElementUseOverlay;
+
+	/**
 	 * Inflater that can be used to inflate a new transition or transition manager.
 	 */
 	private TransitionInflater mTransitionInflater;
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
 	/**
 	 * Creates a new instance of NavigationalTransition without transition activity class.
 	 */
-<span class="nc" id="L315">	public BaseNavigationalTransition() {</span>
-<span class="nc" id="L316">		this.mClassOfTransitionActivity = null;</span>
-<span class="nc" id="L317">	}</span>
+<span class="fc" id="L319">	public BaseNavigationalTransition() {</span>
+<span class="fc" id="L320">		this.mClassOfTransitionActivity = null;</span>
+<span class="fc" id="L321">	}</span>
 
 	/**
 	 * Creates a new instance of NavigationalTransition with the specified class of transition activity.
@@ -323,41 +327,41 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 *                                  that to be started whenever {@link #start(Activity)} is called
 	 *                                  upon this navigational transition.
 	 */
-<span class="nc" id="L326">	public BaseNavigationalTransition(@NonNull Class&lt;? extends Activity&gt; classOfTransitionActivity) {</span>
-<span class="nc" id="L327">		this.mClassOfTransitionActivity = classOfTransitionActivity;</span>
-<span class="nc" id="L328">	}</span>
+<span class="fc" id="L330">	public BaseNavigationalTransition(@NonNull final Class&lt;? extends Activity&gt; classOfTransitionActivity) {</span>
+<span class="fc" id="L331">		this.mClassOfTransitionActivity = classOfTransitionActivity;</span>
+<span class="fc" id="L332">	}</span>
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * Specifies a bundle with extras for the transition activity. The given bundle will be attached
-	 * to this transition's {@link Intent} via {@link Intent#putExtras(Bundle)} when it is created
-	 * via {@link #createIntent(Activity)}.
+	 * Specifies a bundle with extras for the &lt;b&gt;incoming&lt;/b&gt; activity. The given bundle will be
+	 * attached to this transition's {@link Intent} via {@link Intent#putExtras(Bundle)} when it is
+	 * created via {@link #createIntent(Activity)}.
 	 *
 	 * @param extras The desired bundle with extras. May be {@code null} to clear the current one.
 	 * @return This transition to allow methods chaining.
 	 * @see #intentExtras()
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T intentExtras(@Nullable Bundle extras) {
-<span class="nc" id="L345">		this.mIntentExtras = extras;</span>
-<span class="nc" id="L346">		return (T) this;</span>
+	public T intentExtras(@Nullable final Bundle extras) {
+<span class="nc" id="L349">		this.mIntentExtras = extras;</span>
+<span class="nc" id="L350">		return (T) this;</span>
 	}
 
 	/**
-	 * Returns the bundle with extras for the transition activity.
+	 * Returns the bundle with extras for the &lt;b&gt;incoming&lt;/b&gt; activity.
 	 * &lt;p&gt;
 	 * This will be either bundle specified via {@link #intentExtras(Bundle)} or created by default
 	 * when this method is called for the first time.
 	 *
-	 * @return The extras bundle for the transition activity.
+	 * @return The extras bundle for the &lt;b&gt;incoming&lt;/b&gt; activity.
 	 * @see #intentExtras(Bundle)
 	 */
 	@NonNull
 	public Bundle intentExtras() {
-<span class="nc bnc" id="L360" title="All 2 branches missed.">		return mIntentExtras == null ? (mIntentExtras = new Bundle()) : mIntentExtras;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		return mIntentExtras == null ? (mIntentExtras = new Bundle()) : mIntentExtras;</span>
 	}
 
 	/**
@@ -369,14 +373,15 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * @param requestCode The desired request code. Can be {@link #RC_NONE} to not start activity
 	 *                    for result.
 	 * @return This transition to allow methods chaining.
+	 * @see #requestCode()
 	 * @see Activity#startActivityForResult(Intent, int)
 	 * @see Activity#startActivityForResult(Intent, int, Bundle)
 	 * @see Fragment#startActivityForResult(Intent, int)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T requestCode(@IntRange(from = RC_NONE) int requestCode) {
-<span class="nc" id="L378">		this.mRequestCode = requestCode;</span>
-<span class="nc" id="L379">		return (T) this;</span>
+	public T requestCode(@IntRange(from = RC_NONE) final int requestCode) {
+<span class="nc" id="L383">		this.mRequestCode = requestCode;</span>
+<span class="nc" id="L384">		return (T) this;</span>
 	}
 
 	/**
@@ -386,239 +391,308 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	@IntRange(from = RC_NONE)
 	public int requestCode() {
-<span class="nc" id="L389">		return mRequestCode;</span>
+<span class="nc" id="L394">		return mRequestCode;</span>
 	}
 
 	/**
-	 * Specifies a transition to be attached to a window of the caller activity whenever
-	 * {@link #start(Activity)} is invoked.
+	 * Specifies enter transition to be attached to a window of an &lt;b&gt;incoming&lt;/b&gt; activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #enterTransition()
 	 * @see Window#setEnterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T enterTransition(@Nullable Transition transition) {
-<span class="nc" id="L402">		this.mSpecifiedTransitions |= TRANSITION_ENTER;</span>
-<span class="nc" id="L403">		this.mEnterTransition = transition;</span>
-<span class="nc" id="L404">		return (T) this;</span>
+	public T enterTransition(@Nullable final Transition transition) {
+<span class="nc" id="L408">		this.mSpecifiedTransitions |= TRANSITION_ENTER;</span>
+<span class="nc" id="L409">		this.mEnterTransition = transition;</span>
+<span class="nc" id="L410">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns enter transition for the &lt;b&gt;incoming&lt;/b&gt; activity.
+	 *
 	 * @return Transition specified via {@link #enterTransition(Transition)} or {@code null} by
 	 * default.
 	 */
 	@Nullable
 	public Transition enterTransition() {
-<span class="nc" id="L413">		return mEnterTransition;</span>
+<span class="nc" id="L421">		return mEnterTransition;</span>
 	}
 
 	/**
-	 * Specifies a transition to be attached to a window of the caller activity whenever
+	 * Specifies reenter transition to be attached to a window of an &lt;b&gt;outgoing&lt;/b&gt; activity whenever
 	 * {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #reenterTransition()
 	 * @see Window#setReenterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T reenterTransition(@Nullable Transition transition) {
-<span class="nc" id="L426">		this.mSpecifiedTransitions |= TRANSITION_REENTER;</span>
-<span class="nc" id="L427">		this.mReenterTransition = transition;</span>
-<span class="nc" id="L428">		return (T) this;</span>
+	public T reenterTransition(@Nullable final Transition transition) {
+<span class="nc" id="L436">		this.mSpecifiedTransitions |= TRANSITION_REENTER;</span>
+<span class="nc" id="L437">		this.mReenterTransition = transition;</span>
+<span class="nc" id="L438">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns reenter transition for the &lt;b&gt;outgoing&lt;/b&gt; activity.
+	 *
 	 * @return Transition specified via {@link #reenterTransition(Transition)} or {@code null} by
 	 * default.
 	 */
 	@Nullable
 	public Transition reenterTransition() {
-<span class="nc" id="L437">		return mReenterTransition;</span>
+<span class="nc" id="L449">		return mReenterTransition;</span>
 	}
 
 	/**
-	 * Specifies a transition to be attached to a window of the caller activity whenever
-	 * {@link #start(Activity)} is invoked.
+	 * Specifies return transition to be attached to a window of an &lt;b&gt;incoming&lt;/b&gt; activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #returnTransition()
 	 * @see Window#setReturnTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T returnTransition(@Nullable Transition transition) {
-<span class="nc" id="L450">		this.mSpecifiedTransitions |= TRANSITION_RETURN;</span>
-<span class="nc" id="L451">		this.mReturnTransition = transition;</span>
-<span class="nc" id="L452">		return (T) this;</span>
+	public T returnTransition(@Nullable final Transition transition) {
+<span class="nc" id="L463">		this.mSpecifiedTransitions |= TRANSITION_RETURN;</span>
+<span class="nc" id="L464">		this.mReturnTransition = transition;</span>
+<span class="nc" id="L465">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns return transition for the &lt;b&gt;incoming&lt;/b&gt; activity.
+	 *
 	 * @return Transition specified via {@link #returnTransition(Transition)} or {@code null} by
 	 * default.
 	 */
 	@Nullable
 	public Transition returnTransition() {
-<span class="nc" id="L461">		return mReturnTransition;</span>
+<span class="nc" id="L476">		return mReturnTransition;</span>
 	}
 
 	/**
-	 * Specifies a transition to be attached to a window of the caller activity whenever
+	 * Specifies exit transition to be attached to a window of an &lt;b&gt;outgoing&lt;/b&gt; activity whenever
 	 * {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #exitTransition()
 	 * @see Window#setExitTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T exitTransition(@Nullable Transition transition) {
-<span class="nc" id="L474">		this.mSpecifiedTransitions |= TRANSITION_EXIT;</span>
-<span class="nc" id="L475">		this.mExitTransition = transition;</span>
-<span class="nc" id="L476">		return (T) this;</span>
+	public T exitTransition(@Nullable final Transition transition) {
+<span class="nc" id="L491">		this.mSpecifiedTransitions |= TRANSITION_EXIT;</span>
+<span class="nc" id="L492">		this.mExitTransition = transition;</span>
+<span class="nc" id="L493">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns exit transition for the &lt;b&gt;outgoing&lt;/b&gt; activity.
+	 *
 	 * @return Transition specified via {@link #exitTransition(Transition)} or {@code null} by
 	 * default.
 	 */
 	@Nullable
 	public Transition exitTransition() {
-<span class="nc" id="L485">		return mExitTransition;</span>
+<span class="nc" id="L504">		return mExitTransition;</span>
 	}
 
 	/**
-	 * Specifies a boolean flag to be set to a window of the caller activity whenever
-	 * {@link #start(Activity)} is invoked.
+	 * Specifies a boolean flag to be set to a window of an &lt;b&gt;incoming&lt;/b&gt; activity in order to
+	 * indicate whether enter transition may overlap or not.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code false}&lt;/b&gt;
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #allowEnterTransitionOverlap()
 	 * @see Window#setAllowEnterTransitionOverlap(boolean)
+	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T allowEnterTransitionOverlap(boolean allow) {
-<span class="nc" id="L497">		this.mAllowEnterTransitionOverlap = allow;</span>
-<span class="nc" id="L498">		return (T) this;</span>
+	public T allowEnterTransitionOverlap(final boolean allow) {
+<span class="nc" id="L520">		this.mAllowEnterTransitionOverlap = allow;</span>
+<span class="nc" id="L521">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns boolean flag indicating whether enter transition may overlap or not.
+	 *
 	 * @return {@code True} if overlapping of enter transition is enabled, {@code false} otherwise.
 	 */
 	public boolean allowEnterTransitionOverlap() {
-<span class="nc bnc" id="L505" title="All 4 branches missed.">		return mAllowEnterTransitionOverlap != null &amp;&amp; mAllowEnterTransitionOverlap;</span>
+<span class="nc bnc" id="L530" title="All 4 branches missed.">		return mAllowEnterTransitionOverlap != null &amp;&amp; mAllowEnterTransitionOverlap;</span>
 	}
 
 	/**
-	 * Specifies a boolean flag to be set to a window of the caller activity whenever
-	 * {@link #start(Activity)} is invoked.
+	 * Specifies a boolean flag to be set to a window of an &lt;b&gt;incoming&lt;/b&gt; activity in order to
+	 * indicate whether return transition may overlap or not.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code false}&lt;/b&gt;
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #allowReturnTransitionOverlap()
 	 * @see Window#setAllowReturnTransitionOverlap(boolean)
+	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T allowReturnTransitionOverlap(boolean allow) {
-<span class="nc" id="L517">		this.mAllowReturnTransitionOverlap = allow;</span>
-<span class="nc" id="L518">		return (T) this;</span>
+	public T allowReturnTransitionOverlap(final boolean allow) {
+<span class="nc" id="L546">		this.mAllowReturnTransitionOverlap = allow;</span>
+<span class="nc" id="L547">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns boolean flag indicating whether return transition may overlap or not.
+	 *
 	 * @return {@code True} if overlapping of return transition is enabled, {@code false} otherwise.
 	 */
 	public boolean allowReturnTransitionOverlap() {
-<span class="nc bnc" id="L525" title="All 4 branches missed.">		return mAllowReturnTransitionOverlap != null &amp;&amp; mAllowReturnTransitionOverlap;</span>
+<span class="nc bnc" id="L556" title="All 4 branches missed.">		return mAllowReturnTransitionOverlap != null &amp;&amp; mAllowReturnTransitionOverlap;</span>
 	}
 
 	/**
-	 * Specifies a transition for shared element to be attached to a window of the caller activity
-	 * whenever {@link #start(Activity)} is invoked.
+	 * Specifies enter transition for shared element to be attached to a window of an &lt;b&gt;incoming&lt;/b&gt;
+	 * activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #sharedElementEnterTransition()
 	 * @see Window#setSharedElementEnterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T sharedElementEnterTransition(@Nullable Transition transition) {
-<span class="nc" id="L538">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_ENTER;</span>
-<span class="nc" id="L539">		this.mSharedElementEnterTransition = transition;</span>
-<span class="nc" id="L540">		return (T) this;</span>
+	public T sharedElementEnterTransition(@Nullable final Transition transition) {
+<span class="nc" id="L571">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_ENTER;</span>
+<span class="nc" id="L572">		this.mSharedElementEnterTransition = transition;</span>
+<span class="nc" id="L573">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns shared element enter transition for the &lt;b&gt;incoming&lt;/b&gt; activity.
+	 *
 	 * @return Transition for shared element specified via {@link #sharedElementEnterTransition(Transition)}
 	 * or {@code null} by default.
 	 */
 	@Nullable
 	public Transition sharedElementEnterTransition() {
-<span class="nc" id="L549">		return mSharedElementEnterTransition;</span>
+<span class="nc" id="L584">		return mSharedElementEnterTransition;</span>
 	}
 
 	/**
-	 * Specifies a transition for shared element to be attached to a window of the caller activity
-	 * whenever {@link #start(Activity)} is invoked.
+	 * Specifies reenter transition for shared element to be attached to a window of an &lt;b&gt;outgoing&lt;/b&gt;
+	 * activity whenever {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #sharedElementReenterTransition()
 	 * @see Window#setSharedElementReenterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureOutgoingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T sharedElementReenterTransition(@Nullable Transition transition) {
-<span class="nc" id="L562">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_REENTER;</span>
-<span class="nc" id="L563">		this.mSharedElementReenterTransition = transition;</span>
-<span class="nc" id="L564">		return (T) this;</span>
+	public T sharedElementReenterTransition(@Nullable final Transition transition) {
+<span class="nc" id="L599">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_REENTER;</span>
+<span class="nc" id="L600">		this.mSharedElementReenterTransition = transition;</span>
+<span class="nc" id="L601">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns shared element reenter transition for the &lt;b&gt;outgoing&lt;/b&gt; activity.
+	 *
 	 * @return Transition for shared element specified via {@link #sharedElementReenterTransition(Transition)}
 	 * or {@code null} by default.
 	 */
 	@Nullable
 	public Transition sharedElementReenterTransition() {
-<span class="nc" id="L573">		return mSharedElementReenterTransition;</span>
+<span class="nc" id="L612">		return mSharedElementReenterTransition;</span>
 	}
 
 	/**
-	 * Specifies a transition for shared element to be attached to a window of the caller activity
-	 * whenever {@link #start(Activity)} is invoked.
+	 * Specifies return transition for shared element to be attached to a window of an &lt;b&gt;incoming&lt;/b&gt;
+	 * activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #sharedElementReturnTransition()
 	 * @see Window#setSharedElementReturnTransition(Transition)
 	 * @see #inflateTransition(Context, int)
+	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T sharedElementReturnTransition(@Nullable Transition transition) {
-<span class="nc" id="L586">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_RETURN;</span>
-<span class="nc" id="L587">		this.mSharedElementReturnTransition = transition;</span>
-<span class="nc" id="L588">		return (T) this;</span>
+	public T sharedElementReturnTransition(@Nullable final Transition transition) {
+<span class="nc" id="L627">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_RETURN;</span>
+<span class="nc" id="L628">		this.mSharedElementReturnTransition = transition;</span>
+<span class="nc" id="L629">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns shared element return transition for the &lt;b&gt;incoming&lt;/b&gt; activity.
+	 *
 	 * @return Transition for shared element specified via {@link #sharedElementReturnTransition(Transition)}
 	 * or {@code null} by default.
 	 */
 	@Nullable
 	public Transition sharedElementReturnTransition() {
-<span class="nc" id="L597">		return mSharedElementReturnTransition;</span>
+<span class="nc" id="L640">		return mSharedElementReturnTransition;</span>
 	}
 
 	/**
-	 * Specifies a transition for shared element to be attached to a window of the caller activity
-	 * whenever {@link #start(Activity)} is invoked.
+	 * Specifies exit transition for shared element to be attached to a window of an &lt;b&gt;outgoing&lt;/b&gt;
+	 * activity whenever {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 * @see #sharedElementExitTransition()
 	 * @see Window#setSharedElementExitTransition(Transition)
 	 * @see #inflateTransition(Context, int)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T sharedElementExitTransition(@Nullable Transition transition) {
-<span class="nc" id="L610">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_EXIT;</span>
-<span class="nc" id="L611">		this.mSharedElementExitTransition = transition;</span>
-<span class="nc" id="L612">		return (T) this;</span>
+	public T sharedElementExitTransition(@Nullable final Transition transition) {
+<span class="nc" id="L654">		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_EXIT;</span>
+<span class="nc" id="L655">		this.mSharedElementExitTransition = transition;</span>
+<span class="nc" id="L656">		return (T) this;</span>
 	}
 
 	/**
+	 * Returns shared element exit transition for the &lt;b&gt;outgoing&lt;/b&gt; activity.
+	 *
 	 * @return Transition for shared element specified via {@link #sharedElementExitTransition(Transition)}
 	 * or {@code null} by default.
 	 */
 	@Nullable
 	public Transition sharedElementExitTransition() {
-<span class="nc" id="L621">		return mSharedElementExitTransition;</span>
+<span class="nc" id="L667">		return mSharedElementExitTransition;</span>
+	}
+
+	/**
+	 * Specifies a boolean flag to be set to a window of an &lt;b&gt;incoming&lt;/b&gt; or &lt;b&gt;outgoing&lt;/b&gt; activity
+	 * in order to indicate whether shared elements should use overlay or not.
+	 * &lt;p&gt;
+	 * Default value: &lt;b&gt;{@code false}&lt;/b&gt;
+	 *
+	 * @return This transition to allow methods chaining.
+	 * @see #sharedElementsUseOverlay()
+	 * @see Window#setSharedElementsUseOverlay(boolean)
+	 * @see #configureIncomingTransitions(Activity)
+	 * @see #configureOutgoingTransitions(Activity)
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public T sharedElementsUseOverlay(final boolean useOverlay) {
+<span class="fc" id="L684">		this.mSharedElementUseOverlay = useOverlay;</span>
+<span class="fc" id="L685">		return (T) this;</span>
+	}
+
+	/**
+	 * Returns boolean flag indicating whether shared elements should use overlay or not.
+	 *
+	 * @return {@code True} if shared elements will use overlay, {@code false} otherwise.
+	 * @see #sharedElementsUseOverlay(boolean)
+	 */
+	public boolean sharedElementsUseOverlay() {
+<span class="pc bpc" id="L695" title="1 of 4 branches missed.">		return mSharedElementUseOverlay != null &amp;&amp; mSharedElementUseOverlay;</span>
 	}
 
 	/**
@@ -634,14 +708,14 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	@Nullable
 	@SuppressLint(&quot;NewApi&quot;)
-	public Transition inflateTransition(@NonNull Context context, int resource) {
-<span class="nc bnc" id="L638" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc bnc" id="L639" title="All 2 branches missed.">			if (mTransitionInflater == null) {</span>
-<span class="nc" id="L640">				this.mTransitionInflater = TransitionInflater.from(context);</span>
+	public Transition inflateTransition(@NonNull final Context context, final int resource) {
+<span class="nc bnc" id="L712" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc bnc" id="L713" title="All 2 branches missed.">			if (mTransitionInflater == null) {</span>
+<span class="nc" id="L714">				this.mTransitionInflater = TransitionInflater.from(context);</span>
 			}
-<span class="nc" id="L642">			return mTransitionInflater.inflateTransition(resource);</span>
+<span class="nc" id="L716">			return mTransitionInflater.inflateTransition(resource);</span>
 		}
-<span class="nc" id="L644">		return null;</span>
+<span class="nc" id="L718">		return null;</span>
 	}
 
 	/**
@@ -658,14 +732,14 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	@Nullable
 	@SuppressLint(&quot;NewApi&quot;)
-	public TransitionManager inflateTransitionManager(@NonNull Context context, int resource, @NonNull ViewGroup sceneRoot) {
-<span class="nc bnc" id="L662" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc bnc" id="L663" title="All 2 branches missed.">			if (mTransitionInflater == null) {</span>
-<span class="nc" id="L664">				this.mTransitionInflater = TransitionInflater.from(context);</span>
+	public TransitionManager inflateTransitionManager(@NonNull final Context context, final int resource, @NonNull final ViewGroup sceneRoot) {
+<span class="nc bnc" id="L736" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">			if (mTransitionInflater == null) {</span>
+<span class="nc" id="L738">				this.mTransitionInflater = TransitionInflater.from(context);</span>
 			}
-<span class="nc" id="L666">			return mTransitionInflater.inflateTransitionManager(resource, sceneRoot);</span>
+<span class="nc" id="L740">			return mTransitionInflater.inflateTransitionManager(resource, sceneRoot);</span>
 		}
-<span class="nc" id="L668">		return null;</span>
+<span class="nc" id="L742">		return null;</span>
 	}
 
 	/**
@@ -677,12 +751,12 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	@SafeVarargs
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public final T sharedElements(@NonNull Pair&lt;View, String&gt;... elements) {
-<span class="nc bnc" id="L681" title="All 2 branches missed.">		if (mSharedElements == null) {</span>
-<span class="nc" id="L682">			this.mSharedElements = new ArrayList&lt;&gt;(1);</span>
+	public final T sharedElements(@NonNull final Pair&lt;View, String&gt;... elements) {
+<span class="nc bnc" id="L755" title="All 2 branches missed.">		if (mSharedElements == null) {</span>
+<span class="nc" id="L756">			this.mSharedElements = new ArrayList&lt;&gt;(1);</span>
 		}
-<span class="nc" id="L684">		mSharedElements.addAll(Arrays.asList(elements));</span>
-<span class="nc" id="L685">		return (T) this;</span>
+<span class="nc" id="L758">		mSharedElements.addAll(Arrays.asList(elements));</span>
+<span class="nc" id="L759">		return (T) this;</span>
 	}
 
 	/**
@@ -702,12 +776,12 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * @see #makeSceneTransitionAnimation(Activity)
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public T sharedElement(@NonNull View element, @NonNull String elementName) {
-<span class="nc bnc" id="L706" title="All 2 branches missed.">		if (mSharedElements == null) {</span>
-<span class="nc" id="L707">			this.mSharedElements = new ArrayList&lt;&gt;(1);</span>
+	public T sharedElement(@NonNull final View element, @NonNull final String elementName) {
+<span class="nc bnc" id="L780" title="All 2 branches missed.">		if (mSharedElements == null) {</span>
+<span class="nc" id="L781">			this.mSharedElements = new ArrayList&lt;&gt;(1);</span>
 		}
-<span class="nc" id="L709">		mSharedElements.add(new Pair&lt;&gt;(element, elementName));</span>
-<span class="nc" id="L710">		return (T) this;</span>
+<span class="nc" id="L783">		mSharedElements.add(new Pair&lt;&gt;(element, elementName));</span>
+<span class="nc" id="L784">		return (T) this;</span>
 	}
 
 	/**
@@ -720,7 +794,7 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	@Nullable
 	public List&lt;Pair&lt;View, String&gt;&gt; sharedElements() {
-<span class="nc" id="L723">		return mSharedElements;</span>
+<span class="nc" id="L797">		return mSharedElements;</span>
 	}
 
 	/**
@@ -735,23 +809,20 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 */
 	@Nullable
 	public Pair&lt;View, String&gt; singleSharedElement() {
-<span class="nc bnc" id="L738" title="All 4 branches missed.">		return mSharedElements != null &amp;&amp; !mSharedElements.isEmpty() ? mSharedElements.get(0) : null;</span>
+<span class="nc bnc" id="L812" title="All 4 branches missed.">		return mSharedElements != null &amp;&amp; !mSharedElements.isEmpty() ? mSharedElements.get(0) : null;</span>
 	}
 
 	/**
-	 * Starts this navigational transition using the given &lt;var&gt;caller&lt;/var&gt; activity with all
-	 * transitions and shared elements specified for this navigational transition.
+	 * Starts this navigational transition using the given &lt;var&gt;caller&lt;/var&gt; activity with transitions
+	 * and shared elements that are configured for the activity via {@link #configureOutgoingTransitions(Activity)}.
 	 *
 	 * @param caller The activity that will be used to create and start an Intent created via
 	 *               {@link #createIntent(Activity)}.
-	 * @see #configureTransitionsOverlapping(Activity)
-	 * @see #configureTransitions(Activity)
 	 */
-	public void start(@NonNull Activity caller) {
-<span class="nc" id="L751">		configureTransitionsOverlapping(caller);</span>
-<span class="nc" id="L752">		configureTransitions(caller);</span>
-<span class="nc" id="L753">		onStart(caller);</span>
-<span class="nc" id="L754">	}</span>
+	public void start(@NonNull final Activity caller) {
+<span class="nc" id="L823">		configureOutgoingTransitions(caller);</span>
+<span class="nc" id="L824">		onStart(caller);</span>
+<span class="nc" id="L825">	}</span>
 
 	/**
 	 * Invoked whenever {@link #start(Activity)} is called.
@@ -771,23 +842,21 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * methods.
 	 *
 	 * @param caller The caller activity that requested start of this navigational transition.
-	 * @see #attachTransitions(Window)
-	 * @see #attachSharedElementTransitions(Window)
 	 * @see #onFinish(Activity)
 	 */
 	@SuppressLint(&quot;NewApi&quot;)
 	@SuppressWarnings(&quot;ConstantConditions&quot;)
-	protected void onStart(@NonNull Activity caller) {
-<span class="nc" id="L781">		final Intent intent = createIntent(caller);</span>
-<span class="nc bnc" id="L782" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc" id="L783">			final Bundle options = makeSceneTransitionAnimation(caller).toBundle();</span>
-<span class="nc bnc" id="L784" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
-<span class="nc" id="L785">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
-<span class="nc" id="L786">		} else {</span>
-<span class="nc bnc" id="L787" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent);</span>
-<span class="nc" id="L788">			else caller.startActivityForResult(intent, mRequestCode);</span>
+	protected void onStart(@NonNull final Activity caller) {
+<span class="nc" id="L850">		final Intent intent = createIntent(caller);</span>
+<span class="nc bnc" id="L851" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc" id="L852">			final Bundle options = makeSceneTransitionAnimation(caller).toBundle();</span>
+<span class="nc bnc" id="L853" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
+<span class="nc" id="L854">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
+<span class="nc" id="L855">		} else {</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent);</span>
+<span class="nc" id="L857">			else caller.startActivityForResult(intent, mRequestCode);</span>
 		}
-<span class="nc" id="L790">	}</span>
+<span class="nc" id="L859">	}</span>
 
 	/**
 	 * Like {@link #finishCaller(Activity)} but this will postpone the finishing by the requested
@@ -796,24 +865,24 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * @param caller The caller activity to finish.
 	 * @param delay  The desired delay after which to finish the caller activity.
 	 */
-	protected void finishCallerDelayed(@NonNull final Activity caller, @IntRange(from = 0) long delay) {
-<span class="nc" id="L800">		final View decorView = caller.getWindow().getDecorView();</span>
-<span class="nc bnc" id="L801" title="All 2 branches missed.">		if (decorView != null) decorView.postDelayed(new Runnable() {</span>
+	protected void finishCallerDelayed(@NonNull final Activity caller, @IntRange(from = 0) final long delay) {
+<span class="nc" id="L869">		final View decorView = caller.getWindow().getDecorView();</span>
+<span class="nc bnc" id="L870" title="All 2 branches missed.">		if (decorView != null) decorView.postDelayed(new Runnable() {</span>
 
 			/**
 			 */
 			@Override
 			public void run() {
-<span class="nc bnc" id="L807" title="All 2 branches missed.">				if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN_MR1) {</span>
-<span class="nc bnc" id="L808" title="All 4 branches missed.">					if (!caller.isDestroyed() &amp;&amp; !caller.isFinishing()) {</span>
-<span class="nc" id="L809">						onFinishCaller(caller);</span>
+<span class="nc bnc" id="L876" title="All 2 branches missed.">				if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN_MR1) {</span>
+<span class="nc bnc" id="L877" title="All 4 branches missed.">					if (!caller.isDestroyed() &amp;&amp; !caller.isFinishing()) {</span>
+<span class="nc" id="L878">						onFinishCaller(caller);</span>
 					}
-<span class="nc bnc" id="L811" title="All 2 branches missed.">				} else if (!caller.isFinishing()) {</span>
-<span class="nc" id="L812">					onFinishCaller(caller);</span>
+<span class="nc bnc" id="L880" title="All 2 branches missed.">				} else if (!caller.isFinishing()) {</span>
+<span class="nc" id="L881">					onFinishCaller(caller);</span>
 				}
-<span class="nc" id="L814">			}</span>
+<span class="nc" id="L883">			}</span>
 		}, delay);
-<span class="nc" id="L816">	}</span>
+<span class="nc" id="L885">	}</span>
 
 	/**
 	 * Finishes the specified &lt;var&gt;caller&lt;/var&gt; activity either via {@link Activity#finishAfterTransition()}
@@ -821,9 +890,9 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 *
 	 * @param caller The caller activity to finish.
 	 */
-	protected void finishCaller(@NonNull Activity caller) {
-<span class="nc" id="L825">		onFinishCaller(caller);</span>
-<span class="nc" id="L826">	}</span>
+	protected void finishCaller(@NonNull final Activity caller) {
+<span class="nc" id="L894">		onFinishCaller(caller);</span>
+<span class="nc" id="L895">	}</span>
 
 	/**
 	 * Invoked whenever {@link #finishCaller(Activity)} or {@link #finishCallerDelayed(Activity, long)}
@@ -835,12 +904,14 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * @param caller The caller activity to finish.
 	 */
 	@SuppressLint(&quot;NewApi&quot;)
-	protected void onFinishCaller(@NonNull Activity caller) {
-<span class="nc bnc" id="L839" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) caller.finishAfterTransition();</span>
-<span class="nc" id="L840">		else caller.finish();</span>
-<span class="nc" id="L841">	}</span>
+	protected void onFinishCaller(@NonNull final Activity caller) {
+<span class="nc bnc" id="L908" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) caller.finishAfterTransition();</span>
+<span class="nc" id="L909">		else caller.finish();</span>
+<span class="nc" id="L910">	}</span>
 
 	/**
+	 * &lt;b&gt;This method has been deprecated and will be removed in the next release.&lt;/b&gt;
+	 * &lt;p&gt;
 	 * Specifies a boolean flags for a window of the specified &lt;var&gt;activity&lt;/var&gt; determining whether
 	 * an enter or return transition can overlap or not based on the requested values for this
 	 * navigational transition.
@@ -852,85 +923,114 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 *                 can overlap or not.
 	 * @see Window#setAllowEnterTransitionOverlap(boolean)
 	 * @see Window#setAllowReturnTransitionOverlap(boolean)
+	 * @deprecated Use {@link #configureIncomingTransitions(Activity)} instead.
 	 */
-	@SuppressLint(&quot;NewApi&quot;)
-	public void configureTransitionsOverlapping(@NonNull Activity activity) {
-<span class="nc bnc" id="L858" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc" id="L859">			final Window window = activity.getWindow();</span>
-<span class="nc bnc" id="L860" title="All 2 branches missed.">			if (mAllowEnterTransitionOverlap != null)</span>
-<span class="nc" id="L861">				window.setAllowEnterTransitionOverlap(mAllowEnterTransitionOverlap);</span>
-<span class="nc bnc" id="L862" title="All 2 branches missed.">			if (mAllowReturnTransitionOverlap != null)</span>
-<span class="nc" id="L863">				window.setAllowReturnTransitionOverlap(mAllowReturnTransitionOverlap);</span>
+	@Deprecated
+	public void configureTransitionsOverlapping(@NonNull final Activity activity) {
+<span class="nc bnc" id="L930" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc" id="L931">			final Window window = activity.getWindow();</span>
+<span class="nc bnc" id="L932" title="All 2 branches missed.">			if (mAllowEnterTransitionOverlap != null)</span>
+<span class="nc" id="L933">				window.setAllowEnterTransitionOverlap(mAllowEnterTransitionOverlap);</span>
+<span class="nc bnc" id="L934" title="All 2 branches missed.">			if (mAllowReturnTransitionOverlap != null)</span>
+<span class="nc" id="L935">				window.setAllowReturnTransitionOverlap(mAllowReturnTransitionOverlap);</span>
 		}
-<span class="nc" id="L865">	}</span>
+<span class="nc" id="L937">	}</span>
 
 	/**
-	 * Attaches all transitions, including those for shared elements, specified for this navigational
-	 * transition to a window of the specified &lt;var&gt;activity&lt;/var&gt; via one of
-	 * {@code Window#set...Transition(...)} methods.
-	 * &lt;p&gt;
-	 * &lt;b&gt;Note&lt;/b&gt;, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android
-	 * versions this method does nothing.
+	 * This method groups calls to {@link #configureIncomingTransitions(Activity)} and
+	 * {@link #configureOutgoingTransitions(Activity)} into one call.
 	 *
-	 * @param activity The activity to which window should be transitions attached.
+	 * @param activity The activity of which window transitions to configure.
+	 */
+	public void configureTransitions(@NonNull final Activity activity) {
+<span class="nc" id="L946">		configureIncomingTransitions(activity);</span>
+<span class="nc" id="L947">		configureOutgoingTransitions(activity);</span>
+<span class="nc" id="L948">	}</span>
+
+	/**
+	 * Performs configuration of the given &lt;var&gt;activity's&lt;/var&gt; window by attaching to it &lt;b&gt;enter&lt;/b&gt;
+	 * and &lt;b&gt;return&lt;/b&gt; transitions (those for shared elements including) specified for this navigational
+	 * transition. Also the configuration related to transitions overlapping will be performed here.
+	 * &lt;p&gt;
+	 * This method should be called from {@link Activity#onCreate(Bundle)} by the activity to which
+	 * is the calling activity transitioning. See also {@link #configureOutgoingTransitions(Activity)}.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note&lt;/b&gt;, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android  versions this
+	 * method does nothing.
+	 *
+	 * @param activity The activity of which window transitions to configure.
 	 * @see Window#setEnterTransition(Transition)
 	 * @see Window#setReturnTransition(Transition)
-	 * @see Window#setReenterTransition(Transition)
-	 * @see Window#setExitTransition(Transition)
 	 * @see Window#setSharedElementEnterTransition(Transition)
 	 * @see Window#setSharedElementReturnTransition(Transition)
+	 * @see Window#setAllowEnterTransitionOverlap(boolean)
+	 * @see Window#setAllowReturnTransitionOverlap(boolean)
+	 */
+	public void configureIncomingTransitions(@NonNull final Activity activity) {
+<span class="nc bnc" id="L970" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc" id="L971">			final Window window = activity.getWindow();</span>
+<span class="nc bnc" id="L972" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_ENTER) != 0) {</span>
+<span class="nc" id="L973">				window.setEnterTransition(mEnterTransition);</span>
+			}
+<span class="nc bnc" id="L975" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_RETURN) != 0) {</span>
+<span class="nc" id="L976">				window.setReturnTransition(mReturnTransition);</span>
+			}
+<span class="nc bnc" id="L978" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_ENTER) != 0) {</span>
+<span class="nc" id="L979">				window.setSharedElementEnterTransition(mSharedElementEnterTransition);</span>
+			}
+<span class="nc bnc" id="L981" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_RETURN) != 0) {</span>
+<span class="nc" id="L982">				window.setSharedElementReturnTransition(mSharedElementReturnTransition);</span>
+			}
+<span class="nc bnc" id="L984" title="All 2 branches missed.">			if (mAllowEnterTransitionOverlap != null) {</span>
+<span class="nc" id="L985">				window.setAllowEnterTransitionOverlap(mAllowEnterTransitionOverlap);</span>
+			}
+<span class="nc bnc" id="L987" title="All 2 branches missed.">			if (mAllowReturnTransitionOverlap != null) {</span>
+<span class="nc" id="L988">				window.setAllowReturnTransitionOverlap(mAllowReturnTransitionOverlap);</span>
+			}
+<span class="nc bnc" id="L990" title="All 2 branches missed.">			if (mSharedElementUseOverlay != null) {</span>
+<span class="nc" id="L991">				window.setSharedElementsUseOverlay(mSharedElementUseOverlay);</span>
+			}
+		}
+<span class="nc" id="L994">	}</span>
+
+	/**
+	 * Performs configuration of the given &lt;var&gt;activity's&lt;/var&gt; window by attaching to it &lt;b&gt;reenter&lt;/b&gt;
+	 * and &lt;b&gt;exit&lt;/b&gt; transitions (those for shared elements including) specified for this navigational
+	 * transition.
+	 * &lt;p&gt;
+	 * This method is by default invoked whenever {@link #start(Activity)} is called for this
+	 * navigational transition. Its counterpart, {@link #configureIncomingTransitions(Activity)},
+	 * should be called by the activity to which is the calling activity transitioning.
+	 * &lt;p&gt;
+	 * &lt;b&gt;Note&lt;/b&gt;, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android  versions this
+	 * method does nothing.
+	 *
+	 * @param activity The activity of which window transitions to configure.
+	 * @see Window#setReenterTransition(Transition)
+	 * @see Window#setExitTransition(Transition)
 	 * @see Window#setSharedElementReenterTransition(Transition)
 	 * @see Window#setSharedElementExitTransition(Transition)
 	 */
-	public void configureTransitions(@NonNull Activity activity) {
-<span class="nc bnc" id="L886" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc" id="L887">			final Window window = activity.getWindow();</span>
-<span class="nc" id="L888">			this.attachTransitions(window);</span>
-<span class="nc" id="L889">			this.attachSharedElementTransitions(window);</span>
+	public void configureOutgoingTransitions(@NonNull final Activity activity) {
+<span class="nc bnc" id="L1015" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc" id="L1016">			final Window window = activity.getWindow();</span>
+<span class="nc bnc" id="L1017" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_REENTER) != 0) {</span>
+<span class="nc" id="L1018">				window.setReenterTransition(mReenterTransition);</span>
+			}
+<span class="nc bnc" id="L1020" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_EXIT) != 0) {</span>
+<span class="nc" id="L1021">				window.setExitTransition(mExitTransition);</span>
+			}
+<span class="nc bnc" id="L1023" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_REENTER) != 0) {</span>
+<span class="nc" id="L1024">				window.setSharedElementReenterTransition(mSharedElementReenterTransition);</span>
+			}
+<span class="nc bnc" id="L1026" title="All 2 branches missed.">			if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_EXIT) != 0) {</span>
+<span class="nc" id="L1027">				window.setSharedElementExitTransition(mSharedElementExitTransition);</span>
+			}
+<span class="nc bnc" id="L1029" title="All 2 branches missed.">			if (mSharedElementUseOverlay != null) {</span>
+<span class="nc" id="L1030">				window.setSharedElementsUseOverlay(mSharedElementUseOverlay);</span>
+			}
 		}
-<span class="nc" id="L891">	}</span>
-
-	/**
-	 * Attaches all transitions specified for this navigational transition to the given &lt;var&gt;window&lt;/var&gt;.
-	 * &lt;p&gt;
-	 * This will attach only transitions of which particular flags are contained within {@link #mSpecifiedTransitions}
-	 * flags.
-	 *
-	 * @param window The window to which should be transitions attached.
-	 */
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private void attachTransitions(Window window) {
-<span class="nc bnc" id="L903" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_ENTER) != 0)</span>
-<span class="nc" id="L904">			window.setEnterTransition(mEnterTransition);</span>
-<span class="nc bnc" id="L905" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_REENTER) != 0)</span>
-<span class="nc" id="L906">			window.setReenterTransition(mReenterTransition);</span>
-<span class="nc bnc" id="L907" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_RETURN) != 0)</span>
-<span class="nc" id="L908">			window.setReturnTransition(mReturnTransition);</span>
-<span class="nc bnc" id="L909" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_EXIT) != 0)</span>
-<span class="nc" id="L910">			window.setExitTransition(mExitTransition);</span>
-<span class="nc" id="L911">	}</span>
-
-	/**
-	 * Attaches all transitions for shared elements specified for this navigational transition to
-	 * the given &lt;var&gt;window&lt;/var&gt;.
-	 * &lt;p&gt;
-	 * This will attach only transitions of which particular flags are contained within {@link #mSpecifiedTransitions}
-	 * flags.
-	 *
-	 * @param window The window to which should be transitions attached.
-	 */
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private void attachSharedElementTransitions(Window window) {
-<span class="nc bnc" id="L924" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_ENTER) != 0)</span>
-<span class="nc" id="L925">			window.setSharedElementEnterTransition(mSharedElementEnterTransition);</span>
-<span class="nc bnc" id="L926" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_REENTER) != 0)</span>
-<span class="nc" id="L927">			window.setSharedElementReenterTransition(mSharedElementReenterTransition);</span>
-<span class="nc bnc" id="L928" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_RETURN) != 0)</span>
-<span class="nc" id="L929">			window.setSharedElementReturnTransition(mSharedElementReturnTransition);</span>
-<span class="nc bnc" id="L930" title="All 2 branches missed.">		if ((mSpecifiedTransitions &amp; TRANSITION_SHARED_ELEMENT_EXIT) != 0)</span>
-<span class="nc" id="L931">			window.setSharedElementExitTransition(mSharedElementExitTransition);</span>
-
-<span class="nc" id="L933">	}</span>
+<span class="nc" id="L1033">	}</span>
 
 	/**
 	 * Creates a new instance of ActivityOptions for the specified &lt;var&gt;caller&lt;/var&gt; activity.
@@ -945,16 +1045,16 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	@Nullable
 	@SuppressLint(&quot;NewApi&quot;)
 	@SuppressWarnings(&quot;unchecked&quot;)
-	public ActivityOptions makeSceneTransitionAnimation(@NonNull Activity caller) {
-<span class="nc bnc" id="L949" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc bnc" id="L950" title="All 4 branches missed.">			if (mSharedElements != null &amp;&amp; !mSharedElements.isEmpty()) {</span>
-<span class="nc" id="L951">				final Pair&lt;View, String&gt;[] pairs = new Pair[mSharedElements.size()];</span>
-<span class="nc" id="L952">				mSharedElements.toArray(pairs);</span>
-<span class="nc" id="L953">				return ActivityOptions.makeSceneTransitionAnimation(caller, pairs);</span>
+	public ActivityOptions makeSceneTransitionAnimation(@NonNull final Activity caller) {
+<span class="nc bnc" id="L1049" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="nc bnc" id="L1050" title="All 4 branches missed.">			if (mSharedElements != null &amp;&amp; !mSharedElements.isEmpty()) {</span>
+<span class="nc" id="L1051">				final Pair&lt;View, String&gt;[] pairs = new Pair[mSharedElements.size()];</span>
+<span class="nc" id="L1052">				mSharedElements.toArray(pairs);</span>
+<span class="nc" id="L1053">				return ActivityOptions.makeSceneTransitionAnimation(caller, pairs);</span>
 			}
-<span class="nc" id="L955">			return ActivityOptions.makeSceneTransitionAnimation(caller);</span>
+<span class="nc" id="L1055">			return ActivityOptions.makeSceneTransitionAnimation(caller);</span>
 		}
-<span class="nc" id="L957">		return null;</span>
+<span class="nc" id="L1057">		return null;</span>
 	}
 
 	/**
@@ -965,17 +1065,17 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * activity specified.
 	 */
 	@NonNull
-	public Intent createIntent(@NonNull Activity caller) {
-<span class="nc bnc" id="L969" title="All 2 branches missed.">		if (mClassOfTransitionActivity == null) {</span>
-<span class="nc" id="L970">			throw new UnsupportedOperationException(</span>
-<span class="nc" id="L971">					&quot;Navigational transition(&quot; + getClass().getSimpleName() + &quot;) does not have any class of intended activity specified.&quot;</span>
+	public Intent createIntent(@NonNull final Activity caller) {
+<span class="nc bnc" id="L1069" title="All 2 branches missed.">		if (mClassOfTransitionActivity == null) {</span>
+<span class="nc" id="L1070">			throw new UnsupportedOperationException(</span>
+<span class="nc" id="L1071">					&quot;Navigational transition(&quot; + getClass().getSimpleName() + &quot;) does not have any class of intended activity specified.&quot;</span>
 			);
 		}
-<span class="nc" id="L974">		final Intent intent = new Intent(caller, mClassOfTransitionActivity);</span>
-<span class="nc bnc" id="L975" title="All 2 branches missed.">		if (mIntentExtras != null) {</span>
-<span class="nc" id="L976">			intent.putExtras(mIntentExtras);</span>
+<span class="nc" id="L1074">		final Intent intent = new Intent(caller, mClassOfTransitionActivity);</span>
+<span class="nc bnc" id="L1075" title="All 2 branches missed.">		if (mIntentExtras != null) {</span>
+<span class="nc" id="L1076">			intent.putExtras(mIntentExtras);</span>
 		}
-<span class="nc" id="L978">		return intent;</span>
+<span class="nc" id="L1078">		return intent;</span>
 	}
 
 	/**
@@ -984,9 +1084,9 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * @param caller The activity that should be finished and of which exit transitions should be started.
 	 * @see #start(Activity)
 	 */
-	public void finish(@NonNull Activity caller) {
-<span class="nc" id="L988">		onFinish(caller);</span>
-<span class="nc" id="L989">	}</span>
+	public void finish(@NonNull final Activity caller) {
+<span class="nc" id="L1088">		onFinish(caller);</span>
+<span class="nc" id="L1089">	}</span>
 
 	/**
 	 * Invoked whenever {@link #finish(Activity)} is called.
@@ -1001,12 +1101,12 @@ public abstract class BaseNavigationalTransition&lt;T extends BaseNavigationalTr
 	 * @see #onStart(Activity)
 	 */
 	@SuppressLint(&quot;NewApi&quot;)
-	protected void onFinish(@NonNull Activity caller) {
-<span class="nc bnc" id="L1005" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) caller.finishAfterTransition();</span>
-<span class="nc" id="L1006">		else caller.finish();</span>
-<span class="nc" id="L1007">	}</span>
+	protected void onFinish(@NonNull final Activity caller) {
+<span class="nc bnc" id="L1105" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) caller.finishAfterTransition();</span>
+<span class="nc" id="L1106">		else caller.finish();</span>
+<span class="nc" id="L1107">	}</span>
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

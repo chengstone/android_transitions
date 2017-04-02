@@ -38,7 +38,7 @@ import android.support.annotation.NonNull;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class NavigationalTransition extends BaseNavigationalTransition&lt;NavigationalTransition&gt; {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -47,19 +47,19 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 */
 	// private static final String TAG = &quot;NavigationalTransition&quot;;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -77,17 +77,18 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 *                                  whenever starting this transition.
 	 * @see #createIntent(Activity)
 	 */
-	public NavigationalTransition(@NonNull Class&lt;? extends Activity&gt; classOfTransitionActivity) {
+	public NavigationalTransition(@NonNull final Class&lt;? extends Activity&gt; classOfTransitionActivity) {
 <span class="nc" id="L81">		super(classOfTransitionActivity);</span>
 <span class="nc" id="L82">	}</span>
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * Starts this navigational transition using the given &lt;var&gt;caller&lt;/var&gt; fragment with all
-	 * transitions specified for this navigational transition.
+	 * Starts this navigational transition using the given &lt;var&gt;caller&lt;/var&gt; fragment  with transitions
+	 * and shared elements that are configured for the caller's parent activity via
+	 * {@link #configureOutgoingTransitions(Activity)}.
 	 * &lt;p&gt;
 	 * &lt;b&gt;Note&lt;/b&gt;, that unlike {@link ##start(Activity)} this cannot be used to start new activity
 	 * with shared elements presented. For that purpose use {@link #start(Activity)} instead.
@@ -97,10 +98,9 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * @see #configureTransitionsOverlapping(Activity)
 	 * @see #configureTransitions(Activity)
 	 */
-	public void start(@NonNull Fragment caller) {
-<span class="nc" id="L101">		final Activity activity = caller.getActivity();</span>
-<span class="nc" id="L102">		configureTransitionsOverlapping(activity);</span>
-<span class="nc" id="L103">		configureTransitions(activity);</span>
+	public void start(@NonNull final Fragment caller) {
+<span class="nc" id="L102">		final Activity activity = caller.getActivity();</span>
+<span class="nc" id="L103">		configureOutgoingTransitions(activity);</span>
 <span class="nc" id="L104">		onStart(caller);</span>
 <span class="nc" id="L105">	}</span>
 
@@ -117,7 +117,7 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 */
 	@SuppressLint(&quot;NewApi&quot;)
 	@SuppressWarnings(&quot;ConstantConditions&quot;)
-	protected void onStart(@NonNull Fragment caller) {
+	protected void onStart(@NonNull final Fragment caller) {
 <span class="nc" id="L121">		final Activity activity = caller.getActivity();</span>
 <span class="nc" id="L122">		final Intent intent = createIntent(activity);</span>
 <span class="nc bnc" id="L123" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
@@ -137,7 +137,7 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 *               should be started.
 	 * @see #start(Fragment)
 	 */
-	public void finish(@NonNull Fragment caller) {
+	public void finish(@NonNull final Fragment caller) {
 <span class="nc" id="L141">		onFinish(caller);</span>
 <span class="nc" id="L142">	}</span>
 
@@ -150,11 +150,11 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * @param caller The fragment that requested finish of its host activity via this navigational transition.
 	 * @see #onStart(Fragment)
 	 */
-	protected void onFinish(@NonNull Fragment caller) {
+	protected void onFinish(@NonNull final Fragment caller) {
 <span class="nc" id="L154">		onFinish(caller.getActivity());</span>
 <span class="nc" id="L155">	}</span>
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 }

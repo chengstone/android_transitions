@@ -55,7 +55,7 @@ import java.lang.annotation.RetentionPolicy;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Scale extends Visibility {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -87,15 +87,15 @@ public class Scale extends Visibility {
 	 */
 	private static final float SCALE_FRACTION = 0.5f;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -129,7 +129,7 @@ public class Scale extends Visibility {
 	 */
 <span class="nc" id="L130">	private float mPivotYFraction = SCALE_FRACTION;</span>
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -145,7 +145,7 @@ public class Scale extends Visibility {
 	 *
 	 * @param mode One of {@link #MODE_IN} or {@link #MODE_OUT} or theirs combination.
 	 */
-	public Scale(@ScaleMode int mode) {
+	public Scale(@ScaleMode final int mode) {
 <span class="nc" id="L149">		super();</span>
 <span class="nc" id="L150">		setMode(mode);</span>
 <span class="nc" id="L151">	}</span>
@@ -158,7 +158,7 @@ public class Scale extends Visibility {
 	 * @param attrs   Set of attributes from which to obtain animation property values for the scale
 	 *                animation.
 	 */
-	public Scale(@NonNull Context context, @NonNull AttributeSet attrs) {
+	public Scale(@NonNull final Context context, @NonNull final AttributeSet attrs) {
 <span class="nc" id="L162">		super(context, attrs);</span>
 <span class="nc" id="L163">		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);</span>
 <span class="nc" id="L164">		final int n = typedArray.getIndexCount();</span>
@@ -177,7 +177,7 @@ public class Scale extends Visibility {
 <span class="nc" id="L177">		typedArray.recycle();</span>
 <span class="nc" id="L178">	}</span>
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -191,11 +191,15 @@ public class Scale extends Visibility {
 	 * specified parameters when started.
 	 */
 	@NonNull
-	public static Animator createAnimator(@NonNull View view, @FloatRange(from = 0, to = 1) float startScale, @FloatRange(from = 0, to = 1) float endScale) {
-<span class="nc" id="L195">		return ObjectAnimator.ofPropertyValuesHolder(</span>
+	public static Animator createAnimator(
+			@NonNull final View view,
+			@FloatRange(from = 0, to = 1) final float startScale,
+			@FloatRange(from = 0, to = 1) final float endScale
+	) {
+<span class="nc" id="L199">		return ObjectAnimator.ofPropertyValuesHolder(</span>
 				view,
-<span class="nc" id="L197">				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale),</span>
-<span class="nc" id="L198">				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScale, endScale)</span>
+<span class="nc" id="L201">				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale),</span>
+<span class="nc" id="L202">				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScale, endScale)</span>
 		);
 	}
 
@@ -210,9 +214,9 @@ public class Scale extends Visibility {
 	 * @see #setPivotXFraction(float)
 	 * @see #setPivotY(Float)
 	 */
-	public void setPivotX(@Nullable Float pivotX) {
-<span class="nc" id="L214">		this.mPivotX = pivotX;</span>
-<span class="nc" id="L215">	}</span>
+	public void setPivotX(@Nullable final Float pivotX) {
+<span class="nc" id="L218">		this.mPivotX = pivotX;</span>
+<span class="nc" id="L219">	}</span>
 
 	/**
 	 * Returns the x coordinate for pivot of the scale animation.
@@ -222,7 +226,7 @@ public class Scale extends Visibility {
 	 */
 	@Nullable
 	public Float getPivotX() {
-<span class="nc" id="L225">		return mPivotX;</span>
+<span class="nc" id="L229">		return mPivotX;</span>
 	}
 
 	/**
@@ -236,9 +240,9 @@ public class Scale extends Visibility {
 	 * @see #setPivotYFraction(float)
 	 * @see #setPivotX(Float)
 	 */
-	public void setPivotY(@Nullable Float pivotY) {
-<span class="nc" id="L240">		this.mPivotY = pivotY;</span>
-<span class="nc" id="L241">	}</span>
+	public void setPivotY(@Nullable final Float pivotY) {
+<span class="nc" id="L244">		this.mPivotY = pivotY;</span>
+<span class="nc" id="L245">	}</span>
 
 	/**
 	 * Returns the y coordinate for pivot of the scale animation.
@@ -248,7 +252,7 @@ public class Scale extends Visibility {
 	 */
 	@Nullable
 	public Float getPivotY() {
-<span class="nc" id="L251">		return mPivotY;</span>
+<span class="nc" id="L255">		return mPivotY;</span>
 	}
 
 	/**
@@ -263,9 +267,9 @@ public class Scale extends Visibility {
 	 * @see #setPivotXFraction(float)
 	 * @see #setPivotX(Float)
 	 */
-	public void setPivotXFraction(@FloatRange(from = 0, to = 1) float fractionX) {
-<span class="nc" id="L267">		this.mPivotXFraction = fractionX;</span>
-<span class="nc" id="L268">	}</span>
+	public void setPivotXFraction(@FloatRange(from = 0, to = 1) final float fractionX) {
+<span class="nc" id="L271">		this.mPivotXFraction = fractionX;</span>
+<span class="nc" id="L272">	}</span>
 
 	/**
 	 * Returns the fraction of the &lt;b&gt;pivot x&lt;/b&gt; coordinate.
@@ -275,7 +279,7 @@ public class Scale extends Visibility {
 	 */
 	@FloatRange(from = 0, to = 1)
 	public float getPivotXFraction() {
-<span class="nc" id="L278">		return mPivotXFraction;</span>
+<span class="nc" id="L282">		return mPivotXFraction;</span>
 	}
 
 	/**
@@ -290,9 +294,9 @@ public class Scale extends Visibility {
 	 * @see #setPivotYFraction(float)
 	 * @see #setPivotY(Float)
 	 */
-	public void setPivotYFraction(@FloatRange(from = 0, to = 1) float fractionY) {
-<span class="nc" id="L294">		this.mPivotYFraction = fractionY;</span>
-<span class="nc" id="L295">	}</span>
+	public void setPivotYFraction(@FloatRange(from = 0, to = 1) final float fractionY) {
+<span class="nc" id="L298">		this.mPivotYFraction = fractionY;</span>
+<span class="nc" id="L299">	}</span>
 
 	/**
 	 * Returns the fraction of the &lt;b&gt;pivot y&lt;/b&gt; coordinate.
@@ -302,31 +306,31 @@ public class Scale extends Visibility {
 	 */
 	@FloatRange(from = 0, to = 1)
 	public float getPivotYFraction() {
-<span class="nc" id="L305">		return mPivotYFraction;</span>
+<span class="nc" id="L309">		return mPivotYFraction;</span>
 	}
 
 	/**
 	 */
 	@Override
-	public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
-<span class="nc" id="L312">		calculateTransitionProperties(view, 0f, 1f);</span>
-<span class="nc" id="L313">		view.setPivotX(mInfo.pivotX);</span>
-<span class="nc" id="L314">		view.setPivotY(mInfo.pivotY);</span>
-<span class="nc" id="L315">		view.setScaleX(mInfo.startScale);</span>
-<span class="nc" id="L316">		view.setScaleY(mInfo.startScale);</span>
-<span class="nc" id="L317">		return createAnimator(view, mInfo.startScale, mInfo.endScale);</span>
+	public Animator onAppear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
+<span class="nc" id="L316">		calculateTransitionProperties(view, 0f, 1f);</span>
+<span class="nc" id="L317">		view.setPivotX(mInfo.pivotX);</span>
+<span class="nc" id="L318">		view.setPivotY(mInfo.pivotY);</span>
+<span class="nc" id="L319">		view.setScaleX(mInfo.startScale);</span>
+<span class="nc" id="L320">		view.setScaleY(mInfo.startScale);</span>
+<span class="nc" id="L321">		return createAnimator(view, mInfo.startScale, mInfo.endScale);</span>
 	}
 
 	/**
 	 */
 	@Override
-	public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
-<span class="nc" id="L324">		calculateTransitionProperties(view, 1f, 0f);</span>
-<span class="nc" id="L325">		view.setPivotX(mInfo.pivotX);</span>
-<span class="nc" id="L326">		view.setPivotY(mInfo.pivotY);</span>
-<span class="nc" id="L327">		view.setScaleX(mInfo.startScale);</span>
-<span class="nc" id="L328">		view.setScaleY(mInfo.startScale);</span>
-<span class="nc" id="L329">		return createAnimator(view, mInfo.startScale, mInfo.endScale);</span>
+	public Animator onDisappear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
+<span class="nc" id="L328">		calculateTransitionProperties(view, 1f, 0f);</span>
+<span class="nc" id="L329">		view.setPivotX(mInfo.pivotX);</span>
+<span class="nc" id="L330">		view.setPivotY(mInfo.pivotY);</span>
+<span class="nc" id="L331">		view.setScaleX(mInfo.startScale);</span>
+<span class="nc" id="L332">		view.setScaleY(mInfo.startScale);</span>
+<span class="nc" id="L333">		return createAnimator(view, mInfo.startScale, mInfo.endScale);</span>
 	}
 
 	/**
@@ -334,14 +338,14 @@ public class Scale extends Visibility {
 	 *
 	 * @param view The view to which will be the transition applied.
 	 */
-	private void calculateTransitionProperties(View view, float startScale, float endScale) {
-<span class="nc" id="L338">		mInfo.startScale = startScale;</span>
-<span class="nc" id="L339">		mInfo.endScale = endScale;</span>
-<span class="nc bnc" id="L340" title="All 2 branches missed.">		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;</span>
-<span class="nc bnc" id="L341" title="All 2 branches missed.">		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;</span>
-<span class="nc" id="L342">	}</span>
+	private void calculateTransitionProperties(final View view, final float startScale, final float endScale) {
+<span class="nc" id="L342">		mInfo.startScale = startScale;</span>
+<span class="nc" id="L343">		mInfo.endScale = endScale;</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;</span>
+<span class="nc" id="L346">	}</span>
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 
@@ -349,7 +353,7 @@ public class Scale extends Visibility {
 	 * Class holding necessary values for the scale transition that are exclusively associated with
 	 * the currently transitioning view.
 	 */
-<span class="nc" id="L352">	private static final class Info {</span>
+<span class="nc" id="L356">	private static final class Info {</span>
 
 		/**
 		 * Scale value.

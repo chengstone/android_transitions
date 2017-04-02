@@ -20,6 +20,7 @@ package universum.studios.android.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -67,7 +68,7 @@ import universum.studios.android.transition.util.AnimatorWrapper;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Reveal extends Visibility {
 
-	/**
+	/*
 	 * Constants ===================================================================================
 	 */
 
@@ -105,15 +106,15 @@ public class Reveal extends Visibility {
 	 */
 	private static final float CENTER_FRACTION = 0.5f;
 
-	/**
+	/*
 	 * Interface ===================================================================================
 	 */
 
-	/**
+	/*
 	 * Static members ==============================================================================
 	 */
 
-	/**
+	/*
 	 * Members =====================================================================================
 	 */
 
@@ -121,13 +122,13 @@ public class Reveal extends Visibility {
 	 * Object that holds all necessary properties for the reveal transition for the currently
 	 * transitioning view.
 	 */
-<span class="nc" id="L124">	private final Info mInfo = new Info();</span>
+<span class="nc" id="L125">	private final Info mInfo = new Info();</span>
 
 	/**
 	 * Mode determining whether we will run &lt;b&gt;reveal&lt;/b&gt; or &lt;b&gt;conceal&lt;/b&gt; animation.
 	 * Either {@link #REVEAL} or {@link #CONCEAL}.
 	 */
-<span class="nc" id="L130">	private int mMode = REVEAL;</span>
+<span class="nc" id="L131">	private int mMode = REVEAL;</span>
 
 	/**
 	 * X coordinate for center of the reveal/conceal animation. If {@code null}, {@link #mCenterXFraction}
@@ -145,13 +146,13 @@ public class Reveal extends Visibility {
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for center
 	 * of the reveal/conceal animation if {@link #mCenterX} coordinate has not been specified.
 	 */
-<span class="nc" id="L148">	private float mCenterXFraction = CENTER_FRACTION;</span>
+<span class="nc" id="L149">	private float mCenterXFraction = CENTER_FRACTION;</span>
 
 	/**
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for center
 	 * of the reveal/conceal animation if {@link #mCenterY} coordinate has not been specified.
 	 */
-<span class="nc" id="L154">	private float mCenterYFraction = CENTER_FRACTION;</span>
+<span class="nc" id="L155">	private float mCenterYFraction = CENTER_FRACTION;</span>
 
 	/**
 	 * Gravity flags used to resolve center coordinates for the reveal/conceal animation.
@@ -183,26 +184,26 @@ public class Reveal extends Visibility {
 	/**
 	 * Visibility flag set to a revealing view whenever the reveal animation starts.
 	 */
-<span class="nc" id="L186">	private int mStartVisibility = View.VISIBLE;</span>
+<span class="nc" id="L187">	private int mStartVisibility = View.VISIBLE;</span>
 
 	/**
 	 * Visibility flag set to a revealing view whenever the reveal animation ends.
 	 */
-<span class="nc" id="L191">	private int mEndVisibility = View.VISIBLE;</span>
+<span class="nc" id="L192">	private int mEndVisibility = View.VISIBLE;</span>
 
 	/**
 	 * Visibility flag set to a revealing view whenever {@link #onAppear(ViewGroup, View, TransitionValues, TransitionValues)}
 	 * is invoked.
 	 */
-<span class="nc" id="L197">	private int mAppearVisibility = View.VISIBLE;</span>
+<span class="nc" id="L198">	private int mAppearVisibility = View.VISIBLE;</span>
 
 	/**
 	 * Visibility flag set to a revealing view whenever {@link #onDisappear(ViewGroup, View, TransitionValues, TransitionValues)}
 	 * is invoked.
 	 */
-<span class="nc" id="L203">	private int mDisappearVisibility = View.VISIBLE;</span>
+<span class="nc" id="L204">	private int mDisappearVisibility = View.VISIBLE;</span>
 
-	/**
+	/*
 	 * Constructors ================================================================================
 	 */
 
@@ -210,18 +211,18 @@ public class Reveal extends Visibility {
 	 * Same as {@link #Reveal(int)} with {@link #REVEAL} mode.
 	 */
 	public Reveal() {
-<span class="nc" id="L213">		this(REVEAL);</span>
-<span class="nc" id="L214">	}</span>
+<span class="nc" id="L214">		this(REVEAL);</span>
+<span class="nc" id="L215">	}</span>
 
 	/**
 	 * Creates a new instance of Reveal transition with the specified &lt;var&gt;mode&lt;/var&gt;.
 	 *
 	 * @param mode One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
-	public Reveal(@RevealMode int mode) {
-<span class="nc" id="L222">		super();</span>
-<span class="nc" id="L223">		setMode(mode);</span>
-<span class="nc" id="L224">	}</span>
+	public Reveal(@RevealMode final int mode) {
+<span class="nc" id="L223">		super();</span>
+<span class="nc" id="L224">		setMode(mode);</span>
+<span class="nc" id="L225">	}</span>
 
 	/**
 	 * Creates a new instance of Reveal transition with animation property values set from the
@@ -231,42 +232,42 @@ public class Reveal extends Visibility {
 	 * @param attrs   Set of attributes from which to obtain property values for the reveal animation.
 	 */
 	@SuppressWarnings(&quot;ResourceType&quot;)
-	public Reveal(@NonNull Context context, @NonNull AttributeSet attrs) {
-<span class="nc" id="L235">		super(context, attrs);</span>
-<span class="nc" id="L236">		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);</span>
-<span class="nc" id="L237">		final int n = typedArray.getIndexCount();</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
-<span class="nc" id="L239">			final int index = typedArray.getIndex(i);</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">			if (index == R.styleable.Ui_Transition_Reveal_uiRevealMode) {</span>
-<span class="nc" id="L241">				setMode(typedArray.getInteger(index, REVEAL));</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartRadius) {</span>
-<span class="nc" id="L243">				this.mStartRadius = (float) typedArray.getDimensionPixelSize(index, 0);</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndRadius) {</span>
-<span class="nc" id="L245">				this.mEndRadius = (float) typedArray.getDimensionPixelSize(index, 0);</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiAppearVisibility) {</span>
-<span class="nc" id="L247">				this.mAppearVisibility = typedArray.getInteger(index, mAppearVisibility);</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiDisappearVisibility) {</span>
-<span class="nc" id="L249">				this.mDisappearVisibility = typedArray.getInteger(index, mDisappearVisibility);</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartVisibility) {</span>
-<span class="nc" id="L251">				this.mStartVisibility = typedArray.getInteger(index, mStartVisibility);</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndVisibility) {</span>
-<span class="nc" id="L253">				this.mEndVisibility = typedArray.getInteger(index, mEndVisibility);</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterGravity) {</span>
-<span class="nc" id="L255">				this.mCenterGravity = typedArray.getInteger(index, 0);</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterVerticalOffset) {</span>
-<span class="nc" id="L257">				this.mCenterVerticalOffset = typedArray.getDimensionPixelSize(index, 0);</span>
-<span class="nc bnc" id="L258" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterHorizontalOffset) {</span>
-<span class="nc" id="L259">				this.mCenterHorizontalOffset = typedArray.getDimensionPixelSize(index, 0);</span>
-<span class="nc bnc" id="L260" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerX) {</span>
-<span class="nc" id="L261">				this.mCenterXFraction = typedArray.getFraction(index, 1, 1, mCenterXFraction);</span>
-<span class="nc bnc" id="L262" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerY) {</span>
-<span class="nc" id="L263">				this.mCenterYFraction = typedArray.getFraction(index, 1, 1, mCenterYFraction);</span>
+	public Reveal(@NonNull final Context context, @NonNull final AttributeSet attrs) {
+<span class="nc" id="L236">		super(context, attrs);</span>
+<span class="nc" id="L237">		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);</span>
+<span class="nc" id="L238">		final int n = typedArray.getIndexCount();</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L240">			final int index = typedArray.getIndex(i);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (index == R.styleable.Ui_Transition_Reveal_uiRevealMode) {</span>
+<span class="nc" id="L242">				setMode(typedArray.getInteger(index, REVEAL));</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartRadius) {</span>
+<span class="nc" id="L244">				this.mStartRadius = (float) typedArray.getDimensionPixelSize(index, 0);</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndRadius) {</span>
+<span class="nc" id="L246">				this.mEndRadius = (float) typedArray.getDimensionPixelSize(index, 0);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiAppearVisibility) {</span>
+<span class="nc" id="L248">				this.mAppearVisibility = typedArray.getInteger(index, mAppearVisibility);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiDisappearVisibility) {</span>
+<span class="nc" id="L250">				this.mDisappearVisibility = typedArray.getInteger(index, mDisappearVisibility);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartVisibility) {</span>
+<span class="nc" id="L252">				this.mStartVisibility = typedArray.getInteger(index, mStartVisibility);</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndVisibility) {</span>
+<span class="nc" id="L254">				this.mEndVisibility = typedArray.getInteger(index, mEndVisibility);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterGravity) {</span>
+<span class="nc" id="L256">				this.mCenterGravity = typedArray.getInteger(index, 0);</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterVerticalOffset) {</span>
+<span class="nc" id="L258">				this.mCenterVerticalOffset = typedArray.getDimensionPixelSize(index, 0);</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterHorizontalOffset) {</span>
+<span class="nc" id="L260">				this.mCenterHorizontalOffset = typedArray.getDimensionPixelSize(index, 0);</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerX) {</span>
+<span class="nc" id="L262">				this.mCenterXFraction = typedArray.getFraction(index, 1, 1, mCenterXFraction);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerY) {</span>
+<span class="nc" id="L264">				this.mCenterYFraction = typedArray.getFraction(index, 1, 1, mCenterYFraction);</span>
 			}
 		}
-<span class="nc" id="L266">		typedArray.recycle();</span>
-<span class="nc" id="L267">	}</span>
+<span class="nc" id="L267">		typedArray.recycle();</span>
+<span class="nc" id="L268">	}</span>
 
-	/**
+	/*
 	 * Methods =====================================================================================
 	 */
 
@@ -278,8 +279,8 @@ public class Reveal extends Visibility {
 	 * @return Calculated radius that may be used as end/start radius for the desired reveal animation.
 	 */
 	@FloatRange(from = 0)
-	public static float calculateRadius(@NonNull View view) {
-<span class="nc" id="L282">		return calculateRadius(view.getWidth(), view.getHeight());</span>
+	public static float calculateRadius(@NonNull final View view) {
+<span class="nc" id="L283">		return calculateRadius(view.getWidth(), view.getHeight());</span>
 	}
 
 	/**
@@ -291,8 +292,8 @@ public class Reveal extends Visibility {
 	 * @return Calculated radius that may be used as end/start radius for the desired reveal animation.
 	 */
 	@FloatRange(from = 0)
-	public static float calculateRadius(@FloatRange(from = 0) float width, @FloatRange(from = 0) float height) {
-<span class="nc" id="L295">		return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));</span>
+	public static float calculateRadius(@FloatRange(from = 0) final float width, @FloatRange(from = 0) final float height) {
+<span class="nc" id="L296">		return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));</span>
 	}
 
 	/**
@@ -301,8 +302,8 @@ public class Reveal extends Visibility {
 	 */
 	@Size(2)
 	@NonNull
-	public static float[] resolveCenterPosition(@NonNull View view) {
-<span class="nc" id="L305">		return resolveCenterPosition(view, CENTER_FRACTION, CENTER_FRACTION);</span>
+	public static float[] resolveCenterPosition(@NonNull final View view) {
+<span class="nc" id="L306">		return resolveCenterPosition(view, CENTER_FRACTION, CENTER_FRACTION);</span>
 	}
 
 	/**
@@ -319,11 +320,15 @@ public class Reveal extends Visibility {
 	 */
 	@Size(2)
 	@NonNull
-	public static float[] resolveCenterPosition(@NonNull View view, @FloatRange(from = 0, to = 1) float centerXFraction, @FloatRange(from = 0, to = 1) float centerYFraction) {
-<span class="nc" id="L323">		final float[] center = resolveCenter(view, centerXFraction, centerYFraction);</span>
-<span class="nc" id="L324">		return new float[]{</span>
-<span class="nc" id="L325">				view.getX() + center[0],</span>
-<span class="nc" id="L326">				view.getY() + center[1]</span>
+	public static float[] resolveCenterPosition(
+			@NonNull final View view,
+			@FloatRange(from = 0, to = 1) final float centerXFraction,
+			@FloatRange(from = 0, to = 1) final float centerYFraction
+	) {
+<span class="nc" id="L328">		final float[] center = resolveCenter(view, centerXFraction, centerYFraction);</span>
+<span class="nc" id="L329">		return new float[]{</span>
+<span class="nc" id="L330">				view.getX() + center[0],</span>
+<span class="nc" id="L331">				view.getY() + center[1]</span>
 		};
 	}
 
@@ -333,8 +338,8 @@ public class Reveal extends Visibility {
 	 */
 	@Size(2)
 	@NonNull
-	public static float[] resolveCenter(@NonNull View view) {
-<span class="nc" id="L337">		return resolveCenter(view, CENTER_FRACTION, CENTER_FRACTION);</span>
+	public static float[] resolveCenter(@NonNull final View view) {
+<span class="nc" id="L342">		return resolveCenter(view, CENTER_FRACTION, CENTER_FRACTION);</span>
 	}
 
 	/**
@@ -350,10 +355,14 @@ public class Reveal extends Visibility {
 	 */
 	@Size(2)
 	@NonNull
-	public static float[] resolveCenter(@NonNull View view, @FloatRange(from = 0, to = 1) float centerXFraction, @FloatRange(from = 0, to = 1) float centerYFraction) {
-<span class="nc" id="L354">		return new float[]{</span>
-<span class="nc" id="L355">				view.getWidth() * centerXFraction,</span>
-<span class="nc" id="L356">				view.getHeight() * centerYFraction</span>
+	public static float[] resolveCenter(
+			@NonNull final View view,
+			@FloatRange(from = 0, to = 1) final float centerXFraction,
+			@FloatRange(from = 0, to = 1) final float centerYFraction
+	) {
+<span class="nc" id="L363">		return new float[]{</span>
+<span class="nc" id="L364">				view.getWidth() * centerXFraction,</span>
+<span class="nc" id="L365">				view.getHeight() * centerYFraction</span>
 		};
 	}
 
@@ -364,9 +373,13 @@ public class Reveal extends Visibility {
 	 * @see #resolveCenterPosition(View)
 	 */
 	@NonNull
-	public static Animator createAnimator(@NonNull View view, @FloatRange(from = 0) float startRadius, @FloatRange(from = 0) float endRadius) {
-<span class="nc" id="L368">		final float[] center = resolveCenterPosition(view);</span>
-<span class="nc" id="L369">		return createAnimator(view, Math.round(center[0]), Math.round(center[1]), startRadius, endRadius);</span>
+	public static Animator createAnimator(
+			@NonNull final View view,
+			@FloatRange(from = 0) final float startRadius,
+			@FloatRange(from = 0) final float endRadius
+	) {
+<span class="nc" id="L381">		final float[] center = resolveCenterPosition(view);</span>
+<span class="nc" id="L382">		return createAnimator(view, Math.round(center[0]), Math.round(center[1]), startRadius, endRadius);</span>
 	}
 
 	/**
@@ -382,8 +395,14 @@ public class Reveal extends Visibility {
 	 * @see ViewAnimationUtils#createCircularReveal(View, int, int, float, float)
 	 */
 	@NonNull
-	public static Animator createAnimator(@NonNull View view, @IntRange(from = 0) int centerX, @IntRange(from = 0) int centerY, @FloatRange(from = 0) float startRadius, @FloatRange(from = 0) float endRadius) {
-<span class="nc" id="L386">		return ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);</span>
+	public static Animator createAnimator(
+			@NonNull final View view,
+			@IntRange(from = 0) final int centerX,
+			@IntRange(from = 0) final int centerY,
+			@FloatRange(from = 0) final float startRadius,
+			@FloatRange(from = 0) final float endRadius
+	) {
+<span class="nc" id="L405">		return ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);</span>
 	}
 
 	/**
@@ -395,9 +414,9 @@ public class Reveal extends Visibility {
 	 * @see #getMode()
 	 */
 	@Override
-	public final void setMode(@RevealMode int mode) {
-<span class="nc" id="L399">		this.mMode = mode;</span>
-<span class="nc" id="L400">	}</span>
+	public final void setMode(@RevealMode final int mode) {
+<span class="nc" id="L418">		this.mMode = mode;</span>
+<span class="nc" id="L419">	}</span>
 
 	/**
 	 * Returns the reveal mode of this transition.
@@ -406,7 +425,7 @@ public class Reveal extends Visibility {
 	 */
 	@RevealMode
 	public final int getMode() {
-<span class="nc" id="L409">		return mMode;</span>
+<span class="nc" id="L428">		return mMode;</span>
 	}
 
 	/**
@@ -420,9 +439,9 @@ public class Reveal extends Visibility {
 	 * @see #getStartRadius()
 	 * @see #setEndRadius(Float)
 	 */
-	public void setStartRadius(@Nullable Float radius) {
-<span class="nc" id="L424">		this.mStartRadius = radius;</span>
-<span class="nc" id="L425">	}</span>
+	public void setStartRadius(@Nullable final Float radius) {
+<span class="nc" id="L443">		this.mStartRadius = radius;</span>
+<span class="nc" id="L444">	}</span>
 
 	/**
 	 * Returns the start radius for animating circle of the reveal animation.
@@ -433,7 +452,7 @@ public class Reveal extends Visibility {
 	 */
 	@Nullable
 	public Float getStartRadius() {
-<span class="nc" id="L436">		return mStartRadius;</span>
+<span class="nc" id="L455">		return mStartRadius;</span>
 	}
 
 	/**
@@ -447,9 +466,9 @@ public class Reveal extends Visibility {
 	 * @see #getEndRadius()
 	 * @see #setStartRadius(Float)
 	 */
-	public void setEndRadius(@Nullable Float radius) {
-<span class="nc" id="L451">		this.mEndRadius = radius;</span>
-<span class="nc" id="L452">	}</span>
+	public void setEndRadius(@Nullable final Float radius) {
+<span class="nc" id="L470">		this.mEndRadius = radius;</span>
+<span class="nc" id="L471">	}</span>
 
 	/**
 	 * Returns the end radius for animating circle of the reveal animation.
@@ -460,7 +479,7 @@ public class Reveal extends Visibility {
 	 */
 	@Nullable
 	public Float getEndRadius() {
-<span class="nc" id="L463">		return mEndRadius;</span>
+<span class="nc" id="L482">		return mEndRadius;</span>
 	}
 
 	/**
@@ -472,9 +491,9 @@ public class Reveal extends Visibility {
 	 * @see R.attr#uiStartVisibility ui:uiStartVisibility
 	 * @see #getStartVisibility()
 	 */
-	public void setStartVisibility(int visibility) {
-<span class="nc" id="L476">		this.mStartVisibility = visibility;</span>
-<span class="nc" id="L477">	}</span>
+	public void setStartVisibility(final int visibility) {
+<span class="nc" id="L495">		this.mStartVisibility = visibility;</span>
+<span class="nc" id="L496">	}</span>
 
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition
@@ -484,7 +503,7 @@ public class Reveal extends Visibility {
 	 * @see #setStartVisibility(int)
 	 */
 	public int getStartVisibility() {
-<span class="nc" id="L487">		return mStartVisibility;</span>
+<span class="nc" id="L506">		return mStartVisibility;</span>
 	}
 
 	/**
@@ -497,9 +516,9 @@ public class Reveal extends Visibility {
 	 * @see R.attr#uiEndVisibility ui:uiEndVisibility
 	 * @see #getEndVisibility()
 	 */
-	public void setEndVisibility(int visibility) {
-<span class="nc" id="L501">		this.mEndVisibility = visibility;</span>
-<span class="nc" id="L502">	}</span>
+	public void setEndVisibility(final int visibility) {
+<span class="nc" id="L520">		this.mEndVisibility = visibility;</span>
+<span class="nc" id="L521">	}</span>
 
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition ends.
@@ -508,7 +527,7 @@ public class Reveal extends Visibility {
 	 * @see #setEndVisibility(int)
 	 */
 	public int getEndVisibility() {
-<span class="nc" id="L511">		return mEndVisibility;</span>
+<span class="nc" id="L530">		return mEndVisibility;</span>
 	}
 
 	/**
@@ -521,9 +540,9 @@ public class Reveal extends Visibility {
 	 * @see R.attr#uiAppearVisibility ui:uiAppearVisibility
 	 * @see #getAppearVisibility()
 	 */
-	public void setAppearVisibility(int visibility) {
-<span class="nc" id="L525">		this.mAppearVisibility = visibility;</span>
-<span class="nc" id="L526">	}</span>
+	public void setAppearVisibility(final int visibility) {
+<span class="nc" id="L544">		this.mAppearVisibility = visibility;</span>
+<span class="nc" id="L545">	}</span>
 
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition is
@@ -533,7 +552,7 @@ public class Reveal extends Visibility {
 	 * @see #setAppearVisibility(int)
 	 */
 	public int getAppearVisibility() {
-<span class="nc" id="L536">		return mAppearVisibility;</span>
+<span class="nc" id="L555">		return mAppearVisibility;</span>
 	}
 
 	/**
@@ -546,9 +565,9 @@ public class Reveal extends Visibility {
 	 * @see R.attr#uiDisappearVisibility ui:uiDisappearVisibility
 	 * @see #getDisappearVisibility()
 	 */
-	public void setDisappearVisibility(int visibility) {
-<span class="nc" id="L550">		this.mDisappearVisibility = visibility;</span>
-<span class="nc" id="L551">	}</span>
+	public void setDisappearVisibility(final int visibility) {
+<span class="nc" id="L569">		this.mDisappearVisibility = visibility;</span>
+<span class="nc" id="L570">	}</span>
 
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition is
@@ -558,7 +577,7 @@ public class Reveal extends Visibility {
 	 * @see #setDisappearVisibility(int)
 	 */
 	public int getDisappearVisibility() {
-<span class="nc" id="L561">		return mDisappearVisibility;</span>
+<span class="nc" id="L580">		return mDisappearVisibility;</span>
 	}
 
 	/**
@@ -583,9 +602,9 @@ public class Reveal extends Visibility {
 	 * @see #setCenterXFraction(float)
 	 * @see #setCenterYFraction(float)
 	 */
-	public void setCenterGravity(@Nullable Integer gravity) {
-<span class="nc" id="L587">		this.mCenterGravity = gravity;</span>
-<span class="nc" id="L588">	}</span>
+	public void setCenterGravity(@Nullable final Integer gravity) {
+<span class="nc" id="L606">		this.mCenterGravity = gravity;</span>
+<span class="nc" id="L607">	}</span>
 
 	/**
 	 * Returns the gravity flags that will be used to resolve center for animating circle of the
@@ -600,7 +619,7 @@ public class Reveal extends Visibility {
 	 */
 	@Nullable
 	public Integer getCenterGravity() {
-<span class="nc" id="L603">		return mCenterGravity;</span>
+<span class="nc" id="L622">		return mCenterGravity;</span>
 	}
 
 	/**
@@ -615,9 +634,9 @@ public class Reveal extends Visibility {
 	 * @see #getCenterHorizontalOffset()
 	 * @see #setCenterVerticalOffset(int)
 	 */
-	public void setCenterHorizontalOffset(int offset) {
-<span class="nc" id="L619">		this.mCenterHorizontalOffset = offset;</span>
-<span class="nc" id="L620">	}</span>
+	public void setCenterHorizontalOffset(final int offset) {
+<span class="nc" id="L638">		this.mCenterHorizontalOffset = offset;</span>
+<span class="nc" id="L639">	}</span>
 
 	/**
 	 * Returns the offset for the &lt;b&gt;center x&lt;/b&gt; coordinate for animating circle of the reveal animation.
@@ -626,7 +645,7 @@ public class Reveal extends Visibility {
 	 * @see #setCenterHorizontalOffset(int)
 	 */
 	public int getCenterHorizontalOffset() {
-<span class="nc" id="L629">		return mCenterHorizontalOffset;</span>
+<span class="nc" id="L648">		return mCenterHorizontalOffset;</span>
 	}
 
 	/**
@@ -641,9 +660,9 @@ public class Reveal extends Visibility {
 	 * @see #getCenterVerticalOffset()
 	 * @see #setCenterHorizontalOffset(int)
 	 */
-	public void setCenterVerticalOffset(int offset) {
-<span class="nc" id="L645">		this.mCenterVerticalOffset = offset;</span>
-<span class="nc" id="L646">	}</span>
+	public void setCenterVerticalOffset(final int offset) {
+<span class="nc" id="L664">		this.mCenterVerticalOffset = offset;</span>
+<span class="nc" id="L665">	}</span>
 
 	/**
 	 * Returns the offset for the &lt;b&gt;center y&lt;/b&gt; coordinate for animating circle of the reveal animation.
@@ -652,7 +671,7 @@ public class Reveal extends Visibility {
 	 * @see #setCenterVerticalOffset(int)
 	 */
 	public int getCenterVerticalOffset() {
-<span class="nc" id="L655">		return mCenterVerticalOffset;</span>
+<span class="nc" id="L674">		return mCenterVerticalOffset;</span>
 	}
 
 	/**
@@ -666,9 +685,9 @@ public class Reveal extends Visibility {
 	 * @see #setCenterXFraction(float)
 	 * @see #setCenterY(Float)
 	 */
-	public void setCenterX(@Nullable Float centerX) {
-<span class="nc" id="L670">		this.mCenterX = centerX;</span>
-<span class="nc" id="L671">	}</span>
+	public void setCenterX(@Nullable final Float centerX) {
+<span class="nc" id="L689">		this.mCenterX = centerX;</span>
+<span class="nc" id="L690">	}</span>
 
 	/**
 	 * Returns the x coordinate of the center for animating circle of the reveal animation.
@@ -679,7 +698,7 @@ public class Reveal extends Visibility {
 	 */
 	@Nullable
 	public Float getCenterX() {
-<span class="nc" id="L682">		return mCenterX;</span>
+<span class="nc" id="L701">		return mCenterX;</span>
 	}
 
 	/**
@@ -693,9 +712,9 @@ public class Reveal extends Visibility {
 	 * @see #setCenterYFraction(float)
 	 * @see #setCenterX(Float)
 	 */
-	public void setCenterY(@Nullable Float centerY) {
-<span class="nc" id="L697">		this.mCenterY = centerY;</span>
-<span class="nc" id="L698">	}</span>
+	public void setCenterY(@Nullable final Float centerY) {
+<span class="nc" id="L716">		this.mCenterY = centerY;</span>
+<span class="nc" id="L717">	}</span>
 
 	/**
 	 * Returns the y coordinate of the center for animating circle of the reveal animation.
@@ -706,7 +725,7 @@ public class Reveal extends Visibility {
 	 */
 	@Nullable
 	public Float getCenterY() {
-<span class="nc" id="L709">		return mCenterY;</span>
+<span class="nc" id="L728">		return mCenterY;</span>
 	}
 
 	/**
@@ -727,9 +746,9 @@ public class Reveal extends Visibility {
 	 * @see #setCenterYFraction(float)
 	 * @see #setCenterX(Float)
 	 */
-	public void setCenterXFraction(@FloatRange(from = 0, to = 1) float fractionX) {
-<span class="nc" id="L731">		this.mCenterXFraction = fractionX;</span>
-<span class="nc" id="L732">	}</span>
+	public void setCenterXFraction(@FloatRange(from = 0, to = 1) final float fractionX) {
+<span class="nc" id="L750">		this.mCenterXFraction = fractionX;</span>
+<span class="nc" id="L751">	}</span>
 
 	/**
 	 * Returns the fraction of the &lt;b&gt;center x&lt;/b&gt; coordinate.
@@ -739,7 +758,7 @@ public class Reveal extends Visibility {
 	 */
 	@FloatRange(from = 0, to = 1)
 	public float getCenterXFraction() {
-<span class="nc" id="L742">		return mCenterXFraction;</span>
+<span class="nc" id="L761">		return mCenterXFraction;</span>
 	}
 
 	/**
@@ -760,9 +779,9 @@ public class Reveal extends Visibility {
 	 * @see #setCenterXFraction(float)
 	 * @see #setCenterY(Float)
 	 */
-	public void setCenterYFraction(@FloatRange(from = 0, to = 1) float fractionY) {
-<span class="nc" id="L764">		this.mCenterYFraction = fractionY;</span>
-<span class="nc" id="L765">	}</span>
+	public void setCenterYFraction(@FloatRange(from = 0, to = 1) final float fractionY) {
+<span class="nc" id="L783">		this.mCenterYFraction = fractionY;</span>
+<span class="nc" id="L784">	}</span>
 
 	/**
 	 * Returns the fraction of the &lt;b&gt;center y&lt;/b&gt; coordinate.
@@ -772,59 +791,59 @@ public class Reveal extends Visibility {
 	 */
 	@FloatRange(from = 0, to = 1)
 	public float getCenterYFraction() {
-<span class="nc" id="L775">		return mCenterYFraction;</span>
+<span class="nc" id="L794">		return mCenterYFraction;</span>
 	}
 
 	/**
 	 */
 	@Override
-	public Animator onAppear(ViewGroup sceneRoot, final View view, TransitionValues startValues, TransitionValues endValues) {
-<span class="nc" id="L782">		calculateTransitionProperties(view);</span>
-<span class="nc" id="L783">		final Animator animator = createAnimatorFromInfo(view);</span>
-<span class="nc" id="L784">		animator.addListener(new AnimatorListenerAdapter() {</span>
+	public Animator onAppear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
+<span class="nc" id="L801">		calculateTransitionProperties(view);</span>
+<span class="nc" id="L802">		final Animator animator = createAnimatorFromInfo(view);</span>
+<span class="nc" id="L803">		animator.addListener(new AnimatorListenerAdapter() {</span>
 
 			/**
 			 */
 			@Override
 			public void onAnimationStart(Animator animation) {
-<span class="nc" id="L790">				view.setVisibility(mStartVisibility);</span>
-<span class="nc" id="L791">			}</span>
+<span class="nc" id="L809">				view.setVisibility(mStartVisibility);</span>
+<span class="nc" id="L810">			}</span>
 
 			/**
 			 */
 			@Override
 			public void onAnimationEnd(Animator animation) {
-<span class="nc" id="L797">				view.setVisibility(mEndVisibility);</span>
-<span class="nc" id="L798">			}</span>
-		});
-<span class="nc" id="L800">		view.setVisibility(mAppearVisibility);</span>
-<span class="nc" id="L801">		return animator;</span>
-	}
-
-	/**
-	 */
-	@Override
-	public Animator onDisappear(ViewGroup sceneRoot, final View view, TransitionValues startValues, TransitionValues endValues) {
-<span class="nc" id="L808">		calculateTransitionProperties(view);</span>
-<span class="nc" id="L809">		final Animator animator = createAnimatorFromInfo(view);</span>
-<span class="nc" id="L810">		animator.addListener(new AnimatorListenerAdapter() {</span>
-
-			/**
-			 */
-			@Override
-			public void onAnimationStart(Animator animation) {
-<span class="nc" id="L816">				view.setVisibility(mStartVisibility);</span>
+<span class="nc" id="L816">				view.setVisibility(mEndVisibility);</span>
 <span class="nc" id="L817">			}</span>
+		});
+<span class="nc" id="L819">		view.setVisibility(mAppearVisibility);</span>
+<span class="nc" id="L820">		return animator;</span>
+	}
+
+	/**
+	 */
+	@Override
+	public Animator onDisappear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
+<span class="nc" id="L827">		calculateTransitionProperties(view);</span>
+<span class="nc" id="L828">		final Animator animator = createAnimatorFromInfo(view);</span>
+<span class="nc" id="L829">		animator.addListener(new AnimatorListenerAdapter() {</span>
+
+			/**
+			 */
+			@Override
+			public void onAnimationStart(Animator animation) {
+<span class="nc" id="L835">				view.setVisibility(mStartVisibility);</span>
+<span class="nc" id="L836">			}</span>
 
 			/**
 			 */
 			@Override
 			public void onAnimationEnd(Animator animation) {
-<span class="nc" id="L823">				view.setVisibility(mEndVisibility);</span>
-<span class="nc" id="L824">			}</span>
+<span class="nc" id="L842">				view.setVisibility(mEndVisibility);</span>
+<span class="nc" id="L843">			}</span>
 		});
-<span class="nc" id="L826">		view.setVisibility(mDisappearVisibility);</span>
-<span class="nc" id="L827">		return animator;</span>
+<span class="nc" id="L845">		view.setVisibility(mDisappearVisibility);</span>
+<span class="nc" id="L846">		return animator;</span>
 	}
 
 	/**
@@ -832,23 +851,23 @@ public class Reveal extends Visibility {
 	 *
 	 * @param view The view to which will be the transition applied.
 	 */
-	private void calculateTransitionProperties(View view) {
+	private void calculateTransitionProperties(final View view) {
 		// First calculate center of the reveal transition.
 		final float[] center;
-<span class="nc bnc" id="L838" title="All 2 branches missed.">		if (mCenterGravity == null) {</span>
-<span class="nc" id="L839">			center = resolveCenter(view, mCenterXFraction, mCenterYFraction);</span>
+<span class="nc bnc" id="L857" title="All 2 branches missed.">		if (mCenterGravity == null) {</span>
+<span class="nc" id="L858">			center = resolveCenter(view, mCenterXFraction, mCenterYFraction);</span>
 		} else {
-<span class="nc" id="L841">			center = resolveGravityCenter(view);</span>
+<span class="nc" id="L860">			center = resolveGravityCenter(view);</span>
 		}
-<span class="nc bnc" id="L843" title="All 2 branches missed.">		final float centerX = mCenterX == null ? center[0] : mCenterX;</span>
-<span class="nc bnc" id="L844" title="All 2 branches missed.">		final float centerY = mCenterY == null ? center[1] : mCenterY;</span>
-<span class="nc" id="L845">		mInfo.centerX = centerX + mCenterHorizontalOffset;</span>
-<span class="nc" id="L846">		mInfo.centerY = centerY + mCenterVerticalOffset;</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">		final float centerX = mCenterX == null ? center[0] : mCenterX;</span>
+<span class="nc bnc" id="L863" title="All 2 branches missed.">		final float centerY = mCenterY == null ? center[1] : mCenterY;</span>
+<span class="nc" id="L864">		mInfo.centerX = centerX + mCenterHorizontalOffset;</span>
+<span class="nc" id="L865">		mInfo.centerY = centerY + mCenterVerticalOffset;</span>
 		// Now calculate start with end radius of the reveal transition.
-<span class="nc" id="L848">		final float[] radii = calculateTransitionRadii(view);</span>
-<span class="nc bnc" id="L849" title="All 2 branches missed.">		mInfo.startRadius = mStartRadius == null ? radii[0] : mStartRadius;</span>
-<span class="nc bnc" id="L850" title="All 2 branches missed.">		mInfo.endRadius = mEndRadius == null ? radii[1] : mEndRadius;</span>
-<span class="nc" id="L851">	}</span>
+<span class="nc" id="L867">		final float[] radii = calculateTransitionRadii(view);</span>
+<span class="nc bnc" id="L868" title="All 2 branches missed.">		mInfo.startRadius = mStartRadius == null ? radii[0] : mStartRadius;</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">		mInfo.endRadius = mEndRadius == null ? radii[1] : mEndRadius;</span>
+<span class="nc" id="L870">	}</span>
 
 	/**
 	 * Resolves center coordinates for the reveal animation of the specified &lt;var&gt;view&lt;/var&gt; depending
@@ -857,41 +876,42 @@ public class Reveal extends Visibility {
 	 * @param view The view for which will be the reveal animation run.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
 	 */
-	private float[] resolveGravityCenter(View view) {
-<span class="nc" id="L861">		final float[] center = new float[]{0, 0};</span>
-<span class="nc" id="L862">		final int viewWidth = view.getWidth();</span>
-<span class="nc" id="L863">		final int viewHeight = view.getHeight();</span>
-<span class="nc" id="L864">		final int layoutDirection = view.getLayoutDirection();</span>
-<span class="nc" id="L865">		final int absoluteGravity = Gravity.getAbsoluteGravity(mCenterGravity, layoutDirection);</span>
-<span class="nc" id="L866">		final int horizontalGravity = absoluteGravity &amp; Gravity.HORIZONTAL_GRAVITY_MASK;</span>
-<span class="nc" id="L867">		final int verticalGravity = mCenterGravity &amp; Gravity.VERTICAL_GRAVITY_MASK;</span>
+	@SuppressLint(&quot;RtlHardcoded&quot;)
+	private float[] resolveGravityCenter(final View view) {
+<span class="nc" id="L881">		final float[] center = new float[]{0, 0};</span>
+<span class="nc" id="L882">		final int viewWidth = view.getWidth();</span>
+<span class="nc" id="L883">		final int viewHeight = view.getHeight();</span>
+<span class="nc" id="L884">		final int layoutDirection = view.getLayoutDirection();</span>
+<span class="nc" id="L885">		final int absoluteGravity = Gravity.getAbsoluteGravity(mCenterGravity, layoutDirection);</span>
+<span class="nc" id="L886">		final int horizontalGravity = absoluteGravity &amp; Gravity.HORIZONTAL_GRAVITY_MASK;</span>
+<span class="nc" id="L887">		final int verticalGravity = mCenterGravity &amp; Gravity.VERTICAL_GRAVITY_MASK;</span>
 		// Resolve center horizontal coordinate.
-<span class="nc bnc" id="L869" title="All 3 branches missed.">		switch (horizontalGravity) {</span>
+<span class="nc bnc" id="L889" title="All 3 branches missed.">		switch (horizontalGravity) {</span>
 			case Gravity.CENTER_HORIZONTAL:
-<span class="nc" id="L871">				center[0] = viewWidth / 2f;</span>
-<span class="nc" id="L872">				break;</span>
+<span class="nc" id="L891">				center[0] = viewWidth / 2f;</span>
+<span class="nc" id="L892">				break;</span>
 			case Gravity.RIGHT:
-<span class="nc" id="L874">				center[0] = viewWidth;</span>
-<span class="nc" id="L875">				break;</span>
+<span class="nc" id="L894">				center[0] = viewWidth;</span>
+<span class="nc" id="L895">				break;</span>
 			case Gravity.LEFT:
 			default:
-<span class="nc" id="L878">				center[0] = 0;</span>
+<span class="nc" id="L898">				center[0] = 0;</span>
 				break;
 		}
 		// Resolve center vertical coordinate.
-<span class="nc bnc" id="L882" title="All 3 branches missed.">		switch (verticalGravity) {</span>
+<span class="nc bnc" id="L902" title="All 3 branches missed.">		switch (verticalGravity) {</span>
 			case Gravity.CENTER_VERTICAL:
-<span class="nc" id="L884">				center[1] = viewHeight / 2f;</span>
-<span class="nc" id="L885">				break;</span>
+<span class="nc" id="L904">				center[1] = viewHeight / 2f;</span>
+<span class="nc" id="L905">				break;</span>
 			case Gravity.BOTTOM:
-<span class="nc" id="L887">				center[1] = viewHeight;</span>
-<span class="nc" id="L888">				break;</span>
+<span class="nc" id="L907">				center[1] = viewHeight;</span>
+<span class="nc" id="L908">				break;</span>
 			case Gravity.TOP:
 			default:
-<span class="nc" id="L891">				center[1] = 0;</span>
+<span class="nc" id="L911">				center[1] = 0;</span>
 				break;
 		}
-<span class="nc" id="L894">		return center;</span>
+<span class="nc" id="L914">		return center;</span>
 	}
 
 	/**
@@ -901,21 +921,21 @@ public class Reveal extends Visibility {
 	 * @param view The view for which reveal animation to calculate start and end radius.
 	 * @return An array with two radii: startRadius[0], endRadius[1].
 	 */
-	private float[] calculateTransitionRadii(View view) {
+	private float[] calculateTransitionRadii(final View view) {
 		final float startRadius;
 		final float endRadius;
-<span class="nc bnc" id="L907" title="All 2 branches missed.">		switch (mMode) {</span>
+<span class="nc bnc" id="L927" title="All 2 branches missed.">		switch (mMode) {</span>
 			case CONCEAL:
-<span class="nc" id="L909">				startRadius = calculateTransitionRadius(view);</span>
-<span class="nc" id="L910">				endRadius = 0;</span>
-<span class="nc" id="L911">				break;</span>
+<span class="nc" id="L929">				startRadius = calculateTransitionRadius(view);</span>
+<span class="nc" id="L930">				endRadius = 0;</span>
+<span class="nc" id="L931">				break;</span>
 			case REVEAL:
 			default:
-<span class="nc" id="L914">				startRadius = 0;</span>
-<span class="nc" id="L915">				endRadius = calculateTransitionRadius(view);</span>
+<span class="nc" id="L934">				startRadius = 0;</span>
+<span class="nc" id="L935">				endRadius = calculateTransitionRadius(view);</span>
 				break;
 		}
-<span class="nc" id="L918">		return new float[]{startRadius, endRadius};</span>
+<span class="nc" id="L938">		return new float[]{startRadius, endRadius};</span>
 	}
 
 	/**
@@ -930,25 +950,25 @@ public class Reveal extends Visibility {
 	 * @return Calculated radius that should be used as end/start radius for reveal animation
 	 * depends on its current mode.
 	 */
-	private float calculateTransitionRadius(View view) {
+	private float calculateTransitionRadius(final View view) {
 		final float horizontalDistance;
 		final float verticalDistance;
-<span class="nc" id="L936">		final float centerX = mInfo.centerX;</span>
-<span class="nc" id="L937">		final float centerY = mInfo.centerY;</span>
-<span class="nc" id="L938">		final float viewWidth = view.getWidth();</span>
-<span class="nc" id="L939">		final float viewHeight = view.getHeight();</span>
-<span class="nc" id="L940">		final float[] viewCenter = resolveCenter(view);</span>
-<span class="nc bnc" id="L941" title="All 2 branches missed.">		if (centerX &gt;= viewCenter[0]) {</span>
-<span class="nc" id="L942">			horizontalDistance = centerX / viewWidth * viewWidth;</span>
+<span class="nc" id="L956">		final float centerX = mInfo.centerX;</span>
+<span class="nc" id="L957">		final float centerY = mInfo.centerY;</span>
+<span class="nc" id="L958">		final float viewWidth = view.getWidth();</span>
+<span class="nc" id="L959">		final float viewHeight = view.getHeight();</span>
+<span class="nc" id="L960">		final float[] viewCenter = resolveCenter(view);</span>
+<span class="nc bnc" id="L961" title="All 2 branches missed.">		if (centerX &gt;= viewCenter[0]) {</span>
+<span class="nc" id="L962">			horizontalDistance = centerX / viewWidth * viewWidth;</span>
 		} else {
-<span class="nc" id="L944">			horizontalDistance = (1 - (centerX / viewWidth)) * viewWidth;</span>
+<span class="nc" id="L964">			horizontalDistance = (1 - (centerX / viewWidth)) * viewWidth;</span>
 		}
-<span class="nc bnc" id="L946" title="All 2 branches missed.">		if (centerY &gt;= viewCenter[1]) {</span>
-<span class="nc" id="L947">			verticalDistance = centerY / viewHeight * viewHeight;</span>
+<span class="nc bnc" id="L966" title="All 2 branches missed.">		if (centerY &gt;= viewCenter[1]) {</span>
+<span class="nc" id="L967">			verticalDistance = centerY / viewHeight * viewHeight;</span>
 		} else {
-<span class="nc" id="L949">			verticalDistance = (1 - (centerY / viewHeight)) * viewHeight;</span>
+<span class="nc" id="L969">			verticalDistance = (1 - (centerY / viewHeight)) * viewHeight;</span>
 		}
-<span class="nc" id="L951">		return calculateRadius(horizontalDistance, verticalDistance);</span>
+<span class="nc" id="L971">		return calculateRadius(horizontalDistance, verticalDistance);</span>
 	}
 
 	/**
@@ -963,20 +983,20 @@ public class Reveal extends Visibility {
 	 * @param view The view for which to create the requested animator.
 	 * @return Animator that will play circular reveal animation when started.
 	 */
-	private Animator createAnimatorFromInfo(View view) {
-<span class="nc" id="L967">		final Animator animator = createAnimator(</span>
+	private Animator createAnimatorFromInfo(final View view) {
+<span class="nc" id="L987">		final Animator animator = createAnimator(</span>
 				view,
-<span class="nc" id="L969">				Math.round(mInfo.centerX),</span>
-<span class="nc" id="L970">				Math.round(mInfo.centerY),</span>
+<span class="nc" id="L989">				Math.round(mInfo.centerX),</span>
+<span class="nc" id="L990">				Math.round(mInfo.centerY),</span>
 				mInfo.startRadius,
 				mInfo.endRadius
 		);
-<span class="nc" id="L974">		final AnimatorWrapper animatorWrapper = new AnimatorWrapper(animator);</span>
-<span class="nc" id="L975">		animatorWrapper.removeFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME);</span>
-<span class="nc" id="L976">		return animatorWrapper;</span>
+<span class="nc" id="L994">		final AnimatorWrapper animatorWrapper = new AnimatorWrapper(animator);</span>
+<span class="nc" id="L995">		animatorWrapper.removeFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME);</span>
+<span class="nc" id="L996">		return animatorWrapper;</span>
 	}
 
-	/**
+	/*
 	 * Inner classes ===============================================================================
 	 */
 
@@ -984,7 +1004,7 @@ public class Reveal extends Visibility {
 	 * Class holding necessary values for the reveal transition that are exclusively associated with
 	 * the currently transitioning view.
 	 */
-<span class="nc" id="L987">	private static final class Info {</span>
+<span class="nc" id="L1007">	private static final class Info {</span>
 
 		/**
 		 * Reveal circle radius.
