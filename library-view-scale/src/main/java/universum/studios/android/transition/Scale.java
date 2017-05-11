@@ -158,23 +158,22 @@ public class Scale extends Visibility {
 	 * @param attrs   Set of attributes from which to obtain animation property values for the scale
 	 *                animation.
 	 */
-	public Scale(@NonNull final Context context, @NonNull final AttributeSet attrs) {
+	public Scale(@NonNull final Context context, @Nullable final AttributeSet attrs) {
 		super(context, attrs);
-		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);
-		final int n = typedArray.getIndexCount();
-		for (int i = 0; i < n; i++) {
-			final int index = typedArray.getIndex(i);
+		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);
+		for (int i = 0; i < attributes.getIndexCount(); i++) {
+			final int index = attributes.getIndex(i);
 			if (index == R.styleable.Ui_Transition_Scale_android_pivotX) {
-				this.mPivotXFraction = typedArray.getFraction(index, 1, 1, mPivotXFraction);
+				this.mPivotXFraction = attributes.getFraction(index, 1, 1, mPivotXFraction);
 			} else if (index == R.styleable.Ui_Transition_Scale_android_pivotY) {
-				this.mPivotYFraction = typedArray.getFraction(index, 1, 1, mPivotYFraction);
+				this.mPivotYFraction = attributes.getFraction(index, 1, 1, mPivotYFraction);
 			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotX) {
-				this.mPivotX = (float) typedArray.getDimensionPixelSize(index, 0);
+				this.mPivotX = (float) attributes.getDimensionPixelSize(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotY) {
-				this.mPivotY = (float) typedArray.getDimensionPixelSize(index, 0);
+				this.mPivotY = (float) attributes.getDimensionPixelSize(index, 0);
 			}
 		}
-		typedArray.recycle();
+		attributes.recycle();
 	}
 
 	/*
@@ -196,10 +195,12 @@ public class Scale extends Visibility {
 			@FloatRange(from = 0, to = 1) final float startScale,
 			@FloatRange(from = 0, to = 1) final float endScale
 	) {
+		final float startScaleInRange = Math.max(0, Math.min(1, startScale));
+		final float endScaleInRange = Math.max(0, Math.min(1, endScale));
 		return ObjectAnimator.ofPropertyValuesHolder(
 				view,
-				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScale, endScale),
-				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScale, endScale)
+				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_X, startScaleInRange, endScaleInRange),
+				PropertyValuesHolder.ofFloat(PROPERTY_SCALE_Y, startScaleInRange, endScaleInRange)
 		);
 	}
 
@@ -268,7 +269,7 @@ public class Scale extends Visibility {
 	 * @see #setPivotX(Float)
 	 */
 	public void setPivotXFraction(@FloatRange(from = 0, to = 1) final float fractionX) {
-		this.mPivotXFraction = fractionX;
+		this.mPivotXFraction = Math.max(0, Math.min(1, fractionX));
 	}
 
 	/**
@@ -295,7 +296,7 @@ public class Scale extends Visibility {
 	 * @see #setPivotY(Float)
 	 */
 	public void setPivotYFraction(@FloatRange(from = 0, to = 1) final float fractionY) {
-		this.mPivotYFraction = fractionY;
+		this.mPivotYFraction = Math.max(0, Math.min(1, fractionY));
 	}
 
 	/**

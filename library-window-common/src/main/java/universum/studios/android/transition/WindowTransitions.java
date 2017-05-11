@@ -41,7 +41,13 @@ public final class WindowTransitions {
 	/**
 	 * Transition that may be used to change two windows without any animation.
 	 */
-	public static final WindowTransition NONE = new BasicWindowTransition(0, 0, 0, 0, "NONE");
+	public static final WindowTransition NONE = new BasicWindowTransition(
+			WindowTransition.NO_ANIMATION,
+			WindowTransition.NO_ANIMATION,
+			WindowTransition.NO_ANIMATION,
+			WindowTransition.NO_ANIMATION,
+			"NONE"
+	);
 
 	/**
 	 * Transition that may be used to fade a new incoming window into the screen and an outgoing
@@ -287,5 +293,6 @@ public final class WindowTransitions {
 	 */
 	private WindowTransitions() {
 		// Not allowed to be instantiated publicly.
+		throw new UnsupportedOperationException();
 	}
 }

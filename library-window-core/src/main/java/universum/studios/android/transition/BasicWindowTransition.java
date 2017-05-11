@@ -102,7 +102,7 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 
 	/**
-	 * Same as {@link #BasicWindowTransition(int, int, int, int)} finish animations set to
+	 * Same as {@link #BasicWindowTransition(int, int, int, int)} where finish animations are set to
 	 * {@link #NO_ANIMATION}.
 	 */
 	public BasicWindowTransition(@AnimRes final int enterAnim, @AnimRes final int exitAnim) {
@@ -111,7 +111,7 @@ public class BasicWindowTransition implements WindowTransition {
 
 	/**
 	 * Same as {@link #BasicWindowTransition(int, int, int, int, String)} with name specified
-	 * as {@code "UNKNOWN"}.
+	 * as {@code "UNSPECIFIED"}.
 	 */
 	public BasicWindowTransition(
 			@AnimRes final int startEnterAnim,
@@ -119,7 +119,7 @@ public class BasicWindowTransition implements WindowTransition {
 			@AnimRes final int finishEnterAnim,
 			@AnimRes final int finishExitAnim
 	) {
-		this(startEnterAnim, startExitAnim, finishEnterAnim, finishExitAnim, "UNKNOWN");
+		this(startEnterAnim, startExitAnim, finishEnterAnim, finishExitAnim, "UNSPECIFIED");
 	}
 
 	/**

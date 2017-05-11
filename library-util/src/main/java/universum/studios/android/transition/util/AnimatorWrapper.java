@@ -24,6 +24,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.util.ArrayMap;
 
 import java.lang.annotation.Retention;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
  *
  * @author Martin Albedinsky
  */
+@SuppressWarnings("deprecation")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AnimatorWrapper extends Animator {
 
@@ -131,7 +133,10 @@ public class AnimatorWrapper extends Animator {
 
 	/**
 	 * Wrapped animator instance.
+	 *
+	 * @deprecated Use {@link #getWrappedAnimator()} instead.
 	 */
+	@Deprecated
 	protected final Animator mAnimator;
 
 	/**
@@ -170,6 +175,17 @@ public class AnimatorWrapper extends Animator {
 	/*
 	 * Methods =====================================================================================
 	 */
+
+	/**
+	 * Returns the animator wrapped by this wrapper.
+	 *
+	 * @return The wrapped animator.
+	 * @see #AnimatorWrapper(Animator)
+	 */
+	@NonNull
+	public final Animator getWrappedAnimator() {
+		return mAnimator;
+	}
 
 	/**
 	 * Specifies set of features for this wrapper.
@@ -263,7 +279,9 @@ public class AnimatorWrapper extends Animator {
 			return;
 		}
 		if (hasFeature(PAUSE) || hasFeature(RESUME)) {
-			this.ensurePauseListenerWrappers();
+			if (mPauseListenerWrappers == null) {
+				this.mPauseListenerWrappers = new ArrayMap<>(1);
+			}
 			if (!mPauseListenerWrappers.containsKey(listener)) {
 				final AnimatorPauseListenerWrapper wrapper = new AnimatorPauseListenerWrapper(listener, this);
 				mPauseListenerWrappers.put(listener, wrapper);
@@ -276,26 +294,21 @@ public class AnimatorWrapper extends Animator {
 	 */
 	@Override
 	public void removePauseListener(AnimatorPauseListener listener) {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return;
 		}
-		this.ensurePauseListenerWrappers();
-		final AnimatorPauseListenerWrapper wrapper = mPauseListenerWrappers.get(listener);
-		if (wrapper != null) {
-			mPauseListenerWrappers.remove(listener);
-			mAnimator.removePauseListener(wrapper);
+		if (mPauseListenerWrappers != null) {
+			final AnimatorPauseListenerWrapper wrapper = mPauseListenerWrappers.get(listener);
+			if (wrapper != null) {
+				mPauseListenerWrappers.remove(listener);
+				mAnimator.removePauseListener(wrapper);
+			}
 		}
 	}
 
 	/**
-	 * Ensures that the map with pause listener wrappers is initialized.
 	 */
-	private void ensurePauseListenerWrappers() {
-		if (mPauseListenerWrappers == null) this.mPauseListenerWrappers = new ArrayMap<>(1);
-	}
-
-	/**
-	 */
+	@NonNull
 	@Override
 	public ArrayList<AnimatorListener> getListeners() {
 		return mListenerWrappers == null ?
@@ -422,7 +435,7 @@ public class AnimatorWrapper extends Animator {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return;
 		}
-		if (hasFeature(PAUSE) || !hasFeature(RESUME)) {
+		if (hasFeature(PAUSE) || hasFeature(RESUME)) {
 			mAnimator.resume();
 		}
 	}
@@ -496,7 +509,7 @@ public class AnimatorWrapper extends Animator {
 	/**
 	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorListener}.
 	 */
-	private static final class AnimatorListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorListener>
+	@VisibleForTesting static final class AnimatorListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorListener>
 			implements
 			AnimatorListener {
 
@@ -543,7 +556,7 @@ public class AnimatorWrapper extends Animator {
 	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorPauseListener}.
 	 */
 	@TargetApi(Build.VERSION_CODES.KITKAT)
-	private static final class AnimatorPauseListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorPauseListener>
+	@VisibleForTesting static final class AnimatorPauseListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorPauseListener>
 			implements
 			AnimatorPauseListener {
 
