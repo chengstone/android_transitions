@@ -132,5 +132,6 @@ public final class ExtraWindowTransitions {
 	 */
 	private ExtraWindowTransitions() {
 		// Not allowed to be instantiated publicly.
+		throw new UnsupportedOperationException();
 	}
 }

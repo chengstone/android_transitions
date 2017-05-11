@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition class="universum.studios.android.transition.Reveal"
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:trans="http://schemas.android.com/apk/res-auto"
+			android:centerX="75%"
+			android:centerY="25%"
+			trans:uiStartRadius="8px"
+			trans:uiEndRadius="16px"
+			trans:uiAppearVisibility="visible"
+			trans:uiDisappearVisibility="invisible"
+			trans:uiStartVisibility="visible"
+			trans:uiEndVisibility="invisible"
+			trans:uiCenterGravity="end|bottom"
+			trans:uiCenterHorizontalOffset="-16px"
+			trans:uiCenterVerticalOffset="-16px" />

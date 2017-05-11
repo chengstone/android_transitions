@@ -336,6 +336,18 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 
 	/**
+	 * Returns the class of activity specified for this navigational transition.
+	 *
+	 * @return This transitions's associated activity class or {@code null} if not activity class
+	 * has been specified.
+	 * @see #BaseNavigationalTransition(Class)
+	 */
+	@Nullable
+	public final Class<? extends Activity> getActivityClass() {
+		return mClassOfTransitionActivity;
+	}
+
+	/**
 	 * Specifies a bundle with extras for the <b>incoming</b> activity. The given bundle will be
 	 * attached to this transition's {@link Intent} via {@link Intent#putExtras(Bundle)} when it is
 	 * created via {@link #createIntent(Activity)}.
@@ -508,7 +520,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Specifies a boolean flag to be set to a window of an <b>incoming</b> activity in order to
 	 * indicate whether enter transition may overlap or not.
 	 * <p>
-	 * Default value: <b>{@code false}</b>
+	 * Default value: <b>{@code unspecified}</b>
 	 *
 	 * @return This transition to allow methods chaining.
 	 * @see #allowEnterTransitionOverlap()
@@ -523,18 +535,21 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 
 	/**
 	 * Returns boolean flag indicating whether enter transition may overlap or not.
+	 * <p>
+	 * This method returns {@code true} if overlapping has not been specified, which is a default
+	 * behaviour of {@link Window#getAllowEnterTransitionOverlap()}.
 	 *
 	 * @return {@code True} if overlapping of enter transition is enabled, {@code false} otherwise.
 	 */
 	public boolean allowEnterTransitionOverlap() {
-		return mAllowEnterTransitionOverlap != null && mAllowEnterTransitionOverlap;
+		return mAllowEnterTransitionOverlap == null || mAllowEnterTransitionOverlap;
 	}
 
 	/**
 	 * Specifies a boolean flag to be set to a window of an <b>incoming</b> activity in order to
 	 * indicate whether return transition may overlap or not.
 	 * <p>
-	 * Default value: <b>{@code false}</b>
+	 * Default value: <b>{@code unspecified}</b>
 	 *
 	 * @return This transition to allow methods chaining.
 	 * @see #allowReturnTransitionOverlap()
@@ -549,11 +564,14 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 
 	/**
 	 * Returns boolean flag indicating whether return transition may overlap or not.
+	 * <p>
+	 * This method returns {@code true} if overlapping has not been specified, which is a default
+	 * behaviour of {@link Window#getAllowReturnTransitionOverlap()}.
 	 *
 	 * @return {@code True} if overlapping of return transition is enabled, {@code false} otherwise.
 	 */
 	public boolean allowReturnTransitionOverlap() {
-		return mAllowReturnTransitionOverlap != null && mAllowReturnTransitionOverlap;
+		return mAllowReturnTransitionOverlap == null || mAllowReturnTransitionOverlap;
 	}
 
 	/**
@@ -671,7 +689,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Specifies a boolean flag to be set to a window of an <b>incoming</b> or <b>outgoing</b> activity
 	 * in order to indicate whether shared elements should use overlay or not.
 	 * <p>
-	 * Default value: <b>{@code false}</b>
+	 * Default value: <b>{@code unspecified}</b>
 	 *
 	 * @return This transition to allow methods chaining.
 	 * @see #sharedElementsUseOverlay()
@@ -687,12 +705,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 
 	/**
 	 * Returns boolean flag indicating whether shared elements should use overlay or not.
+	 * <p>
+	 * This method returns {@code true} if usage of overlay has not been specified, which is a default
+	 * behaviour of {@link Window#getSharedElementsUseOverlay()}.
 	 *
 	 * @return {@code True} if shared elements will use overlay, {@code false} otherwise.
 	 * @see #sharedElementsUseOverlay(boolean)
 	 */
 	public boolean sharedElementsUseOverlay() {
-		return mSharedElementUseOverlay != null && mSharedElementUseOverlay;
+		return mSharedElementUseOverlay == null || mSharedElementUseOverlay;
 	}
 
 	/**
@@ -873,13 +894,13 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 			 */
 			@Override
 			public void run() {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-					if (!caller.isDestroyed() && !caller.isFinishing()) {
-						onFinishCaller(caller);
-					}
-				} else if (!caller.isFinishing()) {
-					onFinishCaller(caller);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && caller.isDestroyed()) {
+					return;
 				}
+				if (caller.isFinishing()) {
+					return;
+				}
+				onFinishCaller(caller);
 			}
 		}, delay);
 	}

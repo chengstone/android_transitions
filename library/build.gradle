@@ -86,6 +86,12 @@ android {
                 '../library-window-extra/src/androidTest/java',
                 '../library-util/src/androidTest/java'
         ]
+        androidTest.res.srcDirs = [
+                '../library-view-core/src/androidTest/res',
+                '../library-view-reveal/src/androidTest/res',
+                '../library-view-scale/src/androidTest/res',
+                '../library-view-translation/src/androidTest/res'
+        ]
     }
 
     compileOptions {
@@ -118,8 +124,7 @@ dependencies {
     androidTestCompile project(':test-core')
 }
 
-// Apply DEPLOY script.
-apply from: '../deploy/deploy.gradle'
-
-// Apply CODACY script.
+// Apply additional scripts.
+apply from: 'analysis.gradle'
 apply from: 'codacy.gradle'
+apply from: '../deploy/deploy.gradle'

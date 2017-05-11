@@ -21,4 +21,13 @@ package universum.studios.android.transition;
 /**
  * @author Martin Albedinsky
  */
-@SuppressWarnings("unused") final class NavigationalBaseTests {}
+@SuppressWarnings("unused") final class NavigationalBaseTests {
+
+	static void waitFor(long duration) {
+		try {
+			Thread.sleep(duration);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}

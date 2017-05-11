@@ -31,6 +31,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
+import android.support.annotation.VisibleForTesting;
 import android.transition.TransitionValues;
 import android.transition.Visibility;
 import android.util.AttributeSet;
@@ -232,39 +233,38 @@ public class Reveal extends Visibility {
 	 * @param attrs   Set of attributes from which to obtain property values for the reveal animation.
 	 */
 	@SuppressWarnings("ResourceType")
-	public Reveal(@NonNull final Context context, @NonNull final AttributeSet attrs) {
+	public Reveal(@NonNull final Context context, @Nullable final AttributeSet attrs) {
 		super(context, attrs);
-		final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);
-		final int n = typedArray.getIndexCount();
-		for (int i = 0; i < n; i++) {
-			final int index = typedArray.getIndex(i);
+		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);
+		for (int i = 0; i < attributes.getIndexCount(); i++) {
+			final int index = attributes.getIndex(i);
 			if (index == R.styleable.Ui_Transition_Reveal_uiRevealMode) {
-				setMode(typedArray.getInteger(index, REVEAL));
+				setMode(attributes.getInteger(index, REVEAL));
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartRadius) {
-				this.mStartRadius = (float) typedArray.getDimensionPixelSize(index, 0);
+				this.mStartRadius = (float) attributes.getDimensionPixelSize(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndRadius) {
-				this.mEndRadius = (float) typedArray.getDimensionPixelSize(index, 0);
+				this.mEndRadius = (float) attributes.getDimensionPixelSize(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiAppearVisibility) {
-				this.mAppearVisibility = typedArray.getInteger(index, mAppearVisibility);
+				this.mAppearVisibility = attributes.getInteger(index, mAppearVisibility);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiDisappearVisibility) {
-				this.mDisappearVisibility = typedArray.getInteger(index, mDisappearVisibility);
+				this.mDisappearVisibility = attributes.getInteger(index, mDisappearVisibility);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartVisibility) {
-				this.mStartVisibility = typedArray.getInteger(index, mStartVisibility);
+				this.mStartVisibility = attributes.getInteger(index, mStartVisibility);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndVisibility) {
-				this.mEndVisibility = typedArray.getInteger(index, mEndVisibility);
+				this.mEndVisibility = attributes.getInteger(index, mEndVisibility);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterGravity) {
-				this.mCenterGravity = typedArray.getInteger(index, 0);
+				this.mCenterGravity = attributes.getInteger(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterVerticalOffset) {
-				this.mCenterVerticalOffset = typedArray.getDimensionPixelSize(index, 0);
+				this.mCenterVerticalOffset = attributes.getDimensionPixelSize(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterHorizontalOffset) {
-				this.mCenterHorizontalOffset = typedArray.getDimensionPixelSize(index, 0);
+				this.mCenterHorizontalOffset = attributes.getDimensionPixelSize(index, 0);
 			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerX) {
-				this.mCenterXFraction = typedArray.getFraction(index, 1, 1, mCenterXFraction);
+				this.mCenterXFraction = attributes.getFraction(index, 1, 1, mCenterXFraction);
 			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerY) {
-				this.mCenterYFraction = typedArray.getFraction(index, 1, 1, mCenterYFraction);
+				this.mCenterYFraction = attributes.getFraction(index, 1, 1, mCenterYFraction);
 			}
 		}
-		typedArray.recycle();
+		attributes.recycle();
 	}
 
 	/*
@@ -747,7 +747,7 @@ public class Reveal extends Visibility {
 	 * @see #setCenterX(Float)
 	 */
 	public void setCenterXFraction(@FloatRange(from = 0, to = 1) final float fractionX) {
-		this.mCenterXFraction = fractionX;
+		this.mCenterXFraction = Math.max(0, Math.min(1, fractionX));
 	}
 
 	/**
@@ -780,7 +780,7 @@ public class Reveal extends Visibility {
 	 * @see #setCenterY(Float)
 	 */
 	public void setCenterYFraction(@FloatRange(from = 0, to = 1) final float fractionY) {
-		this.mCenterYFraction = fractionY;
+		this.mCenterYFraction = Math.max(0, Math.min(1, fractionY));
 	}
 
 	/**
@@ -851,7 +851,7 @@ public class Reveal extends Visibility {
 	 *
 	 * @param view The view to which will be the transition applied.
 	 */
-	private void calculateTransitionProperties(final View view) {
+	@VisibleForTesting void calculateTransitionProperties(final View view) {
 		// First calculate center of the reveal transition.
 		final float[] center;
 		if (mCenterGravity == null) {
@@ -996,6 +996,16 @@ public class Reveal extends Visibility {
 		return animatorWrapper;
 	}
 
+	/**
+	 * Returns info for the current reveal animation configuration.
+	 *
+	 * @return Current reveal info.
+	 */
+	@NonNull
+	final Info getInfo() {
+		return mInfo;
+	}
+
 	/*
 	 * Inner classes ===============================================================================
 	 */
@@ -1004,7 +1014,7 @@ public class Reveal extends Visibility {
 	 * Class holding necessary values for the reveal transition that are exclusively associated with
 	 * the currently transitioning view.
 	 */
-	private static final class Info {
+	@VisibleForTesting static final class Info {
 
 		/**
 		 * Reveal circle radius.
