@@ -17,6 +17,7 @@ def androidSupport = [
         annotations   : "com.android.support:support-annotations:${versions.androidSupportVersion}",
         v4            : "com.android.support:support-v4:${versions.androidSupportVersion}",
         coreUtils     : "com.android.support:support-core-utils:${versions.androidSupportVersion}",
+        coreUI        : "com.android.support:support-core-ui:${versions.androidSupportVersion}",
         appCompatV7   : "com.android.support:appcompat-v7:${versions.androidSupportVersion}",
         vectorDrawable: "com.android.support:support-vector-drawable:${versions.androidSupportVersion}",
         recyclerView  : "com.android.support:recyclerview-v7:${versions.androidSupportVersion}",

@@ -1,7 +1,7 @@
 Change-Log
 ===============
 
-### Release 1.1.0 ###
+### [Release 1.1.0](https://github.com/universum-studios/android_transitions/releases/tag/1.1.0) ###
 > 14.05.2017
 
 - Add implementation of `Translate` transition which may be used to move views in the scene by
