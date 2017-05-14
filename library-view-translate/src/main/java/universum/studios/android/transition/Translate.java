@@ -93,7 +93,7 @@ public class Translate extends Visibility {
 	 * Name of the property holding position on screen for animating view in {@link TransitionValues}.
 	 */
 	@VisibleForTesting
-	static final String PROPERTY_TRANSITION_LOCATION_ON_SCREEN = Scale.class.getName() + ":transition.locationOnScreen";
+	static final String PROPERTY_TRANSITION_LOCATION_ON_SCREEN = Translate.class.getName() + ":transition.locationOnScreen";
 
 	/*
 	 * Interface ===================================================================================

@@ -83,6 +83,7 @@ dependencies {
      * RELEASE DEPENDENCIES ------------------------------------------------------------------------
      */
     compile deps.androidSupport.annotations
+    compile deps.androidSupport.coreUI
     releaseCompile "universum.studios.android:transitions-util:${config.library.version}@aar"
 
     /*

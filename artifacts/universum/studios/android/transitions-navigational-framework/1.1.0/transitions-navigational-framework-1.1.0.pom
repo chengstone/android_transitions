@@ -44,7 +44,7 @@
     <dependency>
       <groupId>universum.studios.android</groupId>
       <artifactId>transitions-navigational-base</artifactId>
-      <version>1.0.2</version>
+      <version>1.1.0</version>
       <type>aar</type>
       <scope>compile</scope>
       <exclusions>
