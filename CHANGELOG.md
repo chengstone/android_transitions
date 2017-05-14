@@ -4,7 +4,7 @@ Change-Log
 ### [Release 1.1.0](https://github.com/universum-studios/android_transitions/releases/tag/1.1.0) ###
 > 14.05.2017
 
-- Add implementation of `Translate` transition which may be used to move views in the scene by
+- Added implementation of `Translate` transition which may be used to move views in the scene by
   a desired delta along both, X and Y, axes.
 - Updated implementation of `Scale` transition which now also takes into account **current scale**
   value of the target view captured before transition starts. Scale transition also uses
