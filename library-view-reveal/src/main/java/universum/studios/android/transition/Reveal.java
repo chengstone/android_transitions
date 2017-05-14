@@ -20,8 +20,8 @@ package universum.studios.android.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.TimeInterpolator;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -30,8 +30,11 @@ import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.Size;
+import android.support.annotation.UiThread;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.transition.TransitionValues;
 import android.transition.Visibility;
 import android.util.AttributeSet;
@@ -48,7 +51,9 @@ import universum.studios.android.transition.util.AnimatorWrapper;
 /**
  * A {@link Visibility} transition implementation that tracks changes to the visibility of target
  * views in the start and end scenes and reveals or conceals views in the scene. Visibility is
- * determined by the {@link View#setVisibility(int)} state of the views.
+ * determined by both the {@link View#setVisibility(int)} state of the view as well as whether it
+ * is parented in the current view hierarchy. Disappearing Views are limited as described in
+ * {@link Visibility#onDisappear(android.view.ViewGroup, TransitionValues, int, TransitionValues, int)}.
  * <p>
  * A Reveal transition uses {@link ViewAnimationUtils#createCircularReveal(View, int, int, float, float)}
  * to create a circular reveal/conceal animator that is used to animate its target views. A center
@@ -66,7 +71,7 @@ import universum.studios.android.transition.util.AnimatorWrapper;
  *
  * @author Martin Albedinsky
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class Reveal extends Visibility {
 
 	/*
@@ -114,6 +119,11 @@ public class Reveal extends Visibility {
 	/*
 	 * Static members ==============================================================================
 	 */
+
+	/**
+	 * Default interpolator attached to {@link Animator} created via {@link #createAnimator(View, int, int, float, float)}.
+	 */
+	public static final TimeInterpolator INTERPOLATOR = new FastOutSlowInInterpolator();
 
 	/*
 	 * Members =====================================================================================
@@ -372,37 +382,57 @@ public class Reveal extends Visibility {
 	 *
 	 * @see #resolveCenterPosition(View)
 	 */
-	@NonNull
+	@UiThread
+	@Nullable
 	public static Animator createAnimator(
 			@NonNull final View view,
-			@FloatRange(from = 0) final float startRadius,
-			@FloatRange(from = 0) final float endRadius
+			@FloatRange(from = 0) final float radiusStart,
+			@FloatRange(from = 0) final float radiusEnd
 	) {
 		final float[] center = resolveCenterPosition(view);
-		return createAnimator(view, Math.round(center[0]), Math.round(center[1]), startRadius, endRadius);
+		return createAnimator(view, Math.round(center[0]), Math.round(center[1]), radiusStart, radiusEnd);
 	}
 
 	/**
 	 * Creates a new instance of circular reveal Animator for the specified <var>view</var>.
+	 * <p>
+	 * <b>Note, that this animator will be already wrapped in {@link AnimatorWrapper} which will have
+	 * PAUSE and RESUME features disabled to ensure that there will be no exception thrown by the
+	 * Android system if it tries to pause already running Reveal transition which cold possibly
+	 * cause some exception to be thrown by the Android system.</b>
+	 * <p>
+	 * The returned animator will also have the default {@link #INTERPOLATOR} attached.
 	 *
 	 * @param view        The view for which to create the requested animator.
 	 * @param centerX     X coordinate of a center from where should the reveal animation start.
 	 * @param centerY     Y coordinate of a center from where should the reveal animation start.
-	 * @param startRadius Radius of the specified view at the start of the reveal animation.
-	 * @param endRadius   Radius of the specified view at the end of the reveal animation.
+	 * @param radiusStart Radius of the specified view at the start of the reveal animation.
+	 * @param radiusEnd   Radius of the specified view at the end of the reveal animation.
 	 * @return Animator that will play circular reveal animation for the specified view according
-	 * to the specified parameters when started.
+	 * to the specified parameters when started or {@code null} if the start and end radii values
+	 * are the same.
 	 * @see ViewAnimationUtils#createCircularReveal(View, int, int, float, float)
 	 */
-	@NonNull
+	@UiThread
+	@Nullable
 	public static Animator createAnimator(
 			@NonNull final View view,
 			@IntRange(from = 0) final int centerX,
 			@IntRange(from = 0) final int centerY,
-			@FloatRange(from = 0) final float startRadius,
-			@FloatRange(from = 0) final float endRadius
+			@FloatRange(from = 0) final float radiusStart,
+			@FloatRange(from = 0) final float radiusEnd
 	) {
-		return ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
+		if (radiusStart == radiusEnd) {
+			return null;
+		}
+		final AnimatorWrapper animatorWrapper = new AnimatorWrapper(ViewAnimationUtils.createCircularReveal(
+				view,
+				centerX, centerY,
+				radiusStart, radiusEnd
+		));
+		animatorWrapper.setInterpolator(INTERPOLATOR);
+		animatorWrapper.removeFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME);
+		return animatorWrapper;
 	}
 
 	/**
@@ -797,25 +827,15 @@ public class Reveal extends Visibility {
 	/**
 	 */
 	@Override
-	public Animator onAppear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
+	public Animator onAppear(
+			@NonNull final ViewGroup sceneRoot,
+			@NonNull final View view,
+			@Nullable final TransitionValues startValues,
+			@Nullable final TransitionValues endValues
+	) {
 		calculateTransitionProperties(view);
 		final Animator animator = createAnimatorFromInfo(view);
-		animator.addListener(new AnimatorListenerAdapter() {
-
-			/**
-			 */
-			@Override
-			public void onAnimationStart(Animator animation) {
-				view.setVisibility(mStartVisibility);
-			}
-
-			/**
-			 */
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				view.setVisibility(mEndVisibility);
-			}
-		});
+		animator.addListener(new TransitionAnimatorListener(view, mStartVisibility, mEndVisibility));
 		view.setVisibility(mAppearVisibility);
 		return animator;
 	}
@@ -823,25 +843,15 @@ public class Reveal extends Visibility {
 	/**
 	 */
 	@Override
-	public Animator onDisappear(final ViewGroup sceneRoot, final View view, final TransitionValues startValues, final TransitionValues endValues) {
+	public Animator onDisappear(
+			@NonNull final ViewGroup sceneRoot,
+			@NonNull final View view,
+			@Nullable final TransitionValues startValues,
+			@Nullable final TransitionValues endValues
+	) {
 		calculateTransitionProperties(view);
 		final Animator animator = createAnimatorFromInfo(view);
-		animator.addListener(new AnimatorListenerAdapter() {
-
-			/**
-			 */
-			@Override
-			public void onAnimationStart(Animator animation) {
-				view.setVisibility(mStartVisibility);
-			}
-
-			/**
-			 */
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				view.setVisibility(mEndVisibility);
-			}
-		});
+		animator.addListener(new TransitionAnimatorListener(view, mStartVisibility, mEndVisibility));
 		view.setVisibility(mDisappearVisibility);
 		return animator;
 	}
@@ -851,7 +861,8 @@ public class Reveal extends Visibility {
 	 *
 	 * @param view The view to which will be the transition applied.
 	 */
-	@VisibleForTesting void calculateTransitionProperties(final View view) {
+	@VisibleForTesting
+	void calculateTransitionProperties(final View view) {
 		// First calculate center of the reveal transition.
 		final float[] center;
 		if (mCenterGravity == null) {
@@ -867,6 +878,18 @@ public class Reveal extends Visibility {
 		final float[] radii = calculateTransitionRadii(view);
 		mInfo.startRadius = mStartRadius == null ? radii[0] : mStartRadius;
 		mInfo.endRadius = mEndRadius == null ? radii[1] : mEndRadius;
+	}
+
+	/**
+	 * Returns info for the current reveal animation configuration.
+	 *
+	 * @return Current reveal info.
+	 * @see #calculateTransitionProperties(View)
+	 */
+	@NonNull
+	@VisibleForTesting
+	final Info getInfo() {
+		return mInfo;
 	}
 
 	/**
@@ -984,26 +1007,13 @@ public class Reveal extends Visibility {
 	 * @return Animator that will play circular reveal animation when started.
 	 */
 	private Animator createAnimatorFromInfo(final View view) {
-		final Animator animator = createAnimator(
+		return createAnimator(
 				view,
 				Math.round(mInfo.centerX),
 				Math.round(mInfo.centerY),
 				mInfo.startRadius,
 				mInfo.endRadius
 		);
-		final AnimatorWrapper animatorWrapper = new AnimatorWrapper(animator);
-		animatorWrapper.removeFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME);
-		return animatorWrapper;
-	}
-
-	/**
-	 * Returns info for the current reveal animation configuration.
-	 *
-	 * @return Current reveal info.
-	 */
-	@NonNull
-	final Info getInfo() {
-		return mInfo;
 	}
 
 	/*
@@ -1014,7 +1024,8 @@ public class Reveal extends Visibility {
 	 * Class holding necessary values for the reveal transition that are exclusively associated with
 	 * the currently transitioning view.
 	 */
-	@VisibleForTesting static final class Info {
+	@VisibleForTesting
+	static final class Info {
 
 		/**
 		 * Reveal circle radius.
@@ -1025,5 +1036,57 @@ public class Reveal extends Visibility {
 		 * Reveal circle center coordinate.
 		 */
 		float centerX, centerY;
+	}
+
+	/**
+	 * Listener that is used by {@link Reveal} transition to change properties of the animating view
+	 * according to the received animation callbacks.
+	 */
+	@VisibleForTesting
+	static final class TransitionAnimatorListener extends AnimatorListenerAdapter {
+
+		/**
+		 * View of which properties to change due to received animation callbacks.
+		 */
+		private final View animatingView;
+
+		/**
+		 * Visibility to be applied to the view on animation start.
+		 */
+		private final int visibilityStart;
+
+		/**
+		 * Visibility to be applied to the view on animation end.
+		 */
+		private final int visibilityEnd;
+
+		/**
+		 * Creates a new instance of TransitionAnimatorListener for the specified view.
+		 *
+		 * @param animatingView   The animating view of which properties may be changed by the
+		 *                        animator listener as result of received animation callbacks.
+		 * @param visibilityStart Visibility to be applied to the view on animation start.
+		 * @param visibilityEnd   Visibility to be applied to the view on animation end.
+		 */
+		TransitionAnimatorListener(final View animatingView, final int visibilityStart, final int visibilityEnd) {
+			super();
+			this.animatingView = animatingView;
+			this.visibilityStart = visibilityStart;
+			this.visibilityEnd = visibilityEnd;
+		}
+
+		/**
+		 */
+		@Override
+		public void onAnimationStart(@NonNull final Animator animation) {
+			animatingView.setVisibility(visibilityStart);
+		}
+
+		/**
+		 */
+		@Override
+		public void onAnimationEnd(@NonNull final Animator animation) {
+			animatingView.setVisibility(visibilityEnd);
+		}
 	}
 }

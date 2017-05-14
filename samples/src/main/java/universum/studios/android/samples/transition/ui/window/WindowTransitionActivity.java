@@ -39,7 +39,7 @@ public final class WindowTransitionActivity extends SamplesActivity {
 	private static final String TAG = "WindowTransitionActivity";
 	static final String EXTRA_WINDOW_TRANSITION = WindowTransitionActivity.class.getName() + ".EXTRA.WindowTransition";
 
-	@BindView(R.id.text) TextView mTextView;
+	@BindView(R.id.note) TextView mTextView;
 	private WindowTransition mWindowTransition;
 
 	@NonNull
@@ -52,7 +52,7 @@ public final class WindowTransitionActivity extends SamplesActivity {
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		requestFeature(FEATURE_DEPENDENCIES_INJECTION);
+		requestFeature(FEATURE_DEPENDENCIES_INJECTION | FEATURE_TOOLBAR);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_window_transition);
 		this.mWindowTransition = getIntent().getExtras().getParcelable(EXTRA_WINDOW_TRANSITION);

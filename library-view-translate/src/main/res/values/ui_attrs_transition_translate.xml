@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * =================================================================================================
+ *                             Copyright (C) 2017 Universum Studios
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- Translate transition attributes. -->
+	<declare-styleable name="Ui.Transition.Translate">
+		<!--
+			Delta by which to move, in or out, absolutely or relatively, the target view in the scene
+			along X axis. This may be either a fixed/absolute value specified in pixels or as dimension
+			or a relative/fraction value determining how much should be the view moved relative to
+			its size (width) or relative to the size (width) of the root scene.
+
+			Samples:
+			========================================================================================
+			1) Absolute:
+			   - uiTranslationXDelta="24px"
+			   - uiTranslationXDelta="24dp"
+
+			2) Relative to TARGET:
+			   - uiTranslationXDelta="50%"
+
+			3) Relative to parent SCENE:
+			   - uiTranslationXDelta="25%p"
+			========================================================================================
+		-->
+		<attr name="uiTranslationXDelta" format="dimension|float|fraction"/>
+		<!--
+			Delta by which to move, in or out, absolutely or relatively, the target view in the scene
+			along Y axis. This may be either a fixed/absolute value specified in pixels or as dimension
+			or a relative/fraction value determining how much should be the view moved relative to
+			its size (height) or relative to the size (height) of the root scene.
+
+			Samples:
+			========================================================================================
+			1) Absolute:
+			   - uiTranslationYDelta="24px"
+			   - uiTranslationYDelta="24dp"
+
+			2) Relative to TARGET:
+			   - uiTranslationYDelta="50%"
+
+			3) Relative to parent SCENE:
+			   - uiTranslationYDelta="25%p"
+			========================================================================================
+		-->
+		<attr name="uiTranslationYDelta" format="dimension|float|fraction"/>
+	</declare-styleable>
+</resources>

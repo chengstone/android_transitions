@@ -34,7 +34,7 @@ as usually.
 - **[View-Core](https://github.com/universum-studios/android_transitions/tree/master/library-view-core)**
 - **[View-Reveal](https://github.com/universum-studios/android_transitions/tree/master/library-view-reveal)**
 - **[View-Scale](https://github.com/universum-studios/android_transitions/tree/master/library-view-scale)**
-- **[View-Translation](https://github.com/universum-studios/android_transitions/tree/master/library-view-translation)**
+- **[View-Translate](https://github.com/universum-studios/android_transitions/tree/master/library-view-translate)**
 - **[@Window](https://github.com/universum-studios/android_transitions/tree/master/library-window_group)**
 - **[Window-Core](https://github.com/universum-studios/android_transitions/tree/master/library-window-core)**
 - **[Window-Common](https://github.com/universum-studios/android_transitions/tree/master/library-window-common)**

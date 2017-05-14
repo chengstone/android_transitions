@@ -24,6 +24,7 @@ import android.animation.PropertyValuesHolder;
 import android.os.Build;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.transition.TransitionValues;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -50,6 +51,11 @@ public final class ScaleTest extends BaseInstrumentedTest {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "ScaleTest";
+
+	@Test
+	public void testInterpolator() {
+		assertThat(Scale.INTERPOLATOR, is(notNullValue()));
+	}
 
 	@Test
 	public void testInstantiation() {
@@ -98,12 +104,39 @@ public final class ScaleTest extends BaseInstrumentedTest {
 	@SuppressWarnings("ResourceType")
 	public void testCreateAnimator() {
 		final View view = new View(mContext);
-		assertThatAnimatorForViewIsValid(Scale.createAnimator(view, 0.25f, 0.75f), view);
-		assertThatAnimatorForViewIsValid(Scale.createAnimator(view, -0.25f, 0.75f), view);
-		assertThatAnimatorForViewIsValid(Scale.createAnimator(view, 0.25f, -0.75f), view);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, 0.75f), view, 0.25f, 0.25f);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, -0.25f, 0.75f), view, 0.0f, 0.0f);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, -0.75f), view, 0.25f, 0.25f);
 	}
 
-	private void assertThatAnimatorForViewIsValid(Animator animator, View view) {
+	@Test
+	@SuppressWarnings("ResourceType")
+	public void testCreateAnimatorWithSameStartAndEndValues() {
+		final View view = new View(mContext);
+		assertThat(Scale.createAnimator(view, 1.0f, 1.0f), is(nullValue()));
+		assertThat(Scale.createAnimator(view, -0.25f, -0.25f), is(nullValue()));
+	}
+
+	@Test
+	@SuppressWarnings("ResourceType")
+	public void testCreateAnimatorForAxesSeparately() {
+		final View view = new View(mContext);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, 0.75f, 0.15f, 0.85f), view, 0.25f, 0.75f);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, 0.75f, 0.15f, 0.75f), view, 0.25f, 0.75f);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.15f, 0.75f, 0.15f, 0.85f), view, 0.15f, 0.75f);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, -0.25f, 0.75f, -0.15f, 1.25f), view, 0.0f, 0.75f);
+		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, -0.75f, 0.0f, -0.75f), view, 0.25f, 0.0f);
+	}
+
+	@Test
+	@SuppressWarnings("ResourceType")
+	public void testCreateAnimatorForAxesSeparatelyWithSameStartAndEndValues() {
+		final View view = new View(mContext);
+		assertThat(Scale.createAnimator(view, 0.25f, 0.25f, 0.25f, 0.25f), is(nullValue()));
+		assertThat(Scale.createAnimator(view, -0.35f, -0.35f, -0.35f, -0.35f), is(nullValue()));
+	}
+
+	private void assertThatAnimatorIsValid(Animator animator, View view, float startScaleX, float startScaleY) {
 		assertThat(animator, is(notNullValue()));
 		assertThat(animator, instanceOf(ObjectAnimator.class));
 		final ObjectAnimator objectAnimator = (ObjectAnimator) animator;
@@ -113,6 +146,8 @@ public final class ScaleTest extends BaseInstrumentedTest {
 		assertThat(values.length, is(2));
 		assertThat(values[0].getPropertyName(), is(Scale.PROPERTY_SCALE_X));
 		assertThat(values[1].getPropertyName(), is(Scale.PROPERTY_SCALE_Y));
+		assertThat(view.getScaleX(), is(startScaleX));
+		assertThat(view.getScaleY(), is(startScaleY));
 	}
 
 	@Test
@@ -182,17 +217,58 @@ public final class ScaleTest extends BaseInstrumentedTest {
 	}
 
 	@Test
+	public void testCaptureStartValues() {
+		final View view = new View(mContext);
+		view.setScaleX(0.75f);
+		view.setScaleY(0.25f);
+		final TransitionValues transitionValues = new TransitionValues();
+		transitionValues.view = view;
+		new Scale().captureStartValues(transitionValues);
+		assertThat(transitionValues.values.isEmpty(), is(false));
+		assertThat(transitionValues.values.get(Scale.PROPERTY_TRANSITION_SCALE_X), Is.<Object>is(0.75f));
+		assertThat(transitionValues.values.get(Scale.PROPERTY_TRANSITION_SCALE_Y), Is.<Object>is(0.25f));
+	}
+
+	@Test
+	public void testObtainStartScales() {
+		final TransitionValues values = new TransitionValues();
+		values.values.put(Scale.PROPERTY_TRANSITION_SCALE_X, 0.15f);
+		values.values.put(Scale.PROPERTY_TRANSITION_SCALE_Y, 0.95f);
+		final float[] scales = Scale.obtainStartScales(values, 0.5f, 0.25f);
+		assertThat(scales, is(notNullValue()));
+		assertThat(scales.length, is(2));
+		assertThat(scales[0], is(0.15f));
+		assertThat(scales[1], is(0.95f));
+	}
+
+	@Test
+	public void testObtainStartScalesForEmptyTransitionValues() {
+		final float[] scales = Scale.obtainStartScales(new TransitionValues(), 0.5f, 0.25f);
+		assertThat(scales, is(notNullValue()));
+		assertThat(scales.length, is(2));
+		assertThat(scales[0], is(0.5f));
+		assertThat(scales[1], is(0.25f));
+	}
+
+	@Test
+	public void testObtainStartScalesForNullTransitionValues() {
+		final float[] scales = Scale.obtainStartScales(null, 0.5f, 0.25f);
+		assertThat(scales, is(notNullValue()));
+		assertThat(scales.length, is(2));
+		assertThat(scales[0], is(0.5f));
+		assertThat(scales[1], is(0.25f));
+	}
+
+	@Test
 	public void testOnAppearWithSpecifiedPivots() {
 		final Scale scale = new Scale();
 		scale.setPivotX(100f);
 		scale.setPivotY(50f);
 		final View view = new View(mContext);
 		final Animator animator = scale.onAppear(new FrameLayout(mContext), view, null, null);
-		assertThatAnimatorForViewIsValid(animator, view);
+		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
 		assertThat(view.getPivotX(), is(scale.getPivotX()));
 		assertThat(view.getPivotY(), is(scale.getPivotY()));
-		assertThat(view.getScaleX(), is(0.0f));
-		assertThat(view.getScaleY(), is(0.0f));
 	}
 
 	@Test
@@ -206,11 +282,23 @@ public final class ScaleTest extends BaseInstrumentedTest {
 		view.setTop(0);
 		view.setBottom(100);
 		final Animator animator = scale.onAppear(new FrameLayout(mContext), view, null, null);
-		assertThatAnimatorForViewIsValid(animator, view);
+		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
 		assertThat(view.getPivotX(), is(25f));
 		assertThat(view.getPivotY(), is(75f));
-		assertThat(view.getScaleX(), is(0.0f));
-		assertThat(view.getScaleY(), is(0.0f));
+	}
+
+	@Test
+	public void testOnAppearWithSameStartAndEndValues() {
+		final Scale scale = new Scale();
+		scale.setPivotX(100f);
+		scale.setPivotY(50f);
+		final View view = new View(mContext);
+		view.setScaleX(1.0f);
+		view.setScaleY(1.0f);
+		final TransitionValues startValues = new TransitionValues();
+		startValues.view = view;
+		scale.captureStartValues(startValues);
+		assertThat(scale.onAppear(new FrameLayout(mContext), view, startValues, null), is(nullValue()));
 	}
 
 	@Test
@@ -220,7 +308,7 @@ public final class ScaleTest extends BaseInstrumentedTest {
 		scale.setPivotY(50f);
 		final View view = new View(mContext);
 		final Animator animator = scale.onDisappear(new FrameLayout(mContext), view, null, null);
-		assertThatAnimatorForViewIsValid(animator, view);
+		assertThatAnimatorIsValid(animator, view, 1.0f, 1.0f);
 		assertThat(view.getPivotX(), is(scale.getPivotX()));
 		assertThat(view.getPivotY(), is(scale.getPivotY()));
 		assertThat(view.getScaleX(), is(1.0f));
@@ -237,11 +325,64 @@ public final class ScaleTest extends BaseInstrumentedTest {
 		view.setRight(100);
 		view.setTop(0);
 		view.setBottom(100);
-		final Animator animator = scale.onDisappear(new FrameLayout(mContext), view, null, null);
-		assertThatAnimatorForViewIsValid(animator, view);
+		final Animator animator = scale.onDisappear(new FrameLayout(mContext), view, new TransitionValues(), new TransitionValues());
+		assertThatAnimatorIsValid(animator, view, 1.0f, 1.0f);
 		assertThat(view.getPivotX(), is(33f));
 		assertThat(view.getPivotY(), is(66f));
 		assertThat(view.getScaleX(), is(1.0f));
 		assertThat(view.getScaleY(), is(1.0f));
+	}
+
+	@Test
+	public void testOnDisappearWithSameStartAndEndValues() {
+		final Scale scale = new Scale();
+		scale.setPivotX(100f);
+		scale.setPivotY(50f);
+		final View view = new View(mContext);
+		view.setScaleX(0.0f);
+		view.setScaleY(0.0f);
+		final TransitionValues startValues = new TransitionValues();
+		startValues.view = view;
+		scale.captureStartValues(startValues);
+		assertThat(scale.onDisappear(new FrameLayout(mContext), view, startValues, new TransitionValues()), is(nullValue()));
+	}
+
+	@Test
+	public void testCalculateTransitionPropertiesWithSpecifiedPivots() {
+		final Scale scale = new Scale();
+		scale.setPivotX(100f);
+		scale.setPivotY(50f);
+		final View view = new View(mContext);
+		scale.calculateTransitionProperties(view);
+		final Scale.Info info = scale.getInfo();
+		assertThatInfoHasProperties(
+				info,
+				100f,
+				50f
+		);
+	}
+
+	@Test
+	public void testCalculateTransitionPropertiesWithSpecifiedPivotFractions() {
+		final Scale scale = new Scale();
+		scale.setPivotXFraction(0.33f);
+		scale.setPivotYFraction(0.66f);
+		final View view = new View(mContext);
+		view.setLeft(0);
+		view.setRight(100);
+		view.setTop(0);
+		view.setBottom(100);
+		scale.calculateTransitionProperties(view);
+		final Scale.Info info = scale.getInfo();
+		assertThatInfoHasProperties(
+				info,
+				33f,
+				66f
+		);
+	}
+
+	private static void assertThatInfoHasProperties(Scale.Info info, float pivotX, float pivotY) {
+		assertThat(info.pivotX, is(pivotX));
+		assertThat(info.pivotY, is(pivotY));
 	}
 }

@@ -41,7 +41,8 @@ final class ViewTransitionsAdapter extends SimpleRecyclerAdapter<ViewTransition,
 	ViewTransitionsAdapter(@NonNull Context context) {
 		super(context, new ViewTransition[]{
 				ViewTransitions.reveal(),
-				ViewTransitions.scale()
+				ViewTransitions.scale(),
+				ViewTransitions.translate()
 		});
 	}
 

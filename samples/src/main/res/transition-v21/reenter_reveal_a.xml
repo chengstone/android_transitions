@@ -6,7 +6,6 @@
 		class="universum.studios.android.transition.Reveal"
 		android:duration="600"
 		android:startDelay="200"
-		android:interpolator="@android:interpolator/fast_out_slow_in"
 		trans:uiRevealMode="conceal"
 		trans:uiCenterGravity="end|bottom"
 		trans:uiCenterHorizontalOffset="-44dip"

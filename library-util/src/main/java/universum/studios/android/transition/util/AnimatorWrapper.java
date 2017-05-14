@@ -20,10 +20,10 @@ package universum.studios.android.transition.util;
 
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.util.ArrayMap;
 
@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * @author Martin Albedinsky
  */
 @SuppressWarnings("deprecation")
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+@RequiresApi(Build.VERSION_CODES.HONEYCOMB)
 public class AnimatorWrapper extends Animator {
 
 	/*
@@ -370,7 +370,7 @@ public class AnimatorWrapper extends Animator {
 	/**
 	 */
 	@Override
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+	@RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 	public TimeInterpolator getInterpolator() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 ? mAnimator.getInterpolator() : null;
 	}
@@ -555,7 +555,7 @@ public class AnimatorWrapper extends Animator {
 	/**
 	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorPauseListener}.
 	 */
-	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@RequiresApi(Build.VERSION_CODES.KITKAT)
 	@VisibleForTesting static final class AnimatorPauseListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorPauseListener>
 			implements
 			AnimatorPauseListener {

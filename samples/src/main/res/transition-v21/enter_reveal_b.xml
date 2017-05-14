@@ -3,7 +3,7 @@
 
 	<fade android:duration="300">
 		<targets>
-			<target android:targetId="@id/text" />
+			<target android:targetId="@id/note" />
 		</targets>
 	</fade>
 </transitionSet>

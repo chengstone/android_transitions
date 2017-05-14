@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition class="universum.studios.android.transition.Translate"
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:trans="http://schemas.android.com/apk/res-auto"
+			android:duration="350"
+			android:interpolator="@android:interpolator/fast_out_slow_in"
+			trans:uiTranslationXDelta="66%p"
+			trans:uiTranslationYDelta="33%p" />

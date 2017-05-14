@@ -49,14 +49,14 @@ android {
                 '../library-view-core/src/main/java',
                 '../library-view-reveal/src/main/java',
                 '../library-view-scale/src/main/java',
-                '../library-view-translation/src/main/java'
+                '../library-view-translate/src/main/java'
         ]
         debug.java.srcDirs = release.java.srcDirs
         release.res.srcDirs = [
                 '../library-view-core/src/main/res',
                 '../library-view-reveal/src/main/res',
                 '../library-view-scale/src/main/res',
-                '../library-view-translation/src/main/res'
+                '../library-view-translate/src/main/res'
         ]
         debug.res.srcDirs = release.res.srcDirs
     }
