@@ -26,4 +26,7 @@
 
 	<style name="Theme.Transition.Scale.A" parent="Theme.Base.Transition.Scale.A"/>
 	<style name="Theme.Transition.Scale.B" parent="Theme.Base.Transition.Scale.B"/>
+
+	<style name="Theme.Transition.Translate.A" parent="Theme.Base.Transition.Translate.A"/>
+	<style name="Theme.Transition.Translate.B" parent="Theme.Base.Transition.Translate.B"/>
 </resources>

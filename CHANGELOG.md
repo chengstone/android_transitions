@@ -1,6 +1,19 @@
 Change-Log
 ===============
 
+### [Release 1.1.0](https://github.com/universum-studios/android_transitions/releases/tag/1.1.0) ###
+> 14.05.2017
+
+- Add implementation of `Translate` transition which may be used to move views in the scene by
+  a desired delta along both, X and Y, axes.
+- Updated implementation of `Scale` transition which now also takes into account **current scale**
+  value of the target view captured before transition starts. Scale transition also uses
+  `FastOutSlowInInterpolator` as default interpolator for its corresponding animator.
+- Updated implementation of `Reveal` transition which creates its corresponding animator via utility
+  method `createAnimator(...)` already wrapped into `AnimatorWrapper`. Reveal transition also uses
+  `FastOutSlowInInterpolator` as default interpolator for its corresponding animator.
+- Small patches to the navigational transitions.
+
 ### [Release 1.0.2](https://github.com/universum-studios/android_transitions/releases/tag/1.0.2) ###
 > 02.04.2017
 

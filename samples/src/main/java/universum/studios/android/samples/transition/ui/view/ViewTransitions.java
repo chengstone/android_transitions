@@ -21,15 +21,20 @@ package universum.studios.android.samples.transition.ui.view;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import universum.studios.android.transition.NavigationalTransition;
+import universum.studios.android.samples.transition.ui.view.reveal.RevealTransitionActivityA;
+import universum.studios.android.samples.transition.ui.view.scale.ScaleTransitionActivityA;
+import universum.studios.android.samples.transition.ui.view.translate.TranslateTransitionActivityA;
+import universum.studios.android.transition.BaseNavigationalTransition;
+import universum.studios.android.transition.NavigationalTransitionCompat;
 import universum.studios.android.transition.Reveal;
 import universum.studios.android.transition.Scale;
+import universum.studios.android.transition.Translate;
 import universum.studios.android.transition.WindowTransitions;
 
 /**
  * @author Martin Albedinsky
  */
-final class ViewTransitions {
+public final class ViewTransitions {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "ViewTransitions";
@@ -57,11 +62,22 @@ final class ViewTransitions {
 	}
 
 	@NonNull
-	static NavigationalTransition navigationalTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+	static ViewTransition translate() {
+		return new ViewTransition(Translate.class.getSimpleName()) {
+
+			@Override
+			void start(@NonNull Activity activity) {
+				navigationalTransition(TranslateTransitionActivityA.class).start(activity);
+			}
+		};
+	}
+
+	@NonNull
+	public static BaseNavigationalTransition navigationalTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
 		return new NavTransition(classOfTransitionActivity);
 	}
 
-	private static final class NavTransition extends NavigationalTransition {
+	private static final class NavTransition extends NavigationalTransitionCompat {
 
 		NavTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
 			super(classOfTransitionActivity);

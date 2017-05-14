@@ -33,4 +33,8 @@
 	<string name="navigation_item_home">Home</string>
 	<string name="navigation_item_window_transitions">Window Transitions</string>
 	<string name="navigation_item_view_transitions">View Transitions</string>
+
+	<!-- ### VIEW TRANSITIONS ================================================================== -->
+
+	<string name="view_transition_note_go_back">To go back,\npress the back button...</string>
 </resources>

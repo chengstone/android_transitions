@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+			   xmlns:trans="http://schemas.android.com/apk/res-auto">
+
+	<transitionSet android:startDelay="400">
+		<transition
+			class="universum.studios.android.transition.Translate"
+			android:duration="800"
+			android:interpolator="@android:interpolator/fast_out_slow_in"
+			trans:uiTranslationXDelta="-100dp">
+
+			<targets>
+				<target android:targetId="@id/element_top_start" />
+			</targets>
+		</transition>
+	</transitionSet>
+
+	<transitionSet>
+		<transition
+			class="universum.studios.android.transition.Translate"
+			android:duration="800"
+			android:interpolator="@android:interpolator/fast_out_slow_in"
+			trans:uiTranslationXDelta="-100%p">
+
+			<targets>
+				<target android:targetId="@id/element_top_end" />
+			</targets>
+		</transition>
+	</transitionSet>
+
+	<transitionSet
+		android:duration="800"
+		android:startDelay="400">
+		<transition
+			class="universum.studios.android.transition.Translate"
+			android:interpolator="@android:interpolator/fast_out_slow_in"
+			trans:uiTranslationXDelta="40%p"
+			trans:uiTranslationYDelta="-40%p">
+
+			<targets>
+				<target android:targetId="@id/element_bottom_start" />
+			</targets>
+		</transition>
+		<fade>
+			<targets>
+				<target android:targetId="@id/element_bottom_start" />
+			</targets>
+		</fade>
+	</transitionSet>
+
+	<transitionSet android:duration="800">
+		<transition
+			class="universum.studios.android.transition.Translate"
+			android:interpolator="@android:interpolator/fast_out_slow_in"
+			trans:uiTranslationXDelta="-100%"
+			trans:uiTranslationYDelta="-100%">
+
+			<targets>
+				<target android:targetId="@id/element_bottom_end" />
+			</targets>
+		</transition>
+		<fade>
+			<targets>
+				<target android:targetId="@id/element_bottom_end" />
+			</targets>
+		</fade>
+	</transitionSet>
+
+	<fade android:startDelay="1000">
+
+		<targets>
+			<target android:targetId="@id/note" />
+		</targets>
+	</fade>
+</transitionSet>

@@ -18,7 +18,45 @@
  */
 package universum.studios.android.transition;
 
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentHostCallback;
+
+import java.lang.reflect.Field;
+
+import static org.mockito.Mockito.mock;
+
 /**
  * @author Martin Albedinsky
  */
-@SuppressWarnings("unused") final class NavigationalCompatTests {}
+@SuppressWarnings("unused") final class NavigationalCompatTests {
+
+	private static abstract class MockFragmentFactory {
+
+		abstract Fragment createMockFragmentWithActivity(FragmentActivity activity) throws Exception;
+	}
+
+	private static final class CompatMockFragmentFactory extends MockFragmentFactory {
+
+		@Override
+		Fragment createMockFragmentWithActivity(FragmentActivity activity) throws Exception {
+			final Fragment mockFragment = mock(Fragment.class);
+			final FragmentHostCallback mockHostCallback = mock(FragmentHostCallback.class);
+			final Field activityField = FragmentHostCallback.class.getDeclaredField("mActivity");
+			activityField.setAccessible(true);
+			activityField.set(mockHostCallback, activity);
+			final Field hostField = Fragment.class.getDeclaredField("mHost");
+			hostField.setAccessible(true);
+			hostField.set(mockFragment, mockHostCallback);
+			return mockFragment;
+		}
+	}
+
+	private static final MockFragmentFactory MOCK_FRAGMENT_FACTORY = new CompatMockFragmentFactory();
+
+	@NonNull
+	static Fragment createMockFragmentWithActivity(@NonNull FragmentActivity activity) throws Exception {
+		return MOCK_FRAGMENT_FACTORY.createMockFragmentWithActivity(activity);
+	}
+}
