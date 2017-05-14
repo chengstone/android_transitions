@@ -19,13 +19,13 @@
 package universum.studios.android.transition;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
 /**
  * A {@link BaseNavigationalTransition} implementation that may be used also from a context of
@@ -35,7 +35,7 @@ import android.support.annotation.NonNull;
  *
  * @author Martin Albedinsky
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+@RequiresApi(Build.VERSION_CODES.HONEYCOMB)
 public class NavigationalTransition extends BaseNavigationalTransition&lt;NavigationalTransition&gt; {
 
 	/*
@@ -67,8 +67,8 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * Creates a new instance of NavigationalTransition without transition activity.
 	 */
 	public NavigationalTransition() {
-<span class="nc" id="L70">		super();</span>
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L70">		super();</span>
+<span class="fc" id="L71">	}</span>
 
 	/**
 	 * Creates a new instance of NavigationalTransition with the specified &lt;var&gt;classOfTransitionActivity&lt;/var&gt;.
@@ -78,8 +78,8 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * @see #createIntent(Activity)
 	 */
 	public NavigationalTransition(@NonNull final Class&lt;? extends Activity&gt; classOfTransitionActivity) {
-<span class="nc" id="L81">		super(classOfTransitionActivity);</span>
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L81">		super(classOfTransitionActivity);</span>
+<span class="fc" id="L82">	}</span>
 
 	/*
 	 * Methods =====================================================================================
@@ -99,10 +99,10 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * @see #configureTransitions(Activity)
 	 */
 	public void start(@NonNull final Fragment caller) {
-<span class="nc" id="L102">		final Activity activity = caller.getActivity();</span>
-<span class="nc" id="L103">		configureOutgoingTransitions(activity);</span>
-<span class="nc" id="L104">		onStart(caller);</span>
-<span class="nc" id="L105">	}</span>
+<span class="fc" id="L102">		final Activity activity = caller.getActivity();</span>
+<span class="fc" id="L103">		configureOutgoingTransitions(activity);</span>
+<span class="fc" id="L104">		onStart(caller);</span>
+<span class="fc" id="L105">	}</span>
 
 	/**
 	 * Invoked whenever {@link #start(Fragment)} is called.
@@ -118,17 +118,17 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	@SuppressLint(&quot;NewApi&quot;)
 	@SuppressWarnings(&quot;ConstantConditions&quot;)
 	protected void onStart(@NonNull final Fragment caller) {
-<span class="nc" id="L121">		final Activity activity = caller.getActivity();</span>
-<span class="nc" id="L122">		final Intent intent = createIntent(activity);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc" id="L124">			final Bundle options = makeSceneTransitionAnimation(activity).toBundle();</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
-<span class="nc" id="L126">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
-<span class="nc" id="L127">		} else {</span>
+<span class="fc" id="L121">		final Activity activity = caller.getActivity();</span>
+<span class="fc" id="L122">		final Intent intent = createIntent(activity);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="fc" id="L124">			final Bundle options = makeSceneTransitionAnimation(activity).toBundle();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
+<span class="fc" id="L126">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
+<span class="fc" id="L127">		} else {</span>
 <span class="nc bnc" id="L128" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent);</span>
 <span class="nc" id="L129">			else caller.startActivityForResult(intent, mRequestCode);</span>
 		}
-<span class="nc" id="L131">	}</span>
+<span class="fc" id="L131">	}</span>
 
 	/**
 	 * Finishes host activity of the given &lt;var&gt;caller&lt;/var&gt; fragment in order to run its exit transitions.
@@ -138,8 +138,8 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * @see #start(Fragment)
 	 */
 	public void finish(@NonNull final Fragment caller) {
-<span class="nc" id="L141">		onFinish(caller);</span>
-<span class="nc" id="L142">	}</span>
+<span class="fc" id="L141">		onFinish(caller);</span>
+<span class="fc" id="L142">	}</span>
 
 	/**
 	 * Invoked whenever {@link #finish(Fragment)} is called.
@@ -151,11 +151,11 @@ public class NavigationalTransition extends BaseNavigationalTransition&lt;Naviga
 	 * @see #onStart(Fragment)
 	 */
 	protected void onFinish(@NonNull final Fragment caller) {
-<span class="nc" id="L154">		onFinish(caller.getActivity());</span>
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L154">		onFinish(caller.getActivity());</span>
+<span class="fc" id="L155">	}</span>
 
 	/*
 	 * Inner classes ===============================================================================
 	 */
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.2</div></body></html>

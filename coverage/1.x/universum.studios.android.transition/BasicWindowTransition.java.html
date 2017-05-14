@@ -57,14 +57,14 @@ public class BasicWindowTransition implements WindowTransition {
 		 */
 		@Override
 		public BasicWindowTransition createFromParcel(@NonNull final Parcel source) {
-<span class="nc" id="L60">			return new BasicWindowTransition(source);</span>
+<span class="fc" id="L60">			return new BasicWindowTransition(source);</span>
 		}
 
 		/**
 		 */
 		@Override
 		public BasicWindowTransition[] newArray(final int size) {
-<span class="nc" id="L67">			return new BasicWindowTransition[size];</span>
+<span class="fc" id="L67">			return new BasicWindowTransition[size];</span>
 		}
 	};
 
@@ -102,16 +102,16 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 
 	/**
-	 * Same as {@link #BasicWindowTransition(int, int, int, int)} finish animations set to
+	 * Same as {@link #BasicWindowTransition(int, int, int, int)} where finish animations are set to
 	 * {@link #NO_ANIMATION}.
 	 */
 	public BasicWindowTransition(@AnimRes final int enterAnim, @AnimRes final int exitAnim) {
-<span class="nc" id="L109">		this(enterAnim, exitAnim, NO_ANIMATION, NO_ANIMATION);</span>
-<span class="nc" id="L110">	}</span>
+<span class="fc" id="L109">		this(enterAnim, exitAnim, NO_ANIMATION, NO_ANIMATION);</span>
+<span class="fc" id="L110">	}</span>
 
 	/**
 	 * Same as {@link #BasicWindowTransition(int, int, int, int, String)} with name specified
-	 * as {@code &quot;UNKNOWN&quot;}.
+	 * as {@code &quot;UNSPECIFIED&quot;}.
 	 */
 	public BasicWindowTransition(
 			@AnimRes final int startEnterAnim,
@@ -119,8 +119,8 @@ public class BasicWindowTransition implements WindowTransition {
 			@AnimRes final int finishEnterAnim,
 			@AnimRes final int finishExitAnim
 	) {
-<span class="nc" id="L122">		this(startEnterAnim, startExitAnim, finishEnterAnim, finishExitAnim, &quot;UNKNOWN&quot;);</span>
-<span class="nc" id="L123">	}</span>
+<span class="fc" id="L122">		this(startEnterAnim, startExitAnim, finishEnterAnim, finishExitAnim, &quot;UNSPECIFIED&quot;);</span>
+<span class="fc" id="L123">	}</span>
 
 	/**
 	 * Creates a new instance of BasicWindowTransition with the specified animations and name.
@@ -156,13 +156,13 @@ public class BasicWindowTransition implements WindowTransition {
 	 *
 	 * @param source Parcel with data for the new instance.
 	 */
-<span class="nc" id="L159">	protected BasicWindowTransition(@NonNull final Parcel source) {</span>
-<span class="nc" id="L160">		this.mStartEnterAnimRes = source.readInt();</span>
-<span class="nc" id="L161">		this.mStartExitAnimRes = source.readInt();</span>
-<span class="nc" id="L162">		this.mFinishEnterAnimRes = source.readInt();</span>
-<span class="nc" id="L163">		this.mFinishExitAnimRes = source.readInt();</span>
-<span class="nc" id="L164">		this.mName = source.readString();</span>
-<span class="nc" id="L165">	}</span>
+<span class="fc" id="L159">	protected BasicWindowTransition(@NonNull final Parcel source) {</span>
+<span class="fc" id="L160">		this.mStartEnterAnimRes = source.readInt();</span>
+<span class="fc" id="L161">		this.mStartExitAnimRes = source.readInt();</span>
+<span class="fc" id="L162">		this.mFinishEnterAnimRes = source.readInt();</span>
+<span class="fc" id="L163">		this.mFinishExitAnimRes = source.readInt();</span>
+<span class="fc" id="L164">		this.mName = source.readString();</span>
+<span class="fc" id="L165">	}</span>
 
 	/*
 	 * Methods =====================================================================================
@@ -172,18 +172,18 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 	@Override
 	public void writeToParcel(@NonNull final Parcel dest, final int flags) {
-<span class="nc" id="L175">		dest.writeInt(mStartEnterAnimRes);</span>
-<span class="nc" id="L176">		dest.writeInt(mStartExitAnimRes);</span>
-<span class="nc" id="L177">		dest.writeInt(mFinishEnterAnimRes);</span>
-<span class="nc" id="L178">		dest.writeInt(mFinishExitAnimRes);</span>
-<span class="nc" id="L179">		dest.writeString(mName);</span>
-<span class="nc" id="L180">	}</span>
+<span class="fc" id="L175">		dest.writeInt(mStartEnterAnimRes);</span>
+<span class="fc" id="L176">		dest.writeInt(mStartExitAnimRes);</span>
+<span class="fc" id="L177">		dest.writeInt(mFinishEnterAnimRes);</span>
+<span class="fc" id="L178">		dest.writeInt(mFinishExitAnimRes);</span>
+<span class="fc" id="L179">		dest.writeString(mName);</span>
+<span class="fc" id="L180">	}</span>
 
 	/**
 	 */
 	@Override
 	public int describeContents() {
-<span class="nc" id="L186">		return 0;</span>
+<span class="fc" id="L186">		return 0;</span>
 	}
 
 	/**
@@ -230,18 +230,18 @@ public class BasicWindowTransition implements WindowTransition {
 	 */
 	@Override
 	public void overrideStart(@NonNull final Activity activity) {
-<span class="nc" id="L233">		activity.overridePendingTransition(mStartEnterAnimRes, mStartExitAnimRes);</span>
-<span class="nc" id="L234">	}</span>
+<span class="fc" id="L233">		activity.overridePendingTransition(mStartEnterAnimRes, mStartExitAnimRes);</span>
+<span class="fc" id="L234">	}</span>
 
 	/**
 	 */
 	@Override
 	public void overrideFinish(@NonNull final Activity activity) {
-<span class="nc" id="L240">		activity.overridePendingTransition(mFinishEnterAnimRes, mFinishExitAnimRes);</span>
-<span class="nc" id="L241">	}</span>
+<span class="fc" id="L240">		activity.overridePendingTransition(mFinishEnterAnimRes, mFinishExitAnimRes);</span>
+<span class="fc" id="L241">	}</span>
 
 	/*
 	 * Inner classes ===============================================================================
 	 */
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.2</div></body></html>

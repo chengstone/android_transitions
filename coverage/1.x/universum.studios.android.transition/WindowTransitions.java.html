@@ -41,7 +41,13 @@ public final class WindowTransitions {
 	/**
 	 * Transition that may be used to change two windows without any animation.
 	 */
-<span class="fc" id="L44">	public static final WindowTransition NONE = new BasicWindowTransition(0, 0, 0, 0, &quot;NONE&quot;);</span>
+<span class="fc" id="L44">	public static final WindowTransition NONE = new BasicWindowTransition(</span>
+			WindowTransition.NO_ANIMATION,
+			WindowTransition.NO_ANIMATION,
+			WindowTransition.NO_ANIMATION,
+			WindowTransition.NO_ANIMATION,
+			&quot;NONE&quot;
+	);
 
 	/**
 	 * Transition that may be used to fade a new incoming window into the screen and an outgoing
@@ -55,7 +61,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_fade_out_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L58">	public static final WindowTransition CROSS_FADE = new BasicWindowTransition(</span>
+<span class="fc" id="L64">	public static final WindowTransition CROSS_FADE = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_fade_in,
 			// Exit animation.
@@ -79,7 +85,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_fade_out_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L82">	public static final WindowTransition CROSS_FADE_AND_HOLD = new BasicWindowTransition(</span>
+<span class="fc" id="L88">	public static final WindowTransition CROSS_FADE_AND_HOLD = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_fade_in,
 			// Exit animation.
@@ -103,7 +109,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_left_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L106">	public static final WindowTransition SLIDE_TO_RIGHT = new BasicWindowTransition(</span>
+<span class="fc" id="L112">	public static final WindowTransition SLIDE_TO_RIGHT = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_right,
 			// Exit animation.
@@ -127,7 +133,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_right_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L130">	public static final WindowTransition SLIDE_TO_LEFT = new BasicWindowTransition(</span>
+<span class="fc" id="L136">	public static final WindowTransition SLIDE_TO_LEFT = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_left,
 			// Exit animation.
@@ -151,7 +157,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_bottom_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L154">	public static final WindowTransition SLIDE_TO_TOP = new BasicWindowTransition(</span>
+<span class="fc" id="L160">	public static final WindowTransition SLIDE_TO_TOP = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_top,
 			// Exit animation.
@@ -175,7 +181,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_top_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L178">	public static final WindowTransition SLIDE_TO_BOTTOM = new BasicWindowTransition(</span>
+<span class="fc" id="L184">	public static final WindowTransition SLIDE_TO_BOTTOM = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_bottom,
 			// Exit animation.
@@ -199,7 +205,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_right_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L202">	public static final WindowTransition SLIDE_TO_LEFT_AND_SCALE_OUT = new BasicWindowTransition(</span>
+<span class="fc" id="L208">	public static final WindowTransition SLIDE_TO_LEFT_AND_SCALE_OUT = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_left,
 			// Exit animation.
@@ -223,7 +229,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_left_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L226">	public static final WindowTransition SLIDE_TO_RIGHT_AND_SCALE_OUT = new BasicWindowTransition(</span>
+<span class="fc" id="L232">	public static final WindowTransition SLIDE_TO_RIGHT_AND_SCALE_OUT = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_right,
 			// Exit animation.
@@ -247,7 +253,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_bottom_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L250">	public static final WindowTransition SLIDE_TO_TOP_AND_SCALE_OUT = new BasicWindowTransition(</span>
+<span class="fc" id="L256">	public static final WindowTransition SLIDE_TO_TOP_AND_SCALE_OUT = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_top,
 			// Exit animation.
@@ -271,7 +277,7 @@ public final class WindowTransitions {
 	 * &lt;li&gt;&lt;b&gt;Exit (back):&lt;/b&gt; {@link R.anim#ui_window_slide_out_top_back}&lt;/li&gt;
 	 * &lt;/ul&gt;
 	 */
-<span class="fc" id="L274">	public static final WindowTransition SLIDE_TO_BOTTOM_AND_SCALE_OUT = new BasicWindowTransition(</span>
+<span class="fc" id="L280">	public static final WindowTransition SLIDE_TO_BOTTOM_AND_SCALE_OUT = new BasicWindowTransition(</span>
 			// Enter animation.
 			R.anim.ui_window_slide_in_bottom,
 			// Exit animation.
@@ -285,8 +291,9 @@ public final class WindowTransitions {
 
 	/**
 	 */
-<span class="nc" id="L288">	private WindowTransitions() {</span>
+<span class="fc" id="L294">	private WindowTransitions() {</span>
 		// Not allowed to be instantiated publicly.
-<span class="nc" id="L290">	}</span>
+<span class="fc" id="L296">		throw new UnsupportedOperationException();</span>
+	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.2</div></body></html>

@@ -64,8 +64,8 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;
 	 * Creates a new instance of NavigationalTransitionCompat without transition activity.
 	 */
 	public NavigationalTransitionCompat() {
-<span class="nc" id="L67">		super();</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L67">		super();</span>
+<span class="fc" id="L68">	}</span>
 
 	/**
 	 * Creates a new instance of NavigationalTransitionCompat with the specified &lt;var&gt;classOfTransitionActivity&lt;/var&gt;.
@@ -75,8 +75,8 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;
 	 * @see #createIntent(Activity)
 	 */
 	public NavigationalTransitionCompat(@NonNull final Class&lt;? extends Activity&gt; classOfTransitionActivity) {
-<span class="nc" id="L78">		super(classOfTransitionActivity);</span>
-<span class="nc" id="L79">	}</span>
+<span class="fc" id="L78">		super(classOfTransitionActivity);</span>
+<span class="fc" id="L79">	}</span>
 
 	/*
 	 * Methods =====================================================================================
@@ -96,10 +96,10 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;
 	 * @see #configureTransitions(Activity)
 	 */
 	public void start(@NonNull final Fragment caller) {
-<span class="nc" id="L99">		final Activity activity = caller.getActivity();</span>
-<span class="nc" id="L100">		configureOutgoingTransitions(activity);</span>
-<span class="nc" id="L101">		onStart(caller);</span>
-<span class="nc" id="L102">	}</span>
+<span class="fc" id="L99">		final Activity activity = caller.getActivity();</span>
+<span class="fc" id="L100">		configureOutgoingTransitions(activity);</span>
+<span class="fc" id="L101">		onStart(caller);</span>
+<span class="fc" id="L102">	}</span>
 
 	/**
 	 * Invoked whenever {@link #start(Fragment)} is called.
@@ -115,17 +115,17 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;
 	@SuppressLint(&quot;NewApi&quot;)
 	@SuppressWarnings(&quot;ConstantConditions&quot;)
 	protected void onStart(@NonNull final Fragment caller) {
-<span class="nc" id="L118">		final Activity activity = caller.getActivity();</span>
-<span class="nc" id="L119">		final Intent intent = createIntent(activity);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
-<span class="nc" id="L121">			final Bundle options = makeSceneTransitionAnimation(activity).toBundle();</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
-<span class="nc" id="L123">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
-<span class="nc" id="L124">		} else {</span>
+<span class="fc" id="L118">		final Activity activity = caller.getActivity();</span>
+<span class="fc" id="L119">		final Intent intent = createIntent(activity);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (MATERIAL_SUPPORT) {</span>
+<span class="fc" id="L121">			final Bundle options = makeSceneTransitionAnimation(activity).toBundle();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);</span>
+<span class="fc" id="L123">			else caller.startActivityForResult(intent, mRequestCode, options);</span>
+<span class="fc" id="L124">		} else {</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">			if (mRequestCode == RC_NONE) caller.startActivity(intent);</span>
 <span class="nc" id="L126">			else caller.startActivityForResult(intent, mRequestCode);</span>
 		}
-<span class="nc" id="L128">	}</span>
+<span class="fc" id="L128">	}</span>
 
 	/**
 	 * Finishes host activity of the given &lt;var&gt;caller&lt;/var&gt; fragment in order to run its exit transitions.
@@ -135,8 +135,8 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;
 	 * @see #start(Fragment)
 	 */
 	public void finish(@NonNull final Fragment caller) {
-<span class="nc" id="L138">		onFinish(caller);</span>
-<span class="nc" id="L139">	}</span>
+<span class="fc" id="L138">		onFinish(caller);</span>
+<span class="fc" id="L139">	}</span>
 
 	/**
 	 * Invoked whenever {@link #finish(Fragment)} is called.
@@ -148,11 +148,11 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition&lt;
 	 * @see #onStart(Fragment)
 	 */
 	protected void onFinish(@NonNull final Fragment caller) {
-<span class="nc" id="L151">		onFinish(caller.getActivity());</span>
-<span class="nc" id="L152">	}</span>
+<span class="fc" id="L151">		onFinish(caller.getActivity());</span>
+<span class="fc" id="L152">	}</span>
 
 	/*
 	 * Inner classes ===============================================================================
 	 */
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.0</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.3.2</div></body></html>
