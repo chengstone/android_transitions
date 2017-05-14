@@ -20,4 +20,9 @@
  */
 -->
 <resources>
+
+	<style name="Widget.TextView.Note" parent="android:Widget.TextView">
+		<item name="android:textAppearance">@style/TextAppearance.Widget.TextView.Note</item>
+		<item name="android:gravity">center</item>
+	</style>
 </resources>

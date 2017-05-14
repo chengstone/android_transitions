@@ -54,7 +54,7 @@ android {
                 '../library-view-core/src/main/java',
                 '../library-view-reveal/src/main/java',
                 '../library-view-scale/src/main/java',
-                '../library-view-translation/src/main/java',
+                '../library-view-translate/src/main/java',
                 '../library-window-core/src/main/java',
                 '../library-window-common/src/main/java',
                 '../library-window-extra/src/main/java',
@@ -65,7 +65,7 @@ android {
                 '../library-view-core/src/main/res',
                 '../library-view-reveal/src/main/res',
                 '../library-view-scale/src/main/res',
-                '../library-view-translation/src/main/res',
+                '../library-view-translate/src/main/res',
                 '../library-window-core/src/main/res',
                 '../library-window-common/src/main/res',
                 '../library-window-extra/src/main/res'
@@ -80,7 +80,7 @@ android {
                 '../library-view-core/src/androidTest/java',
                 '../library-view-reveal/src/androidTest/java',
                 '../library-view-scale/src/androidTest/java',
-                '../library-view-translation/src/androidTest/java',
+                '../library-view-translate/src/androidTest/java',
                 '../library-window-core/src/androidTest/java',
                 '../library-window-common/src/androidTest/java',
                 '../library-window-extra/src/androidTest/java',
@@ -90,7 +90,7 @@ android {
                 '../library-view-core/src/androidTest/res',
                 '../library-view-reveal/src/androidTest/res',
                 '../library-view-scale/src/androidTest/res',
-                '../library-view-translation/src/androidTest/res'
+                '../library-view-translate/src/androidTest/res'
         ]
     }
 

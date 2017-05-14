@@ -26,4 +26,7 @@
 
 	<style name="Theme.Base.Transition.Scale.A" parent="Samples.Theme.Toolbar"/>
 	<style name="Theme.Base.Transition.Scale.B" parent="Samples.Theme.Toolbar"/>
+
+	<style name="Theme.Base.Transition.Translate.A" parent="Samples.Theme.Toolbar"/>
+	<style name="Theme.Base.Transition.Translate.B" parent="Samples.Theme.Toolbar"/>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<fade android:startDelay="600">
+		<targets>
+			<target android:targetId="@id/note" />
+			<target android:targetId="@id/fab" />
+		</targets>
+	</fade>
+</transitionSet>

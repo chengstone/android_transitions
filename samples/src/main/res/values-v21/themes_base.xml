@@ -34,4 +34,12 @@
 		<item name="android:windowReenterTransition">@transition/reenter_scale_a</item>
 	</style>
 	<style name="Theme.Base.Transition.Scale.B" parent="Samples.Theme.Toolbar"/>
+
+	<style name="Theme.Base.Transition.Translate.A" parent="Samples.Theme.Toolbar">
+		<item name="android:windowReenterTransition">@transition/reenter_translate_a</item>
+	</style>
+	<style name="Theme.Base.Transition.Translate.B" parent="Samples.Theme.Toolbar">
+		<item name="android:windowEnterTransition">@transition/enter_translate_b</item>
+		<item name="android:windowReturnTransition">@transition/return_translate_b</item>
+	</style>
 </resources>

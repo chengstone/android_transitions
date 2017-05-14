@@ -19,13 +19,13 @@
 package universum.studios.android.transition;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
 /**
  * A {@link BaseNavigationalTransition} implementation that may be used also from a context of
@@ -35,7 +35,7 @@ import android.support.annotation.NonNull;
  *
  * @author Martin Albedinsky
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+@RequiresApi(Build.VERSION_CODES.HONEYCOMB)
 public class NavigationalTransition extends BaseNavigationalTransition<NavigationalTransition> {
 
 	/*

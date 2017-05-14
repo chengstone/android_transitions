@@ -28,9 +28,9 @@
 			<enum name="reveal" value="0x01" />
 			<enum name="conceal" value="0x02" />
 		</attr>
-		<!-- Radius used at the start of a transition. -->
+		<!-- Radius of the target view at transition's start. -->
 		<attr name="uiStartRadius" format="dimension" />
-		<!-- Radius used at the end of a transition. -->
+		<!-- Radius of the target view at transition's end. -->
 		<attr name="uiEndRadius" format="dimension" />
 		<!-- Re-used. -->
 		<attr name="uiCenterGravity" />

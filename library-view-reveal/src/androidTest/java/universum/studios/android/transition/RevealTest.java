@@ -41,6 +41,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assume.assumeTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Martin Albedinsky
@@ -196,7 +197,7 @@ public final class RevealTest extends BaseInstrumentedTest {
 	}
 
 	@Test
-	public void testCreateAnimatorForCenter() throws Throwable {
+	public void testCreateAnimatorForCenterCoordinates() throws Throwable {
 		final Activity activity = ACTIVITY_RULE.launchActivity(null);
 		ACTIVITY_RULE.runOnUiThread(new Runnable() {
 
@@ -208,6 +209,11 @@ public final class RevealTest extends BaseInstrumentedTest {
 				assertThat(animator, is(notNullValue()));
 			}
 		});
+	}
+
+	@Test
+	public void testCreateAnimatorWithSameStartAndEndRadii() {
+		assertThat(Reveal.createAnimator(new View(mContext), 100f, 100f), is(nullValue()));
 	}
 
 	@Test
@@ -608,5 +614,19 @@ public final class RevealTest extends BaseInstrumentedTest {
 		assertThat(info.endRadius, is(endRadius));
 		assertThat(info.centerX, is(centerX));
 		assertThat(info.centerY, is(centerY));
+	}
+
+	@Test
+	public void testTransitionAnimatorListenerOnAnimationStart() {
+		final View view = new View(mContext);
+		new Reveal.TransitionAnimatorListener(view, View.INVISIBLE, View.GONE).onAnimationStart(mock(Animator.class));
+		assertThat(view.getVisibility(), is(View.INVISIBLE));
+	}
+
+	@Test
+	public void testTransitionAnimatorListenerOnAnimationEnd() {
+		final View view = new View(mContext);
+		new Reveal.TransitionAnimatorListener(view, View.INVISIBLE, View.GONE).onAnimationEnd(mock(Animator.class));
+		assertThat(view.getVisibility(), is(View.GONE));
 	}
 }

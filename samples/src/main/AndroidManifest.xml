@@ -24,7 +24,7 @@
 
 	<application
 		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
+		android:icon="@mipmap/samples_ic_launcher"
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/Samples.Theme">
@@ -45,19 +45,27 @@
 		<activity android:name=".ui.window.WindowTransitionActivity" />
 
 		<activity
-			android:name=".ui.view.RevealTransitionActivityA"
+			android:name=".ui.view.reveal.RevealTransitionActivityA"
 			android:theme="@style/Theme.Transition.Reveal.A" />
 
 		<activity
-			android:name=".ui.view.RevealTransitionActivityB"
+			android:name=".ui.view.reveal.RevealTransitionActivityB"
 			android:theme="@style/Theme.Transition.Reveal.B" />
 
 		<activity
-			android:name=".ui.view.ScaleTransitionActivityA"
+			android:name=".ui.view.scale.ScaleTransitionActivityA"
 			android:theme="@style/Theme.Transition.Scale.A" />
 
 		<activity
-			android:name=".ui.view.ScaleTransitionActivityB"
+			android:name=".ui.view.scale.ScaleTransitionActivityB"
 			android:theme="@style/Theme.Transition.Scale.B" />
+
+		<activity
+			android:name=".ui.view.translate.TranslateTransitionActivityA"
+			android:theme="@style/Theme.Transition.Translate.A" />
+
+		<activity
+			android:name=".ui.view.translate.TranslateTransitionActivityB"
+			android:theme="@style/Theme.Transition.Translate.B" />
 	</application>
 </manifest>
