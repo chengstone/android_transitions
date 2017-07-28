@@ -11,7 +11,7 @@ def testConfig = [
 ]
 
 def libraryConfig = [
-        version: '1.1.0'
+        version: '1.1.1'
 ]
 
 def githubConfig = [
@@ -38,7 +38,7 @@ def bintrayConfig = [
         packageName              : "${mavenConfig.groupId}:${mavenConfig.artifactId}",
         packageLabels            : ['android', 'scene-transitions', 'window-transitions', 'navigational-transitions'],
         packageVersionName       : mavenConfig.version,
-        packageVersionDescription: 'Minor release.',
+        packageVersionDescription: 'Release patch.',
         packageVersionTag        : mavenConfig.version
 ]
 
