@@ -1,6 +1,11 @@
 Change-Log
 ===============
 
+### [Release 1.1.1](https://github.com/universum-studios/android_transitions/releases/tag/1.1.1) ###
+> 28.07.2017
+
+- **Dropped support** for _Android_ versions **below** _API Level 14_.
+
 ### [Release 1.1.0](https://github.com/universum-studios/android_transitions/releases/tag/1.1.0) ###
 > 14.05.2017
 

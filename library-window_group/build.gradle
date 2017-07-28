@@ -46,15 +46,15 @@ android {
 
     sourceSets {
         release.java.srcDirs = [
-                '../library-window-core/src/main/java',
-                '../library-window-common/src/main/java',
-                '../library-window-extra/src/main/java'
+                "${rootProject.rootDir}/library-window-core/src/main/java",
+                "${rootProject.rootDir}/library-window-common/src/main/java",
+                "${rootProject.rootDir}/library-window-extra/src/main/java"
         ]
         debug.java.srcDirs = release.java.srcDirs
         release.res.srcDirs = [
-                '../library-window-core/src/main/res',
-                '../library-window-common/src/main/res',
-                '../library-window-extra/src/main/res'
+                "${rootProject.rootDir}/library-window-core/src/main/res",
+                "${rootProject.rootDir}/library-window-common/src/main/res",
+                "${rootProject.rootDir}/library-window-extra/src/main/res"
         ]
         debug.res.srcDirs = release.res.srcDirs
     }
@@ -74,6 +74,7 @@ android {
  */
 repositories {
     maven { url repos.project.artifacts }
+    mavenLocal()
 }
 
 dependencies {
@@ -83,5 +84,4 @@ dependencies {
     compile deps.androidSupport.annotations
 }
 
-// Apply DEPLOY script.
-apply from: '../deploy/deploy.gradle'
+apply from: "${rootProject.rootDir}/deploy/deploy.gradle"
