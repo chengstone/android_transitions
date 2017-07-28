@@ -20,7 +20,6 @@ package universum.studios.android.samples.transition.ui.window;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -30,11 +29,12 @@ import universum.studios.android.transition.ExtraWindowTransitions;
 import universum.studios.android.transition.WindowTransition;
 import universum.studios.android.transition.WindowTransitions;
 import universum.studios.android.widget.adapter.SimpleRecyclerAdapter;
+import universum.studios.android.widget.adapter.holder.RecyclerViewHolder;
 
 /**
  * @author Martin Albedinsky
  */
-final class WindowTransitionsAdapter extends SimpleRecyclerAdapter<WindowTransition, WindowTransitionsAdapter.ItemHolder> {
+final class WindowTransitionsAdapter extends SimpleRecyclerAdapter<WindowTransitionsAdapter, WindowTransitionsAdapter.ItemHolder, WindowTransition> {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "WindowTransitionsAdapter";
@@ -64,8 +64,8 @@ final class WindowTransitionsAdapter extends SimpleRecyclerAdapter<WindowTransit
 	}
 
 	@Override
-	public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		return new ItemHolder(inflate(R.layout.item_list_window_transition, parent));
+	public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		return new ItemHolder(inflateView(R.layout.item_list_window_transition, parent));
 	}
 
 	@Override
@@ -73,9 +73,9 @@ final class WindowTransitionsAdapter extends SimpleRecyclerAdapter<WindowTransit
 		((TextView) holder.itemView).setText(getItem(position).getName().replace("_", " "));
 	}
 
-	final class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	final class ItemHolder extends RecyclerViewHolder implements View.OnClickListener {
 
-		ItemHolder(View itemView) {
+		ItemHolder(@NonNull View itemView) {
 			super(itemView);
 			itemView.setOnClickListener(this);
 		}

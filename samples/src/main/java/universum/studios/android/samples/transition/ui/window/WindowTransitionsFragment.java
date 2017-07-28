@@ -36,12 +36,12 @@ import universum.studios.android.widget.adapter.OnDataSetActionListener;
 /**
  * @author Martin Albedinsky
  */
-public final class WindowTransitionsFragment extends SamplesFragment
-		implements
-		OnDataSetActionListener<WindowTransitionsAdapter> {
+public final class WindowTransitionsFragment extends SamplesFragment implements OnDataSetActionListener {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "WindowTransitionsFragment";
+
+	private WindowTransitionsAdapter adapter;
 
 	@Nullable
 	@Override
@@ -52,15 +52,15 @@ public final class WindowTransitionsFragment extends SamplesFragment
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		final RecyclerView recyclerView = (RecyclerView) view.findViewById(android.R.id.list);
+		final RecyclerView recyclerView = view.findViewById(android.R.id.list);
 		recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-		final WindowTransitionsAdapter adapter = new WindowTransitionsAdapter(getActivity());
-		adapter.registerOnDataSetActionListener(this);
+		this.adapter = new WindowTransitionsAdapter(getActivity());
+		this.adapter.registerOnDataSetActionListener(this);
 		recyclerView.setAdapter(adapter);
 	}
 
 	@Override
-	public boolean onDataSetActionSelected(@NonNull WindowTransitionsAdapter adapter, int action, int position, long id, @Nullable Object data) {
+	public boolean onDataSetActionSelected(int action, int position, long id, @Nullable Object data) {
 		switch (action) {
 			case WindowTransitionsAdapter.ACTION_CLICK:
 				final Activity activity = getActivity();

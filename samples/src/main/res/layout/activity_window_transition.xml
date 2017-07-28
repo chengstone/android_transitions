@@ -19,13 +19,20 @@
  * =================================================================================================
  */
 -->
-<FrameLayout android:id="@android:id/list"
-			 xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 xmlns:app="http://schemas.android.com/apk/res-auto"
 			 xmlns:tools="http://schemas.android.com/tools"
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent">
 
-	<include layout="@layout/samples_toolbar" />
+	<android.support.v7.widget.Toolbar
+		android:id="@id/samples_toolbar"
+		style="?attr/toolbarStyle"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="?attr/colorPrimary"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark"
+		app:titleTextAppearance="@style/Samples.TextAppearance.Widget.Toolbar.Title" />
 
 	<TextView
 		android:id="@+id/note"

@@ -46,9 +46,9 @@ android {
 
     sourceSets {
         release.java.srcDirs = [
-                '../library-navigational-base/src/main/java',
-                '../library-navigational-compat/src/main/java',
-                '../library-navigational-framework/src/main/java'
+                "${rootProject.rootDir}/library-navigational-base/src/main/java",
+                "${rootProject.rootDir}/library-navigational-compat/src/main/java",
+                "${rootProject.rootDir}/library-navigational-framework/src/main/java"
         ]
         debug.java.srcDirs = release.java.srcDirs
     }
@@ -78,5 +78,4 @@ dependencies {
     compile deps.androidSupport.v4
 }
 
-// Apply DEPLOY script.
-apply from: '../deploy/deploy.gradle'
+apply from: "${rootProject.rootDir}/deploy/deploy.gradle"

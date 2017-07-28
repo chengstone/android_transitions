@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-def boolean isModule = project.name.startsWith('library-') && !project.name.endsWith('_group')
+final boolean isModule = project.name.startsWith('library-') && !project.name.endsWith('_group')
 
 /**
  * Bundles project's classes into a .jar! file.
@@ -34,7 +34,7 @@ task generateJavadoc(type: Javadoc) {
     options {
         author = true
         memberLevel = JavadocMemberLevel.PROTECTED
-        header = config.maven.projectName + ' ' + config.maven.version + ' Documentation'
+        header = "${config.maven.projectName} ${config.maven.version} Documentation"
         links "http://docs.oracle.com/javase/8/docs/api/"
         linksOffline "http://developer.android.com/reference", "${android.sdkDirectory}\\docs\\reference"
     }
@@ -45,8 +45,8 @@ task generateJavadoc(type: Javadoc) {
     // Append class path with dependencies.
     classpath += files(
             android.getBootClasspath(),
-            "${android.sdkDirectory}\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\${versions.androidSupportVersion}\\support-annotations-${versions.androidSupportVersion}.jar",
-            "${android.sdkDirectory}\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\${versions.androidSupportVersion}\\support-v4-${versions.androidSupportVersion}-sources.jar"
+            "${android.sdkDirectory}\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\${versions.androidSupport}\\support-annotations-${versions.androidSupport}.jar",
+            "${android.sdkDirectory}\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\${versions.androidSupport}\\support-v4-${versions.androidSupport}-sources.jar"
     )
     failOnError false
 }
