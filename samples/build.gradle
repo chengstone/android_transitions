@@ -35,7 +35,7 @@ android {
     }
 
     if (project.hasProperty('signing.properties') && new File((String) project.property('signing.properties')).exists()) {
-        Properties properties = new Properties()
+        final Properties properties = new Properties()
         properties.load(new FileInputStream(file(project.property('signing.properties'))))
 
         signingConfigs {
