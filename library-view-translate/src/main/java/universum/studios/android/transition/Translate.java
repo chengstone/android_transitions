@@ -331,11 +331,11 @@ public class Translate extends Visibility {
 			animationStartX = startPosition[0] - viewX + viewEndX;
 			animationStartY = startPosition[1] - viewY + viewEndY;
 		}
-		view.setTranslationX(animationStartX);
-		view.setTranslationY(animationStartY);
 		if (animationStartX == animationEndX && animationStartY == animationEndY) {
 			return null;
 		}
+		view.setTranslationX(animationStartX);
+		view.setTranslationY(animationStartY);
 		final int viewStartX = viewX + Math.round(startX - viewEndX);
 		final int viewStartY = viewY + Math.round(startY - viewEndY);
 		// Create path with animation properties and animator that will be used to play the desired

@@ -74,12 +74,12 @@ public final class ViewTransitions {
 
 	@NonNull
 	public static BaseNavigationalTransition navigationalTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
-		return new NavTransition(classOfTransitionActivity);
+		return new TransitionImpl(classOfTransitionActivity);
 	}
 
-	private static final class NavTransition extends NavigationalTransitionCompat {
+	private static final class TransitionImpl extends NavigationalTransitionCompat {
 
-		NavTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+		TransitionImpl(@NonNull Class<? extends Activity> classOfTransitionActivity) {
 			super(classOfTransitionActivity);
 		}
 
