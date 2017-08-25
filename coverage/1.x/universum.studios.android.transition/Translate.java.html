@@ -331,11 +331,11 @@ public class Translate extends Visibility {
 <span class="fc" id="L331">			animationStartX = startPosition[0] - viewX + viewEndX;</span>
 <span class="fc" id="L332">			animationStartY = startPosition[1] - viewY + viewEndY;</span>
 		}
-<span class="fc" id="L334">		view.setTranslationX(animationStartX);</span>
-<span class="fc" id="L335">		view.setTranslationY(animationStartY);</span>
-<span class="fc bfc" id="L336" title="All 4 branches covered.">		if (animationStartX == animationEndX &amp;&amp; animationStartY == animationEndY) {</span>
-<span class="fc" id="L337">			return null;</span>
+<span class="fc bfc" id="L334" title="All 4 branches covered.">		if (animationStartX == animationEndX &amp;&amp; animationStartY == animationEndY) {</span>
+<span class="fc" id="L335">			return null;</span>
 		}
+<span class="fc" id="L337">		view.setTranslationX(animationStartX);</span>
+<span class="fc" id="L338">		view.setTranslationY(animationStartY);</span>
 <span class="fc" id="L339">		final int viewStartX = viewX + Math.round(startX - viewEndX);</span>
 <span class="fc" id="L340">		final int viewStartY = viewY + Math.round(startY - viewEndY);</span>
 		// Create path with animation properties and animator that will be used to play the desired

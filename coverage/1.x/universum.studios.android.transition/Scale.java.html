@@ -451,7 +451,13 @@ public class Scale extends Visibility {
 <span class="fc" id="L451">		view.setPivotX(mInfo.pivotX);</span>
 <span class="fc" id="L452">		view.setPivotY(mInfo.pivotY);</span>
 <span class="fc" id="L453">		final float[] startScales = obtainStartScales(startValues, START_SCALE_ON_APPEAR, START_SCALE_ON_APPEAR);</span>
-<span class="fc" id="L454">		return createAnimator(view, startScales[0], startScales[1], MAX, MAX);</span>
+<span class="fc bfc" id="L454" title="All 4 branches covered.">		return createAnimator(</span>
+				view,
+				startScales[0] == MAX ? MIN : startScales[0],
+				startScales[1] == MAX ? MIN : startScales[1],
+				MAX,
+				MAX
+		);
 	}
 
 	/**
@@ -463,11 +469,11 @@ public class Scale extends Visibility {
 			@Nullable final TransitionValues startValues,
 			@Nullable final TransitionValues endValues
 	) {
-<span class="fc" id="L466">		calculateTransitionProperties(view);</span>
-<span class="fc" id="L467">		view.setPivotX(mInfo.pivotX);</span>
-<span class="fc" id="L468">		view.setPivotY(mInfo.pivotY);</span>
-<span class="fc" id="L469">		final float[] startScales = obtainStartScales(startValues, START_SCALE_ON_DISAPPEAR, START_SCALE_ON_DISAPPEAR);</span>
-<span class="fc" id="L470">		return createAnimator(view, startScales[0], startScales[1], MIN, MIN);</span>
+<span class="fc" id="L472">		calculateTransitionProperties(view);</span>
+<span class="fc" id="L473">		view.setPivotX(mInfo.pivotX);</span>
+<span class="fc" id="L474">		view.setPivotY(mInfo.pivotY);</span>
+<span class="fc" id="L475">		final float[] startScales = obtainStartScales(startValues, START_SCALE_ON_DISAPPEAR, START_SCALE_ON_DISAPPEAR);</span>
+<span class="fc" id="L476">		return createAnimator(view, startScales[0], startScales[1], MIN, MIN);</span>
 	}
 
 	/**
@@ -477,9 +483,9 @@ public class Scale extends Visibility {
 	 */
 	@VisibleForTesting
 	void calculateTransitionProperties(final View view) {
-<span class="fc bfc" id="L480" title="All 2 branches covered.">		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;</span>
-<span class="fc" id="L482">	}</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">		mInfo.pivotX = mPivotX == null ? (view.getWidth() * mPivotXFraction) : mPivotX;</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">		mInfo.pivotY = mPivotY == null ? (view.getHeight() * mPivotYFraction) : mPivotY;</span>
+<span class="fc" id="L488">	}</span>
 
 	/**
 	 * Returns info for the current scale animation configuration.
@@ -490,7 +496,7 @@ public class Scale extends Visibility {
 	@NonNull
 	@VisibleForTesting
 	final Info getInfo() {
-<span class="fc" id="L493">		return mInfo;</span>
+<span class="fc" id="L499">		return mInfo;</span>
 	}
 
 	/*
@@ -502,7 +508,7 @@ public class Scale extends Visibility {
 	 * the currently transitioning view.
 	 */
 	@VisibleForTesting
-<span class="fc" id="L505">	static final class Info {</span>
+<span class="fc" id="L511">	static final class Info {</span>
 
 		/**
 		 * Scale pivot coordinate.
