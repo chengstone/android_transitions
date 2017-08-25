@@ -1,6 +1,11 @@
 Change-Log
 ===============
 
+### [Release 1.1.2](https://github.com/universum-studios/android_transitions/releases/tag/1.1.2) ###
+> 24.08.2017
+
+- Fixed [Issue #26](https://github.com/universum-studios/android_transitions/issues/26).
+
 ### [Release 1.1.1](https://github.com/universum-studios/android_transitions/releases/tag/1.1.1) ###
 > 28.07.2017
 

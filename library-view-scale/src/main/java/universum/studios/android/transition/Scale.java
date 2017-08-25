@@ -451,7 +451,13 @@ public class Scale extends Visibility {
 		view.setPivotX(mInfo.pivotX);
 		view.setPivotY(mInfo.pivotY);
 		final float[] startScales = obtainStartScales(startValues, START_SCALE_ON_APPEAR, START_SCALE_ON_APPEAR);
-		return createAnimator(view, startScales[0], startScales[1], MAX, MAX);
+		return createAnimator(
+				view,
+				startScales[0] == MAX ? MIN : startScales[0],
+				startScales[1] == MAX ? MIN : startScales[1],
+				MAX,
+				MAX
+		);
 	}
 
 	/**

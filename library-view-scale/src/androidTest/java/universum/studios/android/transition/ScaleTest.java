@@ -298,7 +298,10 @@ public final class ScaleTest extends BaseInstrumentedTest {
 		final TransitionValues startValues = new TransitionValues();
 		startValues.view = view;
 		scale.captureStartValues(startValues);
-		assertThat(scale.onAppear(new FrameLayout(mContext), view, startValues, null), is(nullValue()));
+		final Animator animator = scale.onAppear(new FrameLayout(mContext), view, startValues, null);
+		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
+		assertThat(view.getPivotX(), is(100f));
+		assertThat(view.getPivotY(), is(50f));
 	}
 
 	@Test
