@@ -43,10 +43,10 @@ import org.junit.runner.RunWith;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import universum.studios.android.test.BaseInstrumentedTest;
-import universum.studios.android.test.SecondaryTestActivity;
-import universum.studios.android.test.TestActivity;
-import universum.studios.android.test.TestUtils;
+import universum.studios.android.test.InstrumentedTestCase;
+import universum.studios.android.test.instrumented.SecondaryTestActivity;
+import universum.studios.android.test.instrumented.TestActivity;
+import universum.studios.android.test.instrumented.TestUtils;
 
 import static junit.framework.Assert.assertSame;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,7 +58,7 @@ import static org.hamcrest.core.IsNull.nullValue;
  */
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.HONEYCOMB)
-public final class NavigationalTransitionTest extends BaseInstrumentedTest {
+public final class NavigationalTransitionTest extends InstrumentedTestCase {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "NavigationalTransitionTest";

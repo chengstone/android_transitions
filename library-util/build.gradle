@@ -56,6 +56,7 @@ android {
  */
 repositories {
     maven { url repos.project.artifacts }
+    mavenLocal()
 }
 
 dependencies {
@@ -68,7 +69,8 @@ dependencies {
     /*
      * TEST DEPENDENCIES ---------------------------------------------------------------------------
      */
-    androidTestCompile project(':test-core')
+    testCompile project(':test-local')
+    androidTestCompile project(':test-instrumented')
 }
 
 apply from: "${rootProject.rootDir}/deploy/deploy.gradle"

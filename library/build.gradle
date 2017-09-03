@@ -92,6 +92,21 @@ android {
                 "${rootProject.rootDir}/library-view-scale/src/androidTest/res",
                 "${rootProject.rootDir}/library-view-translate/src/androidTest/res"
         ]
+        test.java.srcDirs = [
+                "${rootProject.rootDir}/library/src/test/java",
+                "${rootProject.rootDir}/library-core/src/test/java",
+                "${rootProject.rootDir}/library-navigational-base/src/test/java",
+                "${rootProject.rootDir}/library-navigational-compat/src/test/java",
+                "${rootProject.rootDir}/library-navigational-framework/src/test/java",
+                "${rootProject.rootDir}/library-view-core/src/test/java",
+                "${rootProject.rootDir}/library-view-reveal/src/test/java",
+                "${rootProject.rootDir}/library-view-scale/src/test/java",
+                "${rootProject.rootDir}/library-view-translate/src/test/java",
+                "${rootProject.rootDir}/library-window-core/src/test/java",
+                "${rootProject.rootDir}/library-window-common/src/test/java",
+                "${rootProject.rootDir}/library-window-extra/src/test/java",
+                "${rootProject.rootDir}/library-util/src/test/java"
+        ]
     }
 
     compileOptions {
@@ -107,10 +122,6 @@ android {
 /**
  * Library dependencies ============================================================================
  */
-repositories {
-    mavenLocal()
-}
-
 dependencies {
     /*
      * RELEASE DEPENDENCIES ------------------------------------------------------------------------
@@ -121,13 +132,15 @@ dependencies {
     /*
      * TEST DEPENDENCIES ---------------------------------------------------------------------------
      */
-    androidTestCompile project(':test-core')
+    testCompile project(':test-local')
+    androidTestCompile project(':test-instrumented')
 }
 
 /**
  * Additional configuration ========================================================================
  */
 apply from: 'analysis/analysis.gradle'
+apply from: 'coverage/jacoco.gradle'
 apply from: 'coverage/codacy.gradle'
 apply from: "${rootProject.rootDir}/deploy/deploy.gradle"
 apply from: 'github/github.gradle'

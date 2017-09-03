@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import universum.studios.android.test.BaseInstrumentedTest;
+import universum.studios.android.test.InstrumentedTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -37,7 +37,7 @@ import static org.hamcrest.core.IsNull.nullValue;
  * @author Martin Albedinsky
  */
 @RunWith(AndroidJUnit4.class)
-public final class ExtraWindowTransitionsTest extends BaseInstrumentedTest {
+public final class ExtraWindowTransitionsTest extends InstrumentedTestCase {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "ExtraWindowTransitionsTest";

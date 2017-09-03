@@ -33,8 +33,8 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import universum.studios.android.test.BaseInstrumentedTest;
-import universum.studios.android.test.TestUtils;
+import universum.studios.android.test.InstrumentedTestCase;
+import universum.studios.android.test.instrumented.TestUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
@@ -55,7 +55,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 @RunWith(AndroidJUnit4.class)
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.LOLLIPOP)
-public final class TranslateTest extends BaseInstrumentedTest {
+public final class TranslateTest extends InstrumentedTestCase {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "TranslateTest";
