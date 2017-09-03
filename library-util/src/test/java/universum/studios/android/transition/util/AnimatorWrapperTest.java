@@ -21,10 +21,8 @@ package universum.studios.android.transition.util;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.annotation.SuppressLint;
-import android.os.Build;
 
 import org.junit.Test;
-import org.robolectric.annotation.Config;
 
 import universum.studios.android.test.local.RobolectricTestCase;
 
@@ -143,7 +141,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testAddRemovePauseListener() {
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
@@ -161,7 +158,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testAddPauseListenerWithoutPauseFeature() {
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
@@ -174,7 +170,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testAddPauseListenerWithoutResumeFeature() {
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
@@ -187,7 +182,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testAddPauseListenerWithoutPauseNorResumeFeature() {
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
@@ -200,7 +194,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testRemovePauseListenerNotRegistered() {
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
@@ -218,7 +211,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testRemoveAllListeners() {
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
@@ -274,7 +266,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.JELLY_BEAN_MR2)
 	public void testSetInterpolator() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -284,7 +275,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.JELLY_BEAN_MR2)
 	public void testGetInterpolator() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -321,7 +311,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	public void testIsStarted() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -331,7 +320,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testPause() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -340,7 +328,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testPauseWithoutPauseFeature() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -350,7 +337,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testIsPaused() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -360,7 +346,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testResume() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -369,7 +354,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testResumeWithoutPauseFeature() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -379,7 +363,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testResumeWithoutResumeFeature() {
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
@@ -521,7 +504,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testAnimatorPauseListenerWrapperOnAnimationPause() {
 		final Animator.AnimatorPauseListener mockListener = mock(Animator.AnimatorPauseListener.class);
 		final Animator mockAnimator = mock(Animator.class);
@@ -533,7 +515,6 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 	}
 
 	@Test
-	@Config(minSdk = Build.VERSION_CODES.KITKAT)
 	public void testAnimatorPauseListenerWrapperOnAnimationResume() {
 		final Animator.AnimatorPauseListener mockListener = mock(Animator.AnimatorPauseListener.class);
 		final Animator mockAnimator = mock(Animator.class);
