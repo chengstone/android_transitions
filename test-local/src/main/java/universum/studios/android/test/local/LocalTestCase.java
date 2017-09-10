@@ -24,7 +24,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Class that may be used to group <b>suite of tests</b> to be executed on local <i>JVM</i>.
+ * Class that may be used to group <b>suite of tests</b> to be executed on a local <i>JVM</i>.
  *
  * @author Martin Albedinsky
  */

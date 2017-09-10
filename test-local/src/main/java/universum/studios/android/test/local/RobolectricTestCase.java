@@ -29,8 +29,8 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 /**
- * Class that may be used to group <b>suite of tests</b> to be executed on local <i>JVM</i> using
- * {@link RobolectricTestRunner}.
+ * Class that may be used to group <b>suite of Android tests</b> to be executed on a local <i>JVM</i>
+ * with shadowed <i>Android environment</i> using {@link RobolectricTestRunner}.
  *
  * @author Martin Albedinsky
  */
