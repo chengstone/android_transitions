@@ -12,7 +12,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: universumstudios/android:api-26
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -33,7 +33,7 @@ jobs:
   test:
     working_directory: ~/repo
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: universumstudios/android:api-26
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -52,7 +52,7 @@ jobs:
   deploy:
     working_directory: ~/repo
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: universumstudios/android:api-26
     environment:
       JVM_OPTS: -Xmx3200m
     steps:

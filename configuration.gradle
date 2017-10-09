@@ -3,7 +3,7 @@ def buildConfig = [
         compileSdkVersion: 26,
         minSdkVersion    : 14,
         targetSdkVersion : 26,
-        buildToolsVersion: '25.0.3'
+        buildToolsVersion: '26.0.0'
 ]
 
 def testConfig = [
