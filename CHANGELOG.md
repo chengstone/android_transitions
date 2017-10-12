@@ -1,17 +1,19 @@
 Change-Log
 ===============
 
-### [Version 1.1.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.2) ###
+## Version 1.x ##
+
+### [1.1.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.2) ###
 > 24.08.2017
 
 - Fixed [Issue #26](https://github.com/universum-studios/android_transitions/issues/26).
 
-### [Version 1.1.1](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.1) ###
+### [1.1.1](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.1) ###
 > 28.07.2017
 
 - **Dropped support** for _Android_ versions **below** _API Level 14_.
 
-### [Version 1.1.0](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.0) ###
+### [1.1.0](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.0) ###
 > 14.05.2017
 
 - Added implementation of `Translate` transition which may be used to move views in the scene by
@@ -24,7 +26,7 @@ Change-Log
   `FastOutSlowInInterpolator` as default interpolator for its corresponding animator.
 - Small patches to the navigational transitions.
 
-### [Version 1.0.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.2) ###
+### [1.0.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.2) ###
 > 02.04.2017
 
 - Implementation of `BaseNavigationalTransition.configureTransitions(Activity)` has been split into
@@ -39,7 +41,7 @@ Change-Log
 - Fixed **animation resource** for **enter back** animation of window transitions declared in 
   `ExtranWindowTransitions` class
 
-### [Version 1.0.1](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.1) ###
+### [1.0.1](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.1) ###
 > 16.02.2017
 
 - `BaseNavigationalTransition` now allows to specify `Bundle` with extras for the transition activity
@@ -48,7 +50,7 @@ Change-Log
   the same way as `BaseNavigationalTransitions.onStart(Activity)` is implemented to allow starting
   of transition with scene transition animations.
 
-### [Version 1.0.0](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.0) ###
+### [1.0.0](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.0) ###
 > 19.01.2017
 
 - First production release.
