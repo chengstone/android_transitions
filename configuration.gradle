@@ -39,7 +39,7 @@ def bintrayConfig = [
         packageLabels            : ['android', 'scene-transitions', 'window-transitions', 'navigational-transitions'],
         packageVersionName       : mavenConfig.version,
         packageVersionDescription: 'Release patch.',
-        packageVersionTag        : mavenConfig.version
+        packageVersionTag        : "v${mavenConfig.version}"
 ]
 
 def codacyConfig = [
