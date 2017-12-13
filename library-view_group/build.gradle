@@ -28,19 +28,12 @@ android {
     defaultConfig {
         minSdkVersion config.build.minSdkVersion
         targetSdkVersion config.build.targetSdkVersion
-        testInstrumentationRunner config.test.instrumentationRunner
+        testInstrumentationRunner config.test.instrumentationRunner.androidJUnit
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-        }
         modules {
-            minifyEnabled false
-        }
-        debug {
-            minifyEnabled false
-            testCoverageEnabled true
+            matchingFallbacks = ['debug', 'release']
         }
     }
 
@@ -80,17 +73,16 @@ repositories {
 }
 
 dependencies {
-    /*
-     * RELEASE DEPENDENCIES ------------------------------------------------------------------------
-     */
-    compile deps.androidSupport.annotations
-    compile deps.androidSupport.coreUI
-    releaseCompile "universum.studios.android:transitions-util:${config.library.version}@aar"
+    // PRODUCTION ----------------------------------------------------------------------------------
+    implementation deps.androidSupport.annotations
+    implementation deps.androidSupport.coreUI
+    releaseImplementation "universum.studios.android:transitions-util:${config.library.version}@aar"
 
-    /*
-     * DEBUG DEPENDENCIES --------------------------------------------------------------------------
-     */
-    debugCompile project(':library-util')
+    // DEVELOPMENT ---------------------------------------------------------------------------------
+    debugApi project(':library-util')
+
+    // TEST ----------------------------------------------------------------------------------------
+    // None.
 }
 
 apply from: "${rootProject.rootDir}/deploy/deploy.gradle"

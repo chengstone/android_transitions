@@ -4,11 +4,11 @@ Transitions-Window-Core
 This module contains core components for window transitions along with common animation resources.
 
 ## Download ##
-[![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
+[![Bintray](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
 
 ### Gradle ###
 
-    compile "universum.studios.android:transitions-window-core:${DESIRED_VERSION}@aar"
+    implementation "universum.studios.android:transitions-window-core:${DESIRED_VERSION}@aar"
 
 ## Components ##
 

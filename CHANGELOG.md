@@ -1,12 +1,19 @@
 Change-Log
 ===============
 
+More **detailed changelog** for each respective version may be viewed by pressing on a desired _version's name_.
+
 ## Version 1.x ##
+
+### [1.1.3](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.3) ###
+> 13.12.2017
+
+- **Removed deprecated** components from previous versions.
 
 ### [1.1.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.2) ###
 > 24.08.2017
 
-- Fixed [Issue #26](https://github.com/universum-studios/android_transitions/issues/26).
+- Fixed some of reported issues.
 
 ### [1.1.1](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.1) ###
 > 28.07.2017
@@ -21,10 +28,6 @@ Change-Log
 - Updated implementation of `Scale` transition which now also takes into account **current scale**
   value of the target view captured before transition starts. Scale transition also uses
   `FastOutSlowInInterpolator` as default interpolator for its corresponding animator.
-- Updated implementation of `Reveal` transition which creates its corresponding animator via utility
-  method `createAnimator(...)` already wrapped into `AnimatorWrapper`. Reveal transition also uses
-  `FastOutSlowInInterpolator` as default interpolator for its corresponding animator.
-- Small patches to the navigational transitions.
 
 ### [1.0.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.2) ###
 > 02.04.2017
@@ -34,21 +37,11 @@ Change-Log
   configuration method is by default called whenever `BaseNavigationalTransition.start(Activity)` is 
   invoked and the **incoming** configuration method should be called by the activity to which is the
   calling activity transitioning from its `onCreate(Bundle)` method.
-- `BaseNavigationalTransition.configureTransitionsOverlapping(Activity)` has been deprecated as its
-  implementation has been moved into `configureIncomingTransitions(Activity)`.
-- `BaseNavigationalTransition` now also supports setting whether a transitioning shared elements should
-  use **overlay** or not via `sharedElementsUseOverlay(boolean)`.
-- Fixed **animation resource** for **enter back** animation of window transitions declared in 
-  `ExtranWindowTransitions` class
 
 ### [1.0.1](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.1) ###
 > 16.02.2017
 
-- `BaseNavigationalTransition` now allows to specify `Bundle` with extras for the transition activity
-  via `BaseNavigationalTransition.intentExtras(Bundle)` method.
-- `NavigationalTransition` and `NavigationalTransitionCompat` now implement `onStart(Fragment)` method
-  the same way as `BaseNavigationalTransitions.onStart(Activity)` is implemented to allow starting
-  of transition with scene transition animations.
+- Updated `onStart(Fragment)` method for both `NavigationalTransition` and `NavigationalTransitionCompat`.
 
 ### [1.0.0](https://github.com/universum-studios/android_transitions/releases/tag/v1.0.0) ###
 > 19.01.2017

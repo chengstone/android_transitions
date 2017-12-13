@@ -5,11 +5,11 @@ This module contains `Scale` transition which is implementation of `Visibility` 
 This transition may be used to either **scale up** or **scale down** a desired view.
 
 ## Download ##
-[![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
+[![Bintray](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
 
 ### Gradle ###
 
-    compile "universum.studios.android:transitions-view-scale:${DESIRED_VERSION}@aar"
+    implementation "universum.studios.android:transitions-view-scale:${DESIRED_VERSION}@aar"
 
 ## Components ##
 

@@ -5,11 +5,11 @@ This module will contain `Translate` transition which is implementation of `Visi
 This transition may be used to **move/slide** a desired view across screen.
 
 ## Download ##
-[![Download](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
+[![Bintray](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
 
 ### Gradle ###
 
-    compile "universum.studios.android:transitions-view-translate:${DESIRED_VERSION}@aar"
+    implementation "universum.studios.android:transitions-view-translate:${DESIRED_VERSION}@aar"
 
 ## Components ##
 

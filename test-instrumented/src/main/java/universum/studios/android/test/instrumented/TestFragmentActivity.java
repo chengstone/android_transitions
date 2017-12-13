@@ -18,38 +18,8 @@
 */
 package universum.studios.android.test.instrumented;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.test.rule.ActivityTestRule;
-import android.support.v4.app.FragmentActivity;
-import android.widget.FrameLayout;
-
 /**
- * Simple activity that may be used in <b>Android Instrumented Tests</b> in order to set up
- * {@link ActivityTestRule}.
- *
  * @author Martin Albedinsky
  */
-public class TestFragmentActivity extends FragmentActivity {
-
-	/**
-	 * Log TAG.
-	 */
-	@SuppressWarnings("unused")
-	private static final String TAG = "TestFragmentActivity";
-
-	/**
-	 * Id of the TestActivity's content view.
-	 */
-	public static final int CONTENT_VIEW_ID = android.R.id.custom;
-
-	/**
-	 */
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		final FrameLayout contentView = new FrameLayout(this);
-		contentView.setId(CONTENT_VIEW_ID);
-		setContentView(contentView);
-	}
-}
+@Deprecated
+public class TestFragmentActivity extends TestCompatActivity {}
