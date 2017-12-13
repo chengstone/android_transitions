@@ -87,12 +87,11 @@ public class NavigationalTransitionCompat extends BaseNavigationalTransition<Nav
 	 * and shared elements that are configured for the caller's parent activity via
 	 * {@link #configureOutgoingTransitions(Activity)}.
 	 * <p>
-	 * <b>Note</b>, that unlike {@link ##start(Activity)} this cannot be used to start new activity
+	 * <b>Note</b> that unlike {@link #start(Activity)} this cannot be used to start new activity
 	 * with shared elements presented. For that purpose use {@link #start(Activity)} instead.
 	 *
 	 * @param caller The fragment that will be used to create and start an Intent created via
 	 *               {@link #createIntent(Activity)}.
-	 * @see #configureTransitionsOverlapping(Activity)
 	 * @see #configureTransitions(Activity)
 	 */
 	public void start(@NonNull final Fragment caller) {

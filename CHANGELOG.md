@@ -5,8 +5,8 @@ More **detailed changelog** for each respective version may be viewed by pressin
 
 ## Version 1.x ##
 
-### 1.1.3 ###
-> upcoming
+### [1.1.3](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.3) ###
+> 13.12.2017
 
 - **Removed deprecated** components from previous versions.
 
