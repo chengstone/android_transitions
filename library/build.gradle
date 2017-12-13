@@ -29,19 +29,12 @@ android {
         minSdkVersion config.build.minSdkVersion
         targetSdkVersion config.build.targetSdkVersion
         consumerProguardFiles 'proguard-rules.pro'
-        testInstrumentationRunner config.test.instrumentationRunner
+        testInstrumentationRunner config.test.instrumentationRunner.androidJUnit
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-        }
         modules {
-            minifyEnabled false
-        }
-        debug {
-            minifyEnabled false
-            testCoverageEnabled true
+            matchingFallbacks = ['debug', 'release']
         }
     }
 
@@ -72,7 +65,6 @@ android {
         ]
         debug.res.srcDirs = release.res.srcDirs
         androidTest.java.srcDirs = [
-                "${rootProject.rootDir}/library/src/androidTest/java",
                 "${rootProject.rootDir}/library-core/src/androidTest/java",
                 "${rootProject.rootDir}/library-navigational-base/src/androidTest/java",
                 "${rootProject.rootDir}/library-navigational-compat/src/androidTest/java",
@@ -93,7 +85,6 @@ android {
                 "${rootProject.rootDir}/library-view-translate/src/androidTest/res"
         ]
         test.java.srcDirs = [
-                "${rootProject.rootDir}/library/src/test/java",
                 "${rootProject.rootDir}/library-core/src/test/java",
                 "${rootProject.rootDir}/library-navigational-base/src/test/java",
                 "${rootProject.rootDir}/library-navigational-compat/src/test/java",
@@ -123,17 +114,16 @@ android {
  * Library dependencies ============================================================================
  */
 dependencies {
-    /*
-     * RELEASE DEPENDENCIES ------------------------------------------------------------------------
-     */
-    compile deps.androidSupport.annotations
-    compile deps.androidSupport.v4
+    // PRODUCTION ----------------------------------------------------------------------------------
+    implementation deps.androidSupport.annotations
+    implementation deps.androidSupport.v4
 
-    /*
-     * TEST DEPENDENCIES ---------------------------------------------------------------------------
-     */
-    testCompile project(':test-local')
-    androidTestCompile project(':test-instrumented')
+    // DEVELOPMENT ---------------------------------------------------------------------------------
+    // None.
+
+    // TEST ----------------------------------------------------------------------------------------
+    testImplementation project(':test-local')
+    androidTestImplementation project(':test-instrumented')
 }
 
 /**

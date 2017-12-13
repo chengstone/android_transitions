@@ -133,11 +133,8 @@ public class AnimatorWrapper extends Animator {
 
 	/**
 	 * Wrapped animator instance.
-	 *
-	 * @deprecated Use {@link #getWrappedAnimator()} instead.
 	 */
-	@Deprecated
-	protected final Animator mAnimator;
+	private final Animator mAnimator;
 
 	/**
 	 * Set of feature flags specified for this wrapper.
@@ -509,9 +506,9 @@ public class AnimatorWrapper extends Animator {
 	/**
 	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorListener}.
 	 */
-	@VisibleForTesting static final class AnimatorListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorListener>
-			implements
-			AnimatorListener {
+	@VisibleForTesting static final class AnimatorListenerWrapper
+			extends BaseAnimatorListenerWrapper<AnimatorListener>
+			implements AnimatorListener {
 
 		/**
 		 * Creates a new instance of AnimatorListenerWrapper to wrap the given instance of animator
@@ -556,9 +553,9 @@ public class AnimatorWrapper extends Animator {
 	 * A {@link BaseAnimatorListenerWrapper} implementation to wrap {@link AnimatorPauseListener}.
 	 */
 	@RequiresApi(Build.VERSION_CODES.KITKAT)
-	@VisibleForTesting static final class AnimatorPauseListenerWrapper extends BaseAnimatorListenerWrapper<AnimatorPauseListener>
-			implements
-			AnimatorPauseListener {
+	@VisibleForTesting static final class AnimatorPauseListenerWrapper
+			extends BaseAnimatorListenerWrapper<AnimatorPauseListener>
+			implements AnimatorPauseListener {
 
 		/**
 		 * Creates a new instance of AnimatorPauseListenerWrapper to wrap the given instance of animator

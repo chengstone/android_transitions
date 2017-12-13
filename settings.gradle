@@ -1,7 +1,8 @@
 // Gradle project settings. Specifies which modules to include into project.
-include ':library', ':samples'
+include ':library'
 include ':library-core', ':library-util'
 include ':library-navigational_group', ':library-navigational-base', ':library-navigational-framework', ':library-navigational-compat'
 include ':library-view_group', ':library-view-core', ':library-view-scale', ':library-view-reveal', ':library-view-translate'
 include ':library-window_group', ':library-window-core', ':library-window-common', ':library-window-extra'
-include ':test-instrumented', ':test-local'
+include ':test-local', ':test-instrumented'
+include ':samples'

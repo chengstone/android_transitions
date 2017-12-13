@@ -26,7 +26,7 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 
 /**
- * Utility class for tests.
+ * Utility class for instrumented tests.
  *
  * @author Martin Albedinsky
  */

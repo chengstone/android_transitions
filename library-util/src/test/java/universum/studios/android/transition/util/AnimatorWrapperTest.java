@@ -20,9 +20,10 @@ package universum.studios.android.transition.util;
 
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
-import android.annotation.SuppressLint;
+import android.os.Build;
 
 import org.junit.Test;
+import org.robolectric.annotation.Config;
 
 import universum.studios.android.test.local.RobolectricTestCase;
 
@@ -40,11 +41,8 @@ import static org.mockito.Mockito.when;
 /**
  * @author Martin Albedinsky
  */
-@SuppressLint("NewApi")
+@Config(sdk = Build.VERSION_CODES.O)
 public final class AnimatorWrapperTest extends RobolectricTestCase {
-
-	@SuppressWarnings("unused")
-	private static final String TAG = "AnimatorWrapperTest";
 
 	@Test
 	public void testInstantiation() {

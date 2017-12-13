@@ -931,33 +931,6 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	}
 
 	/**
-	 * <b>This method has been deprecated and will be removed in the next release.</b>
-	 * <p>
-	 * Specifies a boolean flags for a window of the specified <var>activity</var> determining whether
-	 * an enter or return transition can overlap or not based on the requested values for this
-	 * navigational transition.
-	 * <p>
-	 * <b>Note</b>, that for pre {@link Build.VERSION_CODES#LOLLIPOP LOLLIPOP} Android
-	 * versions this method does nothing.
-	 *
-	 * @param activity The activity for which window to specify whether an enter or return transition
-	 *                 can overlap or not.
-	 * @see Window#setAllowEnterTransitionOverlap(boolean)
-	 * @see Window#setAllowReturnTransitionOverlap(boolean)
-	 * @deprecated Use {@link #configureIncomingTransitions(Activity)} instead.
-	 */
-	@Deprecated
-	public void configureTransitionsOverlapping(@NonNull final Activity activity) {
-		if (MATERIAL_SUPPORT) {
-			final Window window = activity.getWindow();
-			if (mAllowEnterTransitionOverlap != null)
-				window.setAllowEnterTransitionOverlap(mAllowEnterTransitionOverlap);
-			if (mAllowReturnTransitionOverlap != null)
-				window.setAllowReturnTransitionOverlap(mAllowReturnTransitionOverlap);
-		}
-	}
-
-	/**
 	 * This method groups calls to {@link #configureIncomingTransitions(Activity)} and
 	 * {@link #configureOutgoingTransitions(Activity)} into one call.
 	 *
