@@ -1,6 +1,6 @@
 ### Overview ###
 
-Pre-release patch.
+Release patch.
 
 ### Changes ###
 
