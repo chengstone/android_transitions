@@ -53,8 +53,8 @@ dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
     implementation deps.androidSupport.annotations
     implementation deps.androidSupport.coreUI
-    releaseImplementation "universum.studios.android:transitions-view-core:${config.library.version}@aar"
-    releaseImplementation "universum.studios.android:transitions-util:${config.library.version}@aar"
+    releaseImplementation deps.modules.libraryViewCore
+    releaseImplementation deps.modules.libraryUtil
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     debugApi project(':library-view-core')

@@ -9,7 +9,26 @@ def versions = [
         robolectric               : '3.5.1'
 ]
 
-ext.versions = versions
+def modulesPrimaryId = "${config.pom.groupId}:${config.pom.artifactId}"
+def modulesVersion = "${config.library.version.production}"
+def modules = [
+        library                     : "${modulesPrimaryId}:${modulesVersion}@aar",
+        libraryCore                 : "${modulesPrimaryId}-core:${modulesVersion}@aar",
+        libraryNavigational         : "${modulesPrimaryId}-navigational:${modulesVersion}@aar",
+        libraryNavigationalBase     : "${modulesPrimaryId}-navigational-base:${modulesVersion}@aar",
+        libraryNavigationalCompat   : "${modulesPrimaryId}-navigational-compat:${modulesVersion}@aar",
+        libraryNavigationalFramework: "${modulesPrimaryId}-navigational-framework:${modulesVersion}@aar",
+        libraryView                 : "${modulesPrimaryId}-view:${modulesVersion}@aar",
+        libraryViewCore             : "${modulesPrimaryId}-view-core:${modulesVersion}@aar",
+        libraryViewReveal           : "${modulesPrimaryId}-view-reveal:${modulesVersion}@aar",
+        libraryViewScale            : "${modulesPrimaryId}-view-scale:${modulesVersion}@aar",
+        libraryViewTranslate        : "${modulesPrimaryId}-view-translate:${modulesVersion}@aar",
+        libraryWindow               : "${modulesPrimaryId}-window:${modulesVersion}@aar",
+        libraryWindowCore           : "${modulesPrimaryId}-window-core:${modulesVersion}@aar",
+        libraryWindowCommon         : "${modulesPrimaryId}-window-common:${modulesVersion}@aar",
+        libraryWindowExtra          : "${modulesPrimaryId}-window-extra:${modulesVersion}@aar",
+        libraryUtil                 : "${modulesPrimaryId}-util:${modulesVersion}@aar"
+]
 
 def androidSupport = [
         annotations   : "com.android.support:support-annotations:${versions.androidSupport}",
@@ -50,7 +69,9 @@ def other = [
         butterknifeProcessor: "com.jakewharton:butterknife-compiler:${versions.butterknife}"
 ]
 
+ext.versions = versions
 ext.deps = [
+        "modules"         : modules,
         "androidSupport"  : androidSupport,
         "test"            : test,
         "universumStudios": universumStudios,

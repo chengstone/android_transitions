@@ -52,8 +52,8 @@ repositories {
 dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
     implementation deps.androidSupport.annotations
-    releaseImplementation "universum.studios.android:transitions-window-core:${config.library.version}@aar"
-    releaseImplementation "universum.studios.android:transitions-window-common:${config.library.version}@aar"
+    releaseImplementation deps.modules.libraryWindowCore
+    releaseImplementation deps.modules.libraryWindowCommon
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     debugApi project(':library-window-common')

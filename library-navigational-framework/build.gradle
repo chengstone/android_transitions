@@ -52,7 +52,7 @@ repositories {
 dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
     implementation deps.androidSupport.annotations
-    releaseImplementation "universum.studios.android:transitions-navigational-base:${config.library.version}@aar"
+    releaseImplementation deps.modules.libraryNavigationalBase
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     debugApi project(':library-navigational-base')
