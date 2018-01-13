@@ -1,4 +1,4 @@
-Transitions
+Android Transitions
 ===============
 
 [![CircleCI](https://circleci.com/gh/universum-studios/android_transitions.svg?style=svg)](https://circleci.com/gh/universum-studios/android_transitions)
