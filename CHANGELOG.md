@@ -5,8 +5,8 @@ More **detailed changelog** for each respective version may be viewed by pressin
 
 ## Version 1.x ##
 
-### 1.1.4 ###
-> upcoming
+### [1.1.4](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.4) ###
+> 27.02.2018
 
 - `Reveal`, `Scale`, `Translate` transitions now return **null** `Animator` from `createAnimator(...)`
   factory methods and also from `onAppear(...)` and `onDisappear(...)` methods when a **target view**
