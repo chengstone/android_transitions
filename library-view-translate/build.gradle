@@ -58,6 +58,7 @@ dependencies {
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     debugApi project(':library-view-core')
+    debugApi project(':library-util')
 
     // TEST ----------------------------------------------------------------------------------------
     testImplementation project(':test-local')

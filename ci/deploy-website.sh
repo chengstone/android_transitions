@@ -6,7 +6,7 @@ set -ex
 TEMP_DIR=website-temp
 LIBRARY_NAME=transitions
 LIBRARY_ARTIFACT_NAME="${LIBRARY_NAME//_/-}"
-LIBRARY_VERSION=1.1.3
+LIBRARY_VERSION=1.1.4
 LIBRARY_REPO="git@github.com:universum-studios/android_${LIBRARY_NAME}.git"
 LIBRARY_DIR_ARTIFACTS=../artifacts/universum/studios/android/${LIBRARY_ARTIFACT_NAME}/${LIBRARY_VERSION}/
 LIBRARY_JAVADOC_FILE_NAME="${LIBRARY_ARTIFACT_NAME}-${LIBRARY_VERSION}-javadoc.jar"

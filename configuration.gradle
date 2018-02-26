@@ -2,8 +2,8 @@
 def libraryConfig = [
         name   : 'transitions',
         version: [
-                production : '1.1.3',
-                development: '1.1.3'
+                production : '1.1.4',
+                development: '1.1.4'
         ]
 ]
 

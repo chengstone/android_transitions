@@ -42,6 +42,8 @@ import android.view.ViewGroup;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import universum.studios.android.transition.util.TransitionUtils;
+
 /**
  * A {@link Visibility} transition implementation that tracks changes to the visibility of target
  * views in the start and end scenes and scales up or down views in the scene. Visibility is
@@ -261,7 +263,8 @@ public class Scale extends Visibility {
 	 * @param endScaleX   Scale at which should the animation end along X axis.
 	 * @param endScaleY   Scale at which should the animation end along Y axis.
 	 * @return Animator that will play scale animation for the specified view according to the
-	 * specified parameters when started or {@code null} if the start and end scale values are the same.
+	 * specified parameters when started or {@code null} if the start and end scale values are the
+	 * same or the target view is already detached from window.
 	 */
 	@Nullable
 	public static Animator createAnimator(
@@ -271,6 +274,9 @@ public class Scale extends Visibility {
 			@FloatRange(from = MIN, to = MAX) final float endScaleX,
 			@FloatRange(from = MIN, to = MAX) final float endScaleY
 	) {
+		if (!TransitionUtils.isViewAttachedToWindow(view)) {
+			return null;
+		}
 		final float startX = Math.max(0, Math.min(1, startScaleX));
 		final float startY = Math.max(0, Math.min(1, startScaleY));
 		final float endX = Math.max(0, Math.min(1, endScaleX));
@@ -440,6 +446,7 @@ public class Scale extends Visibility {
 
 	/**
 	 */
+	@Nullable
 	@Override
 	public Animator onAppear(
 			@NonNull final ViewGroup sceneRoot,
@@ -462,6 +469,7 @@ public class Scale extends Visibility {
 
 	/**
 	 */
+	@Nullable
 	@Override
 	public Animator onDisappear(
 			@NonNull final ViewGroup sceneRoot,
