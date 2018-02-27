@@ -47,6 +47,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import universum.studios.android.transition.util.AnimatorWrapper;
+import universum.studios.android.transition.util.TransitionUtils;
 
 /**
  * A {@link Visibility} transition implementation that tracks changes to the visibility of target
@@ -410,7 +411,7 @@ public class Reveal extends Visibility {
 	 * @param radiusEnd   Radius of the specified view at the end of the reveal animation.
 	 * @return Animator that will play circular reveal animation for the specified view according
 	 * to the specified parameters when started or {@code null} if the start and end radii values
-	 * are the same.
+	 * are the same or the target view is already detached from window.
 	 * @see ViewAnimationUtils#createCircularReveal(View, int, int, float, float)
 	 */
 	@UiThread
@@ -422,7 +423,7 @@ public class Reveal extends Visibility {
 			@FloatRange(from = 0) final float radiusStart,
 			@FloatRange(from = 0) final float radiusEnd
 	) {
-		if (radiusStart == radiusEnd) {
+		if (!TransitionUtils.isViewAttachedToWindow(view) || radiusStart == radiusEnd) {
 			return null;
 		}
 		final AnimatorWrapper animatorWrapper = new AnimatorWrapper(ViewAnimationUtils.createCircularReveal(
@@ -826,6 +827,7 @@ public class Reveal extends Visibility {
 
 	/**
 	 */
+	@Nullable
 	@Override
 	public Animator onAppear(
 			@NonNull final ViewGroup sceneRoot,
@@ -835,6 +837,9 @@ public class Reveal extends Visibility {
 	) {
 		calculateTransitionProperties(view);
 		final Animator animator = createAnimatorFromInfo(view);
+		if (animator == null) {
+			return null;
+		}
 		animator.addListener(new TransitionAnimatorListener(view, mStartVisibility, mEndVisibility));
 		view.setVisibility(mAppearVisibility);
 		return animator;
@@ -842,6 +847,7 @@ public class Reveal extends Visibility {
 
 	/**
 	 */
+	@Nullable
 	@Override
 	public Animator onDisappear(
 			@NonNull final ViewGroup sceneRoot,
@@ -851,6 +857,9 @@ public class Reveal extends Visibility {
 	) {
 		calculateTransitionProperties(view);
 		final Animator animator = createAnimatorFromInfo(view);
+		if (animator == null) {
+			return null;
+		}
 		animator.addListener(new TransitionAnimatorListener(view, mStartVisibility, mEndVisibility));
 		view.setVisibility(mDisappearVisibility);
 		return animator;
@@ -1006,6 +1015,7 @@ public class Reveal extends Visibility {
 	 * @param view The view for which to create the requested animator.
 	 * @return Animator that will play circular reveal animation when started.
 	 */
+	@Nullable
 	private Animator createAnimatorFromInfo(final View view) {
 		return createAnimator(
 				view,

@@ -31,7 +31,7 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.robolectric.annotation.Config;
 
-import universum.studios.android.test.local.RobolectricTestCase;
+import universum.studios.android.test.local.ViewTransitionTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -47,7 +47,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * @author Martin Albedinsky
  */
 @Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-public final class TranslateTest extends RobolectricTestCase {
+public final class TranslateTest extends ViewTransitionTestCase {
 
 	@Test
 	public void testInstantiation() {
@@ -69,7 +69,7 @@ public final class TranslateTest extends RobolectricTestCase {
 	@Test
 	public void testCreateAnimator() {
 		final Translate translate = new Translate();
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		assertThatAnimatorForViewIsValid(Translate.createAnimator(
@@ -85,7 +85,7 @@ public final class TranslateTest extends RobolectricTestCase {
 	@Test
 	public void testCreateAnimatorWithKnownLocationOnScreen() {
 		final Translate translate = new Translate();
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		view.setTag(R.id.ui_transition_tag_position, new int[]{50, 50});
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
@@ -102,7 +102,7 @@ public final class TranslateTest extends RobolectricTestCase {
 	@Test
 	public void testCreateAnimatorForTranslationChangedOnlyAlongXAxis() {
 		final Translate translate = new Translate();
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		assertThatAnimatorForViewIsValid(Translate.createAnimator(
@@ -118,7 +118,7 @@ public final class TranslateTest extends RobolectricTestCase {
 	@Test
 	public void testCreateAnimatorForTranslationChangedOnlyAlongYAxis() {
 		final Translate translate = new Translate();
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		assertThatAnimatorForViewIsValid(Translate.createAnimator(
@@ -141,6 +141,18 @@ public final class TranslateTest extends RobolectricTestCase {
 				translate,
 				view,
 				values,
+				0, 0,
+				0f, 0f,
+				0f, 0f
+		), is(nullValue()));
+	}
+
+	@Test
+	public void testCreateAnimatorWithViewNotAttachedToWindow() {
+		assertThat(Translate.createAnimator(
+				new Translate(),
+				createViewNotAttachedToWindow(),
+				new TransitionValues(),
 				0, 0,
 				0f, 0f,
 				0f, 0f
@@ -267,7 +279,7 @@ public final class TranslateTest extends RobolectricTestCase {
 
 	@Test
 	public void testOnAppear() {
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		values.values.put(Translate.PROPERTY_TRANSITION_LOCATION_ON_SCREEN, new int[]{0, 0});
@@ -301,8 +313,13 @@ public final class TranslateTest extends RobolectricTestCase {
 	}
 
 	@Test
+	public void testOnAppearWithViewNotAttachedToWindow() {
+		assertThat(new Translate().onAppear(new FrameLayout(mApplication), createViewNotAttachedToWindow(), null, null), is(nullValue()));
+	}
+
+	@Test
 	public void testOnDisappear() {
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		values.values.put(Translate.PROPERTY_TRANSITION_LOCATION_ON_SCREEN, new int[]{0, 0});
@@ -332,6 +349,11 @@ public final class TranslateTest extends RobolectricTestCase {
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		assertThat(new Translate().onDisappear(new FrameLayout(mApplication), view, values, null), is(nullValue()));
+	}
+
+	@Test
+	public void testOnDisappearWithViewNotAttachedToWindow() {
+		assertThat(new Translate().onDisappear(new FrameLayout(mApplication), createViewNotAttachedToWindow(), null, null), is(nullValue()));
 	}
 
 	@Test

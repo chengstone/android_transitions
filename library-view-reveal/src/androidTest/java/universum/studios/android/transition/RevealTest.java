@@ -18,14 +18,11 @@
  */
 package universum.studios.android.transition;
 
-import android.animation.Animator;
-import android.app.Activity;
 import android.os.Build;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.rule.ActivityTestRule;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -82,67 +79,5 @@ public final class RevealTest extends InstrumentedTestCase {
 		assertThat(reveal.getCenterGravity(), is(Gravity.END | Gravity.BOTTOM));
 		assertThat(reveal.getCenterHorizontalOffset(), is(-16));
 		assertThat(reveal.getCenterVerticalOffset(), is(-16));
-	}
-
-	@Test
-	public void testCreateAnimator() throws Throwable {
-		final Activity activity = ACTIVITY_RULE.launchActivity(null);
-		ACTIVITY_RULE.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				final View view = new View(mContext);
-				activity.setContentView(view);
-				final Animator animator = Reveal.createAnimator(view, 0, 100);
-				assertThat(animator, is(notNullValue()));
-			}
-		});
-	}
-
-	@Test
-	public void testCreateAnimatorForCenterCoordinates() throws Throwable {
-		final Activity activity = ACTIVITY_RULE.launchActivity(null);
-		ACTIVITY_RULE.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				final View view = new View(mContext);
-				activity.setContentView(view);
-				final Animator animator = Reveal.createAnimator(view, view.getWidth() / 2, view.getHeight() / 2, 0, 100);
-				assertThat(animator, is(notNullValue()));
-			}
-		});
-	}
-
-	@Test
-	public void testOnAppear() throws Throwable {
-		final Activity activity = ACTIVITY_RULE.launchActivity(null);
-		ACTIVITY_RULE.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				final Reveal reveal = new Reveal();
-				final View view = new View(mContext);
-				activity.setContentView(view);
-				final Animator animator = reveal.onAppear(new FrameLayout(mContext), view, null, null);
-				assertThat(animator, is(notNullValue()));
-			}
-		});
-	}
-
-	@Test
-	public void testOnDisappear() throws Throwable {
-		final Activity activity = ACTIVITY_RULE.launchActivity(null);
-		ACTIVITY_RULE.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				final Reveal reveal = new Reveal();
-				final View view = new View(mContext);
-				activity.setContentView(view);
-				final Animator animator = reveal.onDisappear(new FrameLayout(mContext), view, null, null);
-				assertThat(animator, is(notNullValue()));
-			}
-		});
 	}
 }

@@ -22,11 +22,12 @@ import android.animation.Animator;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import org.junit.Test;
 import org.robolectric.annotation.Config;
 
-import universum.studios.android.test.local.RobolectricTestCase;
+import universum.studios.android.test.local.ViewTransitionTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -38,7 +39,7 @@ import static org.mockito.Mockito.mock;
  * @author Martin Albedinsky
  */
 @Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-public final class RevealTest extends RobolectricTestCase {
+public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test
 	public void testInstantiation() {
@@ -127,6 +128,17 @@ public final class RevealTest extends RobolectricTestCase {
 		assertThat(center.length, is(2));
 		assertThat(center[0], is(view.getWidth() * 0.25f));
 		assertThat(center[1], is(view.getHeight() * 0.80f));
+	}
+
+	@Test
+	public void testCreateAnimator() {
+		assertThat(Reveal.createAnimator(createViewAttachedToWindow(), 0, 100), is(notNullValue()));
+	}
+
+	@Test
+	public void testCreateAnimatorForCenterCoordinates() {
+		final View view = createViewAttachedToWindow();
+		assertThat(Reveal.createAnimator(view, view.getWidth() / 2, view.getHeight() / 2, 0, 100), is(notNullValue()));
 	}
 
 	@Test
@@ -333,6 +345,26 @@ public final class RevealTest extends RobolectricTestCase {
 	@Test
 	public void testGetCenterYFractionDefault() {
 		assertThat(new Reveal().getCenterYFraction(), is(0.5f));
+	}
+
+	@Test
+	public void testOnAppear() {
+		assertThat(new Reveal().onAppear(new FrameLayout(mApplication), createViewAttachedToWindow(), null, null), is(notNullValue()));
+	}
+
+	@Test
+	public void testOnAppearWithViewNotAttachedToWindow() {
+		assertThat(new Reveal().onAppear(new FrameLayout(mApplication), createViewNotAttachedToWindow(), null, null), is(nullValue()));
+	}
+
+	@Test
+	public void testOnDisappear() {
+		assertThat(new Reveal().onDisappear(new FrameLayout(mApplication), createViewAttachedToWindow(), null, null), is(notNullValue()));
+	}
+
+	@Test
+	public void testOnDisappearWithViewNotAttachedToWindow() {
+		assertThat(new Reveal().onDisappear(new FrameLayout(mApplication), createViewNotAttachedToWindow(), null, null), is(nullValue()));
 	}
 
 	@Test

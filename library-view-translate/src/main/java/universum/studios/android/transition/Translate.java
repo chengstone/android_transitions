@@ -44,6 +44,8 @@ import android.view.ViewGroup;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import universum.studios.android.transition.util.TransitionUtils;
+
 /**
  * A {@link Visibility} transition implementation that tracks changes to the visibility of target
  * views in the start and end scenes and translates/moves views in the scene. Visibility is
@@ -304,7 +306,7 @@ public class Translate extends Visibility {
 	 * @param endY             Translation at which should the animation end along Y axis.
 	 * @return Animator that will play translate animation for the specified view according to the
 	 * specified parameters when started or {@code null} if the start and end translation values are
-	 * the same.
+	 * the same or the target view is already detached from window.
 	 */
 	@Nullable
 	@SuppressWarnings("UnnecessaryLocalVariable")
@@ -319,6 +321,9 @@ public class Translate extends Visibility {
 			final float endX,
 			final float endY
 	) {
+		if (!TransitionUtils.isViewAttachedToWindow(view)) {
+			return null;
+		}
 		float animationStartX = startX;
 		float animationStartY = startY;
 		final float animationEndX = endX;
@@ -503,6 +508,7 @@ public class Translate extends Visibility {
 
 	/**
 	 */
+	@Nullable
 	@Override
 	public Animator onAppear(
 			@NonNull final ViewGroup sceneRoot,
@@ -533,6 +539,7 @@ public class Translate extends Visibility {
 
 	/**
 	 */
+	@Nullable
 	@Override
 	public Animator onDisappear(
 			@NonNull final ViewGroup sceneRoot,

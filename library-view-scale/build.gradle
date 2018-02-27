@@ -53,9 +53,10 @@ dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
     implementation deps.androidSupport.annotations
     implementation deps.androidSupport.coreUI
+    releaseImplementation deps.modules.libraryUtil
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
-    // None.
+    debugApi project(':library-util')
 
     // TEST ----------------------------------------------------------------------------------------
     testImplementation project(':test-local')

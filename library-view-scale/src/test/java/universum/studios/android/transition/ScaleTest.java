@@ -30,7 +30,7 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.robolectric.annotation.Config;
 
-import universum.studios.android.test.local.RobolectricTestCase;
+import universum.studios.android.test.local.ViewTransitionTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -42,7 +42,7 @@ import static org.hamcrest.core.IsNull.nullValue;
  * @author Martin Albedinsky
  */
 @Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-public final class ScaleTest extends RobolectricTestCase {
+public final class ScaleTest extends ViewTransitionTestCase {
 
 	@Test
 	public void testInterpolator() {
@@ -69,7 +69,7 @@ public final class ScaleTest extends RobolectricTestCase {
 	@Test
 	@SuppressWarnings("ResourceType")
 	public void testCreateAnimator() {
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, 0.75f), view, 0.25f, 0.25f);
 		assertThatAnimatorIsValid(Scale.createAnimator(view, -0.25f, 0.75f), view, 0.0f, 0.0f);
 		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, -0.75f), view, 0.25f, 0.25f);
@@ -78,7 +78,7 @@ public final class ScaleTest extends RobolectricTestCase {
 	@Test
 	@SuppressWarnings("ResourceType")
 	public void testCreateAnimatorWithSameStartAndEndValues() {
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		assertThat(Scale.createAnimator(view, 1.0f, 1.0f), is(nullValue()));
 		assertThat(Scale.createAnimator(view, -0.25f, -0.25f), is(nullValue()));
 	}
@@ -86,7 +86,7 @@ public final class ScaleTest extends RobolectricTestCase {
 	@Test
 	@SuppressWarnings("ResourceType")
 	public void testCreateAnimatorForAxesSeparately() {
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, 0.75f, 0.15f, 0.85f), view, 0.25f, 0.75f);
 		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.25f, 0.75f, 0.15f, 0.75f), view, 0.25f, 0.75f);
 		assertThatAnimatorIsValid(Scale.createAnimator(view, 0.15f, 0.75f, 0.15f, 0.85f), view, 0.15f, 0.75f);
@@ -97,9 +97,14 @@ public final class ScaleTest extends RobolectricTestCase {
 	@Test
 	@SuppressWarnings("ResourceType")
 	public void testCreateAnimatorForAxesSeparatelyWithSameStartAndEndValues() {
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		assertThat(Scale.createAnimator(view, 0.25f, 0.25f, 0.25f, 0.25f), is(nullValue()));
 		assertThat(Scale.createAnimator(view, -0.35f, -0.35f, -0.35f, -0.35f), is(nullValue()));
+	}
+
+	@Test
+	public void testCreateAnimatorWithViewNotAttachedToWindow() {
+		assertThat(Scale.createAnimator(createViewNotAttachedToWindow(), 0.0f, 1.0f), is(nullValue()));
 	}
 
 	private void assertThatAnimatorIsValid(Animator animator, View view, float startScaleX, float startScaleY) {
@@ -230,7 +235,7 @@ public final class ScaleTest extends RobolectricTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotX(100f);
 		scale.setPivotY(50f);
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final Animator animator = scale.onAppear(new FrameLayout(mApplication), view, null, null);
 		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
 		assertThat(view.getPivotX(), is(scale.getPivotX()));
@@ -242,7 +247,7 @@ public final class ScaleTest extends RobolectricTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotXFraction(0.25f);
 		scale.setPivotYFraction(0.75f);
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -258,7 +263,7 @@ public final class ScaleTest extends RobolectricTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotX(100f);
 		scale.setPivotY(50f);
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		view.setScaleX(1.0f);
 		view.setScaleY(1.0f);
 		final TransitionValues startValues = new TransitionValues();
@@ -271,11 +276,16 @@ public final class ScaleTest extends RobolectricTestCase {
 	}
 
 	@Test
+	public void testOnAppearWithViewNotAttachedToWindow() {
+		assertThat(new Scale().onAppear(new FrameLayout(mApplication), createViewNotAttachedToWindow(), null, null), is(nullValue()));
+	}
+
+	@Test
 	public void testOnDisappearWithSpecifiedPivots() {
 		final Scale scale = new Scale();
 		scale.setPivotX(100f);
 		scale.setPivotY(50f);
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		final Animator animator = scale.onDisappear(new FrameLayout(mApplication), view, null, null);
 		assertThatAnimatorIsValid(animator, view, 1.0f, 1.0f);
 		assertThat(view.getPivotX(), is(scale.getPivotX()));
@@ -289,7 +299,7 @@ public final class ScaleTest extends RobolectricTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotXFraction(0.33f);
 		scale.setPivotYFraction(0.66f);
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -307,13 +317,18 @@ public final class ScaleTest extends RobolectricTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotX(100f);
 		scale.setPivotY(50f);
-		final View view = new View(mApplication);
+		final View view = createViewAttachedToWindow();
 		view.setScaleX(0.0f);
 		view.setScaleY(0.0f);
 		final TransitionValues startValues = new TransitionValues();
 		startValues.view = view;
 		scale.captureStartValues(startValues);
 		assertThat(scale.onDisappear(new FrameLayout(mApplication), view, startValues, new TransitionValues()), is(nullValue()));
+	}
+
+	@Test
+	public void testOnDisappearWithViewNotAttachedToWindow() {
+		assertThat(new Scale().onDisappear(new FrameLayout(mApplication), createViewNotAttachedToWindow(), null, null), is(nullValue()));
 	}
 
 	@Test
