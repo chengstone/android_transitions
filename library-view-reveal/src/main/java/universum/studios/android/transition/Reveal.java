@@ -247,32 +247,33 @@ public class Reveal extends Visibility {
 	public Reveal(@NonNull final Context context, @Nullable final AttributeSet attrs) {
 		super(context, attrs);
 		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);
-		for (int i = 0; i < attributes.getIndexCount(); i++) {
-			final int index = attributes.getIndex(i);
-			if (index == R.styleable.Ui_Transition_Reveal_uiRevealMode) {
-				setMode(attributes.getInteger(index, REVEAL));
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartRadius) {
-				this.mStartRadius = (float) attributes.getDimensionPixelSize(index, 0);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndRadius) {
-				this.mEndRadius = (float) attributes.getDimensionPixelSize(index, 0);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiAppearVisibility) {
-				this.mAppearVisibility = attributes.getInteger(index, mAppearVisibility);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiDisappearVisibility) {
-				this.mDisappearVisibility = attributes.getInteger(index, mDisappearVisibility);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiStartVisibility) {
-				this.mStartVisibility = attributes.getInteger(index, mStartVisibility);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiEndVisibility) {
-				this.mEndVisibility = attributes.getInteger(index, mEndVisibility);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterGravity) {
-				this.mCenterGravity = attributes.getInteger(index, 0);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterVerticalOffset) {
-				this.mCenterVerticalOffset = attributes.getDimensionPixelSize(index, 0);
-			} else if (index == R.styleable.Ui_Transition_Reveal_uiCenterHorizontalOffset) {
-				this.mCenterHorizontalOffset = attributes.getDimensionPixelSize(index, 0);
-			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerX) {
-				this.mCenterXFraction = attributes.getFraction(index, 1, 1, mCenterXFraction);
-			} else if (index == R.styleable.Ui_Transition_Reveal_android_centerY) {
-				this.mCenterYFraction = attributes.getFraction(index, 1, 1, mCenterYFraction);
+		final int attributeCount = attributes.getIndexCount();
+		for (int i = 0; i < attributeCount; i++) {
+			final int attrIndex = attributes.getIndex(i);
+			if (attrIndex == R.styleable.Ui_Transition_Reveal_uiRevealMode) {
+				setMode(attributes.getInteger(attrIndex, REVEAL));
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiStartRadius) {
+				this.mStartRadius = (float) attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiEndRadius) {
+				this.mEndRadius = (float) attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiAppearVisibility) {
+				this.mAppearVisibility = attributes.getInteger(attrIndex, mAppearVisibility);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiDisappearVisibility) {
+				this.mDisappearVisibility = attributes.getInteger(attrIndex, mDisappearVisibility);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiStartVisibility) {
+				this.mStartVisibility = attributes.getInteger(attrIndex, mStartVisibility);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiEndVisibility) {
+				this.mEndVisibility = attributes.getInteger(attrIndex, mEndVisibility);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiCenterGravity) {
+				this.mCenterGravity = attributes.getInteger(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiCenterVerticalOffset) {
+				this.mCenterVerticalOffset = attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiCenterHorizontalOffset) {
+				this.mCenterHorizontalOffset = attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_android_centerX) {
+				this.mCenterXFraction = attributes.getFraction(attrIndex, 1, 1, mCenterXFraction);
+			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_android_centerY) {
+				this.mCenterYFraction = attributes.getFraction(attrIndex, 1, 1, mCenterYFraction);
 			}
 		}
 		attributes.recycle();

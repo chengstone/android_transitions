@@ -210,16 +210,17 @@ public class Scale extends Visibility {
 	public Scale(@NonNull final Context context, @Nullable final AttributeSet attrs) {
 		super(context, attrs);
 		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Scale, 0, 0);
-		for (int i = 0; i < attributes.getIndexCount(); i++) {
-			final int index = attributes.getIndex(i);
-			if (index == R.styleable.Ui_Transition_Scale_android_pivotX) {
-				this.mPivotXFraction = attributes.getFraction(index, 1, 1, mPivotXFraction);
-			} else if (index == R.styleable.Ui_Transition_Scale_android_pivotY) {
-				this.mPivotYFraction = attributes.getFraction(index, 1, 1, mPivotYFraction);
-			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotX) {
-				this.mPivotX = (float) attributes.getDimensionPixelSize(index, 0);
-			} else if (index == R.styleable.Ui_Transition_Scale_android_transformPivotY) {
-				this.mPivotY = (float) attributes.getDimensionPixelSize(index, 0);
+		final int attributeCount = attributes.getIndexCount();
+		for (int i = 0; i < attributeCount; i++) {
+			final int attrIndex = attributes.getIndex(i);
+			if (attrIndex == R.styleable.Ui_Transition_Scale_android_pivotX) {
+				this.mPivotXFraction = attributes.getFraction(attrIndex, 1, 1, mPivotXFraction);
+			} else if (attrIndex == R.styleable.Ui_Transition_Scale_android_pivotY) {
+				this.mPivotYFraction = attributes.getFraction(attrIndex, 1, 1, mPivotYFraction);
+			} else if (attrIndex == R.styleable.Ui_Transition_Scale_android_transformPivotX) {
+				this.mPivotX = (float) attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Ui_Transition_Scale_android_transformPivotY) {
+				this.mPivotY = (float) attributes.getDimensionPixelSize(attrIndex, 0);
 			}
 		}
 		attributes.recycle();
