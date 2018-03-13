@@ -266,14 +266,15 @@ public class Translate extends Visibility {
 		super(context, attrs);
 		final Resources resources = context.getResources();
 		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Translate, 0, 0);
-		for (int i = 0; i < attributes.getIndexCount(); i++) {
-			final int index = attributes.getIndex(i);
-			if (index == R.styleable.Ui_Transition_Translate_uiTranslationXDelta) {
-				final Description description = Description.parseValue(resources, attributes.peekValue(index));
+		final int attributeCount = attributes.getIndexCount();
+		for (int i = 0; i < attributeCount; i++) {
+			final int attrIndex = attributes.getIndex(i);
+			if (attrIndex == R.styleable.Ui_Transition_Translate_uiTranslationXDelta) {
+				final Description description = Description.parseValue(resources, attributes.peekValue(attrIndex));
 				this.mTranslationXRelativity = description.valueRelativity;
 				this.mTranslationXDelta = description.value;
-			} else if (index == R.styleable.Ui_Transition_Translate_uiTranslationYDelta) {
-				final Description description = Description.parseValue(resources, attributes.peekValue(index));
+			} else if (attrIndex == R.styleable.Ui_Transition_Translate_uiTranslationYDelta) {
+				final Description description = Description.parseValue(resources, attributes.peekValue(attrIndex));
 				this.mTranslationYRelativity = description.valueRelativity;
 				this.mTranslationYDelta = description.value;
 			}
