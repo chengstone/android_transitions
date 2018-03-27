@@ -11,8 +11,8 @@ This transition may be used to **move/slide** a desired view across screen.
 
     implementation "universum.studios.android:transitions-view-translate:${DESIRED_VERSION}@aar"
 
-## Components ##
+## Elements ##
 
-Below are listed some of **primary components** that are available in this module:
+Below are listed some of **primary elements** that are available in this module:
 
 - [Translate](https://github.com/universum-studios/android_transitions/blob/master/library-view-translation/src/main/java/universum/studios/android/transition/Translate.java)

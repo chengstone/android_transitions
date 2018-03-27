@@ -48,6 +48,6 @@ dependencies {
     api deps.test.mockitoCore
     api deps.test.robolectric
     api deps.test.robolectricShadowsSupportV4
-    api deps.test.androidSupportAnnotations
-    api deps.test.androidSupportV4
+    api deps.android.support.annotations
+    api deps.android.support.v4
 }

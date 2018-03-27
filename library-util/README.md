@@ -10,8 +10,8 @@ This module contains utilities for transitions.
 
     implementation "universum.studios.android:transitions-util:${DESIRED_VERSION}@aar"
 
-## Components ##
+## Elements ##
 
-Below are listed some of **primary components** that are available in this module:
+Below are listed some of **primary elements** that are available in this module:
 
 - [AnimatorWrapper](https://github.com/universum-studios/android_transitions/blob/master/library-util/src/main/java/universum/studios/android/transition/util/AnimatorWrapper.java)

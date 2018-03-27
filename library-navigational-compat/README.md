@@ -14,8 +14,8 @@ of `Fragment` from the `android.support.v4.app` package.
 _depends on:_
 [transitions-navigational-base](https://github.com/universum-studios/android_transitions/tree/master/library-navigational-base)
 
-## Components ##
+## Elements ##
 
-Below are listed some of **primary components** that are available in this module:
+Below are listed some of **primary elements** that are available in this module:
 
 - [NavigationalTransitionCompat](https://github.com/universum-studios/android_transitions/blob/master/library-navigational-compat/src/main/java/universum/studios/android/transition/NavigationalTransitionCompat.java)
