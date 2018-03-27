@@ -51,8 +51,8 @@ repositories {
 
 dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
-    implementation deps.androidSupport.annotations
-    implementation deps.androidSupport.coreUtils
+    implementation deps.android.support.annotations
+    implementation deps.android.support.coreUtils
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     // None.

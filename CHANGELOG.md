@@ -1,5 +1,6 @@
 Change-Log
 ===============
+> Regular configuration update: _27.03.2018_
 
 More **detailed changelog** for each respective version may be viewed by pressing on a desired _version's name_.
 
@@ -15,7 +16,7 @@ More **detailed changelog** for each respective version may be viewed by pressin
 ### [1.1.3](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.3) ###
 > 13.12.2017
 
-- **Removed deprecated** components from previous versions.
+- **Removed deprecated** elements from previous versions.
 
 ### [1.1.2](https://github.com/universum-studios/android_transitions/releases/tag/v1.1.2) ###
 > 24.08.2017

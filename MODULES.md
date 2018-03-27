@@ -21,7 +21,7 @@ as usually.
     }
 
 ## Available modules ##
-> Following modules are available in the [latest](https://github.com/universum-studios/android_transitions/releases "Latest Releases page") stable release.
+> Following modules are available in the [latest](https://github.com/universum-studios/android_transitions/releases "Releases page") stable release.
 
 - **[Core](https://github.com/universum-studios/android_transitions/tree/master/library-core)**
 - **[@Navigational](https://github.com/universum-studios/android_transitions/tree/master/library-navigational_group)**

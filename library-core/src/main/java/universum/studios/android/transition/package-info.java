@@ -17,7 +17,7 @@
  * =================================================================================================
  */
 /**
- * Provides a group of common transitions that may be used to animate UI components from one scene
+ * Provides a group of common transitions that may be used to animate UI elements from one scene
  * to another one or to transition from one screen to another one.
  *
  * @author Martin Albedinsky

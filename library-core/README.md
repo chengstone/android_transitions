@@ -1,7 +1,7 @@
 Transitions-Core
 ===============
 
-This module contains core components for transitions.
+This module contains core elements for transitions.
 
 ## Download ##
 [![Bintray](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)

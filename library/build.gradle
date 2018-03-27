@@ -117,8 +117,8 @@ android {
  */
 dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
-    implementation deps.androidSupport.annotations
-    implementation deps.androidSupport.v4
+    implementation deps.android.support.annotations
+    implementation deps.android.support.v4
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     // None.

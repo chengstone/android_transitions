@@ -1,7 +1,7 @@
 Android Transitions
 ===============
 
-[![CircleCI](https://circleci.com/gh/universum-studios/android_transitions.svg?style=svg)](https://circleci.com/gh/universum-studios/android_transitions)
+[![CircleCI](https://circleci.com/gh/universum-studios/android_transitions.svg?style=shield)](https://circleci.com/gh/universum-studios/android_transitions)
 [![Codecov](https://codecov.io/gh/universum-studios/android_transitions/branch/master/graph/badge.svg)](https://codecov.io/gh/universum-studios/android_transitions)
 [![Codacy](https://api.codacy.com/project/badge/Grade/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=universum-studios/android_transitions&amp;utm_campaign=Badge_Grade)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Transitions-green.svg?style=flat)](https://android-arsenal.com/details/1/5409)
@@ -13,7 +13,7 @@ For more information please visit the **[Wiki](https://github.com/universum-stud
 ## Download ##
 [![Bintray](https://api.bintray.com/packages/universum-studios/android/universum.studios.android%3Atransitions/images/download.svg)](https://bintray.com/universum-studios/android/universum.studios.android%3Atransitions/_latestVersion)
 
-Download the latest **[release](https://github.com/universum-studios/android_transitions/releases "Latest Releases page")** or **add as dependency** in your project via:
+Download the latest **[release](https://github.com/universum-studios/android_transitions/releases "Releases page")** or **add as dependency** in your project via:
 
 ### Gradle ###
 

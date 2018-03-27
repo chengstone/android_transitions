@@ -14,8 +14,8 @@ animation resources.
 _depends on:_
 [transitions-window-core](https://github.com/universum-studios/android_transitions/tree/master/library-window-core)
 
-## Components ##
+## Elements ##
 
-Below are listed some of **primary components** that are available in this module:
+Below are listed some of **primary elements** that are available in this module:
 
 - [WindowTransitions](https://github.com/universum-studios/android_transitions/blob/master/library-window-common/src/main/java/universum/studios/android/transition/WindowTransitions.java)
