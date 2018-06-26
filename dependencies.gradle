@@ -1,13 +1,13 @@
 // Defines dependencies used across the library project.
 def versions = [
         android    : [
-                support            : '27.1.0',
-                supportTest        : '1.0.1',
-                supportTestEspresso: '3.0.1',
+                support            : '27.1.1',
+                supportTest        : '1.0.2',
+                supportTestEspresso: '3.0.2'
         ],
         test       : [
                 junit      : '4.12',
-                mockito    : '2.16.0',
+                mockito    : '2.18.0',
                 robolectric: '3.8'
         ],
         butterknife: '8.8.1'
@@ -65,7 +65,7 @@ def test = [
 ]
 
 def universum = [studios: [
-        widgetAdapters: 'universum.studios.android:widget-adapters:2.0.2@aar',
+        widgetAdapters: 'universum.studios.android:widget-adapters:2.0.3@aar',
         support       : [
                 samples  : 'universum.studios.android.support:support-samples:0.1.4@aar',
                 fragments: 'universum.studios.android.support:support-fragments:1.2.0@aar'

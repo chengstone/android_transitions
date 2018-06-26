@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License 
- * you may obtain at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written within this file but as it 
- * is described in the License, the software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
- * 
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -68,9 +68,10 @@ import universum.studios.android.transition.util.TransitionUtils;
  * Xml attributes referenced below.
  *
  * <h3>XML attributes</h3>
- * {@link R.styleable#Ui_Transition_Reveal Reveal Attributes}
+ * {@link R.styleable#Transition_Reveal Reveal Attributes}
  *
  * @author Martin Albedinsky
+ * @since 1.0
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class Reveal extends Visibility {
@@ -105,8 +106,7 @@ public class Reveal extends Visibility {
 	 */
 	@Retention(RetentionPolicy.SOURCE)
 	@IntDef({REVEAL, CONCEAL})
-	public @interface RevealMode {
-	}
+	public @interface RevealMode {}
 
 	/**
 	 * Default value for center fraction.
@@ -134,86 +134,86 @@ public class Reveal extends Visibility {
 	 * Object that holds all necessary properties for the reveal transition for the currently
 	 * transitioning view.
 	 */
-	private final Info mInfo = new Info();
+	private final Info info = new Info();
 
 	/**
 	 * Mode determining whether we will run <b>reveal</b> or <b>conceal</b> animation.
 	 * Either {@link #REVEAL} or {@link #CONCEAL}.
 	 */
-	private int mMode = REVEAL;
+	private int mode = REVEAL;
 
 	/**
-	 * X coordinate for center of the reveal/conceal animation. If {@code null}, {@link #mCenterXFraction}
+	 * X coordinate for center of the reveal/conceal animation. If {@code null}, {@link #centerXFraction}
 	 * should be used to calculate this coordinate.
 	 */
-	private Float mCenterX;
+	private Float centerX;
 
 	/**
-	 * Y coordinate for center of the reveal/conceal animation. If {@code null}, {@link #mCenterYFraction}
+	 * Y coordinate for center of the reveal/conceal animation. If {@code null}, {@link #centerYFraction}
 	 * should be used to calculate this coordinate.
 	 */
-	private Float mCenterY;
+	private Float centerY;
 
 	/**
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate X coordinate for center
-	 * of the reveal/conceal animation if {@link #mCenterX} coordinate has not been specified.
+	 * of the reveal/conceal animation if {@link #centerX} coordinate has not been specified.
 	 */
-	private float mCenterXFraction = CENTER_FRACTION;
+	private float centerXFraction = CENTER_FRACTION;
 
 	/**
 	 * Fraction from the {@code [0.0, 1.0]} range that can be used to calculate Y coordinate for center
-	 * of the reveal/conceal animation if {@link #mCenterY} coordinate has not been specified.
+	 * of the reveal/conceal animation if {@link #centerY} coordinate has not been specified.
 	 */
-	private float mCenterYFraction = CENTER_FRACTION;
+	private float centerYFraction = CENTER_FRACTION;
 
 	/**
 	 * Gravity flags used to resolve center coordinates for the reveal/conceal animation.
-	 * If {@code null}, values specified for {@link #mCenterX} and {@link #mCenterY} should be used
+	 * If {@code null}, values specified for {@link #centerX} and {@link #centerY} should be used
 	 * as center coordinates.
 	 */
-	private Integer mCenterGravity;
+	private Integer centerGravity;
 
 	/**
-	 * Value in pixels by which to offset {@link #mCenterY} vertically.
+	 * Value in pixels by which to offset {@link #centerY} vertically.
 	 */
-	private int mCenterVerticalOffset;
+	private int centerVerticalOffset;
 
 	/**
-	 * Value in pixels by which to offset {@link #mCenterX} horizontally.
+	 * Value in pixels by which to offset {@link #centerX} horizontally.
 	 */
-	private int mCenterHorizontalOffset;
+	private int centerHorizontalOffset;
 
 	/**
 	 * Start radius for circle of the reveal/conceal animation.
 	 */
-	private Float mStartRadius;
+	private Float startRadius;
 
 	/**
 	 * End radius for circle of the reveal/conceal animation.
 	 */
-	private Float mEndRadius;
+	private Float endRadius;
 
 	/**
 	 * Visibility flag set to a revealing view whenever the reveal animation starts.
 	 */
-	private int mStartVisibility = View.VISIBLE;
+	private int startVisibility = View.VISIBLE;
 
 	/**
 	 * Visibility flag set to a revealing view whenever the reveal animation ends.
 	 */
-	private int mEndVisibility = View.VISIBLE;
+	private int endVisibility = View.VISIBLE;
 
 	/**
 	 * Visibility flag set to a revealing view whenever {@link #onAppear(ViewGroup, View, TransitionValues, TransitionValues)}
 	 * is invoked.
 	 */
-	private int mAppearVisibility = View.VISIBLE;
+	private int appearVisibility = View.VISIBLE;
 
 	/**
 	 * Visibility flag set to a revealing view whenever {@link #onDisappear(ViewGroup, View, TransitionValues, TransitionValues)}
 	 * is invoked.
 	 */
-	private int mDisappearVisibility = View.VISIBLE;
+	private int disappearVisibility = View.VISIBLE;
 
 	/*
 	 * Constructors ================================================================================
@@ -243,37 +243,36 @@ public class Reveal extends Visibility {
 	 * @param context Context used to obtain values from the specified <var>attrs</var>.
 	 * @param attrs   Set of attributes from which to obtain property values for the reveal animation.
 	 */
-	@SuppressWarnings("ResourceType")
 	public Reveal(@NonNull final Context context, @Nullable final AttributeSet attrs) {
 		super(context, attrs);
-		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Reveal, 0, 0);
+		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Transition_Reveal, 0, 0);
 		final int attributeCount = attributes.getIndexCount();
 		for (int i = 0; i < attributeCount; i++) {
 			final int attrIndex = attributes.getIndex(i);
-			if (attrIndex == R.styleable.Ui_Transition_Reveal_uiRevealMode) {
+			if (attrIndex == R.styleable.Transition_Reveal_transitionRevealMode) {
 				setMode(attributes.getInteger(attrIndex, REVEAL));
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiStartRadius) {
-				this.mStartRadius = (float) attributes.getDimensionPixelSize(attrIndex, 0);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiEndRadius) {
-				this.mEndRadius = (float) attributes.getDimensionPixelSize(attrIndex, 0);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiAppearVisibility) {
-				this.mAppearVisibility = attributes.getInteger(attrIndex, mAppearVisibility);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiDisappearVisibility) {
-				this.mDisappearVisibility = attributes.getInteger(attrIndex, mDisappearVisibility);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiStartVisibility) {
-				this.mStartVisibility = attributes.getInteger(attrIndex, mStartVisibility);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiEndVisibility) {
-				this.mEndVisibility = attributes.getInteger(attrIndex, mEndVisibility);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiCenterGravity) {
-				this.mCenterGravity = attributes.getInteger(attrIndex, 0);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiCenterVerticalOffset) {
-				this.mCenterVerticalOffset = attributes.getDimensionPixelSize(attrIndex, 0);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_uiCenterHorizontalOffset) {
-				this.mCenterHorizontalOffset = attributes.getDimensionPixelSize(attrIndex, 0);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_android_centerX) {
-				this.mCenterXFraction = attributes.getFraction(attrIndex, 1, 1, mCenterXFraction);
-			} else if (attrIndex == R.styleable.Ui_Transition_Reveal_android_centerY) {
-				this.mCenterYFraction = attributes.getFraction(attrIndex, 1, 1, mCenterYFraction);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionStartRadius) {
+				this.startRadius = (float) attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionEndRadius) {
+				this.endRadius = (float) attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionAppearVisibility) {
+				this.appearVisibility = attributes.getInteger(attrIndex, appearVisibility);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionDisappearVisibility) {
+				this.disappearVisibility = attributes.getInteger(attrIndex, disappearVisibility);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionStartVisibility) {
+				this.startVisibility = attributes.getInteger(attrIndex, startVisibility);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionEndVisibility) {
+				this.endVisibility = attributes.getInteger(attrIndex, endVisibility);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionCenterGravity) {
+				this.centerGravity = attributes.getInteger(attrIndex, 0);
+			}else if (attrIndex == R.styleable.Transition_Reveal_transitionCenterHorizontalOffset) {
+				this.centerHorizontalOffset = attributes.getDimensionPixelSize(attrIndex, 0);
+			} else if (attrIndex == R.styleable.Transition_Reveal_transitionCenterVerticalOffset) {
+				this.centerVerticalOffset = attributes.getDimensionPixelSize(attrIndex, 0);
+			}  else if (attrIndex == R.styleable.Transition_Reveal_android_centerX) {
+				this.centerXFraction = attributes.getFraction(attrIndex, 1, 1, centerXFraction);
+			} else if (attrIndex == R.styleable.Transition_Reveal_android_centerY) {
+				this.centerYFraction = attributes.getFraction(attrIndex, 1, 1, centerYFraction);
 			}
 		}
 		attributes.recycle();
@@ -290,8 +289,7 @@ public class Reveal extends Visibility {
 	 * @param view The view of which radius to calculate.
 	 * @return Calculated radius that may be used as end/start radius for the desired reveal animation.
 	 */
-	@FloatRange(from = 0)
-	public static float calculateRadius(@NonNull final View view) {
+	@FloatRange(from = 0) public static float calculateRadius(@NonNull final View view) {
 		return calculateRadius(view.getWidth(), view.getHeight());
 	}
 
@@ -303,8 +301,7 @@ public class Reveal extends Visibility {
 	 * @param height The height or vertical distance from which to calculate radius.
 	 * @return Calculated radius that may be used as end/start radius for the desired reveal animation.
 	 */
-	@FloatRange(from = 0)
-	public static float calculateRadius(@FloatRange(from = 0) final float width, @FloatRange(from = 0) final float height) {
+	@FloatRange(from = 0) public static float calculateRadius(@FloatRange(from = 0) final float width, @FloatRange(from = 0) final float height) {
 		return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
 	}
 
@@ -312,9 +309,7 @@ public class Reveal extends Visibility {
 	 * Same as {@link #resolveCenterPosition(View, float, float)} with fraction {@code 0.5} for booth
 	 * center coordinates.
 	 */
-	@Size(2)
-	@NonNull
-	public static float[] resolveCenterPosition(@NonNull final View view) {
+	@NonNull @Size(2) public static float[] resolveCenterPosition(@NonNull final View view) {
 		return resolveCenterPosition(view, CENTER_FRACTION, CENTER_FRACTION);
 	}
 
@@ -330,9 +325,7 @@ public class Reveal extends Visibility {
 	 *                        {@code [0.0, 1.0]} range.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
 	 */
-	@Size(2)
-	@NonNull
-	public static float[] resolveCenterPosition(
+	@NonNull @Size(2) public static float[] resolveCenterPosition(
 			@NonNull final View view,
 			@FloatRange(from = 0, to = 1) final float centerXFraction,
 			@FloatRange(from = 0, to = 1) final float centerYFraction
@@ -348,9 +341,7 @@ public class Reveal extends Visibility {
 	 * Same as {@link #resolveCenter(View, float, float)} with fraction {@code 0.5} for booth center
 	 * coordinates.
 	 */
-	@Size(2)
-	@NonNull
-	public static float[] resolveCenter(@NonNull final View view) {
+	@NonNull @Size(2) public static float[] resolveCenter(@NonNull final View view) {
 		return resolveCenter(view, CENTER_FRACTION, CENTER_FRACTION);
 	}
 
@@ -365,9 +356,7 @@ public class Reveal extends Visibility {
 	 *                        {@code [0.0, 1.0]} range.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
 	 */
-	@Size(2)
-	@NonNull
-	public static float[] resolveCenter(
+	@NonNull @Size(2) public static float[] resolveCenter(
 			@NonNull final View view,
 			@FloatRange(from = 0, to = 1) final float centerXFraction,
 			@FloatRange(from = 0, to = 1) final float centerYFraction
@@ -384,9 +373,7 @@ public class Reveal extends Visibility {
 	 *
 	 * @see #resolveCenterPosition(View)
 	 */
-	@UiThread
-	@Nullable
-	public static Animator createAnimator(
+	@UiThread @Nullable public static Animator createAnimator(
 			@NonNull final View view,
 			@FloatRange(from = 0) final float radiusStart,
 			@FloatRange(from = 0) final float radiusEnd
@@ -413,11 +400,10 @@ public class Reveal extends Visibility {
 	 * @return Animator that will play circular reveal animation for the specified view according
 	 * to the specified parameters when started or {@code null} if the start and end radii values
 	 * are the same or the target view is already detached from window.
+	 *
 	 * @see ViewAnimationUtils#createCircularReveal(View, int, int, float, float)
 	 */
-	@UiThread
-	@Nullable
-	public static Animator createAnimator(
+	@UiThread @Nullable public static Animator createAnimator(
 			@NonNull final View view,
 			@IntRange(from = 0) final int centerX,
 			@IntRange(from = 0) final int centerY,
@@ -443,11 +429,11 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@link #REVEAL}</b>
 	 *
 	 * @param mode The desired mode. One of {@link #REVEAL} or {@link #CONCEAL}.
+	 *
 	 * @see #getMode()
 	 */
-	@Override
-	public final void setMode(@RevealMode final int mode) {
-		this.mMode = mode;
+	@Override public final void setMode(@RevealMode final int mode) {
+		this.mode = mode;
 	}
 
 	/**
@@ -455,9 +441,8 @@ public class Reveal extends Visibility {
 	 *
 	 * @return One of {@link #REVEAL} or {@link #CONCEAL}.
 	 */
-	@RevealMode
-	public final int getMode() {
-		return mMode;
+	@RevealMode public final int getMode() {
+		return mode;
 	}
 
 	/**
@@ -467,12 +452,13 @@ public class Reveal extends Visibility {
 	 *
 	 * @param radius The desired radius in pixels. May be {@code null} to use the default approach
 	 *               to compute start radius based on the reveal mode.
-	 * @see R.attr#uiStartRadius ui:uiStartRadius
+	 *
+	 * @see R.attr#transitionStartRadius ui:uiStartRadius
 	 * @see #getStartRadius()
 	 * @see #setEndRadius(Float)
 	 */
 	public void setStartRadius(@Nullable final Float radius) {
-		this.mStartRadius = radius;
+		this.startRadius = radius;
 	}
 
 	/**
@@ -480,11 +466,11 @@ public class Reveal extends Visibility {
 	 *
 	 * @return Start radius in pixels or {@code null} if this radius will be calculated based on the
 	 * reveal mode.
+	 *
 	 * @see #setStartRadius(Float)
 	 */
-	@Nullable
-	public Float getStartRadius() {
-		return mStartRadius;
+	@Nullable public Float getStartRadius() {
+		return startRadius;
 	}
 
 	/**
@@ -494,12 +480,13 @@ public class Reveal extends Visibility {
 	 *
 	 * @param radius The desired radius in pixels. May be {@code null} to use the default approach
 	 *               to compute end radius based on the reveal mode.
-	 * @see R.attr#uiEndRadius ui:uiEndRadius
+	 *
+	 * @see R.attr#transitionEndRadius ui:uiEndRadius
 	 * @see #getEndRadius()
 	 * @see #setStartRadius(Float)
 	 */
 	public void setEndRadius(@Nullable final Float radius) {
-		this.mEndRadius = radius;
+		this.endRadius = radius;
 	}
 
 	/**
@@ -507,11 +494,11 @@ public class Reveal extends Visibility {
 	 *
 	 * @return End radius in pixels or {@code null} if this radius will be calculated based on the
 	 * reveal mode.
+	 *
 	 * @see #setEndRadius(Float)
 	 */
-	@Nullable
-	public Float getEndRadius() {
-		return mEndRadius;
+	@Nullable public Float getEndRadius() {
+		return endRadius;
 	}
 
 	/**
@@ -520,11 +507,12 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
-	 * @see R.attr#uiStartVisibility ui:uiStartVisibility
+	 *
+	 * @see R.attr#transitionStartVisibility ui:uiStartVisibility
 	 * @see #getStartVisibility()
 	 */
 	public void setStartVisibility(final int visibility) {
-		this.mStartVisibility = visibility;
+		this.startVisibility = visibility;
 	}
 
 	/**
@@ -532,10 +520,11 @@ public class Reveal extends Visibility {
 	 * (its animation) starts.
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
+	 *
 	 * @see #setStartVisibility(int)
 	 */
 	public int getStartVisibility() {
-		return mStartVisibility;
+		return startVisibility;
 	}
 
 	/**
@@ -545,21 +534,23 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
-	 * @see R.attr#uiEndVisibility ui:uiEndVisibility
+	 *
+	 * @see R.attr#transitionEndVisibility ui:uiEndVisibility
 	 * @see #getEndVisibility()
 	 */
 	public void setEndVisibility(final int visibility) {
-		this.mEndVisibility = visibility;
+		this.endVisibility = visibility;
 	}
 
 	/**
 	 * Returns the visibility flag that will be set to a revealing view whenever this transition ends.
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
+	 *
 	 * @see #setEndVisibility(int)
 	 */
 	public int getEndVisibility() {
-		return mEndVisibility;
+		return endVisibility;
 	}
 
 	/**
@@ -569,11 +560,12 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
-	 * @see R.attr#uiAppearVisibility ui:uiAppearVisibility
+	 *
+	 * @see R.attr#transitionAppearVisibility ui:uiAppearVisibility
 	 * @see #getAppearVisibility()
 	 */
 	public void setAppearVisibility(final int visibility) {
-		this.mAppearVisibility = visibility;
+		this.appearVisibility = visibility;
 	}
 
 	/**
@@ -581,10 +573,11 @@ public class Reveal extends Visibility {
 	 * requested to create an appear animator.
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
+	 *
 	 * @see #setAppearVisibility(int)
 	 */
 	public int getAppearVisibility() {
-		return mAppearVisibility;
+		return appearVisibility;
 	}
 
 	/**
@@ -594,11 +587,12 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@link View#VISIBLE VISIBLE}</b>
 	 *
 	 * @param visibility One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
-	 * @see R.attr#uiDisappearVisibility ui:uiDisappearVisibility
+	 *
+	 * @see R.attr#transitionDisappearVisibility ui:uiDisappearVisibility
 	 * @see #getDisappearVisibility()
 	 */
 	public void setDisappearVisibility(final int visibility) {
-		this.mDisappearVisibility = visibility;
+		this.disappearVisibility = visibility;
 	}
 
 	/**
@@ -606,10 +600,11 @@ public class Reveal extends Visibility {
 	 * requested to created a disappear animator.
 	 *
 	 * @return One of {@link View#VISIBLE}, {@link View#INVISIBLE} or {@link View#GONE}.
+	 *
 	 * @see #setDisappearVisibility(int)
 	 */
 	public int getDisappearVisibility() {
-		return mDisappearVisibility;
+		return disappearVisibility;
 	}
 
 	/**
@@ -627,7 +622,8 @@ public class Reveal extends Visibility {
 	 *                {@link Gravity#TOP}, {@link Gravity#BOTTOM}, {@link Gravity#START}, {@link Gravity#END}
 	 *                or theirs combination. May be {@code null} to use either specified exact center
 	 *                coordinates or the specified fractions to calculate such coordinates.
-	 * @see R.attr#uiCenterGravity ui:uiCenterGravity
+	 *
+	 * @see R.attr#transitionCenterGravity ui:uiCenterGravity
 	 * @see #getCenterGravity()
 	 * @see #setCenterX(Float)
 	 * @see #setCenterY(Float)
@@ -635,7 +631,7 @@ public class Reveal extends Visibility {
 	 * @see #setCenterYFraction(float)
 	 */
 	public void setCenterGravity(@Nullable final Integer gravity) {
-		this.mCenterGravity = gravity;
+		this.centerGravity = gravity;
 	}
 
 	/**
@@ -647,11 +643,11 @@ public class Reveal extends Visibility {
 	 * theirs combination or {@code null} if no gravity has been specified so either center coordinates
 	 * specified via {@link #setCenterX(Float)} and {@link #setCenterY(Float)} will be used or calculated
 	 * using the current center fraction values.
+	 *
 	 * @see #setCenterGravity(Integer)
 	 */
-	@Nullable
-	public Integer getCenterGravity() {
-		return mCenterGravity;
+	@Nullable public Integer getCenterGravity() {
+		return centerGravity;
 	}
 
 	/**
@@ -662,22 +658,24 @@ public class Reveal extends Visibility {
 	 * @param offset The desired offset in pixels. If negative the center x coordinate will be moved
 	 *               the the left, if positive it will be moved to the right, otherwise remains
 	 *               unchanged.
-	 * @see R.attr#uiCenterHorizontalOffset ui:uiCenterHorizontalOffset
+	 *
+	 * @see R.attr#transitionCenterHorizontalOffset ui:uiCenterHorizontalOffset
 	 * @see #getCenterHorizontalOffset()
 	 * @see #setCenterVerticalOffset(int)
 	 */
 	public void setCenterHorizontalOffset(final int offset) {
-		this.mCenterHorizontalOffset = offset;
+		this.centerHorizontalOffset = offset;
 	}
 
 	/**
 	 * Returns the offset for the <b>center x</b> coordinate for animating circle of the reveal animation.
 	 *
 	 * @return Horizontal offset in pixels.
+	 *
 	 * @see #setCenterHorizontalOffset(int)
 	 */
 	public int getCenterHorizontalOffset() {
-		return mCenterHorizontalOffset;
+		return centerHorizontalOffset;
 	}
 
 	/**
@@ -688,22 +686,24 @@ public class Reveal extends Visibility {
 	 * @param offset The desired offset in pixels. If negative the center y coordinate will be moved
 	 *               the the top, if positive it will be moved to the bottom, otherwise remains
 	 *               unchanged.
-	 * @see R.attr#uiCenterVerticalOffset ui:uiCenterVerticalOffset
+	 *
+	 * @see R.attr#transitionCenterVerticalOffset ui:uiCenterVerticalOffset
 	 * @see #getCenterVerticalOffset()
 	 * @see #setCenterHorizontalOffset(int)
 	 */
 	public void setCenterVerticalOffset(final int offset) {
-		this.mCenterVerticalOffset = offset;
+		this.centerVerticalOffset = offset;
 	}
 
 	/**
 	 * Returns the offset for the <b>center y</b> coordinate for animating circle of the reveal animation.
 	 *
 	 * @return Vertical offset in pixels.
+	 *
 	 * @see #setCenterVerticalOffset(int)
 	 */
 	public int getCenterVerticalOffset() {
-		return mCenterVerticalOffset;
+		return centerVerticalOffset;
 	}
 
 	/**
@@ -713,12 +713,13 @@ public class Reveal extends Visibility {
 	 *
 	 * @param centerX The desired center x coordinate in pixels. May be {@code null} to use center
 	 *                x fraction specified via {@link #setCenterXFraction(float)} instead.
+	 *
 	 * @see #getCenterX()
 	 * @see #setCenterXFraction(float)
 	 * @see #setCenterY(Float)
 	 */
 	public void setCenterX(@Nullable final Float centerX) {
-		this.mCenterX = centerX;
+		this.centerX = centerX;
 	}
 
 	/**
@@ -726,11 +727,11 @@ public class Reveal extends Visibility {
 	 *
 	 * @return X coordinate of the center for animating circle in pixels or {@code null} if no coordinate
 	 * has been specified so the fraction will be used to calculate this center coordinate.
+	 *
 	 * @see #setCenterX(Float)
 	 */
-	@Nullable
-	public Float getCenterX() {
-		return mCenterX;
+	@Nullable public Float getCenterX() {
+		return centerX;
 	}
 
 	/**
@@ -740,12 +741,13 @@ public class Reveal extends Visibility {
 	 *
 	 * @param centerY The desired center y coordinate in pixels. May be {@code null} to use center
 	 *                y fraction specified via {@link #setCenterYFraction(float)} instead.
+	 *
 	 * @see #getCenterY()
 	 * @see #setCenterYFraction(float)
 	 * @see #setCenterX(Float)
 	 */
 	public void setCenterY(@Nullable final Float centerY) {
-		this.mCenterY = centerY;
+		this.centerY = centerY;
 	}
 
 	/**
@@ -753,11 +755,11 @@ public class Reveal extends Visibility {
 	 *
 	 * @return Y coordinate of the center for animating circle in pixels or {@code null} if no coordinate
 	 * has been specified so the fraction will be used to calculate this center coordinate.
+	 *
 	 * @see #setCenterY(Float)
 	 */
-	@Nullable
-	public Float getCenterY() {
-		return mCenterY;
+	@Nullable public Float getCenterY() {
+		return centerY;
 	}
 
 	/**
@@ -773,24 +775,25 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@code 0.5}</b>
 	 *
 	 * @param fractionX The desired fraction from the {@code [0.0, 1.0]} range.
+	 *
 	 * @see android.R.attr#centerX android:centerX
 	 * @see #getCenterXFraction()
 	 * @see #setCenterYFraction(float)
 	 * @see #setCenterX(Float)
 	 */
 	public void setCenterXFraction(@FloatRange(from = 0, to = 1) final float fractionX) {
-		this.mCenterXFraction = Math.max(0, Math.min(1, fractionX));
+		this.centerXFraction = Math.max(0, Math.min(1, fractionX));
 	}
 
 	/**
 	 * Returns the fraction of the <b>center x</b> coordinate.
 	 *
 	 * @return Fraction from the {@code [0.0, 1.0]} range.
+	 *
 	 * @see #setCenterXFraction(float)
 	 */
-	@FloatRange(from = 0, to = 1)
-	public float getCenterXFraction() {
-		return mCenterXFraction;
+	@FloatRange(from = 0, to = 1) public float getCenterXFraction() {
+		return centerXFraction;
 	}
 
 	/**
@@ -806,31 +809,30 @@ public class Reveal extends Visibility {
 	 * Default value: <b>{@code 0.5}</b>
 	 *
 	 * @param fractionY The desired fraction from the {@code [0.0, 1.0]} range.
+	 *
 	 * @see android.R.attr#centerY android:centerY
 	 * @see #getCenterYFraction()
 	 * @see #setCenterXFraction(float)
 	 * @see #setCenterY(Float)
 	 */
 	public void setCenterYFraction(@FloatRange(from = 0, to = 1) final float fractionY) {
-		this.mCenterYFraction = Math.max(0, Math.min(1, fractionY));
+		this.centerYFraction = Math.max(0, Math.min(1, fractionY));
 	}
 
 	/**
 	 * Returns the fraction of the <b>center y</b> coordinate.
 	 *
 	 * @return Fraction from the {@code [0.0, 1.0]} range.
+	 *
 	 * @see #setCenterYFraction(float)
 	 */
-	@FloatRange(from = 0, to = 1)
-	public float getCenterYFraction() {
-		return mCenterYFraction;
+	@FloatRange(from = 0, to = 1) public float getCenterYFraction() {
+		return centerYFraction;
 	}
 
 	/**
 	 */
-	@Nullable
-	@Override
-	public Animator onAppear(
+	@Override @Nullable public Animator onAppear(
 			@NonNull final ViewGroup sceneRoot,
 			@NonNull final View view,
 			@Nullable final TransitionValues startValues,
@@ -841,16 +843,14 @@ public class Reveal extends Visibility {
 		if (animator == null) {
 			return null;
 		}
-		animator.addListener(new TransitionAnimatorListener(view, mStartVisibility, mEndVisibility));
-		view.setVisibility(mAppearVisibility);
+		animator.addListener(new TransitionAnimatorListener(view, startVisibility, endVisibility));
+		view.setVisibility(appearVisibility);
 		return animator;
 	}
 
 	/**
 	 */
-	@Nullable
-	@Override
-	public Animator onDisappear(
+	@Override @Nullable public Animator onDisappear(
 			@NonNull final ViewGroup sceneRoot,
 			@NonNull final View view,
 			@Nullable final TransitionValues startValues,
@@ -861,8 +861,8 @@ public class Reveal extends Visibility {
 		if (animator == null) {
 			return null;
 		}
-		animator.addListener(new TransitionAnimatorListener(view, mStartVisibility, mEndVisibility));
-		view.setVisibility(mDisappearVisibility);
+		animator.addListener(new TransitionAnimatorListener(view, startVisibility, endVisibility));
+		view.setVisibility(disappearVisibility);
 		return animator;
 	}
 
@@ -871,40 +871,39 @@ public class Reveal extends Visibility {
 	 *
 	 * @param view The view to which will be the transition applied.
 	 */
-	@VisibleForTesting
-	void calculateTransitionProperties(final View view) {
+	@VisibleForTesting void calculateTransitionProperties(final View view) {
 		// First calculate center of the reveal transition.
 		final float[] center;
-		if (mCenterGravity == null) {
-			center = resolveCenter(view, mCenterXFraction, mCenterYFraction);
+		if (centerGravity == null) {
+			center = resolveCenter(view, centerXFraction, centerYFraction);
 		} else {
 			center = resolveGravityCenter(view);
 		}
-		final float centerX = mCenterX == null ? center[0] : mCenterX;
-		final float centerY = mCenterY == null ? center[1] : mCenterY;
-		mInfo.centerX = centerX + mCenterHorizontalOffset;
-		mInfo.centerY = centerY + mCenterVerticalOffset;
+		final float centerX = this.centerX == null ? center[0] : this.centerX;
+		final float centerY = this.centerY == null ? center[1] : this.centerY;
+		info.centerX = centerX + centerHorizontalOffset;
+		info.centerY = centerY + centerVerticalOffset;
 		// Now calculate start with end radius of the reveal transition.
 		final float[] radii = calculateTransitionRadii(view);
-		mInfo.startRadius = mStartRadius == null ? radii[0] : mStartRadius;
-		mInfo.endRadius = mEndRadius == null ? radii[1] : mEndRadius;
+		info.startRadius = startRadius == null ? radii[0] : startRadius;
+		info.endRadius = endRadius == null ? radii[1] : endRadius;
 	}
 
 	/**
 	 * Returns info for the current reveal animation configuration.
 	 *
 	 * @return Current reveal info.
+	 *
 	 * @see #calculateTransitionProperties(View)
 	 */
-	@NonNull
 	@VisibleForTesting
-	final Info getInfo() {
-		return mInfo;
+	@NonNull final Info getInfo() {
+		return info;
 	}
 
 	/**
 	 * Resolves center coordinates for the reveal animation of the specified <var>view</var> depending
-	 * on the current value of {@link #mCenterGravity}.
+	 * on the current value of {@link #centerGravity}.
 	 *
 	 * @param view The view for which will be the reveal animation run.
 	 * @return An array with center coordinates: centerX[0], centerY[1].
@@ -915,9 +914,9 @@ public class Reveal extends Visibility {
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final int layoutDirection = view.getLayoutDirection();
-		final int absoluteGravity = Gravity.getAbsoluteGravity(mCenterGravity, layoutDirection);
+		final int absoluteGravity = Gravity.getAbsoluteGravity(centerGravity, layoutDirection);
 		final int horizontalGravity = absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK;
-		final int verticalGravity = mCenterGravity & Gravity.VERTICAL_GRAVITY_MASK;
+		final int verticalGravity = centerGravity & Gravity.VERTICAL_GRAVITY_MASK;
 		// Resolve center horizontal coordinate.
 		switch (horizontalGravity) {
 			case Gravity.CENTER_HORIZONTAL:
@@ -949,7 +948,7 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Calculates start and end radius for the reveal animation of the specified <var>view</var>
-	 * depending on the current {@link #mMode}.
+	 * depending on the current {@link #mode}.
 	 *
 	 * @param view The view for which reveal animation to calculate start and end radius.
 	 * @return An array with two radii: startRadius[0], endRadius[1].
@@ -957,7 +956,7 @@ public class Reveal extends Visibility {
 	private float[] calculateTransitionRadii(final View view) {
 		final float startRadius;
 		final float endRadius;
-		switch (mMode) {
+		switch (mode) {
 			case CONCEAL:
 				startRadius = calculateTransitionRadius(view);
 				endRadius = 0;
@@ -977,7 +976,7 @@ public class Reveal extends Visibility {
 	 * center coordinates to the outermost edge of the given view.
 	 * <p>
 	 * <b>Note, that this method assumes that center coordinates for the reveal transitions has
-	 * been already calculated and are presented in {@link #mInfo}</b>.
+	 * been already calculated and are presented in {@link #info}</b>.
 	 *
 	 * @param view The view for which reveal animation to calculate the requested radius.
 	 * @return Calculated radius that should be used as end/start radius for reveal animation
@@ -986,8 +985,8 @@ public class Reveal extends Visibility {
 	private float calculateTransitionRadius(final View view) {
 		final float horizontalDistance;
 		final float verticalDistance;
-		final float centerX = mInfo.centerX;
-		final float centerY = mInfo.centerY;
+		final float centerX = info.centerX;
+		final float centerY = info.centerY;
 		final float viewWidth = view.getWidth();
 		final float viewHeight = view.getHeight();
 		final float[] viewCenter = resolveCenter(view);
@@ -1006,7 +1005,7 @@ public class Reveal extends Visibility {
 
 	/**
 	 * Creates a new instance of circular reveal Animator for the specified <var>view</var> with current
-	 * reveal properties specified within {@link #mInfo}.
+	 * reveal properties specified within {@link #info}.
 	 * <p>
 	 * <b>Note, that this animator will be already wrapped in {@link AnimatorWrapper} which will have
 	 * PAUSE and RESUME features disabled to ensure that there will be no exception thrown by the
@@ -1016,14 +1015,13 @@ public class Reveal extends Visibility {
 	 * @param view The view for which to create the requested animator.
 	 * @return Animator that will play circular reveal animation when started.
 	 */
-	@Nullable
-	private Animator createAnimatorFromInfo(final View view) {
+	@Nullable private Animator createAnimatorFromInfo(final View view) {
 		return createAnimator(
 				view,
-				Math.round(mInfo.centerX),
-				Math.round(mInfo.centerY),
-				mInfo.startRadius,
-				mInfo.endRadius
+				Math.round(info.centerX),
+				Math.round(info.centerY),
+				info.startRadius,
+				info.endRadius
 		);
 	}
 
@@ -1035,8 +1033,7 @@ public class Reveal extends Visibility {
 	 * Class holding necessary values for the reveal transition that are exclusively associated with
 	 * the currently transitioning view.
 	 */
-	@VisibleForTesting
-	static final class Info {
+	@VisibleForTesting static final class Info {
 
 		/**
 		 * Reveal circle radius.
@@ -1053,8 +1050,7 @@ public class Reveal extends Visibility {
 	 * Listener that is used by {@link Reveal} transition to change properties of the animating view
 	 * according to the received animation callbacks.
 	 */
-	@VisibleForTesting
-	static final class TransitionAnimatorListener extends AnimatorListenerAdapter {
+	@VisibleForTesting static final class TransitionAnimatorListener extends AnimatorListenerAdapter {
 
 		/**
 		 * View of which properties to change due to received animation callbacks.
@@ -1088,16 +1084,14 @@ public class Reveal extends Visibility {
 
 		/**
 		 */
-		@Override
-		public void onAnimationStart(@NonNull final Animator animation) {
-			animatingView.setVisibility(visibilityStart);
+		@Override public void onAnimationStart(@NonNull final Animator animation) {
+			this.animatingView.setVisibility(visibilityStart);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationEnd(@NonNull final Animator animation) {
-			animatingView.setVisibility(visibilityEnd);
+		@Override public void onAnimationEnd(@NonNull final Animator animation) {
+			this.animatingView.setVisibility(visibilityEnd);
 		}
 	}
 }
