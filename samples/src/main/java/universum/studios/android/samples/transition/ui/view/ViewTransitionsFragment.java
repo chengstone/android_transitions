@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.samples.transition.ui.view;
 
@@ -36,19 +36,17 @@ import universum.studios.android.widget.adapter.OnDataSetActionListener;
  */
 public final class ViewTransitionsFragment extends SamplesFragment implements OnDataSetActionListener {
 
-	@SuppressWarnings("unused")
-	private static final String TAG = "ViewTransitionsFragment";
-
 	private ViewTransitionsAdapter adapter;
 
-	@Nullable
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override @Nullable public View onCreateView(
+			@NonNull final LayoutInflater inflater,
+			@Nullable final ViewGroup container,
+			@Nullable final Bundle savedInstanceState
+	) {
 		return inflater.inflate(R.layout.fragment_recycler, container, false);
 	}
 
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	@Override public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		final RecyclerView recyclerView = view.findViewById(android.R.id.list);
 		recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -57,13 +55,13 @@ public final class ViewTransitionsFragment extends SamplesFragment implements On
 		recyclerView.setAdapter(adapter);
 	}
 
-	@Override
-	public boolean onDataSetActionSelected(int action, int position, long id, @Nullable Object data) {
+	@Override public boolean onDataSetActionSelected(final int action, final int position, final long id, @Nullable final Object data) {
 		switch (action) {
 			case ViewTransitionsAdapter.ACTION_CLICK:
-				adapter.getItem(position).start(getActivity());
+				adapter.getItem(position).start(requireActivity());
 				return true;
+			default:
+				return false;
 		}
-		return false;
 	}
 }

@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -111,6 +111,7 @@ import java.util.List;
  * </pre>
  *
  * @author Martin Albedinsky
+ * @since 1.0
  */
 public abstract class BaseNavigationalTransition<T extends BaseNavigationalTransition> {
 
@@ -195,15 +196,17 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 
 	/**
+	 * This field has been deprecated and will be made private in the next release.
+	 * <p>
 	 * Class of activity that should be started as new Intent whenever this navigational transition
 	 * is started via {@link #start(Activity)}.
 	 */
-	protected final Class<? extends Activity> mClassOfTransitionActivity;
+	private final Class<? extends Activity> classOfTransitionActivity;
 
 	/**
 	 * Bundle containing extras for the activity transition activity.
 	 */
-	private Bundle mIntentExtras;
+	private Bundle intentExtras;
 
 	/**
 	 * If set (other than {@link #RC_NONE}) starting of intent specific for this navigational transition
@@ -211,103 +214,103 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * or {@link Fragment#startActivityForResult(Intent, int)} depends on the type of caller and
 	 * current configuration of this transition.
 	 */
-	int mRequestCode = RC_NONE;
+	int requestCode = RC_NONE;
 
 	/**
 	 * Transition that should be attached to caller's activity window if {@link #TRANSITION_ENTER}
-	 * flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setEnterTransition(Transition)
 	 */
-	private Transition mEnterTransition;
+	private Transition enterTransition;
 
 	/**
 	 * Transition that should be attached to caller's activity window if {@link #TRANSITION_REENTER}
-	 * flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setReenterTransition(Transition)
 	 */
-	private Transition mReenterTransition;
+	private Transition reenterTransition;
 
 	/**
 	 * Transition that should be attached to caller's activity window if {@link #TRANSITION_RETURN}
-	 * flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setReturnTransition(Transition)
 	 */
-	private Transition mReturnTransition;
+	private Transition returnTransition;
 
 	/**
 	 * Transition that should be attached to caller's activity window if {@link #TRANSITION_EXIT}
-	 * flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setExitTransition(Transition)
 	 */
-	private Transition mExitTransition;
+	private Transition exitTransition;
 
 	/**
 	 * Transition for shared element that should be attached to caller's activity window if
-	 * {@link #TRANSITION_SHARED_ELEMENT_ENTER} flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * {@link #TRANSITION_SHARED_ELEMENT_ENTER} flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setSharedElementEnterTransition(Transition)
 	 */
-	private Transition mSharedElementEnterTransition;
+	private Transition sharedElementEnterTransition;
 
 	/**
 	 * Transition for shared element that should be attached to caller's activity window if
-	 * {@link #TRANSITION_SHARED_ELEMENT_REENTER} flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * {@link #TRANSITION_SHARED_ELEMENT_REENTER} flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setSharedElementReenterTransition(Transition)
 	 */
-	private Transition mSharedElementReenterTransition;
+	private Transition sharedElementReenterTransition;
 
 	/**
 	 * Transition for shared element that should be attached to caller's activity window if
-	 * {@link #TRANSITION_SHARED_ELEMENT_RETURN} flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * {@link #TRANSITION_SHARED_ELEMENT_RETURN} flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setSharedElementReturnTransition(Transition)
 	 */
-	private Transition mSharedElementReturnTransition;
+	private Transition sharedElementReturnTransition;
 
 	/**
 	 * Transition for shared element that should be attached to caller's activity window if
-	 * {@link #TRANSITION_SHARED_ELEMENT_EXIT} flag is contained within {@link #mSpecifiedTransitions} flags.
+	 * {@link #TRANSITION_SHARED_ELEMENT_EXIT} flag is contained within {@link #specifiedTransitions} flags.
 	 *
 	 * @see Window#setSharedElementExitTransition(Transition)
 	 */
-	private Transition mSharedElementExitTransition;
+	private Transition sharedElementExitTransition;
 
 	/**
 	 * Transition flags determining which transitions has been specified for this navigational transition.
 	 */
-	private int mSpecifiedTransitions;
+	private int specifiedTransitions;
 
 	/**
 	 * Boolean flag indicating whether an <b>enter</b> transition can overlap or not.
 	 */
-	private Boolean mAllowEnterTransitionOverlap;
+	private Boolean allowEnterTransitionOverlap;
 
 	/**
 	 * Boolean flag indicating whether an <b>return</b> transition can overlap or not.
 	 */
-	private Boolean mAllowReturnTransitionOverlap;
+	private Boolean allowReturnTransitionOverlap;
 
 	/**
 	 * List containing all shared elements specified for this navigational transition. If not empty,
 	 * these elements should be transferred to the called activity through Bundle created from
 	 * ActivityOptions that can be created via {@link #makeSceneTransitionAnimation(Activity)}.
 	 */
-	private List<Pair<View, String>> mSharedElements;
+	private List<Pair<View, String>> sharedElements;
 
 	/**
 	 * Boolean flag indicating whether transitioning shared elements should use overlay or not.
 	 */
-	private Boolean mSharedElementUseOverlay;
+	private Boolean sharedElementUseOverlay;
 
 	/**
 	 * Inflater that can be used to inflate a new transition or transition manager.
 	 */
-	private TransitionInflater mTransitionInflater;
+	private TransitionInflater transitionInflater;
 
 	/*
 	 * Constructors ================================================================================
@@ -317,7 +320,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Creates a new instance of NavigationalTransition without transition activity class.
 	 */
 	public BaseNavigationalTransition() {
-		this.mClassOfTransitionActivity = null;
+		this.classOfTransitionActivity = null;
 	}
 
 	/**
@@ -328,7 +331,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *                                  upon this navigational transition.
 	 */
 	public BaseNavigationalTransition(@NonNull final Class<? extends Activity> classOfTransitionActivity) {
-		this.mClassOfTransitionActivity = classOfTransitionActivity;
+		this.classOfTransitionActivity = classOfTransitionActivity;
 	}
 
 	/*
@@ -340,11 +343,12 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *
 	 * @return This transitions's associated activity class or {@code null} if not activity class
 	 * has been specified.
+	 *
 	 * @see #BaseNavigationalTransition(Class)
 	 */
-	@Nullable
-	public final Class<? extends Activity> getActivityClass() {
-		return mClassOfTransitionActivity;
+	@SuppressWarnings("deprecation")
+	@Nullable public final Class<? extends Activity> getActivityClass() {
+		return classOfTransitionActivity;
 	}
 
 	/**
@@ -354,11 +358,12 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *
 	 * @param extras The desired bundle with extras. May be {@code null} to clear the current one.
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #intentExtras()
 	 */
 	@SuppressWarnings("unchecked")
 	public T intentExtras(@Nullable final Bundle extras) {
-		this.mIntentExtras = extras;
+		this.intentExtras = extras;
 		return (T) this;
 	}
 
@@ -369,11 +374,11 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * when this method is called for the first time.
 	 *
 	 * @return The extras bundle for the <b>incoming</b> activity.
+	 *
 	 * @see #intentExtras(Bundle)
 	 */
-	@NonNull
-	public Bundle intentExtras() {
-		return mIntentExtras == null ? (mIntentExtras = new Bundle()) : mIntentExtras;
+	@NonNull public Bundle intentExtras() {
+		return intentExtras == null ? (intentExtras = new Bundle()) : intentExtras;
 	}
 
 	/**
@@ -385,6 +390,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param requestCode The desired request code. Can be {@link #RC_NONE} to not start activity
 	 *                    for result.
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #requestCode()
 	 * @see Activity#startActivityForResult(Intent, int)
 	 * @see Activity#startActivityForResult(Intent, int, Bundle)
@@ -392,7 +398,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T requestCode(@IntRange(from = RC_NONE) final int requestCode) {
-		this.mRequestCode = requestCode;
+		this.requestCode = requestCode;
 		return (T) this;
 	}
 
@@ -401,15 +407,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *
 	 * @return Specified request code or {@link #RC_NONE} by default.
 	 */
-	@IntRange(from = RC_NONE)
-	public int requestCode() {
-		return mRequestCode;
+	@IntRange(from = RC_NONE) public int requestCode() {
+		return requestCode;
 	}
 
 	/**
 	 * Specifies enter transition to be attached to a window of an <b>incoming</b> activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #enterTransition()
 	 * @see Window#setEnterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -417,8 +423,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T enterTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_ENTER;
-		this.mEnterTransition = transition;
+		this.specifiedTransitions |= TRANSITION_ENTER;
+		this.enterTransition = transition;
 		return (T) this;
 	}
 
@@ -428,9 +434,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition specified via {@link #enterTransition(Transition)} or {@code null} by
 	 * default.
 	 */
-	@Nullable
-	public Transition enterTransition() {
-		return mEnterTransition;
+	@Nullable public Transition enterTransition() {
+		return enterTransition;
 	}
 
 	/**
@@ -438,6 +443,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #reenterTransition()
 	 * @see Window#setReenterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -445,8 +451,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T reenterTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_REENTER;
-		this.mReenterTransition = transition;
+		this.specifiedTransitions |= TRANSITION_REENTER;
+		this.reenterTransition = transition;
 		return (T) this;
 	}
 
@@ -456,15 +462,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition specified via {@link #reenterTransition(Transition)} or {@code null} by
 	 * default.
 	 */
-	@Nullable
-	public Transition reenterTransition() {
-		return mReenterTransition;
+	@Nullable public Transition reenterTransition() {
+		return reenterTransition;
 	}
 
 	/**
 	 * Specifies return transition to be attached to a window of an <b>incoming</b> activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #returnTransition()
 	 * @see Window#setReturnTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -472,8 +478,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T returnTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_RETURN;
-		this.mReturnTransition = transition;
+		this.specifiedTransitions |= TRANSITION_RETURN;
+		this.returnTransition = transition;
 		return (T) this;
 	}
 
@@ -483,9 +489,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition specified via {@link #returnTransition(Transition)} or {@code null} by
 	 * default.
 	 */
-	@Nullable
-	public Transition returnTransition() {
-		return mReturnTransition;
+	@Nullable public Transition returnTransition() {
+		return returnTransition;
 	}
 
 	/**
@@ -493,6 +498,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #exitTransition()
 	 * @see Window#setExitTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -500,8 +506,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T exitTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_EXIT;
-		this.mExitTransition = transition;
+		this.specifiedTransitions |= TRANSITION_EXIT;
+		this.exitTransition = transition;
 		return (T) this;
 	}
 
@@ -511,9 +517,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition specified via {@link #exitTransition(Transition)} or {@code null} by
 	 * default.
 	 */
-	@Nullable
-	public Transition exitTransition() {
-		return mExitTransition;
+	@Nullable public Transition exitTransition() {
+		return exitTransition;
 	}
 
 	/**
@@ -523,13 +528,14 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Default value: <b>{@code unspecified}</b>
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #allowEnterTransitionOverlap()
 	 * @see Window#setAllowEnterTransitionOverlap(boolean)
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
 	public T allowEnterTransitionOverlap(final boolean allow) {
-		this.mAllowEnterTransitionOverlap = allow;
+		this.allowEnterTransitionOverlap = allow;
 		return (T) this;
 	}
 
@@ -542,7 +548,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return {@code True} if overlapping of enter transition is enabled, {@code false} otherwise.
 	 */
 	public boolean allowEnterTransitionOverlap() {
-		return mAllowEnterTransitionOverlap == null || mAllowEnterTransitionOverlap;
+		return allowEnterTransitionOverlap == null || allowEnterTransitionOverlap;
 	}
 
 	/**
@@ -552,13 +558,14 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Default value: <b>{@code unspecified}</b>
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #allowReturnTransitionOverlap()
 	 * @see Window#setAllowReturnTransitionOverlap(boolean)
 	 * @see #configureIncomingTransitions(Activity)
 	 */
 	@SuppressWarnings("unchecked")
 	public T allowReturnTransitionOverlap(final boolean allow) {
-		this.mAllowReturnTransitionOverlap = allow;
+		this.allowReturnTransitionOverlap = allow;
 		return (T) this;
 	}
 
@@ -571,7 +578,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return {@code True} if overlapping of return transition is enabled, {@code false} otherwise.
 	 */
 	public boolean allowReturnTransitionOverlap() {
-		return mAllowReturnTransitionOverlap == null || mAllowReturnTransitionOverlap;
+		return allowReturnTransitionOverlap == null || allowReturnTransitionOverlap;
 	}
 
 	/**
@@ -579,6 +586,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElementEnterTransition()
 	 * @see Window#setSharedElementEnterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -586,8 +594,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T sharedElementEnterTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_ENTER;
-		this.mSharedElementEnterTransition = transition;
+		this.specifiedTransitions |= TRANSITION_SHARED_ELEMENT_ENTER;
+		this.sharedElementEnterTransition = transition;
 		return (T) this;
 	}
 
@@ -597,9 +605,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition for shared element specified via {@link #sharedElementEnterTransition(Transition)}
 	 * or {@code null} by default.
 	 */
-	@Nullable
-	public Transition sharedElementEnterTransition() {
-		return mSharedElementEnterTransition;
+	@Nullable public Transition sharedElementEnterTransition() {
+		return sharedElementEnterTransition;
 	}
 
 	/**
@@ -607,6 +614,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * activity whenever {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElementReenterTransition()
 	 * @see Window#setSharedElementReenterTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -614,8 +622,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T sharedElementReenterTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_REENTER;
-		this.mSharedElementReenterTransition = transition;
+		this.specifiedTransitions |= TRANSITION_SHARED_ELEMENT_REENTER;
+		this.sharedElementReenterTransition = transition;
 		return (T) this;
 	}
 
@@ -625,9 +633,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition for shared element specified via {@link #sharedElementReenterTransition(Transition)}
 	 * or {@code null} by default.
 	 */
-	@Nullable
-	public Transition sharedElementReenterTransition() {
-		return mSharedElementReenterTransition;
+	@Nullable public Transition sharedElementReenterTransition() {
+		return sharedElementReenterTransition;
 	}
 
 	/**
@@ -635,6 +642,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * activity.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElementReturnTransition()
 	 * @see Window#setSharedElementReturnTransition(Transition)
 	 * @see #inflateTransition(Context, int)
@@ -642,8 +650,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T sharedElementReturnTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_RETURN;
-		this.mSharedElementReturnTransition = transition;
+		this.specifiedTransitions |= TRANSITION_SHARED_ELEMENT_RETURN;
+		this.sharedElementReturnTransition = transition;
 		return (T) this;
 	}
 
@@ -653,9 +661,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition for shared element specified via {@link #sharedElementReturnTransition(Transition)}
 	 * or {@code null} by default.
 	 */
-	@Nullable
-	public Transition sharedElementReturnTransition() {
-		return mSharedElementReturnTransition;
+	@Nullable public Transition sharedElementReturnTransition() {
+		return sharedElementReturnTransition;
 	}
 
 	/**
@@ -663,14 +670,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * activity whenever {@link #start(Activity)} is invoked.
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElementExitTransition()
 	 * @see Window#setSharedElementExitTransition(Transition)
 	 * @see #inflateTransition(Context, int)
 	 */
 	@SuppressWarnings("unchecked")
 	public T sharedElementExitTransition(@Nullable final Transition transition) {
-		this.mSpecifiedTransitions |= TRANSITION_SHARED_ELEMENT_EXIT;
-		this.mSharedElementExitTransition = transition;
+		this.specifiedTransitions |= TRANSITION_SHARED_ELEMENT_EXIT;
+		this.sharedElementExitTransition = transition;
 		return (T) this;
 	}
 
@@ -680,9 +688,8 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Transition for shared element specified via {@link #sharedElementExitTransition(Transition)}
 	 * or {@code null} by default.
 	 */
-	@Nullable
-	public Transition sharedElementExitTransition() {
-		return mSharedElementExitTransition;
+	@Nullable public Transition sharedElementExitTransition() {
+		return sharedElementExitTransition;
 	}
 
 	/**
@@ -692,6 +699,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Default value: <b>{@code unspecified}</b>
 	 *
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElementsUseOverlay()
 	 * @see Window#setSharedElementsUseOverlay(boolean)
 	 * @see #configureIncomingTransitions(Activity)
@@ -699,7 +707,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 */
 	@SuppressWarnings("unchecked")
 	public T sharedElementsUseOverlay(final boolean useOverlay) {
-		this.mSharedElementUseOverlay = useOverlay;
+		this.sharedElementUseOverlay = useOverlay;
 		return (T) this;
 	}
 
@@ -710,10 +718,11 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * behaviour of {@link Window#getSharedElementsUseOverlay()}.
 	 *
 	 * @return {@code True} if shared elements will use overlay, {@code false} otherwise.
+	 *
 	 * @see #sharedElementsUseOverlay(boolean)
 	 */
 	public boolean sharedElementsUseOverlay() {
-		return mSharedElementUseOverlay == null || mSharedElementUseOverlay;
+		return sharedElementUseOverlay == null || sharedElementUseOverlay;
 	}
 
 	/**
@@ -725,16 +734,16 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param context  Context used to inflate the desired transition.
 	 * @param resource Resource id of the desired transition to inflate.
 	 * @return Inflated transition.
+	 *
 	 * @see #inflateTransitionManager(Context, int, ViewGroup)
 	 */
-	@Nullable
 	@SuppressLint("NewApi")
-	public Transition inflateTransition(@NonNull final Context context, final int resource) {
+	@Nullable public Transition inflateTransition(@NonNull final Context context, final int resource) {
 		if (MATERIAL_SUPPORT) {
-			if (mTransitionInflater == null) {
-				this.mTransitionInflater = TransitionInflater.from(context);
+			if (transitionInflater == null) {
+				this.transitionInflater = TransitionInflater.from(context);
 			}
-			return mTransitionInflater.inflateTransition(resource);
+			return transitionInflater.inflateTransition(resource);
 		}
 		return null;
 	}
@@ -749,16 +758,16 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param resource  Resource id of the desired transition manager to inflater.
 	 * @param sceneRoot Root view for the scene with which will the manager operate.
 	 * @return Inflated transition manager.
+	 *
 	 * @see #inflateTransition(Context, int)
 	 */
-	@Nullable
 	@SuppressLint("NewApi")
-	public TransitionManager inflateTransitionManager(@NonNull final Context context, final int resource, @NonNull final ViewGroup sceneRoot) {
+	@Nullable public TransitionManager inflateTransitionManager(@NonNull final Context context, final int resource, @NonNull final ViewGroup sceneRoot) {
 		if (MATERIAL_SUPPORT) {
-			if (mTransitionInflater == null) {
-				this.mTransitionInflater = TransitionInflater.from(context);
+			if (transitionInflater == null) {
+				this.transitionInflater = TransitionInflater.from(context);
 			}
-			return mTransitionInflater.inflateTransitionManager(resource, sceneRoot);
+			return transitionInflater.inflateTransitionManager(resource, sceneRoot);
 		}
 		return null;
 	}
@@ -768,15 +777,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 *
 	 * @param elements The desired shared elements pairs.
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElement(View, String)
 	 */
-	@SafeVarargs
 	@SuppressWarnings("unchecked")
-	public final T sharedElements(@NonNull final Pair<View, String>... elements) {
-		if (mSharedElements == null) {
-			this.mSharedElements = new ArrayList<>(1);
+	@SafeVarargs public final T sharedElements(@NonNull final Pair<View, String>... elements) {
+		if (sharedElements == null) {
+			this.sharedElements = new ArrayList<>(1);
 		}
-		mSharedElements.addAll(Arrays.asList(elements));
+		this.sharedElements.addAll(Arrays.asList(elements));
 		return (T) this;
 	}
 
@@ -793,15 +802,16 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @param element     The view to be shared via transition.
 	 * @param elementName The name of the shared element.
 	 * @return This transition to allow methods chaining.
+	 *
 	 * @see #sharedElements(Pair[])
 	 * @see #makeSceneTransitionAnimation(Activity)
 	 */
 	@SuppressWarnings("unchecked")
 	public T sharedElement(@NonNull final View element, @NonNull final String elementName) {
-		if (mSharedElements == null) {
-			this.mSharedElements = new ArrayList<>(1);
+		if (sharedElements == null) {
+			this.sharedElements = new ArrayList<>(1);
 		}
-		mSharedElements.add(new Pair<>(element, elementName));
+		this.sharedElements.add(new Pair<>(element, elementName));
 		return (T) this;
 	}
 
@@ -809,13 +819,13 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Returns a list of all shared elements specified for this navigational transition.
 	 *
 	 * @return List of shared elements or {@code null} if there are no shared elements specified.
+	 *
 	 * @see #sharedElements(Pair[])
 	 * @see #sharedElement(View, String)
 	 * @see #singleSharedElement()
 	 */
-	@Nullable
-	public List<Pair<View, String>> sharedElements() {
-		return mSharedElements;
+	@Nullable public List<Pair<View, String>> sharedElements() {
+		return sharedElements;
 	}
 
 	/**
@@ -825,12 +835,12 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * this navigational transition.
 	 *
 	 * @return Single shared element or {@code null} if there are no shared elements specified.
+	 *
 	 * @see #sharedElements()
 	 * @see #sharedElement(View, String)
 	 */
-	@Nullable
-	public Pair<View, String> singleSharedElement() {
-		return mSharedElements == null || mSharedElements.isEmpty() ? null : mSharedElements.get(0);
+	@Nullable public Pair<View, String> singleSharedElement() {
+		return sharedElements == null || sharedElements.isEmpty() ? null : sharedElements.get(0);
 	}
 
 	/**
@@ -863,6 +873,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * methods.
 	 *
 	 * @param caller The caller activity that requested start of this navigational transition.
+	 *
 	 * @see #onFinish(Activity)
 	 */
 	@SuppressLint("NewApi")
@@ -871,11 +882,11 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 		final Intent intent = createIntent(caller);
 		if (MATERIAL_SUPPORT) {
 			final Bundle options = makeSceneTransitionAnimation(caller).toBundle();
-			if (mRequestCode == RC_NONE) caller.startActivity(intent, options);
-			else caller.startActivityForResult(intent, mRequestCode, options);
+			if (requestCode == RC_NONE) caller.startActivity(intent, options);
+			else caller.startActivityForResult(intent, requestCode, options);
 		} else {
-			if (mRequestCode == RC_NONE) caller.startActivity(intent);
-			else caller.startActivityForResult(intent, mRequestCode);
+			if (requestCode == RC_NONE) caller.startActivity(intent);
+			else caller.startActivityForResult(intent, requestCode);
 		}
 	}
 
@@ -892,8 +903,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 
 			/**
 			 */
-			@Override
-			public void run() {
+			@Override public void run() {
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && caller.isDestroyed()) {
 					return;
 				}
@@ -953,6 +963,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * method does nothing.
 	 *
 	 * @param activity The activity of which window transitions to configure.
+	 *
 	 * @see Window#setEnterTransition(Transition)
 	 * @see Window#setReturnTransition(Transition)
 	 * @see Window#setSharedElementEnterTransition(Transition)
@@ -963,26 +974,26 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	public void configureIncomingTransitions(@NonNull final Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
-			if ((mSpecifiedTransitions & TRANSITION_ENTER) != 0) {
-				window.setEnterTransition(mEnterTransition);
+			if ((specifiedTransitions & TRANSITION_ENTER) != 0) {
+				window.setEnterTransition(enterTransition);
 			}
-			if ((mSpecifiedTransitions & TRANSITION_RETURN) != 0) {
-				window.setReturnTransition(mReturnTransition);
+			if ((specifiedTransitions & TRANSITION_RETURN) != 0) {
+				window.setReturnTransition(returnTransition);
 			}
-			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_ENTER) != 0) {
-				window.setSharedElementEnterTransition(mSharedElementEnterTransition);
+			if ((specifiedTransitions & TRANSITION_SHARED_ELEMENT_ENTER) != 0) {
+				window.setSharedElementEnterTransition(sharedElementEnterTransition);
 			}
-			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_RETURN) != 0) {
-				window.setSharedElementReturnTransition(mSharedElementReturnTransition);
+			if ((specifiedTransitions & TRANSITION_SHARED_ELEMENT_RETURN) != 0) {
+				window.setSharedElementReturnTransition(sharedElementReturnTransition);
 			}
-			if (mAllowEnterTransitionOverlap != null) {
-				window.setAllowEnterTransitionOverlap(mAllowEnterTransitionOverlap);
+			if (allowEnterTransitionOverlap != null) {
+				window.setAllowEnterTransitionOverlap(allowEnterTransitionOverlap);
 			}
-			if (mAllowReturnTransitionOverlap != null) {
-				window.setAllowReturnTransitionOverlap(mAllowReturnTransitionOverlap);
+			if (allowReturnTransitionOverlap != null) {
+				window.setAllowReturnTransitionOverlap(allowReturnTransitionOverlap);
 			}
-			if (mSharedElementUseOverlay != null) {
-				window.setSharedElementsUseOverlay(mSharedElementUseOverlay);
+			if (sharedElementUseOverlay != null) {
+				window.setSharedElementsUseOverlay(sharedElementUseOverlay);
 			}
 		}
 	}
@@ -1000,6 +1011,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * method does nothing.
 	 *
 	 * @param activity The activity of which window transitions to configure.
+	 *
 	 * @see Window#setReenterTransition(Transition)
 	 * @see Window#setExitTransition(Transition)
 	 * @see Window#setSharedElementReenterTransition(Transition)
@@ -1008,20 +1020,20 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	public void configureOutgoingTransitions(@NonNull final Activity activity) {
 		if (MATERIAL_SUPPORT) {
 			final Window window = activity.getWindow();
-			if ((mSpecifiedTransitions & TRANSITION_REENTER) != 0) {
-				window.setReenterTransition(mReenterTransition);
+			if ((specifiedTransitions & TRANSITION_REENTER) != 0) {
+				window.setReenterTransition(reenterTransition);
 			}
-			if ((mSpecifiedTransitions & TRANSITION_EXIT) != 0) {
-				window.setExitTransition(mExitTransition);
+			if ((specifiedTransitions & TRANSITION_EXIT) != 0) {
+				window.setExitTransition(exitTransition);
 			}
-			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_REENTER) != 0) {
-				window.setSharedElementReenterTransition(mSharedElementReenterTransition);
+			if ((specifiedTransitions & TRANSITION_SHARED_ELEMENT_REENTER) != 0) {
+				window.setSharedElementReenterTransition(sharedElementReenterTransition);
 			}
-			if ((mSpecifiedTransitions & TRANSITION_SHARED_ELEMENT_EXIT) != 0) {
-				window.setSharedElementExitTransition(mSharedElementExitTransition);
+			if ((specifiedTransitions & TRANSITION_SHARED_ELEMENT_EXIT) != 0) {
+				window.setSharedElementExitTransition(sharedElementExitTransition);
 			}
-			if (mSharedElementUseOverlay != null) {
-				window.setSharedElementsUseOverlay(mSharedElementUseOverlay);
+			if (sharedElementUseOverlay != null) {
+				window.setSharedElementsUseOverlay(sharedElementUseOverlay);
 			}
 		}
 	}
@@ -1036,14 +1048,13 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return Activity options with or without attached shared elements that has been added into
 	 * this navigational transition (if any).
 	 */
-	@Nullable
 	@SuppressLint("NewApi")
 	@SuppressWarnings("unchecked")
-	public ActivityOptions makeSceneTransitionAnimation(@NonNull final Activity caller) {
+	@Nullable public ActivityOptions makeSceneTransitionAnimation(@NonNull final Activity caller) {
 		if (MATERIAL_SUPPORT) {
-			if (mSharedElements != null && !mSharedElements.isEmpty()) {
-				final Pair<View, String>[] pairs = new Pair[mSharedElements.size()];
-				mSharedElements.toArray(pairs);
+			if (sharedElements != null && !sharedElements.isEmpty()) {
+				final Pair<View, String>[] pairs = new Pair[sharedElements.size()];
+				this.sharedElements.toArray(pairs);
 				return ActivityOptions.makeSceneTransitionAnimation(caller, pairs);
 			}
 			return ActivityOptions.makeSceneTransitionAnimation(caller);
@@ -1058,16 +1069,15 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * @return New Intent or {@code null} it this navigational transition has no class of transition
 	 * activity specified.
 	 */
-	@NonNull
-	public Intent createIntent(@NonNull final Activity caller) {
-		if (mClassOfTransitionActivity == null) {
+	@NonNull public Intent createIntent(@NonNull final Activity caller) {
+		if (classOfTransitionActivity == null) {
 			throw new UnsupportedOperationException(
 					"Navigational transition(" + getClass().getSimpleName() + ") does not have any class of intended activity specified."
 			);
 		}
-		final Intent intent = new Intent(caller, mClassOfTransitionActivity);
-		if (mIntentExtras != null) {
-			intent.putExtras(mIntentExtras);
+		final Intent intent = new Intent(caller, classOfTransitionActivity);
+		if (intentExtras != null) {
+			intent.putExtras(intentExtras);
 		}
 		return intent;
 	}
@@ -1076,6 +1086,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * Finishes the given <var>caller</var> activity in order to run its exit transitions.
 	 *
 	 * @param caller The activity that should be finished and of which exit transitions should be started.
+	 *
 	 * @see #start(Activity)
 	 */
 	public void finish(@NonNull final Activity caller) {
@@ -1092,6 +1103,7 @@ public abstract class BaseNavigationalTransition<T extends BaseNavigationalTrans
 	 * pre LOLLIPOP Android versions via {@link Activity#overridePendingTransition(int, int)}.
 	 *
 	 * @param caller The activity that requested its finish via this navigational transition.
+	 *
 	 * @see #onStart(Activity)
 	 */
 	@SuppressLint("NewApi")

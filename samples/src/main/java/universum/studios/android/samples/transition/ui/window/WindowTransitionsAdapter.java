@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.samples.transition.ui.window;
 
@@ -35,9 +35,6 @@ import universum.studios.android.widget.adapter.holder.RecyclerViewHolder;
  * @author Martin Albedinsky
  */
 final class WindowTransitionsAdapter extends SimpleRecyclerAdapter<WindowTransitionsAdapter, WindowTransitionsAdapter.ItemHolder, WindowTransition> {
-
-	@SuppressWarnings("unused")
-	private static final String TAG = "WindowTransitionsAdapter";
 
 	static final int ACTION_CLICK = 0x01;
 
@@ -63,25 +60,22 @@ final class WindowTransitionsAdapter extends SimpleRecyclerAdapter<WindowTransit
 		});
 	}
 
-	@Override
-	public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+	@Override public ItemHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 		return new ItemHolder(inflateView(R.layout.item_list_window_transition, parent));
 	}
 
-	@Override
-	public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
+	@Override public void onBindViewHolder(@NonNull final ItemHolder holder, final int position) {
 		((TextView) holder.itemView).setText(getItem(position).getName().replace("_", " "));
 	}
 
 	final class ItemHolder extends RecyclerViewHolder implements View.OnClickListener {
 
-		ItemHolder(@NonNull View itemView) {
+		ItemHolder(@NonNull final View itemView) {
 			super(itemView);
 			itemView.setOnClickListener(this);
 		}
 
-		@Override
-		public void onClick(View v) {
+		@Override public void onClick(@NonNull final View view) {
 			notifyDataSetActionSelected(ACTION_CLICK, getAdapterPosition(), null);
 		}
 	}

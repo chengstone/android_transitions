@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License 
- * you may obtain at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written within this file but as it 
- * is described in the License, the software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
- * 
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -67,9 +67,10 @@ import universum.studios.android.transition.util.TransitionUtils;
  * Xml attributes referenced below.
  *
  * <h3>XML attributes</h3>
- * {@link R.styleable#Ui_Transition_Translate Translate Attributes}
+ * {@link R.styleable#Transition_Translate Translate Attributes}
  *
  * @author Martin Albedinsky
+ * @since 1.1
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class Translate extends Visibility {
@@ -88,14 +89,12 @@ public class Translate extends Visibility {
 	 */
 	@Retention(RetentionPolicy.SOURCE)
 	@IntDef(flag = true, value = {MODE_IN, MODE_OUT})
-	public @interface TranslateMode {
-	}
+	public @interface TranslateMode {}
 
 	/**
 	 * Name of the property holding position on screen for animating view in {@link TransitionValues}.
 	 */
-	@VisibleForTesting
-	static final String PROPERTY_TRANSITION_LOCATION_ON_SCREEN = Translate.class.getName() + ":transition.locationOnScreen";
+	@VisibleForTesting static final String PROPERTY_TRANSITION_LOCATION_ON_SCREEN = Translate.class.getName() + ":transition.locationOnScreen";
 
 	/*
 	 * Interface ===================================================================================
@@ -106,6 +105,7 @@ public class Translate extends Visibility {
 	 * animation along both X and Y axes.
 	 *
 	 * @author Martin Albedinsky
+	 * @since 1.1
 	 */
 	public interface DeltaResolver {
 
@@ -162,15 +162,23 @@ public class Translate extends Visibility {
 
 		/**
 		 */
-		@Override
-		public float resolveDeltaX(@NonNull ViewGroup sceneRoot, @NonNull View view, @Description.ValueRelativity int valueRelativity, float value) {
+		@Override public float resolveDeltaX(
+				@NonNull final ViewGroup sceneRoot,
+				@NonNull final View view,
+				@Description.ValueRelativity final int valueRelativity,
+				final float value
+		) {
 			return resolveDelta(valueRelativity, value, sceneRoot.getWidth(), view.getWidth());
 		}
 
 		/**
 		 */
-		@Override
-		public float resolveDeltaY(@NonNull ViewGroup sceneRoot, @NonNull View view, @Description.ValueRelativity int valueRelativity, float value) {
+		@Override public float resolveDeltaY(
+				@NonNull final ViewGroup sceneRoot,
+				@NonNull final View view,
+				@Description.ValueRelativity final int valueRelativity,
+				final float value
+		) {
 			return resolveDelta(valueRelativity, value, sceneRoot.getHeight(), view.getHeight());
 		}
 
@@ -184,7 +192,12 @@ public class Translate extends Visibility {
 		 * @param viewSize        Size of the view to be translated.
 		 * @return Resolved translation delta according to the specified parameters.
 		 */
-		private float resolveDelta(@Description.ValueRelativity int valueRelativity, float value, int sceneSize, int viewSize) {
+		private float resolveDelta(
+				@Description.ValueRelativity final int valueRelativity,
+				final float value,
+				final int sceneSize,
+				final int viewSize
+		) {
 			switch (valueRelativity) {
 				case Description.RELATIVE_TO_TARGET:
 					return value * viewSize;
@@ -207,9 +220,9 @@ public class Translate extends Visibility {
 	 * should be the view moved relative to its size (width) or relative to the size (width) of the
 	 * root scene.
 	 * <p>
-	 * Relativity of this value is described by {@link #mTranslationXRelativity} value.
+	 * Relativity of this value is described by {@link #translationXRelativity} value.
 	 */
-	private float mTranslationXDelta;
+	private float translationXDelta;
 
 	/**
 	 * Delta by which should be the target view translated/moved in the scene along Y axis. This may
@@ -217,21 +230,21 @@ public class Translate extends Visibility {
 	 * should be the view moved relative to its size (height) or relative to the size (height) of the
 	 * root scene.
 	 * <p>
-	 * Relativity of this value is described by {@link #mTranslationYRelativity} value.
+	 * Relativity of this value is described by {@link #translationYRelativity} value.
 	 */
-	private float mTranslationYDelta;
+	private float translationYDelta;
 
 	/**
-	 * Relativity type describing how should be treated value specified for {@link #mTranslationXDelta}.
+	 * Relativity type describing how should be treated value specified for {@link #translationXDelta}.
 	 * See relativity types defined by {@link Description.ValueRelativity @ValueRelativity} annotation.
 	 */
-	private int mTranslationXRelativity = Description.NONE;
+	private int translationXRelativity = Description.NONE;
 
 	/**
-	 * Relativity type describing how should be treated value specified for {@link #mTranslationYDelta}.
+	 * Relativity type describing how should be treated value specified for {@link #translationYDelta}.
 	 * See relativity types defined by {@link Description.ValueRelativity @ValueRelativity} annotation.
 	 */
-	private int mTranslationYRelativity = Description.NONE;
+	private int translationYRelativity = Description.NONE;
 
 	/*
 	 * Constructors ================================================================================
@@ -265,18 +278,18 @@ public class Translate extends Visibility {
 	public Translate(@NonNull final Context context, @Nullable final AttributeSet attrs) {
 		super(context, attrs);
 		final Resources resources = context.getResources();
-		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Ui_Transition_Translate, 0, 0);
+		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Transition_Translate, 0, 0);
 		final int attributeCount = attributes.getIndexCount();
 		for (int i = 0; i < attributeCount; i++) {
 			final int attrIndex = attributes.getIndex(i);
-			if (attrIndex == R.styleable.Ui_Transition_Translate_uiTranslationXDelta) {
+			if (attrIndex == R.styleable.Transition_Translate_transitionTranslationXDelta) {
 				final Description description = Description.parseValue(resources, attributes.peekValue(attrIndex));
-				this.mTranslationXRelativity = description.valueRelativity;
-				this.mTranslationXDelta = description.value;
-			} else if (attrIndex == R.styleable.Ui_Transition_Translate_uiTranslationYDelta) {
+				this.translationXRelativity = description.valueRelativity;
+				this.translationXDelta = description.value;
+			} else if (attrIndex == R.styleable.Transition_Translate_transitionTranslationYDelta) {
 				final Description description = Description.parseValue(resources, attributes.peekValue(attrIndex));
-				this.mTranslationYRelativity = description.valueRelativity;
-				this.mTranslationYDelta = description.value;
+				this.translationYRelativity = description.valueRelativity;
+				this.translationYDelta = description.value;
 			}
 		}
 		attributes.recycle();
@@ -309,9 +322,8 @@ public class Translate extends Visibility {
 	 * specified parameters when started or {@code null} if the start and end translation values are
 	 * the same or the target view is already detached from window.
 	 */
-	@Nullable
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	public static Animator createAnimator(
+	@Nullable public static Animator createAnimator(
 			@NonNull final Transition transition,
 			@NonNull final View view,
 			@NonNull final TransitionValues transitionValues,
@@ -375,12 +387,13 @@ public class Translate extends Visibility {
 	 *
 	 * @param xDelta The desired delta. If the delta will represent a relative fraction value, the
 	 *               specified value should be from the range {@code [0.0, 1.0]}.
-	 * @see R.attr#uiTranslationXDelta ui:uiTranslationXDelta
+	 * @see R.attr#transitionTranslationXDelta ui:uiTranslationXDelta
+	 *
 	 * @see #getTranslationXDelta()
 	 * @see #getTranslationXRelativity()
 	 */
-	public void setTranslationXDelta(float xDelta) {
-		this.mTranslationXDelta = xDelta;
+	public void setTranslationXDelta(final float xDelta) {
+		this.translationXDelta = xDelta;
 	}
 
 	/**
@@ -388,10 +401,11 @@ public class Translate extends Visibility {
 	 * X axis.
 	 *
 	 * @return Delta value for translation along X axis.
+	 *
 	 * @see #setTranslationXDelta(float)
 	 */
 	public float getTranslationXDelta() {
-		return mTranslationXDelta;
+		return translationXDelta;
 	}
 
 	/**
@@ -406,12 +420,13 @@ public class Translate extends Visibility {
 	 *
 	 * @param yDelta The desired delta. If the delta will represent a relative fraction value, the
 	 *               specified value should be from the range {@code [0.0, 1.0]}.
-	 * @see R.attr#uiTranslationYDelta ui:uiTranslationYDelta
+	 *
+	 * @see R.attr#transitionTranslationYDelta ui:uiTranslationYDelta
 	 * @see #getTranslationYDelta()
 	 * @see #getTranslationYRelativity()
 	 */
-	public void setTranslationYDelta(float yDelta) {
-		this.mTranslationYDelta = yDelta;
+	public void setTranslationYDelta(final float yDelta) {
+		this.translationYDelta = yDelta;
 	}
 
 	/**
@@ -419,10 +434,11 @@ public class Translate extends Visibility {
 	 * Y axis.
 	 *
 	 * @return Delta value for translation along Y axis.
+	 *
 	 * @see #setTranslationYDelta(float)
 	 */
 	public float getTranslationYDelta() {
-		return mTranslationYDelta;
+		return translationYDelta;
 	}
 
 	/**
@@ -434,22 +450,23 @@ public class Translate extends Visibility {
 	 *
 	 * @param xRelativity The desired relativity type. One of types defined by
 	 *                    {@link Description.ValueRelativity @ValueRelativity} annotation.
-	 * @see R.attr#uiTranslationXDelta ui:uiTranslationXDelta
+	 *
+	 * @see R.attr#transitionTranslationXDelta ui:uiTranslationXDelta
 	 * @see #getTranslationXRelativity()
 	 */
 	public void setTranslationXRelativity(@Description.ValueRelativity final int xRelativity) {
-		this.mTranslationXRelativity = xRelativity;
+		this.translationXRelativity = xRelativity;
 	}
 
 	/**
 	 * Returns the relativity type describing value returned by {@link #getTranslationXDelta()}.
 	 *
 	 * @return Relativity of delta value for translation along X axis.
+	 *
 	 * @see #setTranslationXRelativity(int)
 	 */
-	@Description.ValueRelativity
-	public int getTranslationXRelativity() {
-		return mTranslationXRelativity;
+	@Description.ValueRelativity public int getTranslationXRelativity() {
+		return translationXRelativity;
 	}
 
 	/**
@@ -461,36 +478,35 @@ public class Translate extends Visibility {
 	 *
 	 * @param yRelativity The desired relativity type. One of types defined by
 	 *                    {@link Description.ValueRelativity @ValueRelativity} annotation.
-	 * @see R.attr#uiTranslationYDelta ui:uiTranslationYDelta
+	 *
+	 * @see R.attr#transitionTranslationYDelta ui:uiTranslationYDelta
 	 * @see #getTranslationYRelativity()
 	 */
 	public void setTranslationYRelativity(@Description.ValueRelativity final int yRelativity) {
-		this.mTranslationYRelativity = yRelativity;
+		this.translationYRelativity = yRelativity;
 	}
 
 	/**
 	 * Returns the relativity type describing value returned by {@link #getTranslationYDelta()}.
 	 *
 	 * @return Relativity of delta value for translation along Y axis.
+	 *
 	 * @see #setTranslationYRelativity(int)
 	 */
-	@Description.ValueRelativity
-	public int getTranslationYRelativity() {
-		return mTranslationYRelativity;
+	@Description.ValueRelativity public int getTranslationYRelativity() {
+		return translationYRelativity;
 	}
 
 	/**
 	 */
-	@Override
-	public void captureStartValues(@NonNull final TransitionValues transitionValues) {
+	@Override public void captureStartValues(@NonNull final TransitionValues transitionValues) {
 		super.captureStartValues(transitionValues);
 		this.captureValues(transitionValues);
 	}
 
 	/**
 	 */
-	@Override
-	public void captureEndValues(@NonNull final TransitionValues transitionValues) {
+	@Override public void captureEndValues(@NonNull final TransitionValues transitionValues) {
 		super.captureEndValues(transitionValues);
 		this.captureValues(transitionValues);
 	}
@@ -509,9 +525,7 @@ public class Translate extends Visibility {
 
 	/**
 	 */
-	@Nullable
-	@Override
-	public Animator onAppear(
+	@Override @Nullable public Animator onAppear(
 			@NonNull final ViewGroup sceneRoot,
 			@NonNull final View view,
 			@Nullable final TransitionValues startValues,
@@ -526,8 +540,8 @@ public class Translate extends Visibility {
 		}
 		final float endX = view.getTranslationX();
 		final float endY = view.getTranslationY();
-		final float startX = endX + DELTA_RESOLVER.resolveDeltaX(sceneRoot, view, mTranslationXRelativity, mTranslationXDelta);
-		final float startY = endY + DELTA_RESOLVER.resolveDeltaY(sceneRoot, view, mTranslationYRelativity, mTranslationYDelta);
+		final float startX = endX + DELTA_RESOLVER.resolveDeltaX(sceneRoot, view, translationXRelativity, translationXDelta);
+		final float startY = endY + DELTA_RESOLVER.resolveDeltaY(sceneRoot, view, translationYRelativity, translationYDelta);
 		return createAnimator(
 				this,
 				view,
@@ -540,9 +554,7 @@ public class Translate extends Visibility {
 
 	/**
 	 */
-	@Nullable
-	@Override
-	public Animator onDisappear(
+	@Override @Nullable public Animator onDisappear(
 			@NonNull final ViewGroup sceneRoot,
 			@NonNull final View view,
 			@Nullable final TransitionValues startValues,
@@ -557,8 +569,8 @@ public class Translate extends Visibility {
 		}
 		final float startX = view.getTranslationX();
 		final float startY = view.getTranslationY();
-		final float endX = startX + DELTA_RESOLVER.resolveDeltaX(sceneRoot, view, mTranslationXRelativity, mTranslationXDelta);
-		final float endY = startY + DELTA_RESOLVER.resolveDeltaY(sceneRoot, view, mTranslationYRelativity, mTranslationYDelta);
+		final float endX = startX + DELTA_RESOLVER.resolveDeltaX(sceneRoot, view, translationXRelativity, translationXDelta);
+		final float endY = startY + DELTA_RESOLVER.resolveDeltaY(sceneRoot, view, translationYRelativity, translationYDelta);
 		return createAnimator(
 				this,
 				view,
@@ -574,10 +586,11 @@ public class Translate extends Visibility {
 	 */
 
 	/**
-	 * Describes a translation delta value specified via one of {@link R.attr#uiTranslationXDelta uiTranslationXDelta},
-	 * {@link R.attr#uiTranslationYDelta uiTranslationYDelta} attributes.
+	 * Describes a translation delta value specified via one of {@link R.attr#transitionTranslationXDelta uiTranslationXDelta},
+	 * {@link R.attr#transitionTranslationYDelta uiTranslationYDelta} attributes.
 	 *
 	 * @author Martin Albedinsky
+	 * @since 1.1
 	 */
 	public static final class Description {
 
@@ -605,8 +618,7 @@ public class Translate extends Visibility {
 		 */
 		@IntDef({NONE, RELATIVE_TO_TARGET, RELATIVE_TO_SCENE})
 		@Retention(RetentionPolicy.SOURCE)
-		public @interface ValueRelativity {
-		}
+		public @interface ValueRelativity {}
 
 		/**
 		 * Relativity type parsed for this value description. One of types defined by
@@ -614,8 +626,7 @@ public class Translate extends Visibility {
 		 *
 		 * @see #parseValue(Resources, TypedValue)
 		 */
-		@ValueRelativity
-		public final int valueRelativity;
+		@ValueRelativity public final int valueRelativity;
 
 		/**
 		 * Value parsed for this description. This is either absolute value (float or dimension pixel
@@ -646,8 +657,7 @@ public class Translate extends Visibility {
 		 * @param typedValue Typed value containing translation delta value to be parsed.
 		 * @return Description with value and relativity type parsed from the given <var>typedValue</var>.
 		 */
-		@NonNull
-		public static Description parseValue(@NonNull Resources resources, @Nullable TypedValue typedValue) {
+		@NonNull public static Description parseValue(@NonNull final Resources resources, @Nullable final TypedValue typedValue) {
 			int valueRelativity = NONE;
 			float value = 0;
 			if (typedValue != null) {
@@ -679,8 +689,7 @@ public class Translate extends Visibility {
 	 * Listener that is used by {@link Translate} transition to change properties of the animating
 	 * view according to the received animation callbacks.
 	 */
-	@VisibleForTesting
-	static final class TransitionAnimatorListener extends AnimatorListenerAdapter implements TransitionListener {
+	@VisibleForTesting static final class TransitionAnimatorListener extends AnimatorListenerAdapter implements TransitionListener {
 
 		/**
 		 * View of which properties to change due to received animation callbacks.
@@ -740,12 +749,12 @@ public class Translate extends Visibility {
 		 * @param endY          End position of the translate animation along Y axis.
 		 */
 		TransitionAnimatorListener(
-				View animatingView,
-				View staticView,
-				float startX,
-				float startY,
-				float endX,
-				float endY
+				final View animatingView,
+				final View staticView,
+				final float startX,
+				final float startY,
+				final float endX,
+				final float endY
 		) {
 			super();
 			this.animatingView = animatingView;
@@ -762,8 +771,7 @@ public class Translate extends Visibility {
 
 		/**
 		 */
-		@Override
-		public void onAnimationCancel(Animator animation) {
+		@Override public void onAnimationCancel(@NonNull final Animator animation) {
 			if (animationPosition == null) {
 				this.animationPosition = new int[2];
 			}
@@ -774,8 +782,7 @@ public class Translate extends Visibility {
 
 		/**
 		 */
-		@Override
-		public void onAnimationPause(Animator animation) {
+		@Override public void onAnimationPause(@NonNull final Animator animation) {
 			this.pausedX = animatingView.getTranslationX();
 			this.pausedY = animatingView.getTranslationY();
 			this.animatingView.setTranslationX(endX);
@@ -784,45 +791,39 @@ public class Translate extends Visibility {
 
 		/**
 		 */
-		@Override
-		public void onAnimationResume(Animator animation) {
+		@Override public void onAnimationResume(@NonNull final Animator animation) {
 			this.animatingView.setTranslationX(pausedX);
 			this.animatingView.setTranslationY(pausedY);
 		}
 
 		/**
 		 */
-		@Override
-		public void onTransitionStart(@NonNull final Transition transition) {
+		@Override public void onTransitionStart(@NonNull Transition transition) {
 			// Ignored.
 		}
 
 		/**
 		 */
-		@Override
-		public void onTransitionEnd(@NonNull final Transition transition) {
+		@Override public void onTransitionEnd(@NonNull final Transition transition) {
 			this.animatingView.setTranslationX(endX);
 			this.animatingView.setTranslationY(endY);
 		}
 
 		/**
 		 */
-		@Override
-		public void onTransitionCancel(@NonNull final Transition transition) {
+		@Override public void onTransitionCancel(@NonNull Transition transition) {
 			// Ignored.
 		}
 
 		/**
 		 */
-		@Override
-		public void onTransitionPause(@NonNull final Transition transition) {
+		@Override public void onTransitionPause(@NonNull Transition transition) {
 			// Ignored.
 		}
 
 		/**
 		 */
-		@Override
-		public void onTransitionResume(@NonNull final Transition transition) {
+		@Override public void onTransitionResume(@NonNull Transition transition) {
 			// Ignored.
 		}
 	}

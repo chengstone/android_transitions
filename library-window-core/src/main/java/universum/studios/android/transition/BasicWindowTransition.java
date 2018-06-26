@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License 
- * you may obtain at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written within this file but as it 
- * is described in the License, the software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
- * 
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -28,6 +28,7 @@ import android.support.annotation.NonNull;
  * transitions to animate window changes.
  *
  * @author Martin Albedinsky
+ * @since 1.0
  */
 public class BasicWindowTransition implements WindowTransition {
 
@@ -55,15 +56,13 @@ public class BasicWindowTransition implements WindowTransition {
 
 		/**
 		 */
-		@Override
-		public BasicWindowTransition createFromParcel(@NonNull final Parcel source) {
+		@Override public BasicWindowTransition createFromParcel(@NonNull final Parcel source) {
 			return new BasicWindowTransition(source);
 		}
 
 		/**
 		 */
-		@Override
-		public BasicWindowTransition[] newArray(final int size) {
+		@Override public BasicWindowTransition[] newArray(final int size) {
 			return new BasicWindowTransition[size];
 		}
 	};
@@ -75,27 +74,27 @@ public class BasicWindowTransition implements WindowTransition {
 	/**
 	 * Animation resource for a new entering/starting window used for {@link #overrideStart(Activity)}.
 	 */
-	private final int mStartEnterAnimRes;
+	private final int startEnterAnimRes;
 
 	/**
 	 * Animation resource for the current exiting/pausing window used for {@link #overrideStart(Activity)}.
 	 */
-	private final int mStartExitAnimRes;
+	private final int startExitAnimRes;
 
 	/**
 	 * Animation resource for an old entering/resuming window used for {@link #overrideFinish(Activity)}.
 	 */
-	private final int mFinishEnterAnimRes;
+	private final int finishEnterAnimRes;
 
 	/**
 	 * Animation resource for the current exiting/finishing window used for {@link #overrideFinish(Activity)}.
 	 */
-	private final int mFinishExitAnimRes;
+	private final int finishExitAnimRes;
 
 	/**
 	 * Name of this transition.
 	 */
-	private final String mName;
+	private final String name;
 
 	/*
 	 * Constructors ================================================================================
@@ -133,6 +132,7 @@ public class BasicWindowTransition implements WindowTransition {
 	 * @param finishExitAnim  A resource id of the animation for an exiting window to be destroyed and
 	 *                        replaced by the entering one.
 	 * @param name            Name for the new transition.
+	 *
 	 * @see #overrideStart(Activity)
 	 * @see #overrideFinish(Activity)
 	 */
@@ -143,11 +143,11 @@ public class BasicWindowTransition implements WindowTransition {
 			@AnimRes final int finishExitAnim,
 			@NonNull final String name
 	) {
-		this.mStartEnterAnimRes = startEnterAnim;
-		this.mStartExitAnimRes = startExitAnim;
-		this.mFinishEnterAnimRes = finishEnterAnim;
-		this.mFinishExitAnimRes = finishExitAnim;
-		this.mName = name;
+		this.startEnterAnimRes = startEnterAnim;
+		this.startExitAnimRes = startExitAnim;
+		this.finishEnterAnimRes = finishEnterAnim;
+		this.finishExitAnimRes = finishExitAnim;
+		this.name = name;
 	}
 
 	/**
@@ -157,11 +157,11 @@ public class BasicWindowTransition implements WindowTransition {
 	 * @param source Parcel with data for the new instance.
 	 */
 	protected BasicWindowTransition(@NonNull final Parcel source) {
-		this.mStartEnterAnimRes = source.readInt();
-		this.mStartExitAnimRes = source.readInt();
-		this.mFinishEnterAnimRes = source.readInt();
-		this.mFinishExitAnimRes = source.readInt();
-		this.mName = source.readString();
+		this.startEnterAnimRes = source.readInt();
+		this.startExitAnimRes = source.readInt();
+		this.finishEnterAnimRes = source.readInt();
+		this.finishExitAnimRes = source.readInt();
+		this.name = source.readString();
 	}
 
 	/*
@@ -170,74 +170,60 @@ public class BasicWindowTransition implements WindowTransition {
 
 	/**
 	 */
-	@Override
-	public void writeToParcel(@NonNull final Parcel dest, final int flags) {
-		dest.writeInt(mStartEnterAnimRes);
-		dest.writeInt(mStartExitAnimRes);
-		dest.writeInt(mFinishEnterAnimRes);
-		dest.writeInt(mFinishExitAnimRes);
-		dest.writeString(mName);
+	@Override public void writeToParcel(@NonNull final Parcel dest, final int flags) {
+		dest.writeInt(startEnterAnimRes);
+		dest.writeInt(startExitAnimRes);
+		dest.writeInt(finishEnterAnimRes);
+		dest.writeInt(finishExitAnimRes);
+		dest.writeString(name);
 	}
 
 	/**
 	 */
-	@Override
-	public int describeContents() {
+	@Override public int describeContents() {
 		return 0;
 	}
 
 	/**
 	 */
-	@AnimRes
-	@Override
-	public int getStartEnterAnimation() {
-		return mStartEnterAnimRes;
+	@Override @AnimRes public int getStartEnterAnimation() {
+		return startEnterAnimRes;
 	}
 
 	/**
 	 */
-	@AnimRes
-	@Override
-	public int getStartExitAnimation() {
-		return mStartExitAnimRes;
+	@Override @AnimRes public int getStartExitAnimation() {
+		return startExitAnimRes;
 	}
 
 	/**
 	 */
-	@AnimRes
-	@Override
-	public int getFinishEnterAnimation() {
-		return mFinishEnterAnimRes;
+	@Override @AnimRes public int getFinishEnterAnimation() {
+		return finishEnterAnimRes;
 	}
 
 	/**
 	 */
-	@AnimRes
-	@Override
-	public int getFinishExitAnimation() {
-		return mFinishExitAnimRes;
+	@Override @AnimRes public int getFinishExitAnimation() {
+		return finishExitAnimRes;
 	}
 
 	/**
 	 */
-	@NonNull
-	@Override
-	public String getName() {
-		return mName;
+	@Override @NonNull public String getName() {
+		return name;
 	}
 
 	/**
 	 */
-	@Override
-	public void overrideStart(@NonNull final Activity activity) {
-		activity.overridePendingTransition(mStartEnterAnimRes, mStartExitAnimRes);
+	@Override public void overrideStart(@NonNull final Activity activity) {
+		activity.overridePendingTransition(startEnterAnimRes, startExitAnimRes);
 	}
 
 	/**
 	 */
-	@Override
-	public void overrideFinish(@NonNull final Activity activity) {
-		activity.overridePendingTransition(mFinishEnterAnimRes, mFinishExitAnimRes);
+	@Override public void overrideFinish(@NonNull final Activity activity) {
+		activity.overridePendingTransition(finishEnterAnimRes, finishExitAnimRes);
 	}
 
 	/*

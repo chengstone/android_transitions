@@ -1,21 +1,21 @@
 /*
-* =================================================================================================
-*                             Copyright (C) 2017 Universum Studios
-* =================================================================================================
-*         Licensed under the Apache License, Version 2.0 or later (further "License" only).
-* -------------------------------------------------------------------------------------------------
-* You may use this file only in compliance with the License. More details and copy of this License 
-* you may obtain at
-* 
-* 		http://www.apache.org/licenses/LICENSE-2.0
-* 
-* You can redistribute, modify or publish any part of the code written within this file but as it 
-* is described in the License, the software distributed under the License is distributed on an 
-* "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
-* 
-* See the License for the specific language governing permissions and limitations under the License.
-* =================================================================================================
-*/
+ * *************************************************************************************************
+ *                                 Copyright 2018 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
+ * -------------------------------------------------------------------------------------------------
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * *************************************************************************************************
+ */
 package universum.studios.android.test.instrumented;
 
 import android.content.Context;
@@ -30,6 +30,7 @@ import android.transition.TransitionInflater;
  *
  * @author Martin Albedinsky
  */
+@SuppressWarnings("unused")
 public final class TestUtils {
 
 	/**
@@ -41,6 +42,7 @@ public final class TestUtils {
 	 */
 	private TestUtils() {
 		// Not allowed to be instantiated publicly.
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -50,9 +52,10 @@ public final class TestUtils {
 	 * @param context The context of which package name to check.
 	 * @return {@code True} if the context's package name is the same as the library's root one,
 	 * {@code false} otherwise.
+	 *
 	 * @see #isLibraryRootPackageName(String)
 	 */
-	public static boolean hasLibraryRootPackageName(@NonNull Context context) {
+	public static boolean hasLibraryRootPackageName(@NonNull final Context context) {
 		return isLibraryRootPackageName(context.getPackageName());
 	}
 
@@ -66,7 +69,7 @@ public final class TestUtils {
 	 * @return {@code True} if the package name is the same as the library's root one,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isLibraryRootPackageName(@NonNull String packageName) {
+	public static boolean isLibraryRootPackageName(@NonNull final String packageName) {
 		return LIBRARY_ROOT_PACKAGE_NAME.equals(packageName);
 	}
 
@@ -77,8 +80,7 @@ public final class TestUtils {
 	 * @param transitionResourceName Resource name of the desired transition to inflate.
 	 * @return Inflated transition or {@code null} if the current API level does not support transitions.
 	 */
-	@Nullable
-	public static Transition inflateTransition(@NonNull Context context, @NonNull String transitionResourceName) {
+	@Nullable public static Transition inflateTransition(@NonNull Context context, @NonNull String transitionResourceName) {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ?
 				TransitionInflater.from(context).inflateTransition(TestResources.resourceIdentifier(
 						context,

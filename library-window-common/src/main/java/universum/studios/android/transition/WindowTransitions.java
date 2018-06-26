@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License 
- * you may obtain at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written within this file but as it 
- * is described in the License, the software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
- * 
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -34,6 +34,7 @@ package universum.studios.android.transition;
  * </ul>
  *
  * @author Martin Albedinsky
+ * @since 1.0
  */
 @SuppressWarnings("unused")
 public final class WindowTransitions {
@@ -55,21 +56,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_fade_in}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_fade_out}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_fade_in_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_fade_out_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_fade_in}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_fade_out}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_fade_in_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_fade_out_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition CROSS_FADE = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_fade_in,
+			R.anim.transition_window_fade_in,
 			// Exit animation.
-			R.anim.ui_window_fade_out,
+			R.anim.transition_window_fade_out,
 			// Enter back animation.
-			R.anim.ui_window_fade_in_back,
+			R.anim.transition_window_fade_in_back,
 			// Exit back animation.
-			R.anim.ui_window_fade_out_back,
+			R.anim.transition_window_fade_out_back,
 			"CROSS_FADE"
 	);
 
@@ -79,21 +80,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_fade_in}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_hold}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_hold}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_fade_out_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_fade_in}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_hold}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_hold}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_fade_out_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition CROSS_FADE_AND_HOLD = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_fade_in,
+			R.anim.transition_window_fade_in,
 			// Exit animation.
-			R.anim.ui_window_hold,
+			R.anim.transition_window_hold,
 			// Enter back animation.
-			R.anim.ui_window_hold_back,
+			R.anim.transition_window_hold_back,
 			// Exit back animation.
-			R.anim.ui_window_fade_out_back,
+			R.anim.transition_window_fade_out_back,
 			"CROSS_FADE_AND_HOLD"
 	);
 
@@ -103,21 +104,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_right}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_slide_out_right}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_slide_in_left_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_left_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_right}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_slide_out_right}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_slide_in_left_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_left_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_RIGHT = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_right,
+			R.anim.transition_window_slide_in_right,
 			// Exit animation.
-			R.anim.ui_window_slide_out_right,
+			R.anim.transition_window_slide_out_right,
 			// Enter back animation.
-			R.anim.ui_window_slide_in_left_back,
+			R.anim.transition_window_slide_in_left_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_left_back,
+			R.anim.transition_window_slide_out_left_back,
 			"SLIDE_TO_RIGHT"
 	);
 
@@ -127,21 +128,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_left}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_slide_out_left}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_slide_in_right_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_right_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_left}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_slide_out_left}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_slide_in_right_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_right_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_LEFT = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_left,
+			R.anim.transition_window_slide_in_left,
 			// Exit animation.
-			R.anim.ui_window_slide_out_left,
+			R.anim.transition_window_slide_out_left,
 			// Enter back animation.
-			R.anim.ui_window_slide_in_right_back,
+			R.anim.transition_window_slide_in_right_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_right_back,
+			R.anim.transition_window_slide_out_right_back,
 			"SLIDE_TO_LEFT"
 	);
 
@@ -151,21 +152,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_top}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_slide_out_top}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_slide_in_bottom_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_bottom_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_top}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_slide_out_top}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_slide_in_bottom_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_bottom_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_TOP = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_top,
+			R.anim.transition_window_slide_in_top,
 			// Exit animation.
-			R.anim.ui_window_slide_out_top,
+			R.anim.transition_window_slide_out_top,
 			// Enter back animation.
-			R.anim.ui_window_slide_in_bottom_back,
+			R.anim.transition_window_slide_in_bottom_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_bottom_back,
+			R.anim.transition_window_slide_out_bottom_back,
 			"SLIDE_TO_TOP"
 	);
 
@@ -175,21 +176,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_bottom}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_slide_out_bottom}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_slide_in_top_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_top_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_bottom}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_slide_out_bottom}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_slide_in_top_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_top_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_BOTTOM = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_bottom,
+			R.anim.transition_window_slide_in_bottom,
 			// Exit animation.
-			R.anim.ui_window_slide_out_bottom,
+			R.anim.transition_window_slide_out_bottom,
 			// Enter back animation.
-			R.anim.ui_window_slide_in_top_back,
+			R.anim.transition_window_slide_in_top_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_top_back,
+			R.anim.transition_window_slide_out_top_back,
 			"SLIDE_TO_BOTTOM"
 	);
 
@@ -199,21 +200,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_left}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_scale_out}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_scale_in_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_right_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_left}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_scale_out}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_scale_in_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_right_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_LEFT_AND_SCALE_OUT = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_left,
+			R.anim.transition_window_slide_in_left,
 			// Exit animation.
-			R.anim.ui_window_scale_out,
+			R.anim.transition_window_scale_out,
 			// Enter back animation.
-			R.anim.ui_window_scale_in_back,
+			R.anim.transition_window_scale_in_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_right_back,
+			R.anim.transition_window_slide_out_right_back,
 			"SLIDE_TO_LEFT_AND_SCALE_OUT"
 	);
 
@@ -223,21 +224,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_right}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_scale_out}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_scale_in_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_left_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_right}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_scale_out}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_scale_in_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_left_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_RIGHT_AND_SCALE_OUT = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_right,
+			R.anim.transition_window_slide_in_right,
 			// Exit animation.
-			R.anim.ui_window_scale_out,
+			R.anim.transition_window_scale_out,
 			// Enter back animation.
-			R.anim.ui_window_scale_in_back,
+			R.anim.transition_window_scale_in_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_left_back,
+			R.anim.transition_window_slide_out_left_back,
 			"SLIDE_TO_RIGHT_AND_SCALE_OUT"
 	);
 
@@ -247,21 +248,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_top}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_scale_out}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_scale_in_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_bottom_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_top}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_scale_out}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_scale_in_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_bottom_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_TOP_AND_SCALE_OUT = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_top,
+			R.anim.transition_window_slide_in_top,
 			// Exit animation.
-			R.anim.ui_window_scale_out,
+			R.anim.transition_window_scale_out,
 			// Enter back animation.
-			R.anim.ui_window_scale_in_back,
+			R.anim.transition_window_scale_in_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_bottom_back,
+			R.anim.transition_window_slide_out_bottom_back,
 			"SLIDE_TO_TOP_AND_SCALE_OUT"
 	);
 
@@ -271,21 +272,21 @@ public final class WindowTransitions {
 	 *
 	 * <h3>Powered by animations:</h3>
 	 * <ul>
-	 * <li><b>Enter:</b> {@link R.anim#ui_window_slide_in_bottom}</li>
-	 * <li><b>Exit:</b> {@link R.anim#ui_window_scale_out}</li>
-	 * <li><b>Enter (back):</b> {@link R.anim#ui_window_scale_in_back}</li>
-	 * <li><b>Exit (back):</b> {@link R.anim#ui_window_slide_out_top_back}</li>
+	 * <li><b>Enter:</b> {@link R.anim#transition_window_slide_in_bottom}</li>
+	 * <li><b>Exit:</b> {@link R.anim#transition_window_scale_out}</li>
+	 * <li><b>Enter (back):</b> {@link R.anim#transition_window_scale_in_back}</li>
+	 * <li><b>Exit (back):</b> {@link R.anim#transition_window_slide_out_top_back}</li>
 	 * </ul>
 	 */
 	public static final WindowTransition SLIDE_TO_BOTTOM_AND_SCALE_OUT = new BasicWindowTransition(
 			// Enter animation.
-			R.anim.ui_window_slide_in_bottom,
+			R.anim.transition_window_slide_in_bottom,
 			// Exit animation.
-			R.anim.ui_window_scale_out,
+			R.anim.transition_window_scale_out,
 			// Enter back animation.
-			R.anim.ui_window_scale_in_back,
+			R.anim.transition_window_scale_in_back,
 			// Exit back animation.
-			R.anim.ui_window_slide_out_top_back,
+			R.anim.transition_window_slide_out_top_back,
 			"SLIDE_TO_BOTTOM_AND_SCALE_OUT"
 	);
 

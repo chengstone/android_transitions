@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License 
- * you may obtain at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written within this file but as it 
- * is described in the License, the software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
- * 
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.samples.transition.ui.view.reveal;
 
@@ -35,13 +35,9 @@ import universum.studios.android.transition.NavigationalTransitionCompat;
  */
 public final class RevealTransitionActivityA extends SamplesActivity {
 
-	@SuppressWarnings("unused")
-	private static final String TAG = "RevealTransitionActivityA";
-
 	@BindView(R.id.reveal_overlay) View revealOverlayView;
 
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
+	@Override protected void onCreate(@Nullable final Bundle savedInstanceState) {
 		requestFeature(FEATURE_DEPENDENCIES_INJECTION);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reveal_a);
@@ -49,13 +45,12 @@ public final class RevealTransitionActivityA extends SamplesActivity {
 
 	@OnClick({R.id.fab})
 	@SuppressWarnings("unused")
-	void onFabClick(@NonNull View fab) {
+	void onFabClick(@NonNull final View fab) {
 		revealOverlayView.setVisibility(View.VISIBLE);
 		new NavigationalTransitionCompat(RevealTransitionActivityB.class).start(this);
 	}
 
-	@Override
-	public void onBackPressed() {
+	@Override public void onBackPressed() {
 		ViewTransitions.navigationalTransition(getClass()).finish(this);
 	}
 }
