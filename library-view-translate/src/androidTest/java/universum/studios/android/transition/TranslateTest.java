@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -40,11 +40,12 @@ import static org.junit.Assume.assumeTrue;
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.LOLLIPOP)
 public final class TranslateTest extends InstrumentedTestCase {
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testInflation() {
-		assumeTrue(TestUtils.hasLibraryRootPackageName(mContext));
-		final Translate translate = (Translate) TestUtils.inflateTransition(mContext, "translate");
+	@Test public void testInflation() {
+		assumeTrue(TestUtils.hasLibraryRootPackageName(context));
+		// Act:
+		final Translate translate = (Translate) TestUtils.inflateTransition(context, "translate");
+		// Assert:
 		assertThat(translate, is(notNullValue()));
 		assertThat(translate.getMode(), is(Scale.MODE_IN | Scale.MODE_OUT));
 		assertThat(translate.getTranslationXDelta(), is(48f));
@@ -53,11 +54,12 @@ public final class TranslateTest extends InstrumentedTestCase {
 		assertThat(translate.getTranslationYRelativity(), is(Translate.Description.NONE));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testInflationForTranslationRelativeToTarget() {
-		assumeTrue(TestUtils.hasLibraryRootPackageName(mContext));
-		final Translate translate = (Translate) TestUtils.inflateTransition(mContext, "translate_relative_to_target");
+	@Test public void testInflationForTranslationRelativeToTarget() {
+		assumeTrue(TestUtils.hasLibraryRootPackageName(context));
+		// Act:
+		final Translate translate = (Translate) TestUtils.inflateTransition(context, "translate_relative_to_target");
+		// Assert:
 		assertThat(translate, is(notNullValue()));
 		assertThat(translate.getMode(), is(Scale.MODE_IN | Scale.MODE_OUT));
 		assertThat(translate.getTranslationXDelta(), allOf(greaterThanOrEqualTo(0.799f), lessThanOrEqualTo(0.801f)));
@@ -66,11 +68,12 @@ public final class TranslateTest extends InstrumentedTestCase {
 		assertThat(translate.getTranslationYRelativity(), is(Translate.Description.RELATIVE_TO_TARGET));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testInflationForTranslationRelativeToScene() {
-		assumeTrue(TestUtils.hasLibraryRootPackageName(mContext));
-		final Translate translate = (Translate) TestUtils.inflateTransition(mContext, "translate_relative_to_scene");
+	@Test public void testInflationForTranslationRelativeToScene() {
+		assumeTrue(TestUtils.hasLibraryRootPackageName(context));
+		// Act:
+		final Translate translate = (Translate) TestUtils.inflateTransition(context, "translate_relative_to_scene");
+		// Assert:
 		assertThat(translate, is(notNullValue()));
 		assertThat(translate.getMode(), is(Scale.MODE_IN | Scale.MODE_OUT));
 		assertThat(translate.getTranslationXDelta(), allOf(greaterThanOrEqualTo(0.659f), lessThanOrEqualTo(0.661f)));

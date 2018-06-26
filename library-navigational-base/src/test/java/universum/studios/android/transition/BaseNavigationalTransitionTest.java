@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -66,185 +66,172 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 			Window.FEATURE_ACTIVITY_TRANSITIONS :
 			13;
 
-	@Test
-	public void testInstantiation() {
-		final TestTransition transition = new TestTransition();
-		assertThat(transition.getActivityClass(), is(nullValue()));
+	private static void waitFor(final long duration) {
+		try {
+			Thread.sleep(duration);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Test
-	public void testInstantiationWithActivity() {
+	@Test public void testInstantiation() {
+		// Act:
+		final TestTransition transition = new TestTransition();
+		// Assert:
+		assertThat(transition.getActivityClass(), is(nullValue()));
+		assertThat(transition.intentExtras(), is(notNullValue()));
+		assertThat(transition.intentExtras().isEmpty(), is(true));
+		assertThat(transition.requestCode(), is(BaseNavigationalTransition.RC_NONE));
+		assertThat(transition.enterTransition(), is(nullValue()));
+		assertThat(transition.reenterTransition(), is(nullValue()));
+		assertThat(transition.returnTransition(), is(nullValue()));
+		assertThat(transition.exitTransition(), is(nullValue()));
+		assertThat(transition.exitTransition(), is(nullValue()));
+		assertThat(transition.allowReturnTransitionOverlap(), is(true));
+		assertThat(transition.sharedElementEnterTransition(), is(nullValue()));
+		assertThat(transition.sharedElementReenterTransition(), is(nullValue()));
+		assertThat(transition.sharedElementReturnTransition(), is(nullValue()));
+		assertThat(transition.sharedElementExitTransition(), is(nullValue()));
+		assertThat(transition.sharedElementsUseOverlay(), is(true));
+		assertThat(transition.sharedElements(), is(nullValue()));
+		assertThat(transition.singleSharedElement(), is(nullValue()));
+	}
+
+	@Test public void testInstantiationWithActivity() {
+		// Act:
 		final TestTransition transition = new TestTransition(TestActivity.class);
+		// Assert:
 		assertSame(transition.getActivityClass(), TestActivity.class);
 	}
 
-	@Test
-	public void testIntentExtras() {
+	@Test public void testIntentExtras() {
+		// Arrange:
 		final TestTransition transition = new TestTransition();
+		// Act:
 		transition.intentExtras().putString("extra_text", "Extra text.");
 		transition.intentExtras().putInt("extra_int", 1000);
+		// Assert:
 		assertThat(transition.intentExtras().getString("extra_text"), is("Extra text."));
 		assertThat(transition.intentExtras().getInt("extra_int"), is(1000));
 	}
 
-	@Test
-	public void testIntentExtrasDefault() {
-		final Bundle extras = new TestTransition().intentExtras();
-		assertThat(extras, is(notNullValue()));
-		assertThat(extras.isEmpty(), is(true));
-	}
-
-	@Test
-	public void testRequestCode() {
+	@Test public void testRequestCode() {
+		// Arrange:
+		// Act:
+		// Assert:
 		assertThat(new TestTransition().requestCode(50).requestCode(), is(50));
 	}
 
-	@Test
-	public void testRequestCodeDefault() {
-		assertThat(new TestTransition().requestCode(), is(TestTransition.RC_NONE));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testEnterTransition() {
+	@Test public void testEnterTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().enterTransition(transition).enterTransition(), is(transition));
 	}
 
-	@Test
-	public void testEnterTransitionDefault() {
-		assertThat(new TestTransition().enterTransition(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testReenterTransition() {
+	@Test public void testReenterTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().reenterTransition(transition).reenterTransition(), is(transition));
 	}
 
-	@Test
-	public void testReenterTransitionDefault() {
-		assertThat(new TestTransition().reenterTransition(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testReturnTransition() {
+	@Test public void testReturnTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().returnTransition(transition).returnTransition(), is(transition));
 	}
 
-	@Test
-	public void testReturnTransitionDefault() {
-		assertThat(new TestTransition().returnTransition(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testExitTransition() {
+	@Test public void testExitTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().exitTransition(transition).exitTransition(), is(transition));
 	}
 
-	@Test
-	public void testExitTransitionDefault() {
-		assertThat(new TestTransition().exitTransition(), is(nullValue()));
-	}
-
-	@Test
-	public void testAllowEnterTransitionOverlap() {
+	@Test public void testAllowEnterTransitionOverlap() {
+		// Arrange:
+		// Act:
+		// Assert:
 		assertThat(new TestTransition().allowEnterTransitionOverlap(false).allowEnterTransitionOverlap(), is(false));
 		assertThat(new TestTransition().allowEnterTransitionOverlap(true).allowEnterTransitionOverlap(), is(true));
 	}
 
-	@Test
-	public void testAllowEnterTransitionOverlapDefault() {
-		assertThat(new TestTransition().allowEnterTransitionOverlap(), is(true));
-	}
-
-	@Test
-	public void testAllowReturnTransitionOverlap() {
+	@Test public void testAllowReturnTransitionOverlap() {
+		// Arrange:
+		// Act:
+		// Assert:
 		assertThat(new TestTransition().allowReturnTransitionOverlap(false).allowReturnTransitionOverlap(), is(false));
 		assertThat(new TestTransition().allowReturnTransitionOverlap(true).allowReturnTransitionOverlap(), is(true));
 	}
 
-	@Test
-	public void testAllowReturnTransitionOverlapDefault() {
-		assertThat(new TestTransition().allowReturnTransitionOverlap(), is(true));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testSharedElementEnterTransition() {
+	@Test public void testSharedElementEnterTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().sharedElementEnterTransition(transition).sharedElementEnterTransition(), is(transition));
 	}
 
-	@Test
-	public void testSharedElementEnterTransitionDefault() {
-		assertThat(new TestTransition().sharedElementEnterTransition(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testSharedElementReenterTransition() {
+	@Test public void testSharedElementReenterTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().sharedElementReenterTransition(transition).sharedElementReenterTransition(), is(transition));
 	}
 
-	@Test
-	public void testSharedElementReenterTransitionDefault() {
-		assertThat(new TestTransition().sharedElementReenterTransition(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testSharedElementReturnTransition() {
+	@Test public void testSharedElementReturnTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().sharedElementReturnTransition(transition).sharedElementReturnTransition(), is(transition));
 	}
 
-	@Test
-	public void testSharedElementReturnTransitionDefault() {
-		assertThat(new TestTransition().sharedElementReturnTransition(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testSharedElementExitTransition() {
+	@Test public void testSharedElementExitTransition() {
+		// Arrange:
+		// Act:
+		// Assert:
 		final Transition transition = new Fade();
 		assertThat(new TestTransition().sharedElementExitTransition(transition).sharedElementExitTransition(), is(transition));
 	}
 
-	@Test
-	public void testSharedElementExitTransitionDefault() {
-		assertThat(new TestTransition().sharedElementExitTransition(), is(nullValue()));
-	}
-
-	@Test
-	public void testSharedElementUseOverlay() {
+	@Test public void testSharedElementUseOverlay() {
+		// Arrange:
+		// Act:
+		// Assert:
 		assertThat(new TestTransition().sharedElementsUseOverlay(false).sharedElementsUseOverlay(), is(false));
 		assertThat(new TestTransition().sharedElementsUseOverlay(true).sharedElementsUseOverlay(), is(true));
 	}
 
-	@Test
-	public void testSharedElementUseOverlayDefault() {
-		assertThat(new TestTransition().sharedElementsUseOverlay(), is(true));
-	}
-
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testSharedElements() {
+	@Test public void testSharedElements() {
+		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(mApplication);
-		final View secondElement = new View(mApplication);
-		final View thirdElement = new View(mApplication);
+		final View firstElement = new View(application);
+		final View secondElement = new View(application);
+		final View thirdElement = new View(application);
+		// Act:
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
 				new Pair<>(secondElement, "second_element")
 		);
 		transition.sharedElements(new Pair<>(thirdElement, "third_element"));
+		// Assert:
 		final List<Pair<View, String>> sharedElements = transition.sharedElements();
 		assertThat(sharedElements, is(notNullValue()));
 		assertThat(sharedElements.size(), is(3));
@@ -256,21 +243,18 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		assertThat(sharedElements.get(2).second, is("third_element"));
 	}
 
-	@Test
-	public void testSharedElementsDefault() {
-		assertThat(new TestTransition().sharedElements(), is(nullValue()));
-	}
-
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testSharedElement() {
+	@Test public void testSharedElement() {
+		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(mApplication);
-		final View secondElement = new View(mApplication);
-		final View thirdElement = new View(mApplication);
+		final View firstElement = new View(application);
+		final View secondElement = new View(application);
+		final View thirdElement = new View(application);
+		// Act:
 		transition.sharedElement(firstElement, "first_element");
 		transition.sharedElement(secondElement, "second_element");
 		transition.sharedElement(thirdElement, "third_element");
+		// Assert:
 		final List<Pair<View, String>> sharedElements = transition.sharedElements();
 		assertThat(sharedElements, is(notNullValue()));
 		assertThat(sharedElements.size(), is(3));
@@ -282,120 +266,134 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		assertThat(sharedElements.get(2).second, is("third_element"));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testSingleSharedElement() {
+	@Test public void testSingleSharedElement() {
+		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(mApplication);
+		final View firstElement = new View(application);
+		// Act + Assert:
 		transition.sharedElement(firstElement, "first_element");
 		assertThat(transition.singleSharedElement(), is(notNullValue()));
 		assertThat(transition.singleSharedElement().first, is(firstElement));
 		assertThat(transition.singleSharedElement().second, is("first_element"));
-		final View secondElement = new View(mApplication);
+		final View secondElement = new View(application);
 		transition.sharedElement(secondElement, "second_element");
 		assertThat(transition.singleSharedElement(), is(notNullValue()));
 		assertThat(transition.singleSharedElement().first, is(firstElement));
 		assertThat(transition.singleSharedElement().second, is("first_element"));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testSingleSharedElementOnEmptySharedElements() {
+	@Test public void testSingleSharedElementOnEmptySharedElements() {
+		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(mApplication);
+		final View firstElement = new View(application);
 		transition.sharedElement(firstElement, "first_element");
 		transition.sharedElements().clear();
+		// Act + Assert:
 		assertThat(transition.singleSharedElement(), is(nullValue()));
 	}
 
-	@Test
-	public void testSingleSharedElementDefault() {
-		assertThat(new TestTransition().singleSharedElement(), is(nullValue()));
-	}
-
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testStartAtKitKatApiLevel() {
+	@Test public void testStartAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition(SecondaryTestActivity.class).start(mockActivity);
-		verify(mockActivity, times(1)).startActivity(any(Intent.class));
+		final BaseNavigationalTransition navTransition = new TestTransition(SecondaryTestActivity.class);
+		// Act:
+		navTransition.start(mockActivity);
+		// Assert:
+		verify(mockActivity).startActivity(any(Intent.class));
 		verify(mockActivity, times(0)).startActivityForResult(any(Intent.class), anyInt());
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testStartAtLollipopApiLevel() {
+	@Test public void testStartAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		final Transition transition = new Fade();
-		new TestTransition(SecondaryTestActivity.class).exitTransition(transition).start(mockActivity);
-		verify(mockWindow, times(1)).hasFeature(WINDOW_FEATURE_ACTIVITY_TRANSITIONS);
-		verify(mockWindow, times(1)).setExitTransition(transition);
+		final BaseNavigationalTransition navTransition = new TestTransition(SecondaryTestActivity.class).exitTransition(transition);
+		// Act:
+		navTransition.start(mockActivity);
+		// Assert:
+		verify(mockWindow).hasFeature(WINDOW_FEATURE_ACTIVITY_TRANSITIONS);
+		verify(mockWindow).setExitTransition(transition);
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).startActivity(any(Intent.class), (Bundle) isNull());
+		verify(mockActivity).startActivity(any(Intent.class), (Bundle) isNull());
 		verify(mockActivity, times(0)).startActivityForResult(any(Intent.class), anyInt(), any(Bundle.class));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testOnStartAtKitKatApiLevel() {
+	@Test public void testOnStartAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition(SecondaryTestActivity.class).onStart(mockActivity);
-		verify(mockActivity, times(1)).startActivity(any(Intent.class));
+		final BaseNavigationalTransition navTransition = new TestTransition(SecondaryTestActivity.class);
+		// Act:
+		navTransition.onStart(mockActivity);
+		// Assert:
+		verify(mockActivity).startActivity(any(Intent.class));
 		verify(mockActivity, times(0)).startActivityForResult(any(Intent.class), anyInt());
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testOnStartAtLollipopApiLevel() {
+	@Test public void testOnStartAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition(SecondaryTestActivity.class).onStart(mockActivity);
-		verify(mockWindow, times(1)).hasFeature(WINDOW_FEATURE_ACTIVITY_TRANSITIONS);
+		final BaseNavigationalTransition navTransition = new TestTransition(SecondaryTestActivity.class);
+		// Act:
+		navTransition.onStart(mockActivity);
+		// Assert:
+		verify(mockWindow).hasFeature(WINDOW_FEATURE_ACTIVITY_TRANSITIONS);
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).startActivity(any(Intent.class), (Bundle) isNull());
+		verify(mockActivity).startActivity(any(Intent.class), (Bundle) isNull());
 		verify(mockActivity, times(0)).startActivityForResult(any(Intent.class), anyInt(), any(Bundle.class));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testOnStartWithRequestCodeAtKitKatApiLevel() {
+	@Test public void testOnStartWithRequestCodeAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition(SecondaryTestActivity.class).requestCode(150).onStart(mockActivity);
-		verify(mockActivity, times(1)).startActivityForResult(any(Intent.class), eq(150));
+		final BaseNavigationalTransition navTransition = new TestTransition(SecondaryTestActivity.class).requestCode(150);
+		// Act:
+		navTransition.onStart(mockActivity);
+		// Assert:
+		verify(mockActivity).startActivityForResult(any(Intent.class), eq(150));
 		verify(mockActivity, times(0)).startActivity(any(Intent.class));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testOnStartWithRequestCodeAtLollipopApiLevel() {
+	@Test public void testOnStartWithRequestCodeAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition(SecondaryTestActivity.class).requestCode(150).onStart(mockActivity);
-		verify(mockWindow, times(1)).hasFeature(WINDOW_FEATURE_ACTIVITY_TRANSITIONS);
+		final BaseNavigationalTransition navTransition = new TestTransition(SecondaryTestActivity.class).requestCode(150);
+		// Act:
+		navTransition.onStart(mockActivity);
+		// Assert:
+		verify(mockWindow).hasFeature(WINDOW_FEATURE_ACTIVITY_TRANSITIONS);
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).startActivityForResult(any(Intent.class), eq(150), (Bundle) isNull());
+		verify(mockActivity).startActivityForResult(any(Intent.class), eq(150), (Bundle) isNull());
 		verify(mockActivity, times(0)).startActivity(any(Intent.class), any(Bundle.class));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.JELLY_BEAN)
-	public void testFinishCallerDelayedAtJellyBeanApiLevel() {
+	@Test public void testFinishCallerDelayedAtJellyBeanApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(mApplication) {
+		final View decorView = new FrameLayout(application) {
 
-			@Override
-			public boolean postDelayed(Runnable action, long delayMillis) {
+			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
 				action.run();
 				return true;
@@ -404,24 +402,26 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		when(mockWindow.getDecorView()).thenReturn(decorView);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		when(mockActivity.isFinishing()).thenReturn(false);
-		new TestTransition().finishCallerDelayed(mockActivity, 100);
-		verify(mockActivity, times(1)).getWindow();
-		verify(mockWindow, times(1)).getDecorView();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 100);
+		// Assert:
+		verify(mockActivity).getWindow();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).finish();
-		verify(mockActivity, times(1)).isFinishing();
+		verify(mockActivity).finish();
+		verify(mockActivity).isFinishing();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.JELLY_BEAN_MR1)
-	public void testFinishCallerDelayedOnJellyBeanMR1ApiLevel() {
+	@Test public void testFinishCallerDelayedOnJellyBeanMR1ApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(mApplication) {
+		final View decorView = new FrameLayout(application) {
 
-			@Override
-			public boolean postDelayed(Runnable action, long delayMillis) {
+			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
 				action.run();
 				return true;
@@ -431,25 +431,27 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		when(mockActivity.isFinishing()).thenReturn(false);
 		when(mockActivity.isDestroyed()).thenReturn(false);
-		new TestTransition().finishCallerDelayed(mockActivity, 100);
-		verify(mockActivity, times(1)).getWindow();
-		verify(mockWindow, times(1)).getDecorView();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 100);
+		// Assert:
+		verify(mockActivity).getWindow();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).finish();
-		verify(mockActivity, times(1)).isDestroyed();
-		verify(mockActivity, times(1)).isFinishing();
+		verify(mockActivity).finish();
+		verify(mockActivity).isDestroyed();
+		verify(mockActivity).isFinishing();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testFinishCallerDelayedAtLollipopApiLevel() {
+	@Test public void testFinishCallerDelayedAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(mApplication) {
+		final View decorView = new FrameLayout(application) {
 
-			@Override
-			public boolean postDelayed(Runnable action, long delayMillis) {
+			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
 				action.run();
 				return true;
@@ -459,25 +461,27 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		when(mockActivity.isFinishing()).thenReturn(false);
 		when(mockActivity.isDestroyed()).thenReturn(false);
-		new TestTransition().finishCallerDelayed(mockActivity, 100);
-		verify(mockActivity, times(1)).getWindow();
-		verify(mockWindow, times(1)).getDecorView();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 100);
+		// Assert:
+		verify(mockActivity).getWindow();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).finishAfterTransition();
-		verify(mockActivity, times(1)).isDestroyed();
-		verify(mockActivity, times(1)).isFinishing();
+		verify(mockActivity).finishAfterTransition();
+		verify(mockActivity).isDestroyed();
+		verify(mockActivity).isFinishing();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.JELLY_BEAN_MR2)
-	public void testFinishCallerDelayedForDestroyedCaller() {
+	@Test public void testFinishCallerDelayedForDestroyedCaller() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(mApplication) {
+		final View decorView = new FrameLayout(application) {
 
-			@Override
-			public boolean postDelayed(Runnable action, long delayMillis) {
+			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
 				action.run();
 				return true;
@@ -486,23 +490,25 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		when(mockWindow.getDecorView()).thenReturn(decorView);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		when(mockActivity.isDestroyed()).thenReturn(true);
-		new TestTransition().finishCallerDelayed(mockActivity, 100);
-		verify(mockActivity, times(1)).getWindow();
-		verify(mockWindow, times(1)).getDecorView();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 100);
+		// Assert:
+		verify(mockActivity).getWindow();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).isDestroyed();
+		verify(mockActivity).isDestroyed();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.JELLY_BEAN)
-	public void testFinishCallerDelayedForFinishingCallerAtJellyBeanApiLevel() {
+	@Test public void testFinishCallerDelayedForFinishingCallerAtJellyBeanApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(mApplication) {
+		final View decorView = new FrameLayout(application) {
 
-			@Override
-			public boolean postDelayed(Runnable action, long delayMillis) {
+			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
 				action.run();
 				return true;
@@ -511,23 +517,25 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		when(mockWindow.getDecorView()).thenReturn(decorView);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		when(mockActivity.isFinishing()).thenReturn(true);
-		new TestTransition().finishCallerDelayed(mockActivity, 100);
-		verify(mockActivity, times(1)).getWindow();
-		verify(mockWindow, times(1)).getDecorView();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 100);
+		// Assert:
+		verify(mockActivity).getWindow();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).isFinishing();
+		verify(mockActivity).isFinishing();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.JELLY_BEAN_MR1)
-	public void testFinishCallerDelayedForFinishingCallerOnJellyBeanMR1ApiLevel() {
+	@Test public void testFinishCallerDelayedForFinishingCallerOnJellyBeanMR1ApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(mApplication) {
+		final View decorView = new FrameLayout(application) {
 
-			@Override
-			public boolean postDelayed(Runnable action, long delayMillis) {
+			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
 				action.run();
 				return true;
@@ -537,106 +545,187 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		when(mockActivity.isFinishing()).thenReturn(true);
 		when(mockActivity.isDestroyed()).thenReturn(false);
-		new TestTransition().finishCallerDelayed(mockActivity, 100);
-		verify(mockActivity, times(1)).getWindow();
-		verify(mockWindow, times(1)).getDecorView();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 100);
+		// Assert:
+		verify(mockActivity).getWindow();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
-		verify(mockActivity, times(1)).isDestroyed();
-		verify(mockActivity, times(1)).isFinishing();
+		verify(mockActivity).isDestroyed();
+		verify(mockActivity).isFinishing();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
-	public void testFinishCallerDelayedWithoutDecorView() {
+	@Test public void testFinishCallerDelayedWithoutDecorView() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition().finishCallerDelayed(mockActivity, 250);
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCallerDelayed(mockActivity, 250);
+		// Assert:
 		waitFor(250);
-		verify(mockActivity, times(1)).getWindow();
+		verify(mockActivity).getWindow();
 		verifyNoMoreInteractions(mockActivity);
-		verify(mockWindow, times(1)).getDecorView();
+		verify(mockWindow).getDecorView();
 		verifyNoMoreInteractions(mockWindow);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testFinishCallerAtKitKatApiLevel() {
+	@Test public void testFinishCallerAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().finishCaller(mockActivity);
-		verify(mockActivity, times(1)).finish();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCaller(mockActivity);
+		// Assert:
+		verify(mockActivity).finish();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testFinishCallerAtLollipopApiLevel() {
+	@Test public void testFinishCallerAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().finishCaller(mockActivity);
-		verify(mockActivity, times(1)).finishAfterTransition();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finishCaller(mockActivity);
+		// Assert:
+		verify(mockActivity).finishAfterTransition();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testOnFinishCallerAtKitKatApiLevel() {
+	@Test public void testOnFinishCallerAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().onFinishCaller(mockActivity);
-		verify(mockActivity, times(1)).finish();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.onFinishCaller(mockActivity);
+		// Assert:
+		verify(mockActivity).finish();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testOnFinishCallerAtLollipopApiLevel() {
+	@Test public void testOnFinishCallerAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().onFinishCaller(mockActivity);
-		verify(mockActivity, times(1)).finishAfterTransition();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.onFinishCaller(mockActivity);
+		// Assert:
+		verify(mockActivity).finishAfterTransition();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
-	public void testConfigureTransitions() {
+	@Config(sdk = Build.VERSION_CODES.KITKAT)
+	@Test public void testConfigureTransitionsAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition().configureTransitions(mockActivity);
+		final BaseNavigationalTransition navTransition = new TestTransition()
+				.enterTransition(null)
+				.returnTransition(null)
+				.reenterTransition(null)
+				.exitTransition(null)
+				.allowEnterTransitionOverlap(true)
+				.allowReturnTransitionOverlap(true)
+				.sharedElementEnterTransition(null)
+				.sharedElementReturnTransition(null)
+				.sharedElementReenterTransition(null)
+				.sharedElementExitTransition(null)
+				.sharedElementsUseOverlay(true);
+		// Act:
+		navTransition.configureTransitions(mockActivity);
+		// Assert:
+		verifyZeroInteractions(mockWindow);
 	}
-
-	@Test
-	public void testConfigureTransitionsWithUnspecifiedTransitions() {
+	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
+	@Test public void testConfigureTransitionsAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition().configureTransitions(mockActivity);
+		final Transition enterTransition = new Fade();
+		final Transition returnTransition = new Fade();
+		final Transition reenterTransition = new Fade();
+		final Transition exitTransition = new Fade();
+		final Transition sharedElementEnterTransition = new Fade();
+		final Transition sharedElementReturnTransition = new Fade();
+		final Transition sharedElementReenterTransition = new Fade();
+		final Transition sharedElementExitTransition = new Fade();
+		final BaseNavigationalTransition navTransition = new TestTransition()
+				.enterTransition(enterTransition)
+				.returnTransition(returnTransition)
+				.reenterTransition(reenterTransition)
+				.exitTransition(exitTransition)
+				.allowEnterTransitionOverlap(true)
+				.allowReturnTransitionOverlap(true)
+				.sharedElementEnterTransition(sharedElementEnterTransition)
+				.sharedElementReturnTransition(sharedElementReturnTransition)
+				.sharedElementReenterTransition(sharedElementReenterTransition)
+				.sharedElementExitTransition(sharedElementExitTransition)
+				.sharedElementsUseOverlay(true);
+		// Act:
+		navTransition.configureTransitions(mockActivity);
+		// Assert:
+		verify(mockWindow).setEnterTransition(enterTransition);
+		verify(mockWindow).setReturnTransition(returnTransition);
+		verify(mockWindow).setReenterTransition(reenterTransition);
+		verify(mockWindow).setExitTransition(exitTransition);
+		verify(mockWindow).setSharedElementEnterTransition(sharedElementEnterTransition);
+		verify(mockWindow).setSharedElementReturnTransition(sharedElementReturnTransition);
+		verify(mockWindow).setSharedElementReenterTransition(sharedElementReenterTransition);
+		verify(mockWindow).setSharedElementExitTransition(sharedElementExitTransition);
+		verify(mockWindow).setAllowEnterTransitionOverlap(true);
+		verify(mockWindow).setAllowReturnTransitionOverlap(true);
+		verify(mockWindow, times(2)).setSharedElementsUseOverlay(true);
+	}
+
+	@Test public void testConfigureTransitionsWithUnspecifiedTransitions() {
+		// Arrange:
+		final Activity mockActivity = mock(TestActivity.class);
+		final Window mockWindow = mock(Window.class);
+		when(mockWindow.getDecorView()).thenReturn(null);
+		when(mockActivity.getWindow()).thenReturn(mockWindow);
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.configureTransitions(mockActivity);
+		// Assert:
 		verifyZeroInteractions(mockWindow);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testConfigureIncomingTransitionsAtKitKatApiLevel() {
+	@Test public void testConfigureIncomingTransitionsAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition()
+		final BaseNavigationalTransition navTransition = new TestTransition()
 				.enterTransition(null)
 				.returnTransition(null)
 				.sharedElementEnterTransition(null)
 				.sharedElementReturnTransition(null)
 				.allowEnterTransitionOverlap(true)
 				.allowReturnTransitionOverlap(true)
-				.sharedElementsUseOverlay(true)
-				.configureIncomingTransitions(mockActivity);
+				.sharedElementsUseOverlay(true);
+		// Act:
+		navTransition.configureIncomingTransitions(mockActivity);
+		// Assert:
 		verifyZeroInteractions(mockWindow);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testConfigureIncomingTransitionsAtLollipopApiLevel() {
+	@Test public void testConfigureIncomingTransitionsAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
@@ -645,55 +734,62 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final Transition returnTransition = new Fade();
 		final Transition sharedElementEnterTransition = new Fade();
 		final Transition sharedElementReturnTransition = new Fade();
-		new TestTransition()
+		final BaseNavigationalTransition navTransition = new TestTransition()
 				.enterTransition(enterTransition)
 				.returnTransition(returnTransition)
 				.sharedElementEnterTransition(sharedElementEnterTransition)
 				.sharedElementReturnTransition(sharedElementReturnTransition)
 				.allowEnterTransitionOverlap(true)
 				.allowReturnTransitionOverlap(true)
-				.sharedElementsUseOverlay(true)
-				.configureIncomingTransitions(mockActivity);
-		verify(mockWindow, times(1)).setEnterTransition(enterTransition);
-		verify(mockWindow, times(1)).setReturnTransition(returnTransition);
-		verify(mockWindow, times(1)).setSharedElementEnterTransition(sharedElementEnterTransition);
-		verify(mockWindow, times(1)).setSharedElementReturnTransition(sharedElementReturnTransition);
-		verify(mockWindow, times(1)).setAllowEnterTransitionOverlap(true);
-		verify(mockWindow, times(1)).setAllowReturnTransitionOverlap(true);
-		verify(mockWindow, times(1)).setSharedElementsUseOverlay(true);
+				.sharedElementsUseOverlay(true);
+		// Act:
+		navTransition.configureIncomingTransitions(mockActivity);
+		// Assert:
+		verify(mockWindow).setEnterTransition(enterTransition);
+		verify(mockWindow).setReturnTransition(returnTransition);
+		verify(mockWindow).setSharedElementEnterTransition(sharedElementEnterTransition);
+		verify(mockWindow).setSharedElementReturnTransition(sharedElementReturnTransition);
+		verify(mockWindow).setAllowEnterTransitionOverlap(true);
+		verify(mockWindow).setAllowReturnTransitionOverlap(true);
+		verify(mockWindow).setSharedElementsUseOverlay(true);
 		verifyNoMoreInteractions(mockWindow);
 	}
 
-	@Test
-	public void testConfigureIncomingTransitionsWithUnspecifiedTransitions() {
+	@Test public void testConfigureIncomingTransitionsWithUnspecifiedTransitions() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition().configureIncomingTransitions(mockActivity);
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.configureIncomingTransitions(mockActivity);
+		// Assert:
 		verifyZeroInteractions(mockWindow);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testConfigureOutgoingTransitionsAtKitKatApiLevel() {
+	@Test public void testConfigureOutgoingTransitionsAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition()
+		final BaseNavigationalTransition navTransition = new TestTransition()
 				.reenterTransition(null)
 				.exitTransition(null)
 				.sharedElementReenterTransition(null)
 				.sharedElementExitTransition(null)
-				.sharedElementsUseOverlay(true)
-				.configureOutgoingTransitions(mockActivity);
+				.sharedElementsUseOverlay(true);
+		// Act:
+		navTransition.configureOutgoingTransitions(mockActivity);
+		// Assert:
 		verifyZeroInteractions(mockWindow);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testConfigureOutgoingTransitionsAtLollipopApiLevel() {
+	@Test public void testConfigureOutgoingTransitionsAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
@@ -702,160 +798,179 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final Transition exitTransition = new Fade();
 		final Transition sharedElementReenterTransition = new Fade();
 		final Transition sharedElementExitTransition = new Fade();
-		new TestTransition()
+		final BaseNavigationalTransition navTransition = new TestTransition()
 				.reenterTransition(reenterTransition)
 				.exitTransition(exitTransition)
 				.sharedElementReenterTransition(sharedElementReenterTransition)
 				.sharedElementExitTransition(sharedElementExitTransition)
-				.sharedElementsUseOverlay(true)
-				.configureOutgoingTransitions(mockActivity);
-		verify(mockWindow, times(1)).setReenterTransition(reenterTransition);
-		verify(mockWindow, times(1)).setExitTransition(exitTransition);
-		verify(mockWindow, times(1)).setSharedElementReenterTransition(sharedElementReenterTransition);
-		verify(mockWindow, times(1)).setSharedElementExitTransition(sharedElementExitTransition);
-		verify(mockWindow, times(1)).setSharedElementsUseOverlay(true);
+				.sharedElementsUseOverlay(true);
+		// Act:
+		navTransition.configureOutgoingTransitions(mockActivity);
+		// Assert:
+		verify(mockWindow).setReenterTransition(reenterTransition);
+		verify(mockWindow).setExitTransition(exitTransition);
+		verify(mockWindow).setSharedElementReenterTransition(sharedElementReenterTransition);
+		verify(mockWindow).setSharedElementExitTransition(sharedElementExitTransition);
+		verify(mockWindow).setSharedElementsUseOverlay(true);
 		verifyNoMoreInteractions(mockWindow);
 	}
 
-	@Test
-	public void testConfigureOutgoingTransitionsWithUnspecifiedTransitions() {
+	@Test public void testConfigureOutgoingTransitionsWithUnspecifiedTransitions() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		new TestTransition().configureOutgoingTransitions(mockActivity);
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.configureOutgoingTransitions(mockActivity);
+		// Assert:
 		verifyZeroInteractions(mockWindow);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testMakeSceneTransitionAnimationAtKitKatApiLevel() {
+	@Test public void testMakeSceneTransitionAnimationAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		final TestTransition transition = new TestTransition();
+		// Act + Assert:
 		assertThat(transition.makeSceneTransitionAnimation(mockActivity), is(nullValue()));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testMakeSceneTransitionAnimationAtLollipopApiLevel() {
+	@Test public void testMakeSceneTransitionAnimationAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
 		final TestTransition transition = new TestTransition();
+		// Act:
 		final ActivityOptions options = transition.makeSceneTransitionAnimation(mockActivity);
+		// Assert:
 		assertThat(options, is(notNullValue()));
 		assertThat(options.toBundle(), is(nullValue()));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testMakeSceneTransitionAnimationWithSharedElementsAtKitKatApiLevel() {
+	@Test public void testMakeSceneTransitionAnimationWithSharedElementsAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(mApplication);
-		final View secondElement = new View(mApplication);
+		final View firstElement = new View(application);
+		final View secondElement = new View(application);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
 				new Pair<>(secondElement, "second_element")
 		);
+		// Act + Assert:
 		assertThat(transition.makeSceneTransitionAnimation(mockActivity), is(nullValue()));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testMakeSceneTransitionAnimationWithSharedElementsAtLollipopApiLevel() {
+	@Test public void testMakeSceneTransitionAnimationWithSharedElementsAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(mApplication);
-		final View secondElement = new View(mApplication);
+		final View firstElement = new View(application);
+		final View secondElement = new View(application);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
 				new Pair<>(secondElement, "second_element")
 		);
+		// Act:
 		final ActivityOptions options = transition.makeSceneTransitionAnimation(mockActivity);
+		// Assert:
 		assertThat(options, is(notNullValue()));
 		assertThat(options.toBundle(), is(nullValue()));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testMakeSceneTransitionAnimationWithEmptySharedElementsAtKitKatApiLevel() {
+	@Test public void testMakeSceneTransitionAnimationWithEmptySharedElementsAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(mApplication);
-		final View secondElement = new View(mApplication);
+		final View firstElement = new View(application);
+		final View secondElement = new View(application);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
 				new Pair<>(secondElement, "second_element")
 		);
 		transition.sharedElements().clear();
+		// Act + Assert:
 		assertThat(transition.makeSceneTransitionAnimation(mockActivity), is(nullValue()));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testMakeSceneTransitionAnimationWithEmptySharedElementsAtLollipopApiLevel() {
+	@Test public void testMakeSceneTransitionAnimationWithEmptySharedElementsAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(mApplication);
-		final View secondElement = new View(mApplication);
+		final View firstElement = new View(application);
+		final View secondElement = new View(application);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
 				new Pair<>(secondElement, "second_element")
 		);
 		transition.sharedElements().clear();
+		// Act:
 		final ActivityOptions options = transition.makeSceneTransitionAnimation(mockActivity);
+		// Assert:
 		assertThat(options, is(notNullValue()));
 		assertThat(options.toBundle(), is(nullValue()));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testCreateIntent() {
+	@Test public void testCreateIntent() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		when(mockActivity.getPackageName()).thenReturn(mApplication.getPackageName());
-		final Intent intent = new TestTransition(TestActivity.class).createIntent(mockActivity);
+		when(mockActivity.getPackageName()).thenReturn(application.getPackageName());
+		final BaseNavigationalTransition navTransition = new TestTransition(TestActivity.class);
+		// Act:
+		final Intent intent = navTransition.createIntent(mockActivity);
+		// Assert:
 		assertThat(intent, is(notNullValue()));
 		final ComponentName component = intent.getComponent();
 		assertThat(component, is(notNullValue()));
 		assertThat(component.getClassName(), is(TestActivity.class.getName()));
-		assertThat(component.getPackageName(), is(mApplication.getPackageName()));
+		assertThat(component.getPackageName(), is(application.getPackageName()));
 		assertThat(intent.getExtras(), is(nullValue()));
 	}
 
-	@Test
 	@SuppressWarnings("ConstantConditions")
-	public void testCreateIntentWithExtras() {
+	@Test public void testCreateIntentWithExtras() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		when(mockActivity.getPackageName()).thenReturn(mApplication.getPackageName());
-		final TestTransition transition = new TestTransition(TestActivity.class);
-		transition.intentExtras().putString("extra_string", "Extra text.");
-		final Intent intent = transition.createIntent(mockActivity);
+		when(mockActivity.getPackageName()).thenReturn(application.getPackageName());
+		final BaseNavigationalTransition navTransition = new TestTransition(TestActivity.class);
+		navTransition.intentExtras().putString("extra_string", "Extra text.");
+		// Act:
+		final Intent intent = navTransition.createIntent(mockActivity);
+		// Assert:
 		assertThat(intent, is(notNullValue()));
 		final ComponentName component = intent.getComponent();
 		assertThat(component, is(notNullValue()));
 		assertThat(component.getClassName(), is(TestActivity.class.getName()));
-		assertThat(component.getPackageName(), is(mApplication.getPackageName()));
+		assertThat(component.getPackageName(), is(application.getPackageName()));
 		final Bundle extras = intent.getExtras();
 		assertThat(extras, is(notNullValue()));
 		assertThat(extras.getString("extra_string"), is("Extra text."));
@@ -863,42 +978,57 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testCreateIntentWithoutSpecifiedActivityClass() {
-		new TestTransition().createIntent(mock(TestActivity.class));
+		// Arrange:
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.createIntent(mock(TestActivity.class));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testFinishAtKitKatApiLevel() {
+	@Test public void testFinishAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().finish(mockActivity);
-		verify(mockActivity, times(1)).finish();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finish(mockActivity);
+		// Assert:
+		verify(mockActivity).finish();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testFinishAtLollipopApiLevel() {
+	@Test public void testFinishAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().finish(mockActivity);
-		verify(mockActivity, times(1)).finishAfterTransition();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finish(mockActivity);
+		// Assert:
+		verify(mockActivity).finishAfterTransition();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testOnFinishAtKitKatApiLevel() {
+	@Test public void testOnFinishAtKitKatApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().onFinish(mockActivity);
-		verify(mockActivity, times(1)).finish();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.onFinish(mockActivity);
+		// Assert:
+		verify(mockActivity).finish();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testOnFinishAtLollipopApiLevel() {
+	@Test public void testOnFinishAtLollipopApiLevel() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		new TestTransition().onFinish(mockActivity);
-		verify(mockActivity, times(1)).finishAfterTransition();
+		final BaseNavigationalTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.onFinish(mockActivity);
+		// Assert:
+		verify(mockActivity).finishAfterTransition();
 		verifyNoMoreInteractions(mockActivity);
 	}
 
@@ -908,7 +1038,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 			super();
 		}
 
-		TestTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+		TestTransition(@NonNull final Class<? extends Activity> classOfTransitionActivity) {
 			super(classOfTransitionActivity);
 		}
 	}

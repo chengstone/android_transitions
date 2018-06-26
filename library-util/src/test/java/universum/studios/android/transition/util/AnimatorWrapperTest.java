@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition.util;
 
@@ -44,18 +44,22 @@ import static org.mockito.Mockito.when;
 @Config(sdk = Build.VERSION_CODES.O)
 public final class AnimatorWrapperTest extends RobolectricTestCase {
 
-	@Test
-	public void testInstantiation() {
+	@Test public void testInstantiation() {
+		// Act:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Assert:
 		assertThat(wrapper.getWrappedAnimator(), is(mockAnimator));
 		assertThat(wrapper.hasFeature(AnimatorWrapper.ALL), is(true));
+		assertThat(wrapper.getListeners(), is(notNullValue()));
+		assertThat(wrapper.getListeners().isEmpty(), is(true));
 	}
 
-	@Test
-	public void testRequestFeatures() {
+	@Test public void testRequestFeatures() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act + Assert:
 		wrapper.requestFeatures(0);
 		assertThat(wrapper.hasFeature(AnimatorWrapper.ALL), is(false));
 		wrapper.requestFeatures(AnimatorWrapper.START);
@@ -75,11 +79,12 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 		assertThat(wrapper.hasFeature(AnimatorWrapper.START | AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME | AnimatorWrapper.END), is(false));
 	}
 
-	@Test
-	public void testRequestFeature() {
+	@Test public void testRequestFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.requestFeatures(0);
+		// Act + Assert:
 		wrapper.requestFeature(AnimatorWrapper.START);
 		assertThat(wrapper.hasFeature(AnimatorWrapper.START), is(true));
 		assertThat(wrapper.hasFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME | AnimatorWrapper.END | AnimatorWrapper.CANCEL), is(false));
@@ -96,11 +101,12 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 		assertThat(wrapper.hasFeature(AnimatorWrapper.ALL), is(true));
 	}
 
-	@Test
-	public void testRemoveFeature() {
+	@Test public void testRemoveFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.requestFeatures(AnimatorWrapper.ALL);
+		// Act + Assert:
 		wrapper.removeFeature(AnimatorWrapper.START);
 		assertThat(wrapper.hasFeature(AnimatorWrapper.START), is(false));
 		assertThat(wrapper.hasFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME | AnimatorWrapper.END | AnimatorWrapper.CANCEL), is(true));
@@ -117,11 +123,12 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 		assertThat(wrapper.hasFeature(AnimatorWrapper.ALL), is(false));
 	}
 
-	@Test
-	public void testAddRemoveListener() {
+	@Test public void testAddRemoveListener() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act + Assert:
 		wrapper.addListener(mockListener);
 		wrapper.addListener(mockListener);
 		wrapper.addListener(mockListener);
@@ -138,11 +145,12 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 		assertThat(wrapper.getListeners().isEmpty(), is(true));
 	}
 
-	@Test
-	public void testAddRemovePauseListener() {
+	@Test public void testAddRemovePauseListener() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act + Assert:
 		wrapper.addPauseListener(mockPauseListener);
 		wrapper.addPauseListener(mockPauseListener);
 		wrapper.addPauseListener(mockPauseListener);
@@ -155,371 +163,433 @@ public final class AnimatorWrapperTest extends RobolectricTestCase {
 		verifyNoMoreInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testAddPauseListenerWithoutPauseFeature() {
+	@Test public void testAddPauseListenerWithoutPauseFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.PAUSE);
+		// Act:
 		wrapper.addPauseListener(mockPauseListener);
+		// Assert:
 		verify(mockAnimator, times(1)).addPauseListener(any(Animator.AnimatorPauseListener.class));
 		verify(mockAnimator, times(0)).addPauseListener(mockPauseListener);
 		verifyNoMoreInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testAddPauseListenerWithoutResumeFeature() {
+	@Test public void testAddPauseListenerWithoutResumeFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.RESUME);
+		// Act:
 		wrapper.addPauseListener(mockPauseListener);
+		// Assert:
 		verify(mockAnimator, times(1)).addPauseListener(any(Animator.AnimatorPauseListener.class));
 		verify(mockAnimator, times(0)).addPauseListener(mockPauseListener);
 		verifyNoMoreInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testAddPauseListenerWithoutPauseNorResumeFeature() {
+	@Test public void testAddPauseListenerWithoutPauseNorResumeFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME);
+		// Act:
 		wrapper.addPauseListener(mockPauseListener);
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 		assertThat(wrapper.getListeners(), is(notNullValue()));
 		assertThat(wrapper.getListeners().isEmpty(), is(true));
 	}
 
-	@Test
-	public void testRemovePauseListenerNotRegistered() {
+	@Test public void testRemovePauseListenerNotRegistered() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.removePauseListener(mockPauseListener);
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testGetListenersDefault() {
-		final Animator mockAnimator = mock(Animator.class);
-		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
-		assertThat(wrapper.getListeners(), is(notNullValue()));
-		assertThat(wrapper.getListeners().isEmpty(), is(true));
-	}
-
-	@Test
-	public void testRemoveAllListeners() {
+	@Test public void testRemoveAllListeners() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
 		final Animator.AnimatorPauseListener mockPauseListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.addListener(mockListener);
 		wrapper.addPauseListener(mockPauseListener);
+		// Act:
 		wrapper.removeAllListeners();
+		// Assert:
 		assertThat(wrapper.getListeners().isEmpty(), is(true));
-		verify(mockAnimator, times(1)).removeAllListeners();
+		verify(mockAnimator).removeAllListeners();
 	}
 
-	@Test
-	public void testRemoveAllListenersWithoutRegisteredListeners() {
+	@Test public void testRemoveAllListenersWithoutRegisteredListeners() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.removeAllListeners();
-		verify(mockAnimator, times(1)).removeAllListeners();
+		// Assert:
+		verify(mockAnimator).removeAllListeners();
 	}
 
-	@Test
-	public void testSetStartDelay() {
+	@Test public void testSetStartDelay() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.setStartDelay(150L);
+		// Assert:
 		verify(mockAnimator, times(1)).setStartDelay(150L);
 	}
 
-	@Test
-	public void testGetStartDelay() {
+	@Test public void testGetStartDelay() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		when(mockAnimator.getStartDelay()).thenReturn(250L);
+		// Act + Assert:
 		assertThat(wrapper.getStartDelay(), is(250L));
-		verify(mockAnimator, times(1)).getStartDelay();
+		verify(mockAnimator).getStartDelay();
 	}
 
-	@Test
-	public void testSetDuration() {
+	@Test public void testSetDuration() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.setDuration(200L);
+		// Assert:
 		verify(mockAnimator, times(1)).setDuration(200L);
 	}
 
-	@Test
-	public void testGetDuration() {
+	@Test public void testGetDuration() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		when(mockAnimator.getDuration()).thenReturn(100L);
+		// Act + Assert:
 		assertThat(wrapper.getDuration(), is(100L));
-		verify(mockAnimator, times(1)).getDuration();
+		verify(mockAnimator).getDuration();
 	}
 
-	@Test
-	public void testSetInterpolator() {
+	@Test public void testSetInterpolator() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final TimeInterpolator mockInterpolator = mock(TimeInterpolator.class);
+		// Act:
 		wrapper.setInterpolator(mockInterpolator);
-		verify(mockAnimator, times(1)).setInterpolator(mockInterpolator);
+		// Assert:
+		verify(mockAnimator).setInterpolator(mockInterpolator);
 	}
 
-	@Test
-	public void testGetInterpolator() {
+	@Test public void testGetInterpolator() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final TimeInterpolator mockInterpolator = mock(TimeInterpolator.class);
 		when(mockAnimator.getInterpolator()).thenReturn(mockInterpolator);
+		// Act + Assert:
 		assertThat(wrapper.getInterpolator(), is(mockInterpolator));
-		verify(mockAnimator, times(1)).getInterpolator();
+		verify(mockAnimator).getInterpolator();
 	}
 
-	@Test
-	public void testSetTarget() {
+	@Test public void testSetTarget() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final Object target = new Object();
+		// Act:
 		wrapper.setTarget(target);
-		verify(mockAnimator, times(1)).setTarget(target);
+		// Assert:
+		verify(mockAnimator).setTarget(target);
 	}
 
-	@Test
-	public void testStart() {
+	@Test public void testStart() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.start();
-		verify(mockAnimator, times(1)).start();
+		// Assert:
+		verify(mockAnimator).start();
 	}
 
-	@Test
-	public void testStartWithoutStartFeature() {
+	@Test public void testStartWithoutStartFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.START);
+		// Act:
 		wrapper.start();
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testIsStarted() {
+	@Test public void testIsStarted() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		when(mockAnimator.isStarted()).thenReturn(true);
+		// Act + Assert:
 		assertThat(wrapper.isStarted(), is(true));
-		verify(mockAnimator, times(1)).isStarted();
+		verify(mockAnimator).isStarted();
 	}
 
-	@Test
-	public void testPause() {
+	@Test public void testPause() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.pause();
-		verify(mockAnimator, times(1)).pause();
+		// Assert:
+		verify(mockAnimator).pause();
 	}
 
-	@Test
-	public void testPauseWithoutPauseFeature() {
+	@Test public void testPauseWithoutPauseFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.PAUSE);
+		// Act:
 		wrapper.pause();
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testIsPaused() {
+	@Test public void testIsPaused() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		when(mockAnimator.isPaused()).thenReturn(true);
+		// Act + Assert:
 		assertThat(wrapper.isPaused(), is(true));
-		verify(mockAnimator, times(1)).isPaused();
+		verify(mockAnimator).isPaused();
 	}
 
-	@Test
-	public void testResume() {
+	@Test public void testResume() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.resume();
-		verify(mockAnimator, times(1)).resume();
+		// Assert:
+		verify(mockAnimator).resume();
 	}
 
-	@Test
-	public void testResumeWithoutPauseFeature() {
+	@Test public void testResumeWithoutPauseFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.PAUSE);
+		// Act:
 		wrapper.resume();
-		verify(mockAnimator, times(1)).resume();
+		// Assert:
+		verify(mockAnimator).resume();
 	}
 
-	@Test
-	public void testResumeWithoutResumeFeature() {
+	@Test public void testResumeWithoutResumeFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.RESUME);
+		// Act:
 		wrapper.resume();
-		verify(mockAnimator, times(1)).resume();
+		// Assert:
+		verify(mockAnimator).resume();
 	}
 
-	@Test
-	public void testResumeWithoutPauseNorResumeFeature() {
+	@Test public void testResumeWithoutPauseNorResumeFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.PAUSE | AnimatorWrapper.RESUME);
+		// Act:
 		wrapper.resume();
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testEnd() {
+	@Test public void testEnd() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.end();
-		verify(mockAnimator, times(1)).end();
+		// Assert:
+		verify(mockAnimator).end();
 	}
 
-	@Test
-	public void testEndWithoutStartFeature() {
+	@Test public void testEndWithoutStartFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.START);
+		// Act:
 		wrapper.end();
-		verify(mockAnimator, times(1)).end();
+		// Assert:
+		verify(mockAnimator).end();
 	}
 
-	@Test
-	public void testEndWithoutEndFeature() {
+	@Test public void testEndWithoutEndFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.END);
+		// Act:
 		wrapper.end();
-		verify(mockAnimator, times(1)).end();
+		// Assert:
+		verify(mockAnimator).end();
 	}
 
-	@Test
-	public void testEndWithoutStartNorEndFeature() {
+	@Test public void testEndWithoutStartNorEndFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.START | AnimatorWrapper.END);
+		// Act:
 		wrapper.end();
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testCancel() {
+	@Test public void testCancel() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
+		// Act:
 		wrapper.cancel();
-		verify(mockAnimator, times(1)).cancel();
+		// Assert:
+		verify(mockAnimator).cancel();
 	}
 
-	@Test
-	public void testCancelWithoutStartFeature() {
+	@Test public void testCancelWithoutStartFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.START);
+		// Act:
 		wrapper.cancel();
-		verify(mockAnimator, times(1)).cancel();
+		// Assert:
+		verify(mockAnimator).cancel();
 	}
 
-	@Test
-	public void testCancelWithoutCancelFeature() {
+	@Test public void testCancelWithoutCancelFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.CANCEL);
+		// Act:
 		wrapper.cancel();
-		verify(mockAnimator, times(1)).cancel();
+		// Assert:
+		verify(mockAnimator).cancel();
 	}
 
-	@Test
-	public void testCancelWithoutStartNorCancelFeature() {
+	@Test public void testCancelWithoutStartNorCancelFeature() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		wrapper.removeFeature(AnimatorWrapper.START | AnimatorWrapper.CANCEL);
+		// Act:
 		wrapper.cancel();
+		// Assert:
 		verifyZeroInteractions(mockAnimator);
 	}
 
-	@Test
-	public void testIsRunning() {
+	@Test public void testIsRunning() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		when(mockAnimator.isRunning()).thenReturn(true);
+		// Act + Assert:
 		assertThat(wrapper.isRunning(), is(true));
-		verify(mockAnimator, times(1)).isRunning();
+		verify(mockAnimator).isRunning();
 	}
 
-	@Test
-	public void testAnimatorListenerWrapperOnAnimationStart() {
+	@Test public void testAnimatorListenerWrapperOnAnimationStart() {
+		// Arrange:
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final AnimatorWrapper.AnimatorListenerWrapper listenerWrapper = new AnimatorWrapper.AnimatorListenerWrapper(mockListener, wrapper);
+		// Act:
 		listenerWrapper.onAnimationStart(mockAnimator);
-		verify(mockListener, times(1)).onAnimationStart(wrapper);
+		// Assert:
+		verify(mockListener).onAnimationStart(wrapper);
 		verifyNoMoreInteractions(mockListener);
 	}
 
-	@Test
-	public void testAnimatorListenerWrapperOnAnimationEnd() {
+	@Test public void testAnimatorListenerWrapperOnAnimationEnd() {
+		// Arrange:
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final AnimatorWrapper.AnimatorListenerWrapper listenerWrapper = new AnimatorWrapper.AnimatorListenerWrapper(mockListener, wrapper);
+		// Act:
 		listenerWrapper.onAnimationEnd(mockAnimator);
-		verify(mockListener, times(1)).onAnimationEnd(wrapper);
+		// Assert:
+		verify(mockListener).onAnimationEnd(wrapper);
 		verifyNoMoreInteractions(mockListener);
 	}
 
-	@Test
-	public void testAnimatorListenerWrapperOnAnimationCancel() {
+	@Test public void testAnimatorListenerWrapperOnAnimationCancel() {
+		// Arrange:
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final AnimatorWrapper.AnimatorListenerWrapper listenerWrapper = new AnimatorWrapper.AnimatorListenerWrapper(mockListener, wrapper);
+		// Act:
 		listenerWrapper.onAnimationCancel(mockAnimator);
-		verify(mockListener, times(1)).onAnimationCancel(wrapper);
+		// Assert:
+		verify(mockListener).onAnimationCancel(wrapper);
 		verifyNoMoreInteractions(mockListener);
 	}
 
-	@Test
-	public void testAnimatorListenerWrapperOnAnimationRepeat() {
+	@Test public void testAnimatorListenerWrapperOnAnimationRepeat() {
+		// Arrange:
 		final Animator.AnimatorListener mockListener = mock(Animator.AnimatorListener.class);
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final AnimatorWrapper.AnimatorListenerWrapper listenerWrapper = new AnimatorWrapper.AnimatorListenerWrapper(mockListener, wrapper);
+		// Act:
 		listenerWrapper.onAnimationRepeat(mockAnimator);
-		verify(mockListener, times(1)).onAnimationRepeat(wrapper);
+		// Assert:
+		verify(mockListener).onAnimationRepeat(wrapper);
 		verifyNoMoreInteractions(mockListener);
 	}
 
-	@Test
-	public void testAnimatorPauseListenerWrapperOnAnimationPause() {
+	@Test public void testAnimatorPauseListenerWrapperOnAnimationPause() {
+		// Arrange:
 		final Animator.AnimatorPauseListener mockListener = mock(Animator.AnimatorPauseListener.class);
 		final Animator mockAnimator = mock(Animator.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final AnimatorWrapper.AnimatorPauseListenerWrapper listenerWrapper = new AnimatorWrapper.AnimatorPauseListenerWrapper(mockListener, wrapper);
+		// Act:
 		listenerWrapper.onAnimationPause(mockAnimator);
-		verify(mockListener, times(1)).onAnimationPause(wrapper);
+		// Assert:
+		verify(mockListener).onAnimationPause(wrapper);
 		verifyNoMoreInteractions(mockListener);
 	}
 
-	@Test
-	public void testAnimatorPauseListenerWrapperOnAnimationResume() {
-		final Animator.AnimatorPauseListener mockListener = mock(Animator.AnimatorPauseListener.class);
+	@Test public void testAnimatorPauseListenerWrapperOnAnimationResume() {
+		// Arrange:
 		final Animator mockAnimator = mock(Animator.class);
+		final Animator.AnimatorPauseListener mockListener = mock(Animator.AnimatorPauseListener.class);
 		final AnimatorWrapper wrapper = new AnimatorWrapper(mockAnimator);
 		final AnimatorWrapper.AnimatorPauseListenerWrapper listenerWrapper = new AnimatorWrapper.AnimatorPauseListenerWrapper(mockListener, wrapper);
+		// Act:
 		listenerWrapper.onAnimationResume(mockAnimator);
-		verify(mockListener, times(1)).onAnimationResume(wrapper);
+		// Assert:
+		verify(mockListener).onAnimationResume(wrapper);
 		verifyNoMoreInteractions(mockListener);
 	}
 }

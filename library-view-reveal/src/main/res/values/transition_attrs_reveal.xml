@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
+ * =================================================================================================
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * *************************************************************************************************
+ */
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- Reveal transition attributes. -->
+	<declare-styleable name="Transition.Reveal">
+		<!-- Mode determining whether a view should be revealed or concealed. -->
+		<attr name="transitionRevealMode">
+			<enum name="reveal" value="0x01" />
+			<enum name="conceal" value="0x02" />
+		</attr>
+		<!-- Radius of the target view at transition's start. -->
+		<attr name="transitionStartRadius" format="dimension" />
+		<!-- Radius of the target view at transition's end. -->
+		<attr name="transitionEndRadius" format="dimension" />
+		<!-- Re-used. -->
+		<attr name="transitionCenterGravity" />
+		<!-- Re-used. -->
+		<attr name="transitionCenterHorizontalOffset" />
+		<!-- Re-used. -->
+		<attr name="transitionCenterVerticalOffset" />
+		<!-- Re-used. -->
+		<attr name="android:centerX" />
+		<!-- Re-used. -->
+		<attr name="android:centerY" />
+		<!-- Re-used. -->
+		<attr name="transitionAppearVisibility" />
+		<!-- Re-used. -->
+		<attr name="transitionDisappearVisibility" />
+		<!-- Re-used. -->
+		<attr name="transitionStartVisibility" />
+		<!-- Re-used. -->
+		<attr name="transitionEndVisibility" />
+	</declare-styleable>
+</resources>

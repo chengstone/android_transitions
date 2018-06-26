@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -55,27 +55,32 @@ import static org.hamcrest.core.IsNull.nullValue;
  */
 public final class NavigationalTransitionCompatTest extends RobolectricTestCase {
 
-	@Test
-	public void testInstantiation() {
-		final TestTransition transition = new TestTransition();
-		assertThat(transition.getActivityClass(), is(nullValue()));
+	@Test public void testInstantiation() {
+		// Act:
+		final TestTransition navTransition = new TestTransition();
+		// Assert:
+		assertThat(navTransition.getActivityClass(), is(nullValue()));
 	}
 
-	@Test
-	public void testInstantiationWithActivityClass() {
-		final TestTransition transition = new TestTransition(TestCompatActivity.class);
-		assertSame(transition.getActivityClass(), TestCompatActivity.class);
+	@Test public void testInstantiationWithActivityClass() {
+		// Act:
+		final TestTransition navTransition = new TestTransition(TestCompatActivity.class);
+		// Assert:
+		assertSame(navTransition.getActivityClass(), TestCompatActivity.class);
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testStartForFragmentAtKitKatApiLevel() throws Exception {
+	@Test public void testStartForFragmentAtKitKatApiLevel() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final TestFragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition(SecondaryTestActivity.class).exitTransition(null).start(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition(SecondaryTestActivity.class).exitTransition(null);
+		// Act:
+		navTransition.start(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(false));
 		assertThat(fragment.hasBeenStartActivityCalled(TestFragment.START_ACTIVITY_WITH_OPTIONS), is(true));
 		assertThat(fragment.hasBeenStartActivityCalled(
@@ -83,16 +88,19 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 		), is(false));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testStartForFragmentAtLollipopApiLevel() throws Exception {
+	@Test public void testStartForFragmentAtLollipopApiLevel() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final TestFragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
 		final Transition transition = new Fade();
-		new TestTransition(SecondaryTestActivity.class).exitTransition(transition).start(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition(SecondaryTestActivity.class).exitTransition(transition);
+		// Act:
+		navTransition.start(fragment);
+		// Assert:
 		assertThat(activity.getWindow().getExitTransition(), is(transition));
 		assertThat(activity.isFinishing(), is(false));
 		assertThat(fragment.hasBeenStartActivityCalled(TestFragment.START_ACTIVITY_WITH_OPTIONS), is(true));
@@ -101,15 +109,18 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 		), is(false));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testOnStartForFragmentAtKitKatApiLevel() throws Exception {
+	@Test public void testOnStartForFragmentAtKitKatApiLevel() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final TestFragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition(SecondaryTestActivity.class).onStart(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition(SecondaryTestActivity.class);
+		// Act:
+		navTransition.onStart(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(false));
 		assertThat(fragment.hasBeenStartActivityCalled(TestFragment.START_ACTIVITY_WITH_OPTIONS), is(true));
 		assertThat(fragment.hasBeenStartActivityCalled(
@@ -117,15 +128,18 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 		), is(false));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testOnStartForFragmentAtLollipopApiLevel() throws Exception {
+	@Test public void testOnStartForFragmentAtLollipopApiLevel() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final TestFragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition(SecondaryTestActivity.class).onStart(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition(SecondaryTestActivity.class);
+		// Act:
+		navTransition.onStart(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(false));
 		assertThat(fragment.hasBeenStartActivityCalled(TestFragment.START_ACTIVITY_WITH_OPTIONS), is(true));
 		assertThat(fragment.hasBeenStartActivityCalled(
@@ -133,15 +147,18 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 		), is(false));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.KITKAT)
-	public void testOnStartForFragmentWithRequestCodeAtKitKatApiLevel() throws Exception {
+	@Test public void testOnStartForFragmentWithRequestCodeAtKitKatApiLevel() throws Exception {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final TestFragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition(SecondaryTestActivity.class).requestCode(100).onStart(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition(SecondaryTestActivity.class).requestCode(100);
+		// Act:
+		navTransition.onStart(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(false));
 		assertThat(fragment.hasBeenStartActivityCalled(TestFragment.START_ACTIVITY_FOR_RESULT), is(true));
 		assertThat(fragment.hasBeenStartActivityCalled(
@@ -149,15 +166,18 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 		), is(false));
 	}
 
-	@Test
 	@Config(sdk = Build.VERSION_CODES.LOLLIPOP)
-	public void testOnStartForFragmentWithRequestCodeAtLollipopApiLevel() throws Exception {
+	@Test public void testOnStartForFragmentWithRequestCodeAtLollipopApiLevel() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final TestFragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition(SecondaryTestActivity.class).requestCode(100).onStart(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition(SecondaryTestActivity.class).requestCode(100);
+		// Act:
+		navTransition.onStart(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(false));
 		assertThat(fragment.hasBeenStartActivityCalled(TestFragment.START_ACTIVITY_FOR_RESULT_WITH_OPTIONS), is(true));
 		assertThat(fragment.hasBeenStartActivityCalled(
@@ -165,25 +185,31 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 		), is(false));
 	}
 
-	@Test
-	public void testFinishForFragment() throws Exception {
+	@Test public void testFinishForFragment() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final Fragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition().finish(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.finish(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(true));
 	}
 
-	@Test
-	public void testOnFinishForFragment() throws Exception {
+	@Test public void testOnFinishForFragment() {
+		// Arrange:
 		final FragmentActivity activity = Robolectric.buildActivity(TestCompatActivity.class).create().start().resume().get();
 		final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 		final Fragment fragment = new TestFragment();
 		fragmentManager.beginTransaction().add(fragment, null).commit();
 		fragmentManager.executePendingTransactions();
-		new TestTransition().onFinish(fragment);
+		final NavigationalCompatTransition navTransition = new TestTransition();
+		// Act:
+		navTransition.onFinish(fragment);
+		// Assert:
 		assertThat(activity.isFinishing(), is(true));
 	}
 
@@ -193,7 +219,7 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 			super();
 		}
 
-		TestTransition(@NonNull Class<? extends Activity> classOfTransitionActivity) {
+		TestTransition(@NonNull final Class<? extends Activity> classOfTransitionActivity) {
 			super(classOfTransitionActivity);
 		}
 	}
@@ -212,42 +238,39 @@ public final class NavigationalTransitionCompatTest extends RobolectricTestCase 
 				START_ACTIVITY_FOR_RESULT_WITH_OPTIONS
 		})
 		@Retention(RetentionPolicy.SOURCE)
-		@interface StartActivityCall {
-		}
+		@interface StartActivityCall {}
 
 		@StartActivityCall private int startActivityCalls;
 
-		@NonNull
-		@Override
-		public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		@Override @NonNull public View onCreateView(
+				@NonNull final LayoutInflater inflater,
+				@Nullable final ViewGroup container,
+				@Nullable final Bundle savedInstanceState
+		) {
 			return new View(inflater.getContext());
 		}
 
-		@Override
-		public void startActivity(Intent intent) {
+		@Override public void startActivity(@NonNull final Intent intent) {
 			super.startActivity(intent);
 			this.startActivityCalls |= START_ACTIVITY;
 		}
 
-		@Override
-		public void startActivity(Intent intent, Bundle options) {
+		@Override public void startActivity(@NonNull final Intent intent, @Nullable final Bundle options) {
 			super.startActivity(intent, options);
 			this.startActivityCalls |= START_ACTIVITY_WITH_OPTIONS;
 		}
 
-		@Override
-		public void startActivityForResult(Intent intent, int requestCode) {
+		@Override public void startActivityForResult(@NonNull final Intent intent, final int requestCode) {
 			super.startActivityForResult(intent, requestCode);
 			this.startActivityCalls |= START_ACTIVITY_FOR_RESULT;
 		}
 
-		@Override
-		public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+		@Override public void startActivityForResult(@NonNull final Intent intent, final int requestCode, @Nullable final Bundle options) {
 			super.startActivityForResult(intent, requestCode, options);
 			this.startActivityCalls |= START_ACTIVITY_FOR_RESULT_WITH_OPTIONS;
 		}
 
-		boolean hasBeenStartActivityCalled(@StartActivityCall int startActivityCall) {
+		boolean hasBeenStartActivityCalled(@StartActivityCall final int startActivityCall) {
 			return (startActivityCalls & startActivityCall) == startActivityCall;
 		}
 	}

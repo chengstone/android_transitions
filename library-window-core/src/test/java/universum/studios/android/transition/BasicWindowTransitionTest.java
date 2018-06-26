@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License
- * you may obtain at
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written within this file but as it
- * is described in the License, the software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
  *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition;
 
@@ -30,7 +30,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -39,11 +38,13 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 public final class BasicWindowTransitionTest extends RobolectricTestCase {
 
-	@Test
-	public void testInstantiationInOut() {
+	@Test public void testInstantiationInOut() {
+		// Arrange:
 		final int enterAnimation = android.R.anim.fade_in;
 		final int exitAnimation = android.R.anim.fade_out;
+		// Act:
 		final BasicWindowTransition transition = new BasicWindowTransition(enterAnimation, exitAnimation);
+		// Assert:
 		assertThat(transition.getStartEnterAnimation(), is(enterAnimation));
 		assertThat(transition.getStartExitAnimation(), is(exitAnimation));
 		assertThat(transition.getFinishEnterAnimation(), is(BasicWindowTransition.NO_ANIMATION));
@@ -51,13 +52,15 @@ public final class BasicWindowTransitionTest extends RobolectricTestCase {
 		assertThat(transition.getName(), is("UNSPECIFIED"));
 	}
 
-	@Test
-	public void testInstantiationInOutBack() {
+	@Test public void testInstantiationInOutBack() {
+		// Arrange:
 		final int startEnterAnimation = android.R.anim.fade_in;
 		final int startExitAnimation = android.R.anim.fade_out;
 		final int finishEnterAnimation = android.R.anim.slide_in_left;
 		final int finishExitAnimation = android.R.anim.slide_out_right;
+		// Act:
 		final BasicWindowTransition transition = new BasicWindowTransition(startEnterAnimation, startExitAnimation, finishEnterAnimation, finishExitAnimation);
+		// Assert:
 		assertThat(transition.getStartEnterAnimation(), is(startEnterAnimation));
 		assertThat(transition.getStartExitAnimation(), is(startExitAnimation));
 		assertThat(transition.getFinishEnterAnimation(), is(finishEnterAnimation));
@@ -65,13 +68,15 @@ public final class BasicWindowTransitionTest extends RobolectricTestCase {
 		assertThat(transition.getName(), is("UNSPECIFIED"));
 	}
 
-	@Test
-	public void testInstantiationInOutBackAndName() {
+	@Test public void testInstantiationInOutBackAndName() {
+		// Arrange:
 		final int startEnterAnimation = android.R.anim.fade_in;
 		final int startExitAnimation = android.R.anim.fade_out;
 		final int finishEnterAnimation = android.R.anim.slide_in_left;
 		final int finishExitAnimation = android.R.anim.slide_out_right;
+		// Act:
 		final BasicWindowTransition transition = new BasicWindowTransition(startEnterAnimation, startExitAnimation, finishEnterAnimation, finishExitAnimation, "TEST_TRANSITION");
+		// Assert:
 		assertThat(transition.getStartEnterAnimation(), is(startEnterAnimation));
 		assertThat(transition.getStartExitAnimation(), is(startExitAnimation));
 		assertThat(transition.getFinishEnterAnimation(), is(finishEnterAnimation));
@@ -79,8 +84,8 @@ public final class BasicWindowTransitionTest extends RobolectricTestCase {
 		assertThat(transition.getName(), is("TEST_TRANSITION"));
 	}
 
-	@Test
-	public void testCreatorCreateFromParcel() {
+	@Test public void testCreatorCreateFromParcel() {
+		// Arrange:
 		final int startEnterAnimation = android.R.anim.fade_in;
 		final int startExitAnimation = android.R.anim.fade_out;
 		final int finishEnterAnimation = android.R.anim.slide_in_left;
@@ -92,7 +97,9 @@ public final class BasicWindowTransitionTest extends RobolectricTestCase {
 		parcel.writeInt(finishExitAnimation);
 		parcel.writeString("TEST_TRANSITION");
 		parcel.setDataPosition(0);
+		// Act:
 		final BasicWindowTransition transition = BasicWindowTransition.CREATOR.createFromParcel(parcel);
+		// Assert:
 		assertThat(transition.getStartEnterAnimation(), is(startEnterAnimation));
 		assertThat(transition.getStartExitAnimation(), is(startExitAnimation));
 		assertThat(transition.getFinishEnterAnimation(), is(finishEnterAnimation));
@@ -101,23 +108,26 @@ public final class BasicWindowTransitionTest extends RobolectricTestCase {
 		parcel.recycle();
 	}
 
-	@Test
-	public void testCreatorNewArray() {
+	@Test public void testCreatorNewArray() {
+		// Act:
 		final BasicWindowTransition[] array = BasicWindowTransition.CREATOR.newArray(10);
+		// Assert:
 		for (final BasicWindowTransition anArray : array) {
 			assertThat(anArray, is(nullValue()));
 		}
 	}
 
-	@Test
-	public void testWriteToParcel() {
+	@Test public void testWriteToParcel() {
+		// Arrange:
 		final int startEnterAnimation = android.R.anim.fade_in;
 		final int startExitAnimation = android.R.anim.fade_out;
 		final int finishEnterAnimation = android.R.anim.slide_in_left;
 		final int finishExitAnimation = android.R.anim.slide_out_right;
 		final BasicWindowTransition transition = new BasicWindowTransition(startEnterAnimation, startExitAnimation, finishEnterAnimation, finishExitAnimation, "TEST_TRANSITION");
 		final Parcel parcel = Parcel.obtain();
+		// Act:
 		transition.writeToParcel(parcel, 0);
+		// Assert:
 		parcel.setDataPosition(0);
 		assertThat(parcel.readInt(), is(startEnterAnimation));
 		assertThat(parcel.readInt(), is(startExitAnimation));
@@ -127,56 +137,66 @@ public final class BasicWindowTransitionTest extends RobolectricTestCase {
 		parcel.recycle();
 	}
 
-	@Test
-	public void testDescribeContents() {
-		assertThat(new BasicWindowTransition(0, 0).describeContents(), is(0));
+	@Test public void testDescribeContents() {
+		// Arrange:
+		final BasicWindowTransition transition = new BasicWindowTransition(0, 0);
+		// Act + Assert:
+		assertThat(transition.describeContents(), is(0));
 	}
 
-	@Test
-	public void testOverrideStart() {
+	@Test public void testOverrideStart() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final int startEnterAnimation = android.R.anim.fade_in;
 		final int startExitAnimation = android.R.anim.fade_out;
 		final int finishEnterAnimation = android.R.anim.slide_in_left;
 		final int finishExitAnimation = android.R.anim.slide_out_right;
 		final BasicWindowTransition transition = new BasicWindowTransition(startEnterAnimation, startExitAnimation, finishEnterAnimation, finishExitAnimation);
+		// Act:
 		transition.overrideStart(mockActivity);
-		verify(mockActivity, times(1)).overridePendingTransition(startEnterAnimation, startExitAnimation);
+		// Assert:
+		verify(mockActivity).overridePendingTransition(startEnterAnimation, startExitAnimation);
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
-	public void testOverrideStartSimple() {
+	@Test public void testOverrideStartSimple() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final int enterAnimation = android.R.anim.fade_in;
 		final int exitAnimation = android.R.anim.fade_out;
 		final BasicWindowTransition transition = new BasicWindowTransition(enterAnimation, exitAnimation);
+		// Act:
 		transition.overrideStart(mockActivity);
-		verify(mockActivity, times(1)).overridePendingTransition(enterAnimation, exitAnimation);
+		// Assert:
+		verify(mockActivity).overridePendingTransition(enterAnimation, exitAnimation);
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
-	public void testOverrideFinish() {
+	@Test public void testOverrideFinish() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final int startEnterAnimation = android.R.anim.fade_in;
 		final int startExitAnimation = android.R.anim.fade_out;
 		final int finishEnterAnimation = android.R.anim.slide_in_left;
 		final int finishExitAnimation = android.R.anim.slide_out_right;
 		final BasicWindowTransition transition = new BasicWindowTransition(startEnterAnimation, startExitAnimation, finishEnterAnimation, finishExitAnimation);
+		// Act:
 		transition.overrideFinish(mockActivity);
-		verify(mockActivity, times(1)).overridePendingTransition(finishEnterAnimation, finishExitAnimation);
+		// Assert:
+		verify(mockActivity).overridePendingTransition(finishEnterAnimation, finishExitAnimation);
 		verifyNoMoreInteractions(mockActivity);
 	}
 
-	@Test
-	public void testOverrideFinishSimple() {
+	@Test public void testOverrideFinishSimple() {
+		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final int enterAnimation = android.R.anim.fade_in;
 		final int exitAnimation = android.R.anim.fade_out;
 		final BasicWindowTransition transition = new BasicWindowTransition(enterAnimation, exitAnimation);
+		// Act:
 		transition.overrideFinish(mockActivity);
-		verify(mockActivity, times(1)).overridePendingTransition(BasicWindowTransition.NO_ANIMATION, BasicWindowTransition.NO_ANIMATION);
+		// Assert:
+		verify(mockActivity).overridePendingTransition(BasicWindowTransition.NO_ANIMATION, BasicWindowTransition.NO_ANIMATION);
 		verifyNoMoreInteractions(mockActivity);
 	}
 }

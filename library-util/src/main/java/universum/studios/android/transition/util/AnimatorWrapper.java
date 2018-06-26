@@ -1,20 +1,20 @@
 /*
- * =================================================================================================
- *                             Copyright (C) 2017 Universum Studios
- * =================================================================================================
- *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ *                                 Copyright 2017 Universum Studios
+ * *************************************************************************************************
+ *                  Licensed under the Apache License, Version 2.0 (the "License")
  * -------------------------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy of this License 
- * you may obtain at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written within this file but as it 
- * is described in the License, the software distributed under the License is distributed on an 
- * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
- * 
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ *
  * See the License for the specific language governing permissions and limitations under the License.
- * =================================================================================================
+ * *************************************************************************************************
  */
 package universum.studios.android.transition.util;
 
@@ -23,6 +23,7 @@ import android.animation.TimeInterpolator;
 import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.util.ArrayMap;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
  * 'suppress' some of its features like pausing and resuming for instance.
  *
  * @author Martin Albedinsky
+ * @since 1.0
  */
 @SuppressWarnings("deprecation")
 @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
@@ -111,8 +113,7 @@ public class AnimatorWrapper extends Animator {
 			END,
 			CANCEL
 	})
-	public @interface WrapperFeatures {
-	}
+	public @interface WrapperFeatures {}
 
 	/**
 	 * Flag grouping all wrapper features in one.
@@ -134,26 +135,26 @@ public class AnimatorWrapper extends Animator {
 	/**
 	 * Wrapped animator instance.
 	 */
-	private final Animator mAnimator;
+	private final Animator animator;
 
 	/**
 	 * Set of feature flags specified for this wrapper.
 	 */
-	private int mFeatures = ALL;
+	private int features = ALL;
 
 	/**
 	 * Map containing animator listener wrappers mapped to theirs wrapped listeners used for purpose
 	 * of adding/removing of listeners via {@link #addListener(AnimatorListener)} and
 	 * {@link #removeListener(AnimatorListener)}.
 	 */
-	private ArrayMap<AnimatorListener, AnimatorListenerWrapper> mListenerWrappers;
+	private ArrayMap<AnimatorListener, AnimatorListenerWrapper> listenerWrappers;
 
 	/**
 	 * Map containing animator pause listener wrappers mapped to theirs wrapped listeners used for
 	 * purpose of adding/removing of pause listeners via {@link #addPauseListener(AnimatorPauseListener)}
 	 * and {@link #removePauseListener(AnimatorPauseListener)}.
 	 */
-	private ArrayMap<AnimatorPauseListener, AnimatorPauseListenerWrapper> mPauseListenerWrappers;
+	private ArrayMap<AnimatorPauseListener, AnimatorPauseListenerWrapper> pauseListenerWrappers;
 
 	/*
 	 * Constructors ================================================================================
@@ -164,9 +165,9 @@ public class AnimatorWrapper extends Animator {
 	 *
 	 * @param animator The animator to be wrapped.
 	 */
-	public AnimatorWrapper(@NonNull Animator animator) {
+	public AnimatorWrapper(@NonNull final Animator animator) {
 		super();
-		this.mAnimator = animator;
+		this.animator = animator;
 	}
 
 	/*
@@ -177,11 +178,11 @@ public class AnimatorWrapper extends Animator {
 	 * Returns the animator wrapped by this wrapper.
 	 *
 	 * @return The wrapped animator.
+	 *
 	 * @see #AnimatorWrapper(Animator)
 	 */
-	@NonNull
-	public final Animator getWrappedAnimator() {
-		return mAnimator;
+	@NonNull public final Animator getWrappedAnimator() {
+		return animator;
 	}
 
 	/**
@@ -190,35 +191,38 @@ public class AnimatorWrapper extends Animator {
 	 * <b>Note</b>, that this will override all current features to the specified ones.
 	 *
 	 * @param features The desired features to be set for this wrapper.
+	 *
 	 * @see #requestFeature(int)
 	 * @see #hasFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	public void requestFeatures(@WrapperFeatures int features) {
-		this.mFeatures = features;
+	public void requestFeatures(@WrapperFeatures final int features) {
+		this.features = features;
 	}
 
 	/**
 	 * Adds the specified <var>feature</var> to the registered ones.
 	 *
 	 * @param feature The desired feature to add.
+	 *
 	 * @see #requestFeatures(int)
 	 * @see #hasFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	public void requestFeature(@WrapperFeatures int feature) {
-		this.mFeatures |= feature;
+	public void requestFeature(@WrapperFeatures final int feature) {
+		this.features |= feature;
 	}
 
 	/**
 	 * Removes the specified <var>feature</var> from the registered ones.
 	 *
 	 * @param feature The desired feature to remove.
+	 *
 	 * @see #requestFeature(int)
 	 * @see #hasFeature(int)
 	 */
-	public void removeFeature(@WrapperFeatures int feature) {
-		this.mFeatures &= ~feature;
+	public void removeFeature(@WrapperFeatures final int feature) {
+		this.features &= ~feature;
 	}
 
 	/**
@@ -227,33 +231,32 @@ public class AnimatorWrapper extends Animator {
 	 * @param feature The desired feature to check for.
 	 * @return {@code True} if the feature has been requested via {@link #requestFeature(int)} or
 	 * specified by default, {@code false} otherwise.
+	 *
 	 * @see #requestFeature(int)
 	 */
-	public boolean hasFeature(@WrapperFeatures int feature) {
-		return (mFeatures & feature) != 0;
+	public boolean hasFeature(@WrapperFeatures final int feature) {
+		return (features & feature) != 0;
 	}
 
 	/**
 	 */
-	@Override
-	public void addListener(AnimatorListener listener) {
+	@Override public void addListener(@NonNull final AnimatorListener listener) {
 		this.ensureListenerWrappers();
-		if (!mListenerWrappers.containsKey(listener)) {
+		if (!listenerWrappers.containsKey(listener)) {
 			final AnimatorListenerWrapper wrapper = new AnimatorListenerWrapper(listener, this);
-			mListenerWrappers.put(listener, wrapper);
-			mAnimator.addListener(wrapper);
+			this.listenerWrappers.put(listener, wrapper);
+			this.animator.addListener(wrapper);
 		}
 	}
 
 	/**
 	 */
-	@Override
-	public void removeListener(AnimatorListener listener) {
+	@Override public void removeListener(@NonNull final AnimatorListener listener) {
 		this.ensureListenerWrappers();
-		final AnimatorListenerWrapper wrapper = mListenerWrappers.get(listener);
+		final AnimatorListenerWrapper wrapper = listenerWrappers.get(listener);
 		if (wrapper != null) {
-			mListenerWrappers.remove(listener);
-			mAnimator.removeListener(wrapper);
+			this.listenerWrappers.remove(listener);
+			this.animator.removeListener(wrapper);
 		}
 	}
 
@@ -261,7 +264,7 @@ public class AnimatorWrapper extends Animator {
 	 * Ensures that the map with listener wrappers is initialized.
 	 */
 	private void ensureListenerWrappers() {
-		if (mListenerWrappers == null) this.mListenerWrappers = new ArrayMap<>(1);
+		if (listenerWrappers == null) this.listenerWrappers = new ArrayMap<>(1);
 	}
 
 	/**
@@ -270,113 +273,101 @@ public class AnimatorWrapper extends Animator {
 	 * @see #requestFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	@Override
-	public void addPauseListener(AnimatorPauseListener listener) {
+	@Override public void addPauseListener(@NonNull final AnimatorPauseListener listener) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return;
 		}
 		if (hasFeature(PAUSE) || hasFeature(RESUME)) {
-			if (mPauseListenerWrappers == null) {
-				this.mPauseListenerWrappers = new ArrayMap<>(1);
+			if (pauseListenerWrappers == null) {
+				this.pauseListenerWrappers = new ArrayMap<>(1);
 			}
-			if (!mPauseListenerWrappers.containsKey(listener)) {
+			if (!pauseListenerWrappers.containsKey(listener)) {
 				final AnimatorPauseListenerWrapper wrapper = new AnimatorPauseListenerWrapper(listener, this);
-				mPauseListenerWrappers.put(listener, wrapper);
-				mAnimator.addPauseListener(wrapper);
+				this.pauseListenerWrappers.put(listener, wrapper);
+				this.animator.addPauseListener(wrapper);
 			}
 		}
 	}
 
 	/**
 	 */
-	@Override
-	public void removePauseListener(AnimatorPauseListener listener) {
+	@Override public void removePauseListener(@NonNull final AnimatorPauseListener listener) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return;
 		}
-		if (mPauseListenerWrappers != null) {
-			final AnimatorPauseListenerWrapper wrapper = mPauseListenerWrappers.get(listener);
+		if (pauseListenerWrappers != null) {
+			final AnimatorPauseListenerWrapper wrapper = pauseListenerWrappers.get(listener);
 			if (wrapper != null) {
-				mPauseListenerWrappers.remove(listener);
-				mAnimator.removePauseListener(wrapper);
+				this.pauseListenerWrappers.remove(listener);
+				this.animator.removePauseListener(wrapper);
 			}
 		}
 	}
 
 	/**
 	 */
-	@NonNull
-	@Override
-	public ArrayList<AnimatorListener> getListeners() {
-		return mListenerWrappers == null ?
+	@Override @NonNull public ArrayList<AnimatorListener> getListeners() {
+		return listenerWrappers == null ?
 				new ArrayList<AnimatorListener>(0) :
-				new ArrayList<>(mListenerWrappers.keySet());
+				new ArrayList<>(listenerWrappers.keySet());
 	}
 
 	/**
 	 */
-	@Override
-	public void removeAllListeners() {
-		if (mListenerWrappers != null) {
-			this.mListenerWrappers.clear();
-			this.mListenerWrappers = null;
+	@Override public void removeAllListeners() {
+		if (listenerWrappers != null) {
+			this.listenerWrappers.clear();
+			this.listenerWrappers = null;
 		}
-		if (mPauseListenerWrappers != null) {
-			this.mPauseListenerWrappers.clear();
-			this.mPauseListenerWrappers = null;
+		if (pauseListenerWrappers != null) {
+			this.pauseListenerWrappers.clear();
+			this.pauseListenerWrappers = null;
 		}
-		mAnimator.removeAllListeners();
+		this.animator.removeAllListeners();
 	}
 
 	/**
 	 */
-	@Override
-	public void setStartDelay(long startDelay) {
-		mAnimator.setStartDelay(startDelay);
+	@Override public void setStartDelay(final long startDelay) {
+		this.animator.setStartDelay(startDelay);
 	}
 
 	/**
 	 */
-	@Override
-	public long getStartDelay() {
-		return mAnimator.getStartDelay();
+	@Override public long getStartDelay() {
+		return animator.getStartDelay();
 	}
 
 	/**
 	 */
-	@Override
-	public Animator setDuration(long duration) {
-		mAnimator.setDuration(duration);
+	@Override public Animator setDuration(final long duration) {
+		this.animator.setDuration(duration);
 		return this;
 	}
 
 	/**
 	 */
-	@Override
-	public long getDuration() {
-		return mAnimator.getDuration();
+	@Override public long getDuration() {
+		return animator.getDuration();
 	}
 
 	/**
 	 */
-	@Override
-	public void setInterpolator(TimeInterpolator interpolator) {
-		mAnimator.setInterpolator(interpolator);
+	@Override public void setInterpolator(@Nullable final TimeInterpolator interpolator) {
+		this.animator.setInterpolator(interpolator);
 	}
 
 	/**
 	 */
-	@Override
 	@RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-	public TimeInterpolator getInterpolator() {
-		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 ? mAnimator.getInterpolator() : null;
+	@Override public TimeInterpolator getInterpolator() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 ? animator.getInterpolator() : null;
 	}
 
 	/**
 	 */
-	@Override
-	public void setTarget(Object target) {
-		mAnimator.setTarget(target);
+	@Override public void setTarget(@Nullable final Object target) {
+		this.animator.setTarget(target);
 	}
 
 	/**
@@ -385,16 +376,14 @@ public class AnimatorWrapper extends Animator {
 	 * @see #requestFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	@Override
-	public void start() {
-		if (hasFeature(START)) mAnimator.start();
+	@Override public void start() {
+		if (hasFeature(START)) animator.start();
 	}
 
 	/**
 	 */
-	@Override
-	public boolean isStarted() {
-		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH && mAnimator.isStarted();
+	@Override public boolean isStarted() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH && animator.isStarted();
 	}
 
 	/**
@@ -403,21 +392,19 @@ public class AnimatorWrapper extends Animator {
 	 * @see #requestFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	@Override
-	public void pause() {
+	@Override public void pause() {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return;
 		}
 		if (hasFeature(PAUSE)) {
-			mAnimator.pause();
+			this.animator.pause();
 		}
 	}
 
 	/**
 	 */
-	@Override
-	public boolean isPaused() {
-		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mAnimator.isPaused();
+	@Override public boolean isPaused() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && animator.isPaused();
 	}
 
 
@@ -427,13 +414,12 @@ public class AnimatorWrapper extends Animator {
 	 * @see #requestFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	@Override
-	public void resume() {
+	@Override public void resume() {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return;
 		}
 		if (hasFeature(PAUSE) || hasFeature(RESUME)) {
-			mAnimator.resume();
+			this.animator.resume();
 		}
 	}
 
@@ -443,9 +429,8 @@ public class AnimatorWrapper extends Animator {
 	 * @see #requestFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	@Override
-	public void end() {
-		if (hasFeature(START) || hasFeature(END)) mAnimator.end();
+	@Override public void end() {
+		if (hasFeature(START) || hasFeature(END)) animator.end();
 	}
 
 	/**
@@ -454,16 +439,14 @@ public class AnimatorWrapper extends Animator {
 	 * @see #requestFeature(int)
 	 * @see #removeFeature(int)
 	 */
-	@Override
-	public void cancel() {
-		if (hasFeature(START) || hasFeature(CANCEL)) mAnimator.cancel();
+	@Override public void cancel() {
+		if (hasFeature(START) || hasFeature(CANCEL)) animator.cancel();
 	}
 
 	/**
 	 */
-	@Override
-	public boolean isRunning() {
-		return mAnimator.isRunning();
+	@Override public boolean isRunning() {
+		return animator.isRunning();
 	}
 
 	/*
@@ -497,7 +480,7 @@ public class AnimatorWrapper extends Animator {
 		 *                        to ensure that the original listener always communicates with the
 		 *                        wrapped animator through its wrapper.
 		 */
-		BaseAnimatorListenerWrapper(L listener, Animator animatorWrapper) {
+		BaseAnimatorListenerWrapper(final L listener, final Animator animatorWrapper) {
 			this.listener = listener;
 			this.animatorWrapper = animatorWrapper;
 		}
@@ -516,36 +499,32 @@ public class AnimatorWrapper extends Animator {
 		 *
 		 * @see BaseAnimatorListenerWrapper#BaseAnimatorListenerWrapper(Object, Animator)
 		 */
-		AnimatorListenerWrapper(AnimatorListener listener, Animator animatorWrapper) {
+		AnimatorListenerWrapper(final AnimatorListener listener, final Animator animatorWrapper) {
 			super(listener, animatorWrapper);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationStart(Animator animation) {
-			listener.onAnimationStart(animatorWrapper);
+		@Override public void onAnimationStart(@NonNull final Animator animation) {
+			this.listener.onAnimationStart(animatorWrapper);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationEnd(Animator animation) {
-			listener.onAnimationEnd(animatorWrapper);
+		@Override public void onAnimationEnd(@NonNull final Animator animation) {
+			this.listener.onAnimationEnd(animatorWrapper);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationCancel(Animator animation) {
-			listener.onAnimationCancel(animatorWrapper);
+		@Override public void onAnimationCancel(@NonNull final Animator animation) {
+			this.listener.onAnimationCancel(animatorWrapper);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationRepeat(Animator animation) {
-			listener.onAnimationRepeat(animatorWrapper);
+		@Override public void onAnimationRepeat(@NonNull final Animator animation) {
+			this.listener.onAnimationRepeat(animatorWrapper);
 		}
 	}
 
@@ -563,22 +542,20 @@ public class AnimatorWrapper extends Animator {
 		 *
 		 * @see BaseAnimatorListenerWrapper#BaseAnimatorListenerWrapper(Object, Animator)
 		 */
-		AnimatorPauseListenerWrapper(AnimatorPauseListener listener, Animator animatorWrapper) {
+		AnimatorPauseListenerWrapper(final AnimatorPauseListener listener, final Animator animatorWrapper) {
 			super(listener, animatorWrapper);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationPause(Animator animation) {
-			listener.onAnimationPause(animatorWrapper);
+		@Override public void onAnimationPause(@NonNull final Animator animation) {
+			this.listener.onAnimationPause(animatorWrapper);
 		}
 
 		/**
 		 */
-		@Override
-		public void onAnimationResume(Animator animation) {
-			listener.onAnimationResume(animatorWrapper);
+		@Override public void onAnimationResume(@NonNull final Animator animation) {
+			this.listener.onAnimationResume(animatorWrapper);
 		}
 	}
 }
