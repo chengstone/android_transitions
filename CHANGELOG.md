@@ -7,7 +7,7 @@ More **detailed changelog** for each respective version may be viewed by pressin
 ## Version 1.x ##
 
 ### [1.2.0](https://github.com/universum-studios/android_transitions/releases/tag/v1.2.0) ###
-> --.06.2018
+> 26.06.2018
 
 - Renamed `ui_` prefix to `transition_`.
 - Minor updates.
