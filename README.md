@@ -7,7 +7,6 @@ Android Transitions
 [![Android](https://img.shields.io/badge/android-9.0-blue.svg)](https://developer.android.com/about/versions/pie/android-9.0)
 [![Android Jetpack](https://img.shields.io/badge/Android-Jetpack-brightgreen.svg)](https://developer.android.com/jetpack)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Transitions-green.svg?style=flat)](https://android-arsenal.com/details/1/5409)
-[![Android](https://img.shields.io/badge/android-8.1-blue.svg)](https://developer.android.com/about/versions/oreo/android-8.1.html)
 
 View and navigational transitions for the Android platform.
 
