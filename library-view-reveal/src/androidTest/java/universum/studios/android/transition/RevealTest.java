@@ -19,21 +19,21 @@
 package universum.studios.android.transition;
 
 import android.os.Build;
-import android.support.test.filters.SdkSuppress;
-import android.support.test.rule.ActivityTestRule;
 import android.view.Gravity;
 import android.view.View;
 
 import org.junit.Rule;
 import org.junit.Test;
 
+import androidx.test.filters.SdkSuppress;
+import androidx.test.rule.ActivityTestRule;
 import universum.studios.android.test.instrumented.InstrumentedTestCase;
 import universum.studios.android.test.instrumented.TestActivity;
 import universum.studios.android.test.instrumented.TestUtils;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assume.assumeTrue;
 
 /**

@@ -19,17 +19,17 @@
 package universum.studios.android.transition;
 
 import android.os.Build;
-import android.support.test.filters.SdkSuppress;
 
 import org.junit.Test;
 
+import androidx.test.filters.SdkSuppress;
 import universum.studios.android.test.instrumented.InstrumentedTestCase;
 import universum.studios.android.test.instrumented.TestUtils;
 
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.AllOf.allOf;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
 import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
 import static org.junit.Assume.assumeTrue;

@@ -18,14 +18,16 @@
  */
 package universum.studios.android.transition;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 /**
+ * <b>This class has been deprecated and will be removed in the next release.</b>
+ * <p>
  * A {@link BaseNavigationalTransition} implementation that may be used also from a context of
  * <b>support</b> {@link Fragment}.
  * <p>
@@ -114,8 +116,6 @@ public class NavigationalCompatTransition extends BaseNavigationalTransition<Nav
 	 *
 	 * @see #onFinish(Fragment)
 	 */
-	@SuppressLint("NewApi")
-	@SuppressWarnings("ConstantConditions")
 	protected void onStart(@NonNull final Fragment caller) {
 		final Activity activity = caller.requireActivity();
 		final Intent intent = createIntent(activity);

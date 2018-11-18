@@ -18,11 +18,12 @@
  */
 package universum.studios.android.test.local;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import org.robolectric.Robolectric;
-import org.robolectric.RuntimeEnvironment;
+
+import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
 
 /**
  * A {@link RobolectricTestCase} implementation used as test case for view based transitions.
@@ -53,6 +54,6 @@ public abstract class ViewTransitionTestCase extends RobolectricTestCase {
 	 * @see #createViewAttachedToWindow()
 	 */
 	@NonNull protected static View createViewNotAttachedToWindow() {
-		return new View(RuntimeEnvironment.application);
+		return new View(ApplicationProvider.getApplicationContext());
 	}
 }

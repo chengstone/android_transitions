@@ -21,8 +21,9 @@ package universum.studios.android.transition;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.annotation.AnimRes;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.AnimRes;
+import androidx.annotation.NonNull;
 
 /**
  * WindowTransition provides a foursome of animation resources that may be used to override default

@@ -29,10 +29,10 @@ import org.robolectric.annotation.Config;
 
 import universum.studios.android.test.local.ViewTransitionTestCase;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -69,14 +69,14 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testInstantiationWithAttributeSet() {
 		// Act:
-		final Reveal reveal = new Reveal(application, null);
+		final Reveal reveal = new Reveal(context, null);
 		// Assert:
 		assertThat(reveal.getMode(), is(Reveal.REVEAL));
 	}
 
 	@Test public void testCalculateRadius() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -92,7 +92,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testResolveCenterPosition() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -109,7 +109,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testResolveCenterPositionForFractions() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -126,7 +126,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testResolveCenter() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -142,7 +142,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testResolveCenterForFractions() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -172,7 +172,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testCreateAnimatorWithSameStartAndEndRadii() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		// Act + Assert:
 		assertThat(Reveal.createAnimator(view, 100f, 100f), is(nullValue()));
 	}
@@ -332,7 +332,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 		final View view = createViewAttachedToWindow();
 		final Reveal reveal = new Reveal();
 		// Act + Assert:
-		assertThat(reveal.onAppear(new FrameLayout(application), view, null, null), is(notNullValue()));
+		assertThat(reveal.onAppear(new FrameLayout(context), view, null, null), is(notNullValue()));
 	}
 
 	@Test public void testOnAppearWithViewNotAttachedToWindow() {
@@ -340,7 +340,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 		final View view = createViewNotAttachedToWindow();
 		final Reveal reveal = new Reveal();
 		// Act + Assert:
-		assertThat(reveal.onAppear(new FrameLayout(application), view, null, null), is(nullValue()));
+		assertThat(reveal.onAppear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
 	@Test public void testOnDisappear() {
@@ -348,7 +348,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 		final View view = createViewAttachedToWindow();
 		final Reveal reveal = new Reveal();
 		// Act + Assert:
-		assertThat(reveal.onDisappear(new FrameLayout(application), view, null, null), is(notNullValue()));
+		assertThat(reveal.onDisappear(new FrameLayout(context), view, null, null), is(notNullValue()));
 	}
 
 	@Test public void testOnDisappearWithViewNotAttachedToWindow() {
@@ -356,12 +356,12 @@ public final class RevealTest extends ViewTransitionTestCase {
 		final View view = createViewNotAttachedToWindow();
 		final Reveal reveal = new Reveal();
 		// Act + Assert:
-		assertThat(reveal.onDisappear(new FrameLayout(application), view, null, null), is(nullValue()));
+		assertThat(reveal.onDisappear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
 	@Test public void testCalculateTransitionPropertiesForCenterCoordinates() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -383,7 +383,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testCalculateTransitionPropertiesForCenterGravity() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -484,7 +484,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testCalculateTransitionPropertiesForConcealTransition() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -506,7 +506,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testCalculateTransitionPropertiesForStartRadii() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -536,7 +536,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testTransitionAnimatorListenerOnAnimationStart() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		final Reveal.TransitionAnimatorListener listener = new Reveal.TransitionAnimatorListener(view, View.INVISIBLE, View.GONE);
 		// Act:
 		listener.onAnimationStart(mock(Animator.class));
@@ -546,7 +546,7 @@ public final class RevealTest extends ViewTransitionTestCase {
 
 	@Test public void testTransitionAnimatorListenerOnAnimationEnd() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		final Reveal.TransitionAnimatorListener listener = new Reveal.TransitionAnimatorListener(view, View.INVISIBLE, View.GONE);
 		// Act:
 		listener.onAnimationEnd(mock(Animator.class));

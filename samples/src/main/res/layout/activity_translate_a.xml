@@ -25,7 +25,7 @@
 			  android:layout_height="match_parent"
 			  android:orientation="vertical">
 
-	<android.support.v7.widget.Toolbar
+	<androidx.appcompat.widget.Toolbar
 		android:id="@id/samples_toolbar"
 		style="?attr/toolbarStyle"
 		android:layout_width="match_parent"
@@ -46,7 +46,7 @@
 			android:layout_gravity="center"
 			android:text="To start the Scale transition,\npress the FAB at the bottom..." />
 
-		<android.support.design.widget.FloatingActionButton
+		<com.google.android.material.floatingactionbutton.FloatingActionButton
 			android:id="@+id/fab"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

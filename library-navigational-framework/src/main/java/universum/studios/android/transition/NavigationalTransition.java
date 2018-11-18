@@ -18,14 +18,14 @@
  */
 package universum.studios.android.transition;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 /**
  * A {@link BaseNavigationalTransition} implementation that may be used also from a context of
@@ -114,8 +114,6 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * @param caller The caller fragment that requested start of this navigational transition.
 	 * @see #onFinish(Fragment)
 	 */
-	@SuppressLint("NewApi")
-	@SuppressWarnings("ConstantConditions")
 	protected void onStart(@NonNull final Fragment caller) {
 		final Activity activity = caller.getActivity();
 		final Intent intent = createIntent(activity);
