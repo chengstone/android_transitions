@@ -4,8 +4,9 @@ Android Transitions
 [![CircleCI](https://circleci.com/gh/universum-studios/android_transitions.svg?style=shield)](https://circleci.com/gh/universum-studios/android_transitions)
 [![Codecov](https://codecov.io/gh/universum-studios/android_transitions/branch/master/graph/badge.svg)](https://codecov.io/gh/universum-studios/android_transitions)
 [![Codacy](https://api.codacy.com/project/badge/Grade/a2c7e9599bbf459187424fdb94cd2234)](https://www.codacy.com/app/universum-studios/android_transitions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=universum-studios/android_transitions&amp;utm_campaign=Badge_Grade)
+[![Android](https://img.shields.io/badge/android-9.0-blue.svg)](https://developer.android.com/about/versions/pie/android-9.0)
+[![Android Jetpack](https://img.shields.io/badge/Android-Jetpack-brightgreen.svg)](https://developer.android.com/jetpack)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Transitions-green.svg?style=flat)](https://android-arsenal.com/details/1/5409)
-[![Android](https://img.shields.io/badge/android-8.1-blue.svg)](https://developer.android.com/about/versions/oreo/android-8.1.html)
 
 View and navigational transitions for the Android platform.
 
@@ -31,8 +32,8 @@ Supported down to the **Android [API Level 14](http://developer.android.com/abou
 
 ### Dependencies ###
 
-- [`com.android.support:support-annotations`](https://developer.android.com/topic/libraries/support-library/packages.html#annotations)
-- [`com.android.support:support-v4`](https://developer.android.com/topic/libraries/support-library/packages.html#v4)
+- [`androidx.annotation:annotation`](https://developer.android.com/jetpack/androidx)
+- [`androidx.legacy:legacy-support-v4`](https://developer.android.com/jetpack/androidx)
 
 ## [License](https://github.com/universum-studios/android_transitions/blob/master/LICENSE.md) ##
 

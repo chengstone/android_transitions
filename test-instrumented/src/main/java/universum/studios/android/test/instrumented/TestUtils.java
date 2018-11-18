@@ -20,10 +20,11 @@ package universum.studios.android.test.instrumented;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Utility class for instrumented tests.

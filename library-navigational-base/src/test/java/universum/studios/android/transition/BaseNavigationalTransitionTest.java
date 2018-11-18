@@ -24,7 +24,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Pair;
@@ -37,15 +36,16 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import universum.studios.android.test.local.RobolectricTestCase;
 import universum.studios.android.test.local.SecondaryTestActivity;
 import universum.studios.android.test.local.TestActivity;
 
 import static junit.framework.Assert.assertSame;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
@@ -222,9 +222,9 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 	@Test public void testSharedElements() {
 		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(application);
-		final View secondElement = new View(application);
-		final View thirdElement = new View(application);
+		final View firstElement = new View(context);
+		final View secondElement = new View(context);
+		final View thirdElement = new View(context);
 		// Act:
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
@@ -247,9 +247,9 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 	@Test public void testSharedElement() {
 		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(application);
-		final View secondElement = new View(application);
-		final View thirdElement = new View(application);
+		final View firstElement = new View(context);
+		final View secondElement = new View(context);
+		final View thirdElement = new View(context);
 		// Act:
 		transition.sharedElement(firstElement, "first_element");
 		transition.sharedElement(secondElement, "second_element");
@@ -270,13 +270,13 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 	@Test public void testSingleSharedElement() {
 		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(application);
+		final View firstElement = new View(context);
 		// Act + Assert:
 		transition.sharedElement(firstElement, "first_element");
 		assertThat(transition.singleSharedElement(), is(notNullValue()));
 		assertThat(transition.singleSharedElement().first, is(firstElement));
 		assertThat(transition.singleSharedElement().second, is("first_element"));
-		final View secondElement = new View(application);
+		final View secondElement = new View(context);
 		transition.sharedElement(secondElement, "second_element");
 		assertThat(transition.singleSharedElement(), is(notNullValue()));
 		assertThat(transition.singleSharedElement().first, is(firstElement));
@@ -287,7 +287,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 	@Test public void testSingleSharedElementOnEmptySharedElements() {
 		// Arrange:
 		final TestTransition transition = new TestTransition();
-		final View firstElement = new View(application);
+		final View firstElement = new View(context);
 		transition.sharedElement(firstElement, "first_element");
 		transition.sharedElements().clear();
 		// Act + Assert:
@@ -391,7 +391,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(application) {
+		final View decorView = new FrameLayout(context) {
 
 			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
@@ -419,7 +419,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(application) {
+		final View decorView = new FrameLayout(context) {
 
 			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
@@ -449,7 +449,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(application) {
+		final View decorView = new FrameLayout(context) {
 
 			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
@@ -479,7 +479,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(application) {
+		final View decorView = new FrameLayout(context) {
 
 			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
@@ -506,7 +506,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(application) {
+		final View decorView = new FrameLayout(context) {
 
 			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
@@ -533,7 +533,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
 		final Window mockWindow = mock(Window.class);
-		final View decorView = new FrameLayout(application) {
+		final View decorView = new FrameLayout(context) {
 
 			@Override public boolean postDelayed(@NonNull final Runnable action, final long delayMillis) {
 				waitFor(delayMillis);
@@ -863,8 +863,8 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(application);
-		final View secondElement = new View(application);
+		final View firstElement = new View(context);
+		final View secondElement = new View(context);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
@@ -882,8 +882,8 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(application);
-		final View secondElement = new View(application);
+		final View firstElement = new View(context);
+		final View secondElement = new View(context);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
@@ -904,8 +904,8 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(application);
-		final View secondElement = new View(application);
+		final View firstElement = new View(context);
+		final View secondElement = new View(context);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
@@ -924,8 +924,8 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final Window mockWindow = mock(Window.class);
 		when(mockWindow.getDecorView()).thenReturn(null);
 		when(mockActivity.getWindow()).thenReturn(mockWindow);
-		final View firstElement = new View(application);
-		final View secondElement = new View(application);
+		final View firstElement = new View(context);
+		final View secondElement = new View(context);
 		final TestTransition transition = new TestTransition();
 		transition.sharedElements(
 				new Pair<>(firstElement, "first_element"),
@@ -943,7 +943,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 	@Test public void testCreateIntent() {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		when(mockActivity.getPackageName()).thenReturn(application.getPackageName());
+		when(mockActivity.getPackageName()).thenReturn(context.getPackageName());
 		final BaseNavigationalTransition navTransition = new TestTransition(TestActivity.class);
 		// Act:
 		final Intent intent = navTransition.createIntent(mockActivity);
@@ -952,7 +952,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final ComponentName component = intent.getComponent();
 		assertThat(component, is(notNullValue()));
 		assertThat(component.getClassName(), is(TestActivity.class.getName()));
-		assertThat(component.getPackageName(), is(application.getPackageName()));
+		assertThat(component.getPackageName(), is(context.getPackageName()));
 		assertThat(intent.getExtras(), is(nullValue()));
 	}
 
@@ -960,7 +960,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 	@Test public void testCreateIntentWithExtras() {
 		// Arrange:
 		final Activity mockActivity = mock(TestActivity.class);
-		when(mockActivity.getPackageName()).thenReturn(application.getPackageName());
+		when(mockActivity.getPackageName()).thenReturn(context.getPackageName());
 		final BaseNavigationalTransition navTransition = new TestTransition(TestActivity.class);
 		navTransition.intentExtras().putString("extra_string", "Extra text.");
 		// Act:
@@ -970,7 +970,7 @@ public final class BaseNavigationalTransitionTest extends RobolectricTestCase {
 		final ComponentName component = intent.getComponent();
 		assertThat(component, is(notNullValue()));
 		assertThat(component.getClassName(), is(TestActivity.class.getName()));
-		assertThat(component.getPackageName(), is(application.getPackageName()));
+		assertThat(component.getPackageName(), is(context.getPackageName()));
 		final Bundle extras = intent.getExtras();
 		assertThat(extras, is(notNullValue()));
 		assertThat(extras.getString("extra_string"), is("Extra text."));

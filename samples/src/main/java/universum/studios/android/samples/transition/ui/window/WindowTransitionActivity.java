@@ -21,13 +21,13 @@ package universum.studios.android.samples.transition.ui.window;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.support.samples.ui.SamplesActivity;
+import universum.studios.android.samples.ui.SamplesActivity;
 import universum.studios.android.transition.WindowTransition;
 
 /**

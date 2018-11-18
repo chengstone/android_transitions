@@ -25,8 +25,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import universum.studios.android.test.local.LocalTestCase;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**

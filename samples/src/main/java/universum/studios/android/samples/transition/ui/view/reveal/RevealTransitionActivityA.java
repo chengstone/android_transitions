@@ -19,16 +19,16 @@
 package universum.studios.android.samples.transition.ui.view.reveal;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import universum.studios.android.samples.transition.R;
 import universum.studios.android.samples.transition.ui.view.ViewTransitions;
-import universum.studios.android.support.samples.ui.SamplesActivity;
-import universum.studios.android.transition.NavigationalTransitionCompat;
+import universum.studios.android.samples.ui.SamplesActivity;
+import universum.studios.android.transition.NavigationalCompatTransition;
 
 /**
  * @author Martin Albedinsky
@@ -43,11 +43,10 @@ public final class RevealTransitionActivityA extends SamplesActivity {
 		setContentView(R.layout.activity_reveal_a);
 	}
 
-	@OnClick({R.id.fab})
 	@SuppressWarnings("unused")
-	void onFabClick(@NonNull final View fab) {
+	@OnClick({R.id.fab}) void onFabClick(@NonNull final View fab) {
 		revealOverlayView.setVisibility(View.VISIBLE);
-		new NavigationalTransitionCompat(RevealTransitionActivityB.class).start(this);
+		new NavigationalCompatTransition(RevealTransitionActivityB.class).start(this);
 	}
 
 	@Override public void onBackPressed() {

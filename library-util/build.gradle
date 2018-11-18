@@ -21,6 +21,10 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 /**
@@ -33,8 +37,8 @@ repositories {
 
 dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
-    implementation deps.android.support.annotations
-    implementation deps.android.support.coreUtils
+    implementation deps.androidx.annotation.annotation
+    implementation deps.androidx.core.core
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     // None.

@@ -21,6 +21,10 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 /**
@@ -33,10 +37,10 @@ repositories {
 
 dependencies {
     // PRODUCTION ----------------------------------------------------------------------------------
-    implementation deps.android.support.annotations
-    implementation deps.android.support.coreUI
-    releaseImplementation deps.modules.libraryViewCore
-    releaseImplementation deps.modules.libraryUtil
+    implementation deps.androidx.annotation.annotation
+    implementation deps.androidx.legacy.coreUi
+    releaseImplementation deps.library.viewCore
+    releaseImplementation deps.library.util
 
     // DEVELOPMENT ---------------------------------------------------------------------------------
     debugApi project(':library-view-core')

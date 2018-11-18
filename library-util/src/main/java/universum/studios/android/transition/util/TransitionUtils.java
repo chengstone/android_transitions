@@ -18,8 +18,9 @@
  */
 package universum.studios.android.transition.util;
 
-import android.support.annotation.NonNull;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 /**
  * Class providing utility methods which may be useful in transitions context.
