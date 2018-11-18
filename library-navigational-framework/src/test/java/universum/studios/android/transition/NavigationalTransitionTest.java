@@ -24,9 +24,6 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.view.LayoutInflater;
@@ -40,14 +37,17 @@ import org.robolectric.annotation.Config;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import universum.studios.android.test.local.RobolectricTestCase;
 import universum.studios.android.test.local.SecondaryTestActivity;
 import universum.studios.android.test.local.TestActivity;
 
 import static junit.framework.Assert.assertSame;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
 
 /**
  * @author Martin Albedinsky

@@ -19,15 +19,15 @@
 package universum.studios.android.samples.transition.ui.view.translate;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.OnClick;
 import universum.studios.android.samples.transition.R;
 import universum.studios.android.samples.transition.ui.view.ViewTransitions;
-import universum.studios.android.support.samples.ui.SamplesActivity;
-import universum.studios.android.transition.NavigationalTransitionCompat;
+import universum.studios.android.samples.ui.SamplesActivity;
+import universum.studios.android.transition.NavigationalCompatTransition;
 
 /**
  * @author Martin Albedinsky
@@ -40,10 +40,9 @@ public final class TranslateTransitionActivityA extends SamplesActivity {
 		setContentView(R.layout.activity_translate_a);
 	}
 
-	@OnClick({R.id.fab})
 	@SuppressWarnings("unused")
-	void onFabClick(@NonNull final View fab) {
-		new NavigationalTransitionCompat(TranslateTransitionActivityB.class).start(this);
+	@OnClick({R.id.fab}) void onFabClick(@NonNull final View fab) {
+		new NavigationalCompatTransition(TranslateTransitionActivityB.class).start(this);
 	}
 
 	@Override public void onBackPressed() {

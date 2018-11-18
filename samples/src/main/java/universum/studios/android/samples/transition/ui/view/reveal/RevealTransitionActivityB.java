@@ -20,10 +20,10 @@ package universum.studios.android.samples.transition.ui.view.reveal;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import universum.studios.android.samples.transition.R;
-import universum.studios.android.support.samples.ui.SamplesActivity;
+import universum.studios.android.samples.ui.SamplesActivity;
 
 /**
  * @author Martin Albedinsky

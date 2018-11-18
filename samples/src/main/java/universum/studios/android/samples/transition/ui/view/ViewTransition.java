@@ -19,7 +19,8 @@
 package universum.studios.android.samples.transition.ui.view;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * @author Martin Albedinsky

@@ -19,9 +19,10 @@
 package universum.studios.android.test.local;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.widget.FrameLayout;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 /**
  * Simple compatibility activity that may be used in <b>Robolectric tests</b>.

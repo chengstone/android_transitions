@@ -1,86 +1,94 @@
 // Defines dependencies used across the library project.
 def versions = [
-        android    : [
-                support            : '27.1.1',
-                supportTest        : '1.0.2',
-                supportTestEspresso: '3.0.2'
+        library    : "${config.library.version.production}",
+        androidx   : [
+                test: [espresso: '3.1.0']
         ],
         test       : [
                 junit      : '4.12',
-                mockito    : '2.18.0',
-                robolectric: '3.8'
+                mockito    : '2.22.0',
+                robolectric: '4.0.1'
         ],
-        butterknife: '8.8.1'
+        butterknife: '9.0.0-rc1'
 ]
 
-def modulesPrimaryId = "${config.pom.groupId}:${config.pom.artifactId}"
-def modulesVersion = "${config.library.version.production}"
-def modules = [
-        library                     : "${modulesPrimaryId}:${modulesVersion}@aar",
-        libraryCore                 : "${modulesPrimaryId}-core:${modulesVersion}@aar",
-        libraryNavigational         : "${modulesPrimaryId}-navigational:${modulesVersion}@aar",
-        libraryNavigationalBase     : "${modulesPrimaryId}-navigational-base:${modulesVersion}@aar",
-        libraryNavigationalCompat   : "${modulesPrimaryId}-navigational-compat:${modulesVersion}@aar",
-        libraryNavigationalFramework: "${modulesPrimaryId}-navigational-framework:${modulesVersion}@aar",
-        libraryView                 : "${modulesPrimaryId}-view:${modulesVersion}@aar",
-        libraryViewCore             : "${modulesPrimaryId}-view-core:${modulesVersion}@aar",
-        libraryViewReveal           : "${modulesPrimaryId}-view-reveal:${modulesVersion}@aar",
-        libraryViewScale            : "${modulesPrimaryId}-view-scale:${modulesVersion}@aar",
-        libraryViewTranslate        : "${modulesPrimaryId}-view-translate:${modulesVersion}@aar",
-        libraryWindow               : "${modulesPrimaryId}-window:${modulesVersion}@aar",
-        libraryWindowCore           : "${modulesPrimaryId}-window-core:${modulesVersion}@aar",
-        libraryWindowCommon         : "${modulesPrimaryId}-window-common:${modulesVersion}@aar",
-        libraryWindowExtra          : "${modulesPrimaryId}-window-extra:${modulesVersion}@aar",
-        libraryUtil                 : "${modulesPrimaryId}-util:${modulesVersion}@aar"
+def libraryArtifactBaseId = "${config.pom.groupId}:${config.pom.artifactId}"
+def library = [
+        core                 : "${libraryArtifactBaseId}-core:${versions.library}@aar",
+        navigational         : "${libraryArtifactBaseId}-navigational:${versions.library}@aar",
+        navigationalBase     : "${libraryArtifactBaseId}-navigational-base:${versions.library}@aar",
+        navigationalCompat   : "${libraryArtifactBaseId}-navigational-compat:${versions.library}@aar",
+        navigationalFramework: "${libraryArtifactBaseId}-navigational-framework:${versions.library}@aar",
+        view                 : "${libraryArtifactBaseId}-view:${versions.library}@aar",
+        viewCore             : "${libraryArtifactBaseId}-view-core:${versions.library}@aar",
+        viewReveal           : "${libraryArtifactBaseId}-view-reveal:${versions.library}@aar",
+        viewScale            : "${libraryArtifactBaseId}-view-scale:${versions.library}@aar",
+        viewTranslate        : "${libraryArtifactBaseId}-view-translate:${versions.library}@aar",
+        window               : "${libraryArtifactBaseId}-window:${versions.library}@aar",
+        windowCore           : "${libraryArtifactBaseId}-window-core:${versions.library}@aar",
+        windowCommon         : "${libraryArtifactBaseId}-window-common:${versions.library}@aar",
+        windowExtra          : "${libraryArtifactBaseId}-window-extra:${versions.library}@aar",
+        util                 : "${libraryArtifactBaseId}-util:${versions.library}@aar"
 ]
 
-def android = [
-        support: [
-                annotations   : "com.android.support:support-annotations:${versions.android.support}",
-                coreUtils     : "com.android.support:support-core-utils:${versions.android.support}",
-                coreUI        : "com.android.support:support-core-ui:${versions.android.support}",
-                v4            : "com.android.support:support-v4:${versions.android.support}",
-                appCompatV7   : "com.android.support:appcompat-v7:${versions.android.support}",
-                vectorDrawable: "com.android.support:support-vector-drawable:${versions.android.support}",
-                recyclerView  : "com.android.support:recyclerview-v7:${versions.android.support}",
-                design        : "com.android.support:design:${versions.android.support}",
-                cardView      : "com.android.support:cardview-v7:${versions.android.support}"
+def androidx = [
+        annotation    : [annotation: "androidx.annotation:annotation:1.0.0"],
+        core          : [core: "androidx.core:core:1.0.0"],
+        appcompat     : [appcompat: "androidx.appcompat:appcompat:1.0.0"],
+        drawerlayout  : [drawerlayout: "androidx.drawerlayout:drawerlayout:1.0.0"],
+        legacy        : [
+                coreUi   : "androidx.legacy:legacy-support-core-ui:1.0.0",
+                coreUtils: "androidx.legacy:legacy-support-core-utils:1.0.0",
+                supportV4: "androidx.legacy:legacy-support-v4:1.0.0"
         ],
-        test   : [
-                runner         : "com.android.support.test:runner:${versions.android.supportTest}",
-                rules          : "com.android.support.test:rules:${versions.android.supportTest}",
-                espressoCore   : "com.android.support.test.espresso:espresso-core:${versions.android.supportTestEspresso}",
-                espressoIntents: "com.android.support.test.espresso:espresso-intents:${versions.android.supportTestEspresso}",
-                espressoContrib: "com.android.support.test.espresso:espresso-contrib:${versions.android.supportTestEspresso}"
-        ]
+        recyclerview  : [recyclerview: "androidx.recyclerview:recyclerview:1.0.0"],
+        test          : [
+                core    : "androidx.test:core:1.0.0",
+                espresso: [
+                        contrib: "androidx.test.espresso:espresso-contrib:${versions.androidx.test.espresso}",
+                        core   : "androidx.test.espresso:espresso-core:${versions.androidx.test.espresso}",
+                        intents: "androidx.test.espresso:espresso-intents:${versions.androidx.test.espresso}"
+                ],
+                ext     : [junit: "androidx.test.ext:junit:1.0.0"],
+                rules   : "androidx.test:rules:1.1.0",
+                runner  : "androidx.test:runner:1.1.0"
+        ],
+        vectordrawable: [vectordrawable: "androidx.vectordrawable:vectordrawable:1.0.0"]
 ]
+
+def google = [android: [material: [material: "com.google.android.material:material:1.0.0"]]]
 
 def test = [
-        junit                      : "junit:junit:${versions.test.junit}",
-        mockitoCore                : "org.mockito:mockito-core:${versions.test.mockito}",
-        mockitoAndroid             : "org.mockito:mockito-android:${versions.test.mockito}",
-        robolectric                : "org.robolectric:robolectric:${versions.test.robolectric}",
-        robolectricMultidex        : "org.robolectric:shadows-multidex:${versions.test.robolectric}",
-        robolectricShadowsSupportV4: "org.robolectric:shadows-supportv4:${versions.test.robolectric}"
+        junit      : "junit:junit:${versions.test.junit}",
+        mockito    : [
+                core   : "org.mockito:mockito-core:${versions.test.mockito}",
+                android: "org.mockito:mockito-android:${versions.test.mockito}"
+        ],
+        robolectric: [
+                robolectric     : "org.robolectric:robolectric:${versions.test.robolectric}",
+                shadowsMultidex : "org.robolectric:shadows-multidex:${versions.test.robolectric}",
+                shadowsSupportV4: "org.robolectric:shadows-supportv4:${versions.test.robolectric}"
+        ]
 ]
 
 def universum = [studios: [
-        widgetAdapters: 'universum.studios.android:widget-adapters:2.0.3@aar',
-        support       : [
-                samples  : 'universum.studios.android.support:support-samples:0.1.4@aar',
-                fragments: 'universum.studios.android.support:support-fragments:1.2.0@aar'
-        ]
+        samples       : 'universum.studios.android:samples:0.2.0@aar',
+        widgetAdapters: 'universum.studios.android:widget-adapters:2.1.0@aar',
+        fragments     : 'universum.studios.android:fragments:1.4.0@aar'
 ]]
 
 def other = [
-        butterknife         : "com.jakewharton:butterknife:${versions.butterknife}",
-        butterknifeProcessor: "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+        butterknife: [
+                butterknife: "com.jakewharton:butterknife:${versions.butterknife}",
+                processor  : "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+        ]
 ]
 
 ext.versions = versions
 ext.deps = [
-        "modules"  : modules,
-        "android"  : android,
+        "library"  : library,
+        "androidx" : androidx,
+        "google"   : google,
         "test"     : test,
         "universum": universum,
         "other"    : other

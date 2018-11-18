@@ -22,7 +22,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.os.Build;
-import android.support.annotation.Size;
 import android.transition.TransitionValues;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -31,13 +30,14 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.robolectric.annotation.Config;
 
+import androidx.annotation.Size;
 import universum.studios.android.test.local.ViewTransitionTestCase;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -68,7 +68,7 @@ public final class TranslateTest extends ViewTransitionTestCase {
 
 	@Test public void testInstantiationWithAttributeSet() {
 		// Act:
-		final Translate translate = new Translate(application, null);
+		final Translate translate = new Translate(context, null);
 		// Assert:
 		assertThat(translate.getMode(), is(Scale.MODE_IN | Scale.MODE_OUT));
 	}
@@ -145,7 +145,7 @@ public final class TranslateTest extends ViewTransitionTestCase {
 	@Test public void testCreateAnimatorForZeroTranslationDeltas() {
 		// Arrange:
 		final Translate translate = new Translate();
-		final View view = new View(application);
+		final View view = new View(context);
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		// Act + Assert:
@@ -222,7 +222,7 @@ public final class TranslateTest extends ViewTransitionTestCase {
 	@Test public void testCaptureStartValues() {
 		// Arrange:
 		final int[] mockLocationOnScreen = new int[]{200, 400};
-		final View mockView = new View(application) {
+		final View mockView = new View(context) {
 
 			@Override public void getLocationOnScreen(@Size(value = 2) final int[] outLocation) {
 				outLocation[0] = mockLocationOnScreen[0];
@@ -245,7 +245,7 @@ public final class TranslateTest extends ViewTransitionTestCase {
 	@Test public void testCaptureEndValues() {
 		// Arrange:
 		final int[] mockLocationOnScreen = new int[]{100, 300};
-		final View mockView = new View(application) {
+		final View mockView = new View(context) {
 
 			@Override public void getLocationOnScreen(@Size(value = 2) final int[] outLocation) {
 				outLocation[0] = mockLocationOnScreen[0];
@@ -275,35 +275,35 @@ public final class TranslateTest extends ViewTransitionTestCase {
 		translate.setTranslationXDelta(-100f);
 		translate.setTranslationYDelta(-100f);
 		// Act + Assert:
-		assertThatAnimatorForViewIsValid(translate.onAppear(new FrameLayout(application), view, null, values), view);
+		assertThatAnimatorForViewIsValid(translate.onAppear(new FrameLayout(context), view, null, values), view);
 	}
 
 	@Test public void testOnAppearWithZeroTranslationDeltas() {
 		// Arrange:
 		final Translate translate = new Translate();
-		final View view = new View(application);
+		final View view = new View(context);
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		values.values.put(Translate.PROPERTY_TRANSITION_LOCATION_ON_SCREEN, new int[]{0, 0});
 		// Act + Assert:
-		assertThat(translate.onAppear(new FrameLayout(application), view, null, values), is(nullValue()));
+		assertThat(translate.onAppear(new FrameLayout(context), view, null, values), is(nullValue()));
 	}
 
 	@Test public void testOnAppearWithNullEndValues() {
 		// Arrange:
 		final Translate translate = new Translate();
 		// Act + Assert:
-		assertThat(translate.onAppear(new FrameLayout(application), new View(application), null, null), is(nullValue()));
+		assertThat(translate.onAppear(new FrameLayout(context), new View(context), null, null), is(nullValue()));
 	}
 
 	@Test public void testOnAppearWithEndValuesWithoutLocationOnScreen() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		final Translate translate = new Translate();
 		// Act + Assert:
-		assertThat(translate.onAppear(new FrameLayout(application), view, null, values), is(nullValue()));
+		assertThat(translate.onAppear(new FrameLayout(context), view, null, values), is(nullValue()));
 	}
 
 	@Test public void testOnAppearWithViewNotAttachedToWindow() {
@@ -311,7 +311,7 @@ public final class TranslateTest extends ViewTransitionTestCase {
 		final View view = createViewNotAttachedToWindow();
 		final Translate translate = new Translate();
 		// Act + Assert:
-		assertThat(translate.onAppear(new FrameLayout(application), view, null, null), is(nullValue()));
+		assertThat(translate.onAppear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
 	@Test public void testOnDisappear() {
@@ -324,34 +324,34 @@ public final class TranslateTest extends ViewTransitionTestCase {
 		translate.setTranslationXDelta(100f);
 		translate.setTranslationYDelta(100f);
 		// Act + Assert:
-		assertThatAnimatorForViewIsValid(translate.onDisappear(new FrameLayout(application), view, values, null), view);
+		assertThatAnimatorForViewIsValid(translate.onDisappear(new FrameLayout(context), view, values, null), view);
 	}
 
 	@Test public void testOnDisappearWithZeroTranslationDeltas() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		values.values.put(Translate.PROPERTY_TRANSITION_LOCATION_ON_SCREEN, new int[]{0, 0});
 		// Act + Assert:
-		assertThat(new Translate().onDisappear(new FrameLayout(application), view, values, null), is(nullValue()));
+		assertThat(new Translate().onDisappear(new FrameLayout(context), view, values, null), is(nullValue()));
 	}
 
 	@Test public void testOnDisappearWithNullStartValues() {
 		// Arrange:
 		final Translate translate = new Translate();
 		// Act + Assert:
-		assertThat(translate.onDisappear(new FrameLayout(application), new View(application), null, null), is(nullValue()));
+		assertThat(translate.onDisappear(new FrameLayout(context), new View(context), null, null), is(nullValue()));
 	}
 
 	@Test public void testOnDisappearWithStartValuesWithoutLocationOnScreen() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		final TransitionValues values = new TransitionValues();
 		values.view = view;
 		final Translate translate = new Translate();
 		// Act + Assert:
-		assertThat(translate.onDisappear(new FrameLayout(application), view, values, null), is(nullValue()));
+		assertThat(translate.onDisappear(new FrameLayout(context), view, values, null), is(nullValue()));
 	}
 
 	@Test public void testOnDisappearWithViewNotAttachedToWindow() {
@@ -360,15 +360,15 @@ public final class TranslateTest extends ViewTransitionTestCase {
 		final Translate translate = new Translate();
 		// Act:
 		// Assert:
-		assertThat(translate.onDisappear(new FrameLayout(application), view, null, null), is(nullValue()));
+		assertThat(translate.onDisappear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
 	@Test public void testTransitionAnimatorListenerOnAnimationCancel() {
 		// Arrange:
-		final View animatingView = new View(application);
+		final View animatingView = new View(context);
 		animatingView.setTranslationX(100f);
 		animatingView.setTranslationY(200f);
-		final View viewInHierarchy = new View(application);
+		final View viewInHierarchy = new View(context);
 		viewInHierarchy.setTag(R.id.ui_transition_tag_position, new int[]{0, 0});
 		final Translate.TransitionAnimatorListener listener = new Translate.TransitionAnimatorListener(
 				animatingView,
@@ -388,8 +388,8 @@ public final class TranslateTest extends ViewTransitionTestCase {
 
 	@Test public void testTransitionAnimatorListenerOnAnimationPauseResume() {
 		// Arrange:
-		final View animatingView = new View(application);
-		final View viewInHierarchy = new View(application);
+		final View animatingView = new View(context);
+		final View viewInHierarchy = new View(context);
 		final Translate.TransitionAnimatorListener listener = new Translate.TransitionAnimatorListener(
 				animatingView,
 				viewInHierarchy,
@@ -410,8 +410,8 @@ public final class TranslateTest extends ViewTransitionTestCase {
 
 	@Test public void testTransitionAnimatorListenerOnTransitionEnd() {
 		// Arrange:
-		final View animatingView = new View(application);
-		final View viewInHierarchy = new View(application);
+		final View animatingView = new View(context);
+		final View viewInHierarchy = new View(context);
 		final Translate.TransitionAnimatorListener listener = new Translate.TransitionAnimatorListener(
 				animatingView,
 				viewInHierarchy,

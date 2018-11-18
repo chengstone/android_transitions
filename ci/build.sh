@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew clean :library:assembleDebug
+./gradlew clean library:assembleRelease

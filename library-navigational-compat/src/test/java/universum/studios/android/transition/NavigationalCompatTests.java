@@ -18,12 +18,12 @@
  */
 package universum.studios.android.transition;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentHostCallback;
-
 import java.lang.reflect.Field;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentHostCallback;
 
 import static org.mockito.Mockito.mock;
 

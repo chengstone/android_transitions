@@ -30,7 +30,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: universumstudios/android:api-27
+      - image: universumstudios/android:api-28
     environment:
       JAVA_TOOL_OPTIONS: -Xmx4096m
     steps:
@@ -54,7 +54,7 @@ jobs:
   test:
     working_directory: ~/repo
     docker:
-      - image: universumstudios/android:api-27
+      - image: universumstudios/android:api-28
     environment:
       JAVA_TOOL_OPTIONS: -Xmx4096m
     steps:
@@ -73,7 +73,7 @@ jobs:
   deploy:
     working_directory: ~/repo
     docker:
-      - image: universumstudios/android:api-27
+      - image: universumstudios/android:api-28
     environment:
       JAVA_TOOL_OPTIONS: -Xmx4096m
     steps:

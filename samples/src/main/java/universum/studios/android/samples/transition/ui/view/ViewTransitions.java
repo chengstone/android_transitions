@@ -19,13 +19,13 @@
 package universum.studios.android.samples.transition.ui.view;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import universum.studios.android.samples.transition.ui.view.reveal.RevealTransitionActivityA;
 import universum.studios.android.samples.transition.ui.view.scale.ScaleTransitionActivityA;
 import universum.studios.android.samples.transition.ui.view.translate.TranslateTransitionActivityA;
 import universum.studios.android.transition.BaseNavigationalTransition;
-import universum.studios.android.transition.NavigationalTransitionCompat;
+import universum.studios.android.transition.NavigationalCompatTransition;
 import universum.studios.android.transition.Reveal;
 import universum.studios.android.transition.Scale;
 import universum.studios.android.transition.Translate;
@@ -67,7 +67,7 @@ public final class ViewTransitions {
 		return new TransitionImpl(classOfTransitionActivity);
 	}
 
-	private static final class TransitionImpl extends NavigationalTransitionCompat {
+	private static final class TransitionImpl extends NavigationalCompatTransition {
 
 		TransitionImpl(@NonNull final Class<? extends Activity> classOfTransitionActivity) {
 			super(classOfTransitionActivity);

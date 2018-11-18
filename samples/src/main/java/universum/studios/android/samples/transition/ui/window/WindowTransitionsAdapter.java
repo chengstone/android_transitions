@@ -19,11 +19,11 @@
 package universum.studios.android.samples.transition.ui.window;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import universum.studios.android.samples.transition.R;
 import universum.studios.android.transition.ExtraWindowTransitions;
 import universum.studios.android.transition.WindowTransition;

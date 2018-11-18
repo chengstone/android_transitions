@@ -26,17 +26,17 @@ import android.transition.TransitionValues;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import org.hamcrest.core.Is;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.robolectric.annotation.Config;
 
 import universum.studios.android.test.local.ViewTransitionTestCase;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
 
 /**
  * @author Martin Albedinsky
@@ -69,7 +69,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 
 	@Test public void testInstantiationWithAttributeSet() {
 		// Act:
-		final Scale scale = new Scale(application, null);
+		final Scale scale = new Scale(context, null);
 		// Assert:
 		assertThat(scale.getMode(), is(Scale.MODE_IN | Scale.MODE_OUT));
 	}
@@ -171,7 +171,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 
 	@Test public void testCaptureStartValues() {
 		// Arrange:
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setScaleX(0.75f);
 		view.setScaleY(0.25f);
 		final TransitionValues transitionValues = new TransitionValues();
@@ -181,8 +181,8 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		scale.captureStartValues(transitionValues);
 		// Assert:
 		assertThat(transitionValues.values.isEmpty(), is(false));
-		assertThat(transitionValues.values.get(Scale.PROPERTY_TRANSITION_SCALE_X), Is.<Object>is(0.75f));
-		assertThat(transitionValues.values.get(Scale.PROPERTY_TRANSITION_SCALE_Y), Is.<Object>is(0.25f));
+		assertThat(transitionValues.values.get(Scale.PROPERTY_TRANSITION_SCALE_X), CoreMatchers.<Object>is(0.75f));
+		assertThat(transitionValues.values.get(Scale.PROPERTY_TRANSITION_SCALE_Y), CoreMatchers.<Object>is(0.25f));
 	}
 
 	@Test public void testObtainStartScales() {
@@ -226,7 +226,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		scale.setPivotY(50f);
 		final View view = createViewAttachedToWindow();
 		// Act:
-		final Animator animator = scale.onAppear(new FrameLayout(application), view, null, null);
+		final Animator animator = scale.onAppear(new FrameLayout(context), view, null, null);
 		// Assert:
 		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
 		assertThat(view.getPivotX(), is(scale.getPivotX()));
@@ -244,7 +244,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		view.setTop(0);
 		view.setBottom(100);
 		// Act:
-		final Animator animator = scale.onAppear(new FrameLayout(application), view, null, null);
+		final Animator animator = scale.onAppear(new FrameLayout(context), view, null, null);
 		// Assert:
 		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
 		assertThat(view.getPivotX(), is(25f));
@@ -263,7 +263,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		startValues.view = view;
 		scale.captureStartValues(startValues);
 		// Act:
-		final Animator animator = scale.onAppear(new FrameLayout(application), view, startValues, null);
+		final Animator animator = scale.onAppear(new FrameLayout(context), view, startValues, null);
 		// Assert:
 		assertThatAnimatorIsValid(animator, view, 0.0f, 0.0f);
 		assertThat(view.getPivotX(), is(100f));
@@ -275,7 +275,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		final View view = createViewNotAttachedToWindow();
 		final Scale scale = new Scale();
 		// Act + Assert:
-		assertThat(scale.onAppear(new FrameLayout(application), view, null, null), is(nullValue()));
+		assertThat(scale.onAppear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
 	@Test public void testOnDisappearWithSpecifiedPivots() {
@@ -285,7 +285,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		scale.setPivotY(50f);
 		final View view = createViewAttachedToWindow();
 		// Act:
-		final Animator animator = scale.onDisappear(new FrameLayout(application), view, null, null);
+		final Animator animator = scale.onDisappear(new FrameLayout(context), view, null, null);
 		// Assert:
 		assertThatAnimatorIsValid(animator, view, 1.0f, 1.0f);
 		assertThat(view.getPivotX(), is(scale.getPivotX()));
@@ -305,7 +305,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		view.setTop(0);
 		view.setBottom(100);
 		// Act:
-		final Animator animator = scale.onDisappear(new FrameLayout(application), view, new TransitionValues(), new TransitionValues());
+		final Animator animator = scale.onDisappear(new FrameLayout(context), view, new TransitionValues(), new TransitionValues());
 		// Assert:
 		assertThatAnimatorIsValid(animator, view, 1.0f, 1.0f);
 		assertThat(view.getPivotX(), is(33f));
@@ -326,7 +326,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		startValues.view = view;
 		scale.captureStartValues(startValues);
 		// Act + Assert:
-		assertThat(scale.onDisappear(new FrameLayout(application), view, startValues, new TransitionValues()), is(nullValue()));
+		assertThat(scale.onDisappear(new FrameLayout(context), view, startValues, new TransitionValues()), is(nullValue()));
 	}
 
 	@Test public void testOnDisappearWithViewNotAttachedToWindow() {
@@ -335,7 +335,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		final Scale scale = new Scale();
 		// Act:
 		// Assert:
-		assertThat(scale.onDisappear(new FrameLayout(application), view, null, null), is(nullValue()));
+		assertThat(scale.onDisappear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
 	@Test public void testCalculateTransitionPropertiesWithSpecifiedPivots() {
@@ -343,7 +343,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotX(100f);
 		scale.setPivotY(50f);
-		final View view = new View(application);
+		final View view = new View(context);
 		// Act:
 		scale.calculateTransitionProperties(view);
 		// Assert:
@@ -356,7 +356,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		final Scale scale = new Scale();
 		scale.setPivotXFraction(0.33f);
 		scale.setPivotYFraction(0.66f);
-		final View view = new View(application);
+		final View view = new View(context);
 		view.setLeft(0);
 		view.setRight(100);
 		view.setTop(0);
@@ -379,7 +379,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		assertThat(animator, is(notNullValue()));
 		assertThat(animator, instanceOf(ObjectAnimator.class));
 		final ObjectAnimator objectAnimator = (ObjectAnimator) animator;
-		assertThat(objectAnimator.getTarget(), Is.<Object>is(view));
+		assertThat(objectAnimator.getTarget(), CoreMatchers.<Object>is(view));
 		final PropertyValuesHolder[] values = objectAnimator.getValues();
 		assertThat(values, is(notNullValue()));
 		assertThat(values.length, is(2));
