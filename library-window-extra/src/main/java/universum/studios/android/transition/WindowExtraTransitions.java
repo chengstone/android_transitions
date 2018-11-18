@@ -28,7 +28,7 @@ package universum.studios.android.transition;
  * </ul>
  *
  * @author Martin Albedinsky
- * @since 1.0
+ * @since 1.3
  */
 @SuppressWarnings("unused")
 public final class WindowExtraTransitions {

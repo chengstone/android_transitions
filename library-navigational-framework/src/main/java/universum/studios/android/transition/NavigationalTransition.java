@@ -18,7 +18,6 @@
  */
 package universum.studios.android.transition;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -115,8 +114,6 @@ public class NavigationalTransition extends BaseNavigationalTransition<Navigatio
 	 * @param caller The caller fragment that requested start of this navigational transition.
 	 * @see #onFinish(Fragment)
 	 */
-	@SuppressLint("NewApi")
-	@SuppressWarnings("ConstantConditions")
 	protected void onStart(@NonNull final Fragment caller) {
 		final Activity activity = caller.getActivity();
 		final Intent intent = createIntent(activity);

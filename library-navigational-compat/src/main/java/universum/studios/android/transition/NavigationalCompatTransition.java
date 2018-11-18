@@ -20,6 +20,7 @@ package universum.studios.android.transition;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -115,8 +116,6 @@ public class NavigationalCompatTransition extends BaseNavigationalTransition<Nav
 	 *
 	 * @see #onFinish(Fragment)
 	 */
-	@SuppressLint("NewApi")
-	@SuppressWarnings("ConstantConditions")
 	protected void onStart(@NonNull final Fragment caller) {
 		final Activity activity = caller.requireActivity();
 		final Intent intent = createIntent(activity);
