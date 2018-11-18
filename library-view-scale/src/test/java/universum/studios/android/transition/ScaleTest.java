@@ -333,8 +333,7 @@ public final class ScaleTest extends ViewTransitionTestCase {
 		// Arrange:
 		final View view = createViewNotAttachedToWindow();
 		final Scale scale = new Scale();
-		// Act:
-		// Assert:
+		// Act + Assert:
 		assertThat(scale.onDisappear(new FrameLayout(context), view, null, null), is(nullValue()));
 	}
 
