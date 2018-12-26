@@ -8,6 +8,12 @@ Android Transitions
 [![Android Jetpack](https://img.shields.io/badge/Android-Jetpack-brightgreen.svg)](https://developer.android.com/jetpack)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Transitions-green.svg?style=flat)](https://android-arsenal.com/details/1/5409)
 
+## ! MOVED ! ##
+
+**> This library has been moved to a new [location](https://bitbucket.org/android-universum/transitions). <**
+
+---
+
 View and navigational transitions for the Android platform.
 
 For more information please visit the **[Wiki](https://github.com/universum-studios/android_transitions/wiki)**.
